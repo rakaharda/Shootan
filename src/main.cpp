@@ -1,10 +1,11 @@
 #include "game.h"
 
 sf::RenderWindow window;
+Game* game;
 
 int main()
 {
-    Game game;
-    game.play();
+    game = new Game;
+    game->play();
     return 0;
 }

@@ -22,3 +22,4 @@ class Game
 #endif // GAME_H
 
 extern sf::RenderWindow window;
+extern Game* game;
