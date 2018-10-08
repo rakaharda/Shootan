@@ -3,6 +3,7 @@
 
 #include "ObjectProperties.h"
 #include <SFML\Graphics.hpp>
+
 class GameObject : public sf::Drawable
 {
     public:
@@ -16,3 +17,4 @@ class GameObject : public sf::Drawable
 };
 
 #endif // GAMEOBJECT_H
+

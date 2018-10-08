@@ -4,6 +4,7 @@ Game::Game() : isPlaying(true)
 {
     vector <sf::VideoMode> vMode = sf::VideoMode::getFullscreenModes();
     window.create(vMode[0], "Shootan", sf::Style::Fullscreen);
+    window.setVerticalSyncEnabled(true);
 }
 
 Game::~Game()
@@ -14,10 +15,13 @@ Game::~Game()
 void Game::play()
 {
     GameObject* player = new Player;
+    clock = new sf::Clock;
     while (isPlaying)
     {
+        frameTime = clock->restart().asSeconds();
         ProcessEvents();
-        window.clear();
+        player->update();
+        window.clear(sf::Color(235, 235, 235));
         window.draw(*player);
         window.display();
     }

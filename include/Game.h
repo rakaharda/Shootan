@@ -14,12 +14,14 @@ class Game
         Game();
         virtual ~Game();
         void play();
+        sf::Clock* clock;
     private:
         bool isPlaying;
         void ProcessEvents();
 };
 
+extern sf::RenderWindow window;
+extern float frameTime;
+
 #endif // GAME_H
 
-extern sf::RenderWindow window;
-extern Game* game;
