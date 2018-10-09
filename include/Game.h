@@ -14,14 +14,21 @@ class Game
         Game();
         virtual ~Game();
         void play();
-        sf::Clock* clock;
     private:
+        GameObject* player;
+        sf::Clock* clock;
         bool isPlaying;
-        void ProcessEvents();
+        void loadResources();
+        void processEvents();
+        void collectTrash();
+        void update();
+        void draw();
 };
 
 extern sf::RenderWindow window;
 extern float frameTime;
+extern vector <sf::Texture> vecTextures;
+extern vector <GameObject*> vecProjectiles;
 
 #endif // GAME_H
 

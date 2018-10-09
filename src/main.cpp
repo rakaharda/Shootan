@@ -1,7 +1,9 @@
-#include "game.h"
+#include "Game.h"
 
 sf::RenderWindow window;
 float frameTime;
+vector <sf::Texture> vecTextures;
+vector <GameObject*> vecProjectiles;
 
 int main()
 {
