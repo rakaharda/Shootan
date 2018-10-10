@@ -14,6 +14,8 @@ class Player : public GameObject
         virtual ~Player();
         void update();
         void processEvents(sf::Event event);
+        Weapon* getWeapon();
+        void setWeapon(Weapon* _weapon);
     private:
         sf::Texture texture;
         float speed;

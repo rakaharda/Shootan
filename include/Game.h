@@ -5,7 +5,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Player.h"
-
+#include <sstream>
 using namespace std;
 
 class Game
@@ -15,7 +15,9 @@ class Game
         virtual ~Game();
         void play();
     private:
-        GameObject* player;
+        Player* player;
+        sf::Font font;
+        sf::Text info; //temporary
         sf::Clock* clock;
         bool isPlaying;
         void loadResources();
