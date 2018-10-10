@@ -1,4 +1,4 @@
-#include "Weapon.h"
+#include "../include/Weapon.h"
 
 Weapon::Weapon(sf::Sprite* _player) :
 player(_player),
@@ -42,4 +42,10 @@ bool Weapon::addProjectile()
         return true;
     }
     return false;
+}
+WeaponAutorifle::WeaponAutorifle(sf::Sprite* _player, float _weaponCooldown, float _damage, int _spread, Projectile::ProjectileType _projectileType):
+    Weapon( _player, _weaponCooldown, _damage, _spread, _projectileType) {}
+
+boll WeaponShotgun::addProjectile(){
+
 }

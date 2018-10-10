@@ -1,4 +1,4 @@
-#include "Projectile.h"
+#include "../include/Projectile.h"
 
 Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread)
 {

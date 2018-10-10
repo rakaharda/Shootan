@@ -25,7 +25,15 @@ class Weapon
         Projectile::ProjectileType projectileType;
     private:
 };
-
+class WeaponAutorifle: public Weapon{
+    public:
+        WeaponAutorifle(sf::Sprite* _player);
+}
+class WeaponShotgun{
+    public:
+        WeaponAutorifle(sf::Sprite* _player);
+        bool addProjectile();
+}
 extern sf::RenderWindow window;
 extern float frameTime;
 extern vector <GameObject*> vecProjectiles;
