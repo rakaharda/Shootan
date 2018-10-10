@@ -6,6 +6,9 @@ Game::Game() : isPlaying(true)
     window.create(vMode[0], "Shootan", sf::Style::Fullscreen);
     window.setVerticalSyncEnabled(true);
     loadResources();
+    font.loadFromFile("./data/fonts/arial.ttf");
+    info.setFont(font);
+    info.setFillColor(sf::Color::Black);
 }
 
 Game::~Game()
@@ -20,6 +23,9 @@ void Game::play()
     while (isPlaying)
     {
         frameTime = clock->restart().asSeconds();
+        stringstream ss;
+        ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
+        info.setString(ss.str());
         processEvents();
         update();
         collectTrash();
@@ -70,6 +76,7 @@ void Game::draw()
     for(unsigned int i=0; i<vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     window.draw(*player);
+    window.draw(info);
     window.display();
 }
 

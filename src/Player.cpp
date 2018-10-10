@@ -42,6 +42,18 @@ void Player::processEvents(sf::Event event)
             break;
     }
 }
+
+Weapon* Player::getWeapon()
+{
+    return weapon;
+}
+
+void Player::setWeapon(Weapon* _weapon)
+{
+    delete(weapon);
+    weapon = _weapon;
+}
+
 void Player::move()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
