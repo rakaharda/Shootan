@@ -25,6 +25,7 @@ Game::~Game()
 void Game::play()
 {
     player = new Player;
+    enemy = new Enemy (300,300,player->m_sprite);
     clock = new sf::Clock;
     while (isPlaying)
     {
@@ -113,6 +114,7 @@ void Game::collectTrash()
 void Game::update()
 {
     player->update();
+    enemy->update();
     for(unsigned int i=0; i<vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
 }
@@ -122,6 +124,7 @@ void Game::draw()
     for(unsigned int i=0; i<vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     window.draw(*player);
+    window.draw(*enemy);
     window.draw(info);
     window.display();
 }

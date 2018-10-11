@@ -5,6 +5,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
 #include <sstream>
 #include <cstdlib>
 
@@ -18,6 +19,7 @@ class Game
         void play();
     private:
         Player* player;
+        Enemy* enemy;
         sf::Font font;
         sf::Text info; //temporary
         sf::Clock* clock;
