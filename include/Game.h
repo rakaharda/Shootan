@@ -25,6 +25,7 @@ class Game
         bool fullscreen;
         bool verticalSync;
         sf::Vector2u resolution;
+        void showAmmo();
         void loadResources();
         void loadSettings();
         void processEvents();

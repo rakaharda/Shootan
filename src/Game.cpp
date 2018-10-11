@@ -29,9 +29,7 @@ void Game::play()
     while (isPlaying)
     {
         frameTime = clock->restart().asSeconds();
-        stringstream ss;
-        ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
-        info.setString(ss.str());
+        showAmmo();
         processEvents();
         update();
         collectTrash();
@@ -39,6 +37,12 @@ void Game::play()
     }
 }
 
+void Game::showAmmo()
+{
+    stringstream ss;
+    ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
+    info.setString(ss.str());
+}
 void Game::processEvents(){
     sf::Event event;
     while(window.pollEvent(event))
@@ -131,8 +135,11 @@ void Game::loadResources()
 void Game::loadSettings()
 {
     FILE *fp = fopen("settings.conf", "r");
-    fscanf(fp, "Fullscreen=%u\n", &fullscreen);
-    fscanf(fp, "VerticalSync=%u\n", &verticalSync);
+    unsigned int temp;
+    fscanf(fp, "Fullscreen=%u\n", &temp);
+    fullscreen = (bool)temp;
+    fscanf(fp, "VerticalSync=%u\n", &temp);
+    verticalSync = (bool)temp;
     fscanf(fp, "Width=%u\n", &(resolution.x));
     fscanf(fp, "Height=%u\n", &(resolution.y));
     if(resolution.x < 640)
