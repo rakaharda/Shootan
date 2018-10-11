@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "Player.h"
 #include <sstream>
+#include <cstdlib>
+
 using namespace std;
 
 class Game
@@ -20,7 +22,11 @@ class Game
         sf::Text info; //temporary
         sf::Clock* clock;
         bool isPlaying;
+        bool fullscreen;
+        bool verticalSync;
+        sf::Vector2u resolution;
         void loadResources();
+        void loadSettings();
         void processEvents();
         void collectTrash();
         void update();

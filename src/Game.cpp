@@ -2,9 +2,15 @@
 
 Game::Game() : isPlaying(true)
 {
-    vector <sf::VideoMode> vMode = sf::VideoMode::getFullscreenModes();
-    window.create(vMode[0], "Shootan", sf::Style::Fullscreen);
-    window.setVerticalSyncEnabled(true);
+    loadSettings();
+    if(fullscreen)
+        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
+    else
+        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan");
+    if (verticalSync)
+        window.setVerticalSyncEnabled(true);
+    else
+        window.setVerticalSyncEnabled(false);
     loadResources();
     font.loadFromFile("./data/fonts/arial.ttf");
     info.setFont(font);
@@ -39,13 +45,49 @@ void Game::processEvents(){
         {
             switch(event.type)
             {
+        case sf::Event::Closed:
+                window.close();
+                isPlaying = false;
+                return;
             case sf::Event::KeyPressed:
-                if(event.key.code==sf::Keyboard::Escape)
-                    {
+                switch(event.key.code)
+                {
+                case sf::Keyboard::Escape:
                     window.close();
                     isPlaying = false;
                     return;
+                case sf::Keyboard::F12:
+                    if(fullscreen)
+                    {
+                        window.close();
+                        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan");
+                        if (verticalSync)
+                            window.setVerticalSyncEnabled(true);
+                        fullscreen = false;
                     }
+                    else
+                    {
+                        window.close();
+                        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
+                        if (verticalSync)
+                            window.setVerticalSyncEnabled(true);
+                        fullscreen = true;
+                    }
+                    break;
+                case sf::Keyboard::F11:
+                    if (verticalSync)
+                    {
+                        window.setVerticalSyncEnabled(false);
+                        verticalSync = false;
+                    }
+                    else
+                    {
+                        window.setVerticalSyncEnabled(true);
+                        verticalSync = true;
+                    }
+                default:
+                    break;
+                }
             default:
             player->processEvents(event);
                 break;
@@ -84,4 +126,18 @@ void Game::loadResources()
 {
     vecTextures.push_back(sf::Texture());
     vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");
+}
+
+void Game::loadSettings()
+{
+    FILE *fp = fopen("settings.conf", "r");
+    fscanf(fp, "Fullscreen=%u\n", &fullscreen);
+    fscanf(fp, "VerticalSync=%u\n", &verticalSync);
+    fscanf(fp, "Width=%u\n", &(resolution.x));
+    fscanf(fp, "Height=%u\n", &(resolution.y));
+    if(resolution.x < 640)
+        resolution.x = 640;
+    if(resolution.y < 480)
+        resolution.y = 480;
+    fclose(fp);
 }
