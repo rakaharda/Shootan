@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include "GameObject.h"
+#include <iostream>
 
 using namespace std;
 
@@ -16,8 +17,11 @@ class Enemy : public GameObject
         sf::Texture texture;
         const sf::Sprite* player;
         float speed;
-        void move(float angle);
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states);
+        float angle;
+        float currentAngle;
+        float rotationRate;
+        void move();
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 extern sf::RenderWindow window;

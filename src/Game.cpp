@@ -25,7 +25,7 @@ Game::~Game()
 void Game::play()
 {
     player = new Player;
-    enemy = new Enemy (300,300,player->m_sprite);
+    enemy = new Enemy (500,500,&player->m_sprite);
     clock = new sf::Clock;
     while (isPlaying)
     {
