@@ -14,6 +14,7 @@ Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite)
     m_sprite.setRotation(angle);
     currentAngle = angle;
     rotationRate = 90.f;
+    distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
     speed = 50.f;
 }
 
@@ -24,6 +25,7 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
+    distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
     angle = 180 / M_PI * atan2(
                         player->getPosition().y - m_sprite.getPosition().y,
                         player->getPosition().x - m_sprite.getPosition().x
@@ -58,8 +60,8 @@ void Enemy::update()
         if(currentAngle>360.f) currentAngle -= 360.f;
         }
     m_sprite.setRotation(currentAngle);
-    cout<<currentAngle<<' '<<angle<<endl;
-    move();
+    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2)
+        move();
 }
 
 void Enemy::move()

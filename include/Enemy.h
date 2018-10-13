@@ -20,6 +20,7 @@ class Enemy : public GameObject
         float angle;
         float currentAngle;
         float rotationRate;
+        float distance;
         void move();
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

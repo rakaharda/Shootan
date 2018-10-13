@@ -1,4 +1,4 @@
-#include "../include/Weapon.h"
+#include "Weapon.h"
 
 Weapon::Weapon(sf::Sprite* _player) :
 player(_player),
