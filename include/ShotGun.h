@@ -8,6 +8,7 @@ class ShotGun: public Weapon
         ShotGun(sf::Sprite* _player);
         virtual ~ShotGun();
         bool addProjectile();
+        int waveNamber=0;
 };
 
 #endif //SHOTGUN

@@ -14,7 +14,7 @@ class Weapon
         Weapon(sf::Sprite* _player);
         Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType);
         virtual ~Weapon();
-        void update();
+        virtual void update();
         virtual bool addProjectile();
         float getReloadTime();
         float getCurrentReloadTime();
