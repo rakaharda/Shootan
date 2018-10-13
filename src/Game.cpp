@@ -1,5 +1,4 @@
 #include "Game.h"
-
 Game::Game() : isPlaying(true)
 {
     loadSettings();

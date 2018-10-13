@@ -12,8 +12,10 @@ class Enemy : public GameObject
     public:
         Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite);
         virtual ~Enemy();
-        void update();
+        virtual void update();
     private:
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    protected:
         sf::Texture texture;
         const sf::Sprite* player;
         float speed;
@@ -22,7 +24,6 @@ class Enemy : public GameObject
         float rotationRate;
         float distance;
         void move();
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 extern sf::RenderWindow window;
