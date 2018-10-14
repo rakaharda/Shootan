@@ -17,7 +17,7 @@ bool ShotGun::addProjectile()
 {
     if(currentCooldown <= 0.f && currentReloadTime <=0.f && currentClipSize>0)
     {
-        if(this->waveNamber%3==2)
+        if(this->waveNamber%4==3)
         {
             currentClipSize--;
             weaponCooldown=1.f;
@@ -26,12 +26,12 @@ bool ShotGun::addProjectile()
         else
         {
             waveNamber++;
-            weaponCooldown=((float)(rand()%30+10))/1000;
+            weaponCooldown=((float)(rand()%20+10))/1000;
         }
         currentCooldown = weaponCooldown;
-        for(int i=0;i<5;i++)
+        for(int i=0;i<4;i++)
         {
-            vecProjectiles.push_back(new Projectile(player, damage, spread+((-2+i)*10)));
+            vecProjectiles.push_back(new Projectile(player, damage, spread+(i+rand()%9-7)*4));
         }
         return true;
     }
