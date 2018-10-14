@@ -1,4 +1,4 @@
-#include "../include/Game.h"
+#include "Game.h"
 
 Game::Game() : isPlaying(true)
 {
@@ -24,12 +24,13 @@ Game::~Game()
 
 void Game::play()
 {
+    srand(clock());
     player = new Player;
     enemy = new Enemy (500,500,&player->m_sprite);
-    clock = new sf::Clock;
+    gameClock = new sf::Clock;
     while (isPlaying)
     {
-        frameTime = clock->restart().asSeconds();
+        frameTime = gameClock->restart().asSeconds();
         showAmmo();
         processEvents();
         update();
@@ -41,7 +42,10 @@ void Game::play()
 void Game::showAmmo()
 {
     stringstream ss;
-    ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
+    if(player->getWeapon()->getCurrentReloadTime()>0.f)
+        ss<<player->getWeapon()->getCurrentReloadTime()<<'/'<<player->getWeapon()->getReloadTime();
+    else
+        ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
     info.setString(ss.str());
 }
 void Game::processEvents(){

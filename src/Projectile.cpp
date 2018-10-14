@@ -2,7 +2,6 @@
 
 Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread)
 {
-    srand(time(NULL));
     m_sprite.setTexture(vecTextures[0]);
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;

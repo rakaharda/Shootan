@@ -4,7 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 #include <cmath>
-#include "../include/Projectile.h"
+#include "Projectile.h"
 
 using namespace std;
 
@@ -35,15 +35,7 @@ class Weapon
         Projectile::ProjectileType projectileType;
     private:
 };
-class WeaponAutorifle: public Weapon{
-    public:
-        WeaponAutorifle(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType);
-};
-class WeaponShotgun{
-    public:
-        WeaponShotgun(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType);
-        bool addProjectile();
-};
+
 extern sf::RenderWindow window;
 extern float frameTime;
 extern vector <GameObject*> vecProjectiles;

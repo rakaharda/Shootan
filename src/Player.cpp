@@ -1,4 +1,4 @@
-#include "../include/Player.h"
+#include "Player.h"
 
 Player::Player()
 {
@@ -6,7 +6,7 @@ Player::Player()
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(window.getSize().x / 2, window.getSize().y / 2);
-    weapon = new WeaponAutorifle(&m_sprite,0.1,1,30,100,2,Projectile::ptSprite);
+    weapon = new Weapon(&m_sprite);
     speed = 100.f;
 }
 
