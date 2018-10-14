@@ -84,4 +84,3 @@ int Weapon::getCurrentClipSize()
 {
     return currentClipSize;
 }
-

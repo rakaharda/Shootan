@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include <sstream>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ class Game
         Enemy* enemy;
         sf::Font font;
         sf::Text info; //temporary
-        sf::Clock* clock;
+        sf::Clock* gameClock;
         bool isPlaying;
         bool fullscreen;
         bool verticalSync;

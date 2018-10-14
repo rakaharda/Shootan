@@ -4,7 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 #include <cmath>
-#include "../include/Projectile.h"
+#include "Projectile.h"
 
 using namespace std;
 
