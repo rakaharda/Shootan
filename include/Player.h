@@ -4,6 +4,8 @@
 #include <cmath>
 #include "GameObject.h"
 #include "Weapon.h"
+#include "Autorifle.h"
+#include "Shotgun.h"
 
 using namespace std;
 
