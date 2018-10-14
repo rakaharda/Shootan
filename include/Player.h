@@ -5,7 +5,7 @@
 #include "GameObject.h"
 #include "Weapon.h"
 #include "Autorifle.h"
-#include "ShotGun.h"
+#include "Shotgun.h"
 
 using namespace std;
 

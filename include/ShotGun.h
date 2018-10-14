@@ -2,11 +2,11 @@
 #define SHOTGUN_H
 
 #include "Weapon.h"
-class ShotGun: public Weapon
+class Shotgun: public Weapon
 {
     public:
-        ShotGun(sf::Sprite* _player);
-        virtual ~ShotGun();
+        Shotgun(sf::Sprite* _player);
+        virtual ~Shotgun();
         bool addProjectile();
 };
 

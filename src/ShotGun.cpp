@@ -1,18 +1,18 @@
-#include "ShotGun.h"
+#include "Shotgun.h"
 
-ShotGun::ShotGun(sf::Sprite* _player): Weapon(_player)
+Shotgun::Shotgun(sf::Sprite* _player): Weapon(_player)
 {
     weaponCooldown=1.0f;
     clipSize=5;
     currentClipSize=clipSize;
 }
 
-ShotGun::~ShotGun()
+Shotgun::~Shotgun()
 {
     //dtor
 }
 
-bool ShotGun::addProjectile()
+bool Shotgun::addProjectile()
 {
     if(currentCooldown <= 0.f && currentReloadTime <=0.f && currentClipSize>0)
     {
