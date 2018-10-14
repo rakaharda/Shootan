@@ -24,6 +24,8 @@ class Enemy : public GameObject
         float rotationRate;
         float distance;
         void move();
+        void calculateRotation();
+        bool checkDistance();
 };
 
 extern sf::RenderWindow window;
