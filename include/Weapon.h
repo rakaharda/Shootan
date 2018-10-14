@@ -38,5 +38,5 @@ class Weapon
 
 extern sf::RenderWindow window;
 extern float frameTime;
-extern vector <GameObject*> vecProjectiles;
+extern vector <Projectile*> vecProjectiles;
 #endif // WEAPON_H
