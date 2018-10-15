@@ -18,7 +18,8 @@ Game::Game() : isPlaying(true)
 
 Game::~Game()
 {
-    //dtor
+    delete(gameClock);
+    delete(player);
 }
 
 void Game::play()
@@ -27,12 +28,12 @@ void Game::play()
     player = new Player;
     //Weapon* autorifle = new Autorifle;
     player->setWeapon(new Autorifle(&player->m_sprite));
-    vecEnemies.push_back(new Monster (500,500,&player->m_sprite, 100.f));
+    vecEnemies.push_back(new Monster (500,500,&player->m_sprite, 100.f, 20.f));
     gameClock = new sf::Clock;
     while (isPlaying)
     {
         frameTime = gameClock->restart().asSeconds();
-        showAmmo();
+        showStats();
         processEvents();
         checkProjectiles();
         checkEnemies();
@@ -42,13 +43,14 @@ void Game::play()
     }
 }
 
-void Game::showAmmo()
+void Game::showStats()
 {
     stringstream ss;
     if(player->getWeapon()->getCurrentReloadTime()>0.f)
         ss<<player->getWeapon()->getCurrentReloadTime()<<'/'<<player->getWeapon()->getReloadTime();
     else
         ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
+    ss<<endl<<player->getCurrentHealthPoints();
     info.setString(ss.str());
 }
 void Game::processEvents(){
@@ -112,10 +114,9 @@ void Game::checkProjectiles()
     for(unsigned int i=0; i < vecProjectiles.size(); i++)
         for(unsigned int j=0; j < vecEnemies.size(); j++)
         {
-            if(vecProjectiles[i]->m_sprite.getGlobalBounds().intersects(vecEnemies[j]->m_sprite.getGlobalBounds()))
+            if(checkCollision(vecProjectiles[i], vecEnemies[j]))
                 {
                     vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                  //  cout<<vecEnemies[j]->getCurrentHealthPoints()<<' '<<vecProjectiles[i]->getDamage()<<endl;
                     vecProjectiles.erase(vecProjectiles.begin() + i);
                 }
         }
@@ -127,6 +128,13 @@ void Game::checkEnemies()
     {
         if(vecEnemies[i]->getCurrentHealthPoints() == 0.f)
             vecEnemies.erase(vecEnemies.begin() + i);
+    }
+    for(unsigned int i=0; i < vecEnemies.size(); i++)
+    {
+        if(checkCollision(player, vecEnemies[i]))
+            {
+                player->takeDamage(vecEnemies[i]->attack());
+            }
     }
 }
 void Game::collectTrash()

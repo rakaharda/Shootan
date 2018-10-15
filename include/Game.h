@@ -10,6 +10,7 @@
 #include "Projectile.h"
 #include "Autorifle.h"
 #include "Shotgun.h"
+#include "Collision.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
@@ -17,7 +18,7 @@
 
 using namespace std;
 
-class Game
+class Game : private Collision
 {
     public:
         Game();
@@ -32,7 +33,7 @@ class Game
         bool fullscreen;
         bool verticalSync;
         sf::Vector2u resolution;
-        void showAmmo();
+        void showStats();
         void loadResources();
         void loadSettings();
         void processEvents();

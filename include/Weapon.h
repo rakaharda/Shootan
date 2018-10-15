@@ -5,10 +5,10 @@
 #include <SFML\Window.hpp>
 #include <cmath>
 #include "Projectile.h"
-
+#include "Cooldown.h"
 using namespace std;
 
-class Weapon
+class Weapon : public Cooldown
 {
     public:
         Weapon(sf::Sprite* _player);
@@ -18,14 +18,10 @@ class Weapon
         virtual bool addProjectile();
         float getReloadTime();
         float getCurrentReloadTime();
-        float getCooldown();
-        float getCurrentCooldown();
         int getClipSize();
         int getCurrentClipSize();
     protected:
         const sf::Sprite* player;
-        float weaponCooldown;
-        float currentCooldown;
         float reloadTime;
         float currentReloadTime;
         int clipSize;

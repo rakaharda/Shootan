@@ -1,6 +1,8 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) : HealthPoints(_healthPoints)
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) : 
+HealthPoints(_healthPoints),
+MeleeAttack(_meleeDamage)
 {
     texture.loadFromFile("./data/enemies/sprite.png");
     m_sprite.setTexture(texture);
@@ -30,6 +32,7 @@ void Enemy::update()
     m_sprite.setRotation(currentAngle);
     if(checkDistance())
         move();
+    reduceCooldown();
 }
 
 void Enemy::move()
