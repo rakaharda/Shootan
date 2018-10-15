@@ -25,7 +25,20 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
+    
+    calculateRotation();
+    m_sprite.setRotation(currentAngle);
+    if(checkDistance())
+        move();
+}
+
+void Enemy::move()
+{
+    m_sprite.move(speed * frameTime * cos(currentAngle / 180 * M_PI), speed * frameTime * sin(currentAngle / 180 * M_PI));
+}
+
+void Enemy::calculateRotation()
+{
     angle = 180 / M_PI * atan2(
                         player->getPosition().y - m_sprite.getPosition().y,
                         player->getPosition().x - m_sprite.getPosition().x
@@ -59,17 +72,18 @@ void Enemy::update()
             }
         if(currentAngle>360.f) currentAngle -= 360.f;
         }
-    m_sprite.setRotation(currentAngle);
-    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2)
-        move();
 }
 
-void Enemy::move()
+bool Enemy::checkDistance()
 {
-    m_sprite.move(speed * frameTime * cos(currentAngle / 180 * M_PI), speed * frameTime * sin(currentAngle / 180 * M_PI));
+    distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
+    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2)
+        return true;
+    return false;
 }
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
+

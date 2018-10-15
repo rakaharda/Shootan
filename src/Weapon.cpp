@@ -84,8 +84,4 @@ int Weapon::getCurrentClipSize()
 {
     return currentClipSize;
 }
-WeaponAutorifle::WeaponAutorifle(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType): 
-Weapon(_player, _weaponCooldown, _reloadTime, _clipSize, _damage, _spread, _projectileType)
-{
 
-}
