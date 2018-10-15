@@ -1,13 +1,22 @@
 #include "Projectile.h"
 
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread)
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread) : 
+damage(_damage),
+speed(1000.f)
 {
-    damage = _damage;
     m_sprite.setTexture(vecTextures[0]);
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
 }
 
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, float _speed) :
+damage(_damage),
+speed(_speed)
+{
+    m_sprite.setTexture(vecTextures[0]);
+    m_sprite.setPosition(_sprite->getPosition());
+    angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
+}
 Projectile::~Projectile()
 {
     //dtor
