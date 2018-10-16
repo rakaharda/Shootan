@@ -4,10 +4,13 @@
 #include <cmath>
 #include "GameObject.h"
 #include "Weapon.h"
+#include "Autorifle.h"
+#include "Shotgun.h"
+#include "HealthPoints.h"
 
 using namespace std;
 
-class Player : public GameObject
+class Player : public GameObject, public HealthPoints
 {
     public:
         Player();

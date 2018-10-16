@@ -3,8 +3,8 @@
 sf::RenderWindow window;
 float frameTime;
 vector <sf::Texture> vecTextures;
-vector <GameObject*> vecProjectiles;
-
+vector <Projectile*> vecProjectiles;
+vector <Enemy*> vecEnemies;
 int main()
 {
     Game* game;

@@ -4,13 +4,14 @@
 #include <cmath>
 #include "GameObject.h"
 #include <iostream>
-
+#include "HealthPoints.h"
+#include "MeleeAttack.h"
 using namespace std;
 
-class Enemy : public GameObject
+class Enemy : public GameObject, public HealthPoints, public MeleeAttack
 {
     public:
-        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite);
+        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
         virtual ~Enemy();
         virtual void update();
     private:
