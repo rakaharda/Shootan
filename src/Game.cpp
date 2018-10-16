@@ -126,6 +126,8 @@ void Game::loadResources()
 {
     vecTextures.push_back(sf::Texture());
     vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[1].loadFromFile("./data/projectiles/projectile2.png");
 }
 
 void Game::loadSettings()

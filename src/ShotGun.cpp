@@ -6,6 +6,8 @@ Shotgun::Shotgun(sf::Sprite* _player): Weapon(_player)
     clipSize=5;
     currentClipSize=clipSize;
     damage=1;
+    spread=7;
+    projectileSpeed=0.9f;
 }
 
 Shotgun::~Shotgun()
@@ -26,12 +28,12 @@ bool Shotgun::addProjectile()
         else
         {
             waveNamber++;
-            weaponCooldown=((float)(rand()%20+10))/1000;
+            weaponCooldown=((float)(rand()%10+15))/1000;
         }
         currentCooldown = weaponCooldown;
         for(int i=0;i<4;i++)
         {
-            vecProjectiles.push_back(new Projectile(player, damage, spread+(i+rand()%9-7)*4));
+            vecProjectiles.push_back(new Projectile(player, damage, spread, skills, i, projectileSpeed));
         }
         return true;
     }

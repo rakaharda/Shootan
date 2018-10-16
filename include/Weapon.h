@@ -32,6 +32,8 @@ class Weapon
         int currentClipSize;
         float damage;
         int spread;
+        int skills;
+        float projectileSpeed;
         Projectile::ProjectileType projectileType;
     private:
 };
