@@ -1,12 +1,7 @@
 #include "Autorifle.h"
 
-Autorifle::Autorifle(sf::Sprite* _player): Weapon(_player)
+Autorifle::Autorifle(sf::Sprite* _player): Weapon(_player, 0.05f, 2.f, 30, 5.f, 8, Projectile::ptSprite)
 {
-    reloadTime=2.f;
-    weaponCooldown=0.05f;
-    clipSize=30;
-    currentClipSize=clipSize;
-    spread=8;
     projectileSpeed=1.1f;
 }
 

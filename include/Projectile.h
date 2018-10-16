@@ -20,6 +20,7 @@ class Projectile : public GameObject
         Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, int _numberShot, float _speed);
         virtual ~Projectile();
         void update();
+        float getDamage();
     private:
         float speed;
         float angle;

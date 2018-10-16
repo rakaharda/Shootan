@@ -8,10 +8,11 @@
 #include "Shotgun.h"
 #include "SniperRifle.h"
 #include "Gun.h"
+#include "HealthPoints.h"
 
 using namespace std;
 
-class Player : public GameObject
+class Player : public GameObject, public HealthPoints
 {
     public:
         Player();

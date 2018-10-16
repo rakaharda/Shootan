@@ -5,12 +5,22 @@
 #include <vector>
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Monster.h"
+#include "Projectile.h"
+#include "Autorifle.h"
+#include "Shotgun.h"
+#include "Gun.h"
+#include "SniperRifle.h"
+#include "Collision.h"
 #include <sstream>
 #include <cstdlib>
+#include <ctime>
+#include <iostream>
 
 using namespace std;
 
-class Game
+class Game : private Collision
 {
     public:
         Game();
@@ -20,15 +30,18 @@ class Game
         Player* player;
         sf::Font font;
         sf::Text info; //temporary
-        sf::Clock* clock;
+        sf::Clock* gameClock;
         bool isPlaying;
         bool fullscreen;
         bool verticalSync;
         sf::Vector2u resolution;
+        void showStats();
         void loadResources();
         void loadSettings();
         void processEvents();
         void collectTrash();
+        void checkProjectiles();
+        void checkEnemies();
         void update();
         void draw();
 };
@@ -36,7 +49,7 @@ class Game
 extern sf::RenderWindow window;
 extern float frameTime;
 extern vector <sf::Texture> vecTextures;
-extern vector <GameObject*> vecProjectiles;
-
+extern vector <Projectile*> vecProjectiles;
+extern vector <Enemy*> vecEnemies;
 #endif // GAME_H
 

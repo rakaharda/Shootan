@@ -2,8 +2,7 @@
 
 Weapon::Weapon(sf::Sprite* _player) :
 player(_player),
-weaponCooldown(0.4f),
-currentCooldown(0.f),
+Cooldown(0.4f),
 reloadTime(3.f),
 currentReloadTime(0.f),
 clipSize(12),
@@ -19,8 +18,7 @@ projectileSpeed(1.f)
 
 Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread, Projectile::ProjectileType _projectileType) :
 player(_player),
-weaponCooldown(_weaponCooldown),
-currentCooldown(0.f),
+Cooldown(_weaponCooldown),
 reloadTime(_reloadTime),
 currentReloadTime(0.f),
 clipSize(_clipSize),
@@ -41,8 +39,7 @@ Weapon::~Weapon()
 
 void Weapon::update()
 {
-    if(currentCooldown>=0.f)
-        currentCooldown -= frameTime;
+    reduceCooldown();
     if(currentReloadTime>=0.f)
         currentReloadTime -= frameTime;
 }
@@ -72,14 +69,7 @@ float Weapon::getCurrentReloadTime()
 {
     return currentReloadTime;
 }
-float Weapon::getCooldown()
-{
-    return weaponCooldown;
-}
-float Weapon::getCurrentCooldown()
-{
-    return currentCooldown;
-}
+
 int Weapon::getClipSize()
 {
     return clipSize;
