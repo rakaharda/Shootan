@@ -6,13 +6,13 @@
 
 class GameObject : public sf::Drawable
 {
-    public:
-        GameObject() {};
-        virtual ~GameObject() {};
-        virtual void update() = 0;
-        sf::Sprite m_sprite;
-        ObjectProperties m_objectProperties;
-    protected:
+public:
+    GameObject() {};
+    virtual ~GameObject() {};
+    virtual void update() = 0;
+    sf::Sprite m_sprite;
+    ObjectProperties m_objectProperties;
+protected:
 
 };
 

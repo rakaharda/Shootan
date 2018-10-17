@@ -11,6 +11,8 @@
 #include "Autorifle.h"
 #include "Shotgun.h"
 #include "Collision.h"
+#include "Menu.h"
+#include "MainMenu.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
@@ -20,28 +22,30 @@ using namespace std;
 
 class Game : private Collision
 {
-    public:
-        Game();
-        virtual ~Game();
-        void play();
-    private:
-        Player* player;
-        sf::Font font;
-        sf::Text info; //temporary
-        sf::Clock* gameClock;
-        bool isPlaying;
-        bool fullscreen;
-        bool verticalSync;
-        sf::Vector2u resolution;
-        void showStats();
-        void loadResources();
-        void loadSettings();
-        void processEvents();
-        void collectTrash();
-        void checkProjectiles();
-        void checkEnemies();
-        void update();
-        void draw();
+public:
+    Game();
+    virtual ~Game();
+    void play();
+private:
+    Player* player;
+    sf::Font font;
+    sf::Text info; //temporary
+    sf::Clock* gameClock;
+    MainMenu *menu;
+    bool isPlaying;
+    bool fullscreen;
+    bool verticalSync;
+    sf::Vector2u resolution;
+    bool openMainMenu;
+    void showStats();
+    void loadResources();
+    void loadSettings();
+    void processEvents();
+    void collectTrash();
+    void checkProjectiles();
+    void checkEnemies();
+    void update();
+    void draw();
 };
 
 extern sf::RenderWindow window;

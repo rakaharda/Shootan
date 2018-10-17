@@ -5,15 +5,15 @@
 
 class MeleeAttack : public Cooldown
 {
-    public:
-        MeleeAttack(float _damage);
-        virtual ~MeleeAttack(){};
-        float getDamage();
-        void setDamage(float _damage);
-        float attack();
-    protected:
-        float damage;
-    private:
+public:
+    MeleeAttack(float _damage);
+    virtual ~MeleeAttack() {};
+    float getDamage();
+    void setDamage(float _damage);
+    float attack();
+protected:
+    float damage;
+private:
 };
 
 #endif // MELEEATTACK_H

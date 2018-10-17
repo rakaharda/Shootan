@@ -12,19 +12,19 @@ using namespace std;
 
 class Player : public GameObject, public HealthPoints
 {
-    public:
-        Player();
-        virtual ~Player();
-        void update();
-        void processEvents(sf::Event event);
-        Weapon* getWeapon();
-        void setWeapon(Weapon* _weapon);
-    private:
-        sf::Texture texture;
-        float speed;
-        void move();
-        Weapon* weapon;
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+public:
+    Player();
+    virtual ~Player();
+    void update();
+    void processEvents(sf::Event event);
+    Weapon* getWeapon();
+    void setWeapon(Weapon* _weapon);
+private:
+    sf::Texture texture;
+    float speed;
+    void move();
+    Weapon* weapon;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 extern sf::RenderWindow window;

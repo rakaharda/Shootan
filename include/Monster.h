@@ -5,13 +5,13 @@
 
 class Monster : public Enemy
 {
-    public:
-        Monster(int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
-        virtual ~Monster(){};
+public:
+    Monster(int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
+    virtual ~Monster() {};
 
-    protected:
+protected:
 
-    private:
+private:
 };
 
 #endif // MONSTER_H

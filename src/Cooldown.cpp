@@ -1,7 +1,7 @@
 #include "Cooldown.h"
 
 Cooldown::Cooldown(float _weaponCooldown) :
-weaponCooldown(_weaponCooldown)
+    weaponCooldown(_weaponCooldown)
 {
     //ctor
 }
@@ -19,5 +19,6 @@ void Cooldown::reduceCooldown()
 {
     if(currentCooldown < frameTime)
         currentCooldown = 0.f;
-    else currentCooldown -= frameTime;
+    else
+        currentCooldown -= frameTime;
 }

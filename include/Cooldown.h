@@ -4,16 +4,16 @@
 
 class Cooldown
 {
-    public:
-        Cooldown(float _weaponCooldown);
-        virtual ~Cooldown(){};
-        float getCooldown();
-        float getCurrentCooldown();
-        void reduceCooldown();
-    protected:
-        float weaponCooldown;
-        float currentCooldown;
-    private:
+public:
+    Cooldown(float _weaponCooldown);
+    virtual ~Cooldown() {};
+    float getCooldown();
+    float getCurrentCooldown();
+    void reduceCooldown();
+protected:
+    float weaponCooldown;
+    float currentCooldown;
+private:
 };
 
 extern float frameTime;

@@ -1,29 +1,29 @@
 #include "Weapon.h"
 
 Weapon::Weapon(sf::Sprite* _player) :
-player(_player),
-Cooldown(0.4f),
-reloadTime(3.f),
-currentReloadTime(0.f),
-clipSize(12),
-currentClipSize(clipSize),
-damage(5.f),
-spread(6),
-projectileType(Projectile::ptSprite)
+    player(_player),
+    Cooldown(0.4f),
+    reloadTime(3.f),
+    currentReloadTime(0.f),
+    clipSize(12),
+    currentClipSize(clipSize),
+    damage(5.f),
+    spread(6),
+    projectileType(Projectile::ptSprite)
 {
     //ctor
 }
 
 Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread, Projectile::ProjectileType _projectileType) :
-player(_player),
-Cooldown(_weaponCooldown),
-reloadTime(_reloadTime),
-currentReloadTime(0.f),
-clipSize(_clipSize),
-currentClipSize(clipSize),
-damage(_damage),
-spread(_spread),
-projectileType(_projectileType)
+    player(_player),
+    Cooldown(_weaponCooldown),
+    reloadTime(_reloadTime),
+    currentReloadTime(0.f),
+    clipSize(_clipSize),
+    currentClipSize(clipSize),
+    damage(_damage),
+    spread(_spread),
+    projectileType(_projectileType)
 {
 
 }

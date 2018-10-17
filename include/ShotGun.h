@@ -4,10 +4,10 @@
 #include "Weapon.h"
 class Shotgun: public Weapon
 {
-    public:
-        Shotgun(sf::Sprite* _player);
-        virtual ~Shotgun();
-        bool addProjectile();
+public:
+    Shotgun(sf::Sprite* _player);
+    virtual ~Shotgun();
+    bool addProjectile();
 };
 
 #endif //SHOTGUN

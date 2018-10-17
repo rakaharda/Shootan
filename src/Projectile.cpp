@@ -1,8 +1,8 @@
 #include "Projectile.h"
 
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread) : 
-damage(_damage),
-speed(1000.f)
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread) :
+    damage(_damage),
+    speed(1000.f)
 {
     m_sprite.setTexture(vecTextures[0]);
     m_sprite.setPosition(_sprite->getPosition());
@@ -10,8 +10,8 @@ speed(1000.f)
 }
 
 Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, float _speed) :
-damage(_damage),
-speed(_speed)
+    damage(_damage),
+    speed(_speed)
 {
     m_sprite.setTexture(vecTextures[0]);
     m_sprite.setPosition(_sprite->getPosition());

@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include <iostream>
 
 Menu::Menu()
 {
@@ -10,38 +11,30 @@ Menu::~Menu()
     //dor
 }
 
-void Menu::processEvents()
+void Menu::processEvents(sf::Event event)
 {
-    sf::Event event;
-    while(window.pollEvent(event))
+    switch(event.type)
     {
-        switch(event.type)
+    case sf::Event::Closed:
+        window.close();
+        return;
+    case sf::Event::KeyPressed:
+        switch(event.key.code)
         {
-        case sf::Event::Closed:
-            window.close();
-           // isPlaying = false;
-            return;
-        case sf::Event::KeyPressed:
-            switch(event.key.code)
-            {
-            case sf::Keyboard::Escape:
-                window.clear();
-//                isPlaying = true;
-                return;
-            default:
-                break;
-            }
-        case sf::Event::MouseButtonPressed:
-            switch(event.mouseButton.button)
-            {
-                case sf::Mouse::Left:
-                    searchButton();
-                default:
-                    break;
-            }
         default:
             break;
         }
+    case sf::Event::MouseButtonPressed:
+        switch(event.mouseButton.button)
+        {
+        case sf::Mouse::Left:
+            searchButton();
+            break;
+        default:
+            break;
+        }
+    default:
+        break;
     }
 }
 
@@ -49,9 +42,10 @@ void Menu::searchButton()
 {
     for(unsigned int i = 0; i < buttons.size(); i++)
     {
-        if(buttons[i]->m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y))
+        if(buttons[i]->m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition().x - buttons[i]->m_sprite.getTexture()->getSize().x/4,
+                                                           sf::Mouse::getPosition().y - buttons[i]->m_sprite.getTexture()->getSize().y/2))
         {
-            startProcess(buttons[i]->getId());
+            startProcess(buttons[i]->getID());
         }
     }
 }
@@ -69,6 +63,7 @@ void Menu::startProcess(int _id)
 
 void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    target.draw(backGroundSprite,states);
     for(unsigned int i = 0; i < buttons.size(); i++)
-    target.draw(*buttons[i],states);
+        target.draw(*buttons[i],states);
 }

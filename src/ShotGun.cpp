@@ -18,7 +18,7 @@ bool Shotgun::addProjectile()
     {
         currentClipSize--;
         currentCooldown = weaponCooldown;
-        for(int i=0;i<5;i++)
+        for(int i=0; i<5; i++)
         {
             vecProjectiles.push_back(new Projectile(player, damage, spread+((-2+i)*10)));
         }

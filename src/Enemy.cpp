@@ -1,8 +1,8 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) : 
-HealthPoints(_healthPoints),
-MeleeAttack(_meleeDamage)
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) :
+    HealthPoints(_healthPoints),
+    MeleeAttack(_meleeDamage)
 {
     texture.loadFromFile("./data/enemies/sprite.png");
     m_sprite.setTexture(texture);
@@ -10,9 +10,9 @@ MeleeAttack(_meleeDamage)
     m_sprite.setPosition(_xPos, _yPos);
     player = _sprite;
     angle = 180 / M_PI * atan2(
-                        player->getPosition().y - m_sprite.getPosition().y,
-                        player->getPosition().x - m_sprite.getPosition().x
-                        );
+                player->getPosition().y - m_sprite.getPosition().y,
+                player->getPosition().x - m_sprite.getPosition().x
+            );
     m_sprite.setRotation(angle);
     currentAngle = angle;
     rotationRate = 90.f;
@@ -27,7 +27,7 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    
+
     calculateRotation();
     m_sprite.setRotation(currentAngle);
     if(checkDistance())
@@ -43,38 +43,41 @@ void Enemy::move()
 void Enemy::calculateRotation()
 {
     angle = 180 / M_PI * atan2(
-                        player->getPosition().y - m_sprite.getPosition().y,
-                        player->getPosition().x - m_sprite.getPosition().x
-                        );
-    if(angle<0) angle += 360 ;
-    if(currentAngle<0) currentAngle += 360;
+                player->getPosition().y - m_sprite.getPosition().y,
+                player->getPosition().x - m_sprite.getPosition().x
+            );
+    if(angle<0)
+        angle += 360 ;
+    if(currentAngle<0)
+        currentAngle += 360;
     if(currentAngle != angle)
+    {
+        if(abs(angle-currentAngle) < frameTime * rotationRate)
+            currentAngle = angle;
+        else
         {
-            if(abs(angle-currentAngle) < frameTime * rotationRate)
-                currentAngle = angle;
-            else
+            if(angle<currentAngle)
             {
-                if(angle<currentAngle)
+                if ((360+angle-currentAngle)<(currentAngle-angle))
                 {
-                    if ((360+angle-currentAngle)<(currentAngle-angle))
-                    {
-                        currentAngle += frameTime * rotationRate;
-                    }
-                    else
-                        currentAngle -= frameTime * rotationRate;
+                    currentAngle += frameTime * rotationRate;
                 }
-                else //(angle>=currentAngle)
-                {
-                    if ((360-angle+currentAngle)<(angle-currentAngle))
-                    {
-                        currentAngle -= frameTime * rotationRate;
-                    }
-                    else
-                        currentAngle += frameTime * rotationRate;
-                }
+                else
+                    currentAngle -= frameTime * rotationRate;
             }
-        if(currentAngle>360.f) currentAngle -= 360.f;
+            else //(angle>=currentAngle)
+            {
+                if ((360-angle+currentAngle)<(angle-currentAngle))
+                {
+                    currentAngle -= frameTime * rotationRate;
+                }
+                else
+                    currentAngle += frameTime * rotationRate;
+            }
         }
+        if(currentAngle>360.f)
+            currentAngle -= 360.f;
+    }
 }
 
 bool Enemy::checkDistance()
