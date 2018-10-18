@@ -14,7 +14,7 @@ class Weapon : public Cooldown
         Weapon(sf::Sprite* _player);
         Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType);
         virtual ~Weapon();
-        void update();
+        virtual void update();
         virtual bool addProjectile();
         float getReloadTime();
         float getCurrentReloadTime();
@@ -28,6 +28,8 @@ class Weapon : public Cooldown
         int currentClipSize;
         float damage;
         int spread;
+        int skills;
+        float projectileSpeed;
         Projectile::ProjectileType projectileType;
     private:
 };

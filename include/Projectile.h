@@ -16,15 +16,15 @@ class Projectile : public GameObject
             ptSprite,
             ptLine
         };
-        Projectile(const sf::Sprite* _sprite, float _damage, int _spread);
-        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, float _speed);
+        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, float _speed);
+        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, int _numberShot, float _speed);
         virtual ~Projectile();
         void update();
         float getDamage();
     private:
+        float speed;
         float angle;
         float damage;
-        float speed;
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

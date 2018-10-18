@@ -6,6 +6,8 @@
 #include "Weapon.h"
 #include "Autorifle.h"
 #include "Shotgun.h"
+#include "SniperRifle.h"
+#include "Gun.h"
 #include "HealthPoints.h"
 
 using namespace std;

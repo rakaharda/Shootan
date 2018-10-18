@@ -10,6 +10,8 @@
 #include "Projectile.h"
 #include "Autorifle.h"
 #include "Shotgun.h"
+#include "Gun.h"
+#include "SniperRifle.h"
 #include "Collision.h"
 #include "MonsterNest.h"
 #include <sstream>

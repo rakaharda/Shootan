@@ -9,7 +9,9 @@ clipSize(12),
 currentClipSize(clipSize),
 damage(5.f),
 spread(6),
-projectileType(Projectile::ptSprite)
+projectileType(Projectile::ptSprite),
+skills(0),
+projectileSpeed(1.f)
 {
     //ctor
 }
@@ -23,7 +25,9 @@ clipSize(_clipSize),
 currentClipSize(clipSize),
 damage(_damage),
 spread(_spread),
-projectileType(_projectileType)
+projectileType(_projectileType),
+skills(0),
+projectileSpeed(1.f)
 {
 
 }
@@ -46,7 +50,7 @@ bool Weapon::addProjectile()
     {
         currentClipSize--;
         currentCooldown = weaponCooldown;
-        vecProjectiles.push_back(new Projectile(player, damage, spread));
+        vecProjectiles.push_back(new Projectile(player, damage, spread, skills,projectileSpeed));
         return true;
     }
     if(currentClipSize <= 0)
