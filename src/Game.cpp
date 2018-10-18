@@ -176,13 +176,11 @@ void Game::loadResources()
     vecTextures.push_back(sf::Texture());
     vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");
     vecTextures.push_back(sf::Texture());
-<<<<<<< HEAD
     vecTextures[1].loadFromFile("./data/enemies/default_enemy.png");
     vecTextures.push_back(sf::Texture());
     vecTextures[2].loadFromFile("./data/enemies/default_monster_nest.png");
-=======
-    vecTextures[1].loadFromFile("./data/projectiles/projectile2.png");
->>>>>>> 7154a140fb02163343c18077b38223f6bc839090
+    vecTextures.push_back(sf::Texture());
+    vecTextures[3].loadFromFile("./data/projectiles/projectile2.png");
 }
 
 void Game::loadSettings()
