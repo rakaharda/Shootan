@@ -12,6 +12,7 @@ class GameObject : public sf::Drawable
         virtual void update() = 0;
         sf::Sprite m_sprite;
         ObjectProperties m_objectProperties;
+        bool toDelete;
     protected:
 
 };

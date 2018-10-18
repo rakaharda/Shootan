@@ -1,9 +1,9 @@
 #include "Cooldown.h"
 
 Cooldown::Cooldown(float _weaponCooldown) :
-weaponCooldown(_weaponCooldown)
+weaponCooldown(_weaponCooldown), currentCooldown(0.f)
 {
-    //ctor
+    
 }
 
 float Cooldown::getCooldown()

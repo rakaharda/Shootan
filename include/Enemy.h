@@ -6,12 +6,13 @@
 #include <iostream>
 #include "HealthPoints.h"
 #include "MeleeAttack.h"
+
 using namespace std;
 
 class Enemy : public GameObject, public HealthPoints, public MeleeAttack
 {
     public:
-        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
+        Enemy (sf::Texture _texture, int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
         virtual ~Enemy();
         virtual void update();
     private:
@@ -27,6 +28,7 @@ class Enemy : public GameObject, public HealthPoints, public MeleeAttack
         void move();
         void calculateRotation();
         bool checkDistance();
+        void checkHealth();
 };
 
 extern sf::RenderWindow window;

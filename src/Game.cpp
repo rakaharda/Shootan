@@ -11,7 +11,6 @@ Game::Game() : isPlaying(true)
     else
         window.setVerticalSyncEnabled(false);
     loadResources();
-    font.loadFromFile("./data/fonts/arial.ttf");
     info.setFont(font);
     info.setFillColor(sf::Color::Black);
 }
@@ -26,9 +25,9 @@ void Game::play()
 {
     srand(clock());
     player = new Player;
-    //Weapon* autorifle = new Autorifle;
     player->setWeapon(new Autorifle(&player->m_sprite));
-    vecEnemies.push_back(new Monster (500,500,&player->m_sprite, 100.f, 20.f));
+    vecEnemies.push_back(new Monster(500,500,&player->m_sprite, 100.f, 20.f));
+    vecEnemies.push_back(new MonsterNest(200,200,&player->m_sprite, 300.f));
     gameClock = new sf::Clock;
     while (isPlaying)
     {
@@ -126,8 +125,11 @@ void Game::checkEnemies()
 {
     for(unsigned int i=0; i < vecEnemies.size(); i++)
     {
-        if(vecEnemies[i]->getCurrentHealthPoints() == 0.f)
+        if(vecEnemies[i]->toDelete)
+        {
             vecEnemies.erase(vecEnemies.begin() + i);
+            cout<<i<<" deleted"<<endl;
+        }
     }
     for(unsigned int i=0; i < vecEnemies.size(); i++)
     {
@@ -170,8 +172,13 @@ void Game::draw()
 
 void Game::loadResources()
 {
+    font.loadFromFile("./data/fonts/arial.ttf");
     vecTextures.push_back(sf::Texture());
     vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[1].loadFromFile("./data/enemies/default_enemy.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[2].loadFromFile("./data/enemies/default_monster_nest.png");
 }
 
 void Game::loadSettings()

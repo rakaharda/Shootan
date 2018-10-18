@@ -11,6 +11,7 @@
 #include "Autorifle.h"
 #include "Shotgun.h"
 #include "Collision.h"
+#include "MonsterNest.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>

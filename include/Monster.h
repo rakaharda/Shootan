@@ -14,4 +14,6 @@ class Monster : public Enemy
     private:
 };
 
+extern vector <sf::Texture> vecTextures;
+
 #endif // MONSTER_H

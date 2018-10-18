@@ -1,10 +1,10 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) : 
+Enemy::Enemy(sf::Texture _texture, int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) : 
 HealthPoints(_healthPoints),
 MeleeAttack(_meleeDamage)
 {
-    texture.loadFromFile("./data/enemies/sprite.png");
+    texture = _texture;
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(_xPos, _yPos);
@@ -18,6 +18,7 @@ MeleeAttack(_meleeDamage)
     rotationRate = 90.f;
     distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
     speed = 50.f;
+    toDelete = false;
 }
 
 Enemy::~Enemy()
@@ -27,7 +28,7 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    
+    checkHealth();
     calculateRotation();
     m_sprite.setRotation(currentAngle);
     if(checkDistance())
@@ -85,6 +86,11 @@ bool Enemy::checkDistance()
     return false;
 }
 
+void Enemy::checkHealth()
+{
+    if(currentHealthPoints == 0.f) 
+        toDelete = true;
+}
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
