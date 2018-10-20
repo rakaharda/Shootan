@@ -1,6 +1,6 @@
 #include "Shotgun.h"
 
-Shotgun::Shotgun(sf::Sprite* _player): Weapon(_player)
+Shotgun::Shotgun(sf::Sprite* _player, bool _person): Weapon(_player, _person)
 {
     weaponCooldown=1.0f;
     clipSize=5;
@@ -33,7 +33,7 @@ bool Shotgun::addProjectile()
         currentCooldown = weaponCooldown;
         for(int i=0;i<4;i++)
         {
-            vecProjectiles.push_back(new Projectile(player, damage, spread, skills, i, projectileSpeed));
+            vecProjectiles.push_back(new Projectile(player, damage, spread, skills, i, projectileSpeed, person));
         }
         return true;
     }

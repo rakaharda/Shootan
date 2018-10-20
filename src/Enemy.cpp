@@ -1,9 +1,9 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage, float _distanceAttack) :
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) :
 HealthPoints(_healthPoints),
 MeleeAttack(_meleeDamage),
-distanceAttack(_distanceAttack)
+distanceAttack(0.f)
 {
     texture.loadFromFile("./data/enemies/sprite.png");
     m_sprite.setTexture(texture);

@@ -27,8 +27,9 @@ void Game::play()
     srand(clock());
     player = new Player;
     //Weapon* autorifle = new Autorifle;
-    player->setWeapon(new SniperRifle(&player->m_sprite));
-    vecEnemies.push_back(new Monster (500,500,&player->m_sprite, 100.f, 20.f));
+    player->setWeapon(new SniperRifle(&player->m_sprite,1));
+    vecEnemies.push_back(new Soldier (500,500,&player->m_sprite, 100.f));
+    vecEnemies[vecEnemies.size()-1]->setWeapon(new SniperRifle(&(vecEnemies[vecEnemies.size()-1])->m_sprite));
     gameClock = new sf::Clock;
     while (isPlaying)
     {
@@ -115,10 +116,17 @@ void Game::checkProjectiles()
         for(unsigned int j=0; j < vecEnemies.size(); j++)
         {
             if(checkCollision(vecProjectiles[i], vecEnemies[j]))
-                {
-                    vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                    vecProjectiles.erase(vecProjectiles.begin() + i);
-                }
+                if(vecProjectiles[i]->person)
+                    {
+                        vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
+                        vecProjectiles.erase(vecProjectiles.begin() + i);
+                    }
+            if(checkCollision(vecProjectiles[i], player))
+                if(!(vecProjectiles[i]->person))
+                    {
+                        player->takeDamage(vecProjectiles[i]->getDamage());
+                        vecProjectiles.erase(vecProjectiles.begin() + i);
+                    }
         }
 }
 
@@ -152,7 +160,7 @@ void Game::update()
 {
     player->update();
     for(unsigned int i=0; i<vecEnemies.size(); i++)
-        vecEnemies[i]->update();
+            vecEnemies[i]->update();
     for(unsigned int i=0; i<vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
 }

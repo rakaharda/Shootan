@@ -6,17 +6,20 @@
 #include <iostream>
 #include "HealthPoints.h"
 #include "MeleeAttack.h"
+#include "Weapon.h"
 using namespace std;
 
 class Enemy : public GameObject, public HealthPoints, public MeleeAttack
 {
     public:
-        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage, float _distanceAttack=0.f);
+        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
         virtual ~Enemy();
         virtual void update();
+        virtual void setWeapon(Weapon* _weapon)=0;
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     protected:
+        Weapon * weapon;
         sf::Texture texture;
         const sf::Sprite* player;
         float speed;
@@ -32,5 +35,6 @@ class Enemy : public GameObject, public HealthPoints, public MeleeAttack
 
 extern sf::RenderWindow window;
 extern float frameTime;
-
+extern vector <sf::Texture> vecTextures;
+extern vector <Projectile*> vecProjectiles;
 #endif // ENEMY_H

@@ -5,3 +5,13 @@ Enemy(_xPos, _yPos, _sprite, _healthPoints, _meleeDamage)
 {
     //ctor
 }
+
+Monster::~Monster()
+{
+
+}
+
+void Monster::setWeapon(Weapon * _weapon)
+{
+
+}

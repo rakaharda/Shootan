@@ -11,8 +11,8 @@ using namespace std;
 class Weapon : public Cooldown
 {
     public:
-        Weapon(sf::Sprite* _player);
-        Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType);
+        Weapon(sf::Sprite* _player, bool _person=0);
+        Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, Projectile::ProjectileType _projectileType, bool _person=0);
         virtual ~Weapon();
         virtual void update();
         virtual bool addProjectile();
@@ -20,6 +20,7 @@ class Weapon : public Cooldown
         float getCurrentReloadTime();
         int getClipSize();
         int getCurrentClipSize();
+        float getDistanceAttack();
     protected:
         const sf::Sprite* player;
         float reloadTime;
@@ -30,6 +31,8 @@ class Weapon : public Cooldown
         int spread;
         int skills;
         float projectileSpeed;
+        float wDistanceAttack;
+        bool person;
         Projectile::ProjectileType projectileType;
     private:
 };

@@ -1,9 +1,9 @@
 #include "MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(float _damage) : 
+MeleeAttack::MeleeAttack(float _damage) :
 damage(_damage), Cooldown(1.f)
 {
-    
+
 }
 
 float MeleeAttack::getDamage()

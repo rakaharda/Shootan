@@ -1,8 +1,9 @@
 #include "Projectile.h"
 
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, float _speed) :
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, float _speed, bool _person) :
 damage(_damage),
-speed(_speed)
+speed(_speed),
+person(_person)
 {
     speed=_speed;
     srand(time(NULL));
@@ -10,9 +11,10 @@ speed(_speed)
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
 }
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, int _numberShot, float _speed) :
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, int _numberShot, float _speed, bool _person) :
 damage(_damage),
-speed(_speed)
+speed(_speed),
+person(_person)
 {
     speed=_speed;
     srand(time(NULL));
