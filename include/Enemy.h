@@ -11,7 +11,7 @@ using namespace std;
 class Enemy : public GameObject, public HealthPoints, public MeleeAttack
 {
     public:
-        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
+        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage, float _distanceAttack=0.f);
         virtual ~Enemy();
         virtual void update();
     private:
@@ -24,6 +24,7 @@ class Enemy : public GameObject, public HealthPoints, public MeleeAttack
         float currentAngle;
         float rotationRate;
         float distance;
+        float distanceAttack;
         void move();
         void calculateRotation();
         bool checkDistance();

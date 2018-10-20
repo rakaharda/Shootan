@@ -1,8 +1,9 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) : 
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage, float _distanceAttack) :
 HealthPoints(_healthPoints),
-MeleeAttack(_meleeDamage)
+MeleeAttack(_meleeDamage),
+distanceAttack(_distanceAttack)
 {
     texture.loadFromFile("./data/enemies/sprite.png");
     m_sprite.setTexture(texture);
@@ -27,7 +28,7 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    
+
     calculateRotation();
     m_sprite.setRotation(currentAngle);
     if(checkDistance())
@@ -80,7 +81,7 @@ void Enemy::calculateRotation()
 bool Enemy::checkDistance()
 {
     distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
-    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2)
+    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2+distanceAttack)
         return true;
     return false;
 }
