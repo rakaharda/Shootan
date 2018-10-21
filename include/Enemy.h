@@ -9,13 +9,14 @@
 #include "Weapon.h"
 using namespace std;
 
-class Enemy : public GameObject, public HealthPoints, public MeleeAttack
+class Enemy : public GameObject, public HealthPoints
 {
     public:
-        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage);
+        Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints);
         virtual ~Enemy();
         virtual void update();
-        virtual void setWeapon(Weapon* _weapon)=0;
+        virtual void setWeapon(Weapon* _weapon);
+        float attack();
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     protected:

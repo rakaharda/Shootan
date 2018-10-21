@@ -6,8 +6,6 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Monster.h"
-#include "Soldier.h"
 #include "Projectile.h"
 #include "Autorifle.h"
 #include "Shotgun.h"

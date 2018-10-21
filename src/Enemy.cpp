@@ -1,8 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) :
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) :
 HealthPoints(_healthPoints),
-MeleeAttack(_meleeDamage),
 distanceAttack(0.f)
 {
     texture.loadFromFile("./data/enemies/sprite.png");
@@ -33,7 +32,8 @@ void Enemy::update()
     m_sprite.setRotation(currentAngle);
     if(checkDistance())
         move();
-    reduceCooldown();
+    weapon->addProjectile();
+    weapon->update();
 }
 
 void Enemy::move()
@@ -90,4 +90,14 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
+void Enemy::setWeapon(Weapon* _weapon)
+{
+    delete(weapon);
+    weapon = _weapon;
+    distanceAttack=weapon->getDistanceAttack();
+}
 
+float Enemy::attack()
+{
+    return weapon->attack();
+}

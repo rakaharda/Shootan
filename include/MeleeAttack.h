@@ -1,18 +1,18 @@
 #ifndef MELEEATTACK_H
 #define MELEEATTACK_H
 
-#include "Cooldown.h"
+#include "Weapon.h"
 
-class MeleeAttack : public Cooldown
+class MeleeAttack : public Weapon
 {
     public:
-        MeleeAttack(float _damage);
+        MeleeAttack(sf::Sprite* _player, bool _person=0);
         virtual ~MeleeAttack(){};
         float getDamage();
         void setDamage(float _damage);
         float attack();
+        bool addProjectile(){};
     protected:
-        float damage;
     private:
 };
 

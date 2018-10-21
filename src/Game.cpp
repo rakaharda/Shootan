@@ -28,8 +28,8 @@ void Game::play()
     player = new Player;
     //Weapon* autorifle = new Autorifle;
     player->setWeapon(new SniperRifle(&player->m_sprite,1));
-    vecEnemies.push_back(new Soldier (500,500,&player->m_sprite, 100.f));
-    vecEnemies[vecEnemies.size()-1]->setWeapon(new SniperRifle(&(vecEnemies[vecEnemies.size()-1])->m_sprite));
+    vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
+    vecEnemies[vecEnemies.size()-1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size()-1])->m_sprite));
     gameClock = new sf::Clock;
     while (isPlaying)
     {

@@ -21,6 +21,9 @@ class Weapon : public Cooldown
         int getClipSize();
         int getCurrentClipSize();
         float getDistanceAttack();
+        virtual float attack(){};
+        void getDamage(){};
+        void setDamage(float _damage){};
     protected:
         const sf::Sprite* player;
         float reloadTime;
