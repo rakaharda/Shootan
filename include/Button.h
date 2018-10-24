@@ -12,12 +12,15 @@ public:
     Button(string _name, string _path, float _xPos, float _yPos, int _id);
     virtual ~Button();
     void setID(int _id);
+    void changeButtonName(string _name);
+    void changeButtonSprite(string _path);
     int getID();
-private:
+protected:
     sf::Texture texture;
     sf::Text text;
     sf::Font font;
     int id;
+private:
     virtual void update();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

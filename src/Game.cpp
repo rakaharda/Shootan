@@ -72,7 +72,7 @@ void Game::processEvents()
             {
             case sf::Keyboard::Escape:
                 if(!openMainMenu)
-                    menu = new MainMenu(&openMainMenu);
+                    menu = new MainMenu(&openMainMenu,&fullscreen,&verticalSync);
                 else {
                     openMainMenu = false;
                 }
