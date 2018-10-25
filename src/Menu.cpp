@@ -41,8 +41,8 @@ void Menu::searchButton()
 {
     for(unsigned int i = 0; i < buttons.size(); i++)
     {
-        if(buttons[i]->m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition().x - buttons[i]->m_sprite.getTexture()->getSize().x/4,
-                                                           sf::Mouse::getPosition().y - buttons[i]->m_sprite.getTexture()->getSize().y/2))
+        if(buttons[i]->m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x,
+                                                           sf::Mouse::getPosition(window).y))
         {
             startProcess(buttons[i]->getID());
         }

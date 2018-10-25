@@ -60,7 +60,7 @@ void MainMenu::startProcess(int _id)
             window.create(sf::VideoMode(1280, 720), "Shootan");
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
-            buttons[1]->changeButtonName("In Window");
+            buttons[1]->changeButtonName("Windowed");
             *fullscreen = false;
         }
         else
@@ -69,7 +69,7 @@ void MainMenu::startProcess(int _id)
             window.create(sf::VideoMode(1280, 720), "Shootan", sf::Style::Fullscreen);
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
-            buttons[1]->changeButtonName("Full Screen");
+            buttons[1]->changeButtonName("Fullscreen");
             *fullscreen = true;
         }
         break;
@@ -103,9 +103,9 @@ void MainMenu::createSettingsMenu()
     isSettings = true;
     str[0] = "Vertical Sync";
     if (*fullscreen)
-        str[1] = "Full Screen";
+        str[1] = "Fullscreen";
     else
-        str[1] = "In Window";
+        str[1] = "Windowed";
     if (window.getSize().x == 1280)
         str[2] = "720";
     if (window.getSize().x == 1920)
