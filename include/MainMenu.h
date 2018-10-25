@@ -2,7 +2,7 @@
 #define MAINMENU_H
 
 #include "Menu.h"
-#include "CheckMark.h"
+#include "CheckBox.h"
 
 class MainMenu: public Menu
 {
@@ -15,7 +15,7 @@ class MainMenu: public Menu
         void startProcess(int _id);
         void createSettingsMenu();
         void backToMainMenu();
-        bool isSettings; 
+        bool isSettings;
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };

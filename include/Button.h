@@ -9,12 +9,13 @@ using namespace std;
 class Button: public GameObject
 {
 public:
-    Button(string _name, string _path, float _xPos, float _yPos, int _id);
+    Button(string _name, string _path, float _size, float _xPos, float _yPos, int _id);
     virtual ~Button();
     void setID(int _id);
     void changeButtonName(string _name);
     void changeButtonSprite(string _path);
     int getID();
+    bool isSelect;
 protected:
     sf::Texture texture;
     sf::Text text;

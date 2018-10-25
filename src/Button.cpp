@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(string _name, string _path, float _xPos, float _yPos, int _id = 0)
+Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, int _id = 0)
 {
     id = _id;
     texture.loadFromFile(_path);
@@ -9,6 +9,7 @@ Button::Button(string _name, string _path, float _xPos, float _yPos, int _id = 0
     text.setString(_name);
     font.loadFromFile("./data/fonts/arial.ttf");
     text.setFont(font);
+    text.setCharacterSize(_size);
     text.setPosition(_xPos - _name.size()*14/2,
                      _yPos - 20);
 }

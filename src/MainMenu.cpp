@@ -11,7 +11,7 @@ MainMenu::MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync)
     str[2] = "Exit";
     str[3] = "./data/interface/button.png";
     for(int i = 0; i < 3; i++)
-        buttons.push_back(new Button(str[i],str[3],window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150,i));
+        buttons.push_back(new Button(str[i],str[3],30.f,window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150,i));
     for(int i = 0; i < 4; i++)
         str[i].erase();
     backGroundTexture.loadFromFile("./data/interface/background.png");
@@ -44,15 +44,13 @@ void MainMenu::startProcess(int _id)
     case 3:
         if (*verticalSync)
         {
-            buttons[1]->changeButtonName("Vertical Sync - Off");
+            buttons[0]->isSelect = *verticalSync =  false;
             window.setVerticalSyncEnabled(false);
-            *verticalSync = false;
         }
         else
         {
-            buttons[1]->changeButtonName("Vertical Sync - On");
+            buttons[0]->isSelect = *verticalSync = true;
             window.setVerticalSyncEnabled(true);
-            *verticalSync = true;
         }
         break;
     case 4:
@@ -62,7 +60,7 @@ void MainMenu::startProcess(int _id)
             window.create(sf::VideoMode(1280, 720), "Shootan");
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
-            buttons[0]->changeButtonName("in window");
+            buttons[1]->changeButtonName("In Window");
             *fullscreen = false;
         }
         else
@@ -71,7 +69,7 @@ void MainMenu::startProcess(int _id)
             window.create(sf::VideoMode(1280, 720), "Shootan", sf::Style::Fullscreen);
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
-            buttons[0]->changeButtonName("fullscreen");
+            buttons[1]->changeButtonName("Full Screen");
             *fullscreen = true;
         }
         break;
@@ -115,11 +113,9 @@ void MainMenu::createSettingsMenu()
     str[3] = "Back";
     str[4] = "./data/interface/button4.png";
     buttons.clear();
-    //CheckMark  *ch;
-    //ch = new CheckMark(str[0],1,window.getSize().x / 2,window.getSize().y / 2 - 176,3);
-    buttons.push_back(new CheckMark(str[0],1,window.getSize().x / 2,window.getSize().y / 2 - 176,3));
+    buttons.push_back(new CheckBox(str[0],28.f,window.getSize().x / 2,window.getSize().y / 2 - 176,3,verticalSync));
     for(int i = 1; i < 4; i++)
-        buttons.push_back(new Button(str[i],str[4],window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116,i+3));
+        buttons.push_back(new Button(str[i],str[4],30.f,window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116,i+3));
     for(int i = 0; i < 5; i++)
     str[i].erase();
 }
@@ -134,7 +130,7 @@ void MainMenu::backToMainMenu()
     str[3] = "./data/interface/button.png";
     buttons.clear();
     for(int i = 0; i < 3; i++)
-        buttons.push_back(new Button(str[i],str[3],window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150,i));
+        buttons.push_back(new Button(str[i],str[3],30.f,window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150,i));
     for(int i = 0; i < 4; i++)
         str[i].erase();
 }
@@ -142,5 +138,5 @@ void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(backGroundSprite,states);
     for(unsigned int i = 0; i < buttons.size(); i++)
-        target.draw(*buttons[i]);
+        target.draw(*buttons[i],states);
 }
