@@ -1,10 +1,10 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Texture _texture, int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) : 
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) :
 HealthPoints(_healthPoints),
-MeleeAttack(_meleeDamage)
+distanceAttack(0.f),
+texture(vecTextures[1])
 {
-    texture = _texture;
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(_xPos, _yPos);
@@ -19,6 +19,7 @@ MeleeAttack(_meleeDamage)
     distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
     speed = 50.f;
     toDelete = false;
+    weapon = nullptr;
 }
 
 Enemy::~Enemy()
@@ -28,12 +29,12 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    checkHealth();
     calculateRotation();
     m_sprite.setRotation(currentAngle);
     if(checkDistance())
         move();
-    reduceCooldown();
+    weapon->addProjectile();
+    weapon->update();
 }
 
 void Enemy::move()
@@ -84,7 +85,7 @@ void Enemy::calculateRotation()
 bool Enemy::checkDistance()
 {
     distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle/180 * M_PI);
-    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2)
+    if(abs(distance) > m_sprite.getTexture()->getSize().x/2 + player->getTexture()->getSize().x/2+distanceAttack)
         return true;
     return false;
 }
@@ -98,4 +99,15 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
+void Enemy::setWeapon(Weapon* _weapon)
+{
+    if(weapon != nullptr)
+        delete(weapon);
+    weapon = _weapon;
+    distanceAttack=weapon->getDistanceAttack();
+}
 
+float Enemy::attack()
+{
+    return weapon->attack();
+}

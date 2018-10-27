@@ -16,11 +16,12 @@ class Projectile : public GameObject
             ptSprite,
             ptLine
         };
-        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _iTexture, float _speed);
-        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _iTexture, int _numberShot, float _speed);
+        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, float _speed, bool _person);
+        Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, int _numberShot, float _speed, bool _person);
         virtual ~Projectile();
         void update();
         float getDamage();
+        bool person;
     private:
         float speed;
         float angle;

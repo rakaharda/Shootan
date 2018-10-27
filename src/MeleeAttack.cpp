@@ -1,9 +1,11 @@
 #include "MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(float _damage) :
-    damage(_damage), Cooldown(1.f)
+MeleeAttack::MeleeAttack(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
 {
-
+    damage=20.f;
+    currentCooldown=1.f;
+    weaponCooldown=currentCooldown;
+    wDistanceAttack=0;
 }
 
 float MeleeAttack::getDamage()
@@ -18,7 +20,7 @@ void MeleeAttack::setDamage(float _damage)
 
 float MeleeAttack::attack()
 {
-    if(currentCooldown == 0.f)
+    if(currentCooldown <= 0.f)
     {
         currentCooldown = weaponCooldown;
         return damage;

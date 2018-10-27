@@ -1,6 +1,6 @@
 #include "Weapon.h"
 
-Weapon::Weapon(sf::Sprite* _player) :
+Weapon::Weapon(sf::Sprite* _player, bool _person) :
 player(_player),
 Cooldown(0.4f),
 reloadTime(3.f),
@@ -11,12 +11,14 @@ damage(5.f),
 spread(6),
 projectileType(Projectile::ptSprite),
 skills(0),
-projectileSpeed(1.f)
+projectileSpeed(1.f),
+wDistanceAttack(40.f),
+person(_person)
 {
     //ctor
 }
 
-Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread, Projectile::ProjectileType _projectileType) :
+Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread, Projectile::ProjectileType _projectileType, bool _person) :
 player(_player),
 Cooldown(_weaponCooldown),
 reloadTime(_reloadTime),
@@ -27,7 +29,9 @@ damage(_damage),
 spread(_spread),
 projectileType(_projectileType),
 skills(0),
-projectileSpeed(1.f)
+projectileSpeed(1.f),
+wDistanceAttack(40.f),
+person(_person)
 {
 
 }
@@ -50,7 +54,7 @@ bool Weapon::addProjectile()
     {
         currentClipSize--;
         currentCooldown = weaponCooldown;
-        vecProjectiles.push_back(new Projectile(player, damage, spread, skills,projectileSpeed));
+        vecProjectiles.push_back(new Projectile(player, damage, spread, skills,projectileSpeed, person));
         return true;
     }
     if(currentClipSize <= 0)
@@ -77,4 +81,8 @@ int Weapon::getClipSize()
 int Weapon::getCurrentClipSize()
 {
     return currentClipSize;
+}
+float Weapon::getDistanceAttack()
+{
+    return wDistanceAttack;
 }
