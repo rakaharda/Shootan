@@ -1,5 +1,4 @@
 #include "Enemy.h"
-
 Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, float _meleeDamage) :
     HealthPoints(_healthPoints),
     MeleeAttack(_meleeDamage)

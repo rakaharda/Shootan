@@ -74,12 +74,13 @@ void MainMenu::startProcess(int _id)
         }
         break;
     case 5:
-        /*if(window.getSize().x == 1280)
+        if(window.getSize().x == 1280)
         {
             window.close();
             window.create(sf::VideoMode(1920, 1080), "Shootan");
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
+            buttons[2]->changeButtonName("1080");
         }
         else
         {
@@ -87,7 +88,8 @@ void MainMenu::startProcess(int _id)
             window.create(sf::VideoMode(1280, 720), "Shootan");
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
-        } */
+            buttons[2]->changeButtonName("720");
+        }
         break;
     case 6:
         backToMainMenu();

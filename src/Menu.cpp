@@ -45,6 +45,7 @@ void Menu::searchButton()
                                                            sf::Mouse::getPosition(window).y))
         {
             startProcess(buttons[i]->getID());
+            return;
         }
     }
 }

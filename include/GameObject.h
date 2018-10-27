@@ -3,6 +3,7 @@
 
 #include "ObjectProperties.h"
 #include <SFML\Graphics.hpp>
+#define M_PI 3.141592
 
 class GameObject : public sf::Drawable
 {
