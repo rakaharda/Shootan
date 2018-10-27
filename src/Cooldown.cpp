@@ -19,5 +19,6 @@ void Cooldown::reduceCooldown()
 {
     if(currentCooldown < frameTime)
         currentCooldown = 0.f;
-    else currentCooldown -= frameTime;
+    else
+        currentCooldown -= frameTime;
 }

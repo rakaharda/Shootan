@@ -6,6 +6,8 @@
 #include <iostream>
 #include "HealthPoints.h"
 #include "MeleeAttack.h"
+#include <cmath>
+
 
 using namespace std;
 

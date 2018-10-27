@@ -18,9 +18,10 @@ Player::~Player()
 void Player::update()
 {
     m_sprite.setRotation(-180 / M_PI * atan2(
-                        m_sprite.getPosition().y-sf::Mouse::getPosition(window).y,
-                        sf::Mouse::getPosition(window).x-m_sprite.getPosition().x
-                        ));
+
+                             m_sprite.getPosition().y-sf::Mouse::getPosition(window).y,
+                             sf::Mouse::getPosition(window).x-m_sprite.getPosition().x
+                         ));
     move();
     weapon->update();
 }
@@ -29,17 +30,17 @@ void Player::processEvents(sf::Event event)
 {
     switch(event.type)
     {
-        case sf::Event::MouseButtonPressed:
-            switch(event.mouseButton.button)
-            {
-                case sf::Mouse::Left:
-                    weapon->addProjectile();
-                default:
-                    break;
-            }
-            break;
+    case sf::Event::MouseButtonPressed:
+        switch(event.mouseButton.button)
+        {
+        case sf::Mouse::Left:
+            weapon->addProjectile();
         default:
             break;
+        }
+        break;
+    default:
+        break;
     }
 }
 

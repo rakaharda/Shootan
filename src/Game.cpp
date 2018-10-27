@@ -1,7 +1,10 @@
 #include "Game.h"
+#include <iostream>
 Game::Game() : isPlaying(true)
 {
     loadSettings();
+    //openMainMenu = new bool;
+    openMainMenu = false;
     if(fullscreen)
         window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
     else
@@ -52,60 +55,67 @@ void Game::showStats()
     ss<<endl<<player->getCurrentHealthPoints();
     info.setString(ss.str());
 }
-void Game::processEvents(){
+void Game::processEvents()
+{
     sf::Event event;
     while(window.pollEvent(event))
+    {
+        switch(event.type)
         {
-            switch(event.type)
-            {
         case sf::Event::Closed:
-                window.close();
-                isPlaying = false;
-                return;
-            case sf::Event::KeyPressed:
-                switch(event.key.code)
+            window.close();
+            isPlaying = false;
+            return;
+        case sf::Event::KeyPressed:
+            switch(event.key.code)
+            {
+            case sf::Keyboard::Escape:
+                if(!openMainMenu)
+                    menu = new MainMenu(&openMainMenu,&fullscreen,&verticalSync);
+                else {
+                    openMainMenu = false;
+                }
+                break;
+            case sf::Keyboard::F12:
+                if(fullscreen)
                 {
-                case sf::Keyboard::Escape:
                     window.close();
-                    isPlaying = false;
-                    return;
-                case sf::Keyboard::F12:
-                    if(fullscreen)
-                    {
-                        window.close();
-                        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan");
-                        if (verticalSync)
-                            window.setVerticalSyncEnabled(true);
-                        fullscreen = false;
-                    }
-                    else
-                    {
-                        window.close();
-                        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
-                        if (verticalSync)
-                            window.setVerticalSyncEnabled(true);
-                        fullscreen = true;
-                    }
-                    break;
-                case sf::Keyboard::F11:
+                    window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan");
                     if (verticalSync)
-                    {
-                        window.setVerticalSyncEnabled(false);
-                        verticalSync = false;
-                    }
-                    else
-                    {
                         window.setVerticalSyncEnabled(true);
-                        verticalSync = true;
-                    }
-                default:
-                    break;
+                    fullscreen = false;
+                }
+                else
+                {
+                    window.close();
+                    window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
+                    if (verticalSync)
+                        window.setVerticalSyncEnabled(true);
+                    fullscreen = true;
+                }
+                break;
+            case sf::Keyboard::F11:
+                if (verticalSync)
+                {
+                    window.setVerticalSyncEnabled(false);
+                    verticalSync = false;
+                }
+                else
+                {
+                    window.setVerticalSyncEnabled(true);
+                    verticalSync = true;
                 }
             default:
-            player->processEvents(event);
                 break;
             }
+        default:
+            if(openMainMenu)
+                menu->processEvents(event);
+            else
+                player->processEvents(event);
+            break;
         }
+    }
 }
 
 void Game::checkProjectiles()
@@ -114,10 +124,10 @@ void Game::checkProjectiles()
         for(unsigned int j=0; j < vecEnemies.size(); j++)
         {
             if(checkCollision(vecProjectiles[i], vecEnemies[j]))
-                {
-                    vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                    vecProjectiles.erase(vecProjectiles.begin() + i);
-                }
+            {
+                vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
+                vecProjectiles.erase(vecProjectiles.begin() + i);
+            }
         }
 }
 
@@ -134,24 +144,26 @@ void Game::checkEnemies()
     for(unsigned int i=0; i < vecEnemies.size(); i++)
     {
         if(checkCollision(player, vecEnemies[i]))
-            {
-                player->takeDamage(vecEnemies[i]->attack());
-            }
+        {
+            player->takeDamage(vecEnemies[i]->attack());
+        }
     }
 }
 void Game::collectTrash()
 {
     for(unsigned int i=0; i<vecProjectiles.size(); i++)
-        {
-            if(vecProjectiles[i]->m_sprite.getPosition().x > window.getSize().x + 100
-            || vecProjectiles[i]->m_sprite.getPosition().x < -100
-            || vecProjectiles[i]->m_sprite.getPosition().y > window.getSize().y + 100
-            || vecProjectiles[i]->m_sprite.getPosition().y < -100)
-                vecProjectiles.erase(vecProjectiles.begin() + i);
-        }
+    {
+        if(vecProjectiles[i]->m_sprite.getPosition().x > window.getSize().x + 100
+                || vecProjectiles[i]->m_sprite.getPosition().x < -100
+                || vecProjectiles[i]->m_sprite.getPosition().y > window.getSize().y + 100
+                || vecProjectiles[i]->m_sprite.getPosition().y < -100)
+            vecProjectiles.erase(vecProjectiles.begin() + i);
+    }
 }
 void Game::update()
 {
+    if(openMainMenu)
+        return;
     player->update();
     for(unsigned int i=0; i<vecEnemies.size(); i++)
         vecEnemies[i]->update();
@@ -167,6 +179,8 @@ void Game::draw()
         window.draw(*vecEnemies[i]);
     window.draw(*player);
     window.draw(info);
+    if(openMainMenu)
+        window.draw(*menu);
     window.display();
 }
 

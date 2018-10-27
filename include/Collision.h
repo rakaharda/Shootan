@@ -5,13 +5,13 @@
 
 class Collision
 {
-    public:
-        Collision(){};
-        virtual ~Collision(){};
-        bool checkCollision(GameObject* _obj, GameObject* _obj2);
-    protected:
+public:
+    Collision() {};
+    virtual ~Collision() {};
+    bool checkCollision(GameObject* _obj, GameObject* _obj2);
+protected:
 
-    private:
+private:
 };
 
 #endif // COLLISION_H
