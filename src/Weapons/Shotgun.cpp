@@ -1,39 +1,35 @@
 #include "Weapons/Shotgun.h"
 
-Shotgun::Shotgun(sf::Sprite* _player, bool _person): Weapon(_player, _person)
+Shotgun::Shotgun(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
 {
-    weaponCooldown=1.0f;
-    clipSize=5;
-    currentClipSize=clipSize;
-    damage=1;
-    spread=7;
-    projectileSpeed=0.9f;
-}
-
-Shotgun::~Shotgun()
-{
-    //dtor
+    weaponCooldown = 1.0f;
+    clipSize = 5;
+    currentClipSize = clipSize;
+    damage = 1.f;
+    spread = 7;
+    projectileSpeed = 0.9f;
+    waveCount = 0;
 }
 
 bool Shotgun::addProjectile()
 {
-    if(currentCooldown <= 0.f && currentReloadTime <=0.f && currentClipSize>0)
+    if(currentCooldown <= 0.f && currentReloadTime <= 0.f && currentClipSize > 0)
     {
-        if(this->waveNamber%4==3)
+        if(waveCount % 4 == 3)
         {
             currentClipSize--;
-            weaponCooldown=1.f;
-            waveNamber=0;
+            weaponCooldown = 1.f;
+            waveCount = 0;
         }
         else
         {
-            waveNamber++;
-            weaponCooldown=((float)(rand()%10+15))/1000;
+            waveCount++;
+            weaponCooldown = ((float)(rand() % 10 + 15)) / 1000;
         }
         currentCooldown = weaponCooldown;
-        for(int i=0;i<4;i++)
+        for(int i = 0; i < 4; i++)
         {
-            vecProjectiles.push_back(new Projectile(player, damage, spread, skills, i, projectileSpeed, person));
+            vecProjectiles.push_back(new Projectile(player, damage, spread, iTexture, i, projectileSpeed, person));
         }
         return true;
     }

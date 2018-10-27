@@ -2,10 +2,10 @@
 
 MeleeAttack::MeleeAttack(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
 {
-    damage=20.f;
-    currentCooldown=1.f;
-    weaponCooldown=currentCooldown;
-    wDistanceAttack=0;
+    damage = 20.f;
+    currentCooldown = 1.f;
+    weaponCooldown = currentCooldown;
+    wAttackDistance = 0;
 }
 
 float MeleeAttack::getDamage()

@@ -26,7 +26,8 @@ void CheckBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite,states);
     target.draw(text,states);
-    if(isSelect){
+    if(isSelect)
+    {
         target.draw(markSprite,states);
     }
 }

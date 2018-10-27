@@ -9,7 +9,7 @@ public:
     virtual ~Cooldown() {};
     float getCooldown();
     float getCurrentCooldown();
-    void reduceCooldown();
+    void  reduceCooldown();
 protected:
     float weaponCooldown;
     float currentCooldown;

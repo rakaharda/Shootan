@@ -28,20 +28,20 @@ public:
     virtual ~Game();
     void play();
 private:
-    Player* player;
-    sf::Font font;
-    sf::Text info; //temporary
-    sf::Clock* gameClock;
-    MainMenu *menu;
-    bool isPlaying;
-    bool fullscreen;
-    bool verticalSync;
+    Player*      player;
+    sf::Font     font;
+    sf::Text     info; //temporary
+    sf::Clock*   gameClock;
+    MainMenu     *menu;
+    bool         isPlaying;
+    bool         fullscreen;
+    bool         verticalSync;
     sf::Vector2u resolution;
-    bool openMainMenu;
+    bool         openMainMenu;
     void showStats();
     void loadResources();
     void loadSettings();
-    void processEvents();
+    void handleEvents();
     void collectTrash();
     void checkProjectiles();
     void checkEnemies();
@@ -49,10 +49,10 @@ private:
     void draw();
 };
 
-extern sf::RenderWindow window;
-extern float frameTime;
+extern sf::RenderWindow     window;
+extern float                frameTime;
 extern vector <sf::Texture> vecTextures;
 extern vector <Projectile*> vecProjectiles;
-extern vector <Enemy*> vecEnemies;
+extern vector <Enemy*>      vecEnemies;
 #endif // GAME_H
 

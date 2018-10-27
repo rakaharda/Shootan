@@ -1,20 +1,21 @@
 #include "Projectiles/Projectile.h"
 
 Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _iTexture, float _speed, bool _person) :
-damage(_damage),
-speed(_speed),
-person(_person)
+    person(_person),
+    damage(_damage),
+    speed(_speed)
 {
     speed=_speed;
     srand(time(NULL));
+    cout<<_iTexture;
     m_sprite.setTexture(vecTextures[_iTexture]);
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
 }
 Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _iTexture, int _numberShot, float _speed, bool _person) :
-damage(_damage),
-speed(_speed),
-person(_person)
+    person(_person),
+    damage(_damage),
+    speed(_speed)
 {
     speed=_speed;
     srand(time(NULL));

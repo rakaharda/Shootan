@@ -6,17 +6,17 @@
 
 class MainMenu: public Menu
 {
-    public:
-        MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync);
-        bool *fullscreen;
-        bool *verticalSync; 
-        virtual ~MainMenu();
-    private:
-        void startProcess(int _id);
-        void createSettingsMenu();
-        void backToMainMenu();
-        bool isSettings;
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+public:
+    MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync);
+    bool *fullscreen;
+    bool *verticalSync;
+    virtual ~MainMenu();
+private:
+    void startProcess(int _id);
+    void createSettingsMenu();
+    void backToMainMenu();
+    bool isSettings;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };
 

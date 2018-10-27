@@ -17,19 +17,19 @@ class Player : public GameObject, public HealthPoints
 public:
     Player();
     virtual ~Player();
-    void update();
-    void processEvents(sf::Event event);
+    void    update();
+    void    handleEvents(sf::Event event);
     Weapon* getWeapon();
-    void setWeapon(Weapon* _weapon);
+    void    setWeapon(Weapon* _weapon);
 private:
     sf::Texture texture;
-    float speed;
-    void move();
-    Weapon* weapon;
+    float       speed;
+    Weapon*     weapon;
+    void         move();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 extern sf::RenderWindow window;
-extern float frameTime;
+extern float            frameTime;
 
 #endif // PLAYER_H

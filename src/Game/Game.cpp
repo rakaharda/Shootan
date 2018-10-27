@@ -5,6 +5,7 @@ Game::Game() : isPlaying(true)
     loadSettings();
     //openMainMenu = new bool;
     openMainMenu = false;
+    window.setFramerateLimit(200);
     if(fullscreen)
         window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
     else
@@ -29,16 +30,16 @@ void Game::play()
     srand(clock());
     loadResources();
     player = new Player;
-    player->setWeapon(new SniperRifle(&player->m_sprite,1));
+    player->setWeapon(new SniperRifle(&player->m_sprite, 1));
     vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
-    vecEnemies[vecEnemies.size()-1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size()-1])->m_sprite));
+    vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
     gameClock = new sf::Clock;
-    cout<<"Starting main game loop"<<endl;
+    cout << "Starting main game loop"<<endl;
     while (isPlaying)
     {
         frameTime = gameClock->restart().asSeconds();
         showStats();
-        processEvents();
+        handleEvents();
         checkProjectiles();
         checkEnemies();
         update();
@@ -50,18 +51,22 @@ void Game::play()
 void Game::showStats()
 {
     stringstream ss;
-    if(player->getWeapon()->getCurrentReloadTime()>0.f)
-        ss<<player->getWeapon()->getCurrentReloadTime()<<'/'<<player->getWeapon()->getReloadTime();
+    if(player->getWeapon()->getCurrentReloadTime() > 0.f)
+        ss << player->getWeapon()->getCurrentReloadTime() << '/' << player->getWeapon()->getReloadTime();
     else
-        ss<<player->getWeapon()->getCurrentClipSize()<<'/'<<player->getWeapon()->getClipSize();
-    ss<<endl<<player->getCurrentHealthPoints();
+        ss << player->getWeapon()->getCurrentClipSize() << '/' << player->getWeapon()->getClipSize();
+    ss << endl <<"HP: "<< player->getCurrentHealthPoints();
     info.setString(ss.str());
 }
-void Game::processEvents()
+void Game::handleEvents()
 {
     sf::Event event;
     while(window.pollEvent(event))
     {
+        if(openMainMenu)
+            menu->processEvents(event);
+        else
+            player->handleEvents(event);
         switch(event.type)
         {
         case sf::Event::Closed:
@@ -73,48 +78,16 @@ void Game::processEvents()
             {
             case sf::Keyboard::Escape:
                 if(!openMainMenu)
-                    menu = new MainMenu(&openMainMenu,&fullscreen,&verticalSync);
-                else {
+                    menu = new MainMenu(&openMainMenu, &fullscreen, &verticalSync);
+                else
+                {
                     openMainMenu = false;
                 }
                 break;
-            case sf::Keyboard::F12:
-                if(fullscreen)
-                {
-                    window.close();
-                    window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan");
-                    if (verticalSync)
-                        window.setVerticalSyncEnabled(true);
-                    fullscreen = false;
-                }
-                else
-                {
-                    window.close();
-                    window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
-                    if (verticalSync)
-                        window.setVerticalSyncEnabled(true);
-                    fullscreen = true;
-                }
-                break;
-            case sf::Keyboard::F11:
-                if (verticalSync)
-                {
-                    window.setVerticalSyncEnabled(false);
-                    verticalSync = false;
-                }
-                else
-                {
-                    window.setVerticalSyncEnabled(true);
-                    verticalSync = true;
-                }
             default:
                 break;
             }
         default:
-            if(openMainMenu)
-                menu->processEvents(event);
-            else
-                player->processEvents(event);
             break;
         }
     }
@@ -122,27 +95,27 @@ void Game::processEvents()
 
 void Game::checkProjectiles()
 {
-    for(unsigned int i=0; i < vecProjectiles.size(); i++)
-        for(unsigned int j=0; j < vecEnemies.size(); j++)
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+        for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
             if(checkCollision(vecProjectiles[i], vecEnemies[j]))
                 if(vecProjectiles[i]->person)
-                    {
-                        vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                        vecProjectiles.erase(vecProjectiles.begin() + i);
-                    }
+                {
+                    vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
+                    vecProjectiles.erase(vecProjectiles.begin() + i);
+                }
             if(checkCollision(vecProjectiles[i], player))
                 if(!(vecProjectiles[i]->person))
-                    {
-                        player->takeDamage(vecProjectiles[i]->getDamage());
-                        vecProjectiles.erase(vecProjectiles.begin() + i);
-                    }
+                {
+                    player->takeDamage(vecProjectiles[i]->getDamage());
+                    vecProjectiles.erase(vecProjectiles.begin() + i);
+                }
         }
 }
 
 void Game::checkEnemies()
 {
-    for(unsigned int i=0; i < vecEnemies.size(); i++)
+    for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
         if(vecEnemies[i]->toDelete)
         {
@@ -150,7 +123,7 @@ void Game::checkEnemies()
             cout<<i<<" deleted"<<endl;
         }
     }
-    for(unsigned int i=0; i < vecEnemies.size(); i++)
+    for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
         if(checkCollision(player, vecEnemies[i]))
         {
@@ -160,7 +133,7 @@ void Game::checkEnemies()
 }
 void Game::collectTrash()
 {
-    for(unsigned int i=0; i<vecProjectiles.size(); i++)
+    for(unsigned int i = 0; i<vecProjectiles.size(); i++)
     {
         if(vecProjectiles[i]->m_sprite.getPosition().x > window.getSize().x + 100
                 || vecProjectiles[i]->m_sprite.getPosition().x < -100
@@ -174,17 +147,17 @@ void Game::update()
     if(openMainMenu)
         return;
     player->update();
-    for(unsigned int i=0; i<vecEnemies.size(); i++)
-            vecEnemies[i]->update();
-    for(unsigned int i=0; i<vecProjectiles.size(); i++)
+    for(unsigned int i = 0; i < vecEnemies.size(); i++)
+        vecEnemies[i]->update();
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
 }
 void Game::draw()
 {
     window.clear(sf::Color(235, 235, 235));
-    for(unsigned int i=0; i<vecProjectiles.size(); i++)
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
-    for(unsigned int i=0; i<vecEnemies.size(); i++)
+    for(unsigned int i = 0; i < vecEnemies.size(); i++)
         window.draw(*vecEnemies[i]);
     window.draw(*player);
     window.draw(info);

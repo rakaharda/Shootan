@@ -1,15 +1,17 @@
 #include "Components/HealthPoints.h"
 
-HealthPoints::HealthPoints()
+HealthPoints::HealthPoints() :
+    healthPoints(100.f),
+    currentHealthPoints(healthPoints)
 {
-    healthPoints = 100.f;
-    currentHealthPoints = healthPoints;
+    
 }
 
-HealthPoints::HealthPoints(float _healthPoints)
+HealthPoints::HealthPoints(float _healthPoints) :
+    healthPoints(_healthPoints),
+    currentHealthPoints(healthPoints) 
 {
-    healthPoints = _healthPoints;
-    currentHealthPoints = healthPoints;
+    
 }
 
 HealthPoints::~HealthPoints()

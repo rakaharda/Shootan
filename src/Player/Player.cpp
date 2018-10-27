@@ -7,7 +7,7 @@ Player::Player() : HealthPoints()
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(window.getSize().x / 2, window.getSize().y / 2);
     weapon = new SniperRifle(&m_sprite);
-    speed = 100.f;
+    speed = 150.f;
 }
 
 Player::~Player()
@@ -19,14 +19,14 @@ void Player::update()
 {
     m_sprite.setRotation(-180 / M_PI * atan2(
 
-                             m_sprite.getPosition().y-sf::Mouse::getPosition(window).y,
-                             sf::Mouse::getPosition(window).x-m_sprite.getPosition().x
-                         ));
+                             m_sprite.getPosition().y - sf::Mouse::getPosition(window).y,
+                             sf::Mouse::getPosition(window).x - m_sprite.getPosition().x
+                        ));
     move();
     weapon->update();
 }
 
-void Player::processEvents(sf::Event event)
+void Player::handleEvents(sf::Event event)
 {
     switch(event.type)
     {
@@ -51,7 +51,8 @@ Weapon* Player::getWeapon()
 
 void Player::setWeapon(Weapon* _weapon)
 {
-    delete(weapon);
+    if(weapon != nullptr)
+        delete(weapon);
     weapon = _weapon;
 }
 

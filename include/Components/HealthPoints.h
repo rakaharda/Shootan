@@ -10,7 +10,7 @@ public:
     virtual ~HealthPoints();
     float getHealthPoints();
     float getCurrentHealthPoints();
-    void takeDamage(float _damage);
+    void  takeDamage(float _damage);
 protected:
     float healthPoints;
     float currentHealthPoints;

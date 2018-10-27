@@ -119,7 +119,7 @@ void MainMenu::createSettingsMenu()
     for(int i = 1; i < 4; i++)
         buttons.push_back(new Button(str[i],str[4],30.f,window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116,i+3));
     for(int i = 0; i < 5; i++)
-    str[i].erase();
+        str[i].erase();
 }
 
 void MainMenu::backToMainMenu()

@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Game/Game.h"
 
 sf::RenderWindow window;
 float frameTime;
