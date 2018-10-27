@@ -1,7 +1,7 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include "GameObject.h"
+#include "Components/GameObject.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>

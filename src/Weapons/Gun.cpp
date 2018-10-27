@@ -1,4 +1,4 @@
-#include "Gun.h"
+#include "Weapons/Gun.h"
 
 Gun::Gun(sf::Sprite* _player, bool _person): Weapon(_player, _person)
 {

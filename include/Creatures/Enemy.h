@@ -2,11 +2,11 @@
 #define ENEMY_H
 
 #include <cmath>
-#include "GameObject.h"
+#include "Components/GameObject.h"
 #include <iostream>
-#include "HealthPoints.h"
-#include "MeleeAttack.h"
-#include "Weapon.h"
+#include "Components/HealthPoints.h"
+#include "Weapons/MeleeAttack.h"
+#include "Weapons/Weapon.h"
 
 using namespace std;
 

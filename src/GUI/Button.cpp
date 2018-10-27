@@ -1,4 +1,4 @@
-#include "Button.h"
+#include "GUI/Button.h"
 
 Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, int _id = 0)
 {

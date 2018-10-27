@@ -1,4 +1,4 @@
-#include "Collision.h"
+#include "Components/Collision.h"
 
 bool Collision::checkCollision(GameObject* _obj, GameObject* _obj2)
 {

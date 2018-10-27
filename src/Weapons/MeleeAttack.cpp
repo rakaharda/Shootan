@@ -1,4 +1,4 @@
-#include "MeleeAttack.h"
+#include "Weapons/MeleeAttack.h"
 
 MeleeAttack::MeleeAttack(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
 {

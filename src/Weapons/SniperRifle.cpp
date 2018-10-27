@@ -1,4 +1,4 @@
-#include "SniperRifle.h"
+#include "Weapons/SniperRifle.h"
 
 SniperRifle::SniperRifle(sf::Sprite* _player, bool _person): Weapon(_player, _person)
 {

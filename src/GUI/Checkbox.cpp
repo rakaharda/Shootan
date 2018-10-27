@@ -1,4 +1,4 @@
-#include "CheckBox.h"
+#include "GUI/CheckBox.h"
 CheckBox::CheckBox(string _name, float _size, float _xPos, float _yPos, int _id, bool _isSelect)
     : Button(_name,"./data/interface/markBG.png",_size,_xPos,_yPos,_id)
 {

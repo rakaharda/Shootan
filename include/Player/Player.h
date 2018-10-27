@@ -2,13 +2,13 @@
 #define PLAYER_H
 
 #include <cmath>
-#include "GameObject.h"
-#include "Weapon.h"
-#include "Autorifle.h"
-#include "Shotgun.h"
-#include "SniperRifle.h"
-#include "Gun.h"
-#include "HealthPoints.h"
+#include "Components/GameObject.h"
+#include "Weapons/Weapon.h"
+#include "Weapons/Autorifle.h"
+#include "Weapons/Shotgun.h"
+#include "Weapons/SniperRifle.h"
+#include "Weapons/Gun.h"
+#include "Components/HealthPoints.h"
 
 using namespace std;
 

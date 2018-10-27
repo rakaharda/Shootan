@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "Creatures/Enemy.h"
 
 Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) :
 HealthPoints(_healthPoints),
@@ -92,7 +92,7 @@ bool Enemy::checkDistance()
 
 void Enemy::checkHealth()
 {
-    if(currentHealthPoints == 0.f) 
+    if(currentHealthPoints == 0.f)
         toDelete = true;
 }
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const

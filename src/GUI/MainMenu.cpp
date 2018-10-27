@@ -1,4 +1,4 @@
-#include "MainMenu.h"
+#include "GUI/MainMenu.h"
 #include <iostream>
 MainMenu::MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync)
 {

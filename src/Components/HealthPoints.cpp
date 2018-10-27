@@ -1,4 +1,4 @@
-#include "HealthPoints.h"
+#include "Components/HealthPoints.h"
 
 HealthPoints::HealthPoints()
 {
@@ -29,6 +29,6 @@ void HealthPoints::takeDamage(float _damage)
 {
     if(currentHealthPoints < _damage)
         currentHealthPoints = 0.f;
-    else 
+    else
         currentHealthPoints -= _damage;
 }

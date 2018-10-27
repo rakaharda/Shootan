@@ -2,7 +2,7 @@
 #define BUTTON_H
 
 
-#include "GameObject.h"
+#include "Components/GameObject.h"
 
 using namespace std;
 

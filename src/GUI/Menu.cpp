@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "GUI/Menu.h"
 
 Menu::Menu()
 {

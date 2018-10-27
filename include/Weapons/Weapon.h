@@ -4,8 +4,8 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 #include <cmath>
-#include "Projectile.h"
-#include "Cooldown.h"
+#include "Projectiles/Projectile.h"
+#include "Components/Cooldown.h"
 using namespace std;
 
 class Weapon : public Cooldown

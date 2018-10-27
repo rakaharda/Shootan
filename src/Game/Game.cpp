@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Game/Game.h"
 #include <iostream>
 Game::Game() : isPlaying(true)
 {
