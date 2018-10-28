@@ -2,7 +2,7 @@
 
 Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) :
     HealthPoints(_healthPoints),
-    texture(vecTextures[1]),
+    texture(vecTextures[6]),
     attackDistance(0.f)
 {
     m_sprite.setTexture(texture);

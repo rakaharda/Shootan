@@ -120,7 +120,7 @@ void Game::checkEnemies()
     {
         if(vecEnemies[i]->toDelete)
         {
-            vecPerks.push_back(new Perk(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
+            vecPerks.push_back(new Medicine(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y, &player));
             vecEnemies.erase(vecEnemies.begin() + i);
             cout<<i<<" deleted"<<endl;
         }
@@ -139,6 +139,7 @@ void Game::checkPerks()
     {
         if(checkCollision(player, vecPerks[i]))
         {
+            vecPerks[i]->pickUp();
             vecPerks.erase(vecPerks.begin() + i);
             continue;
         }
@@ -191,13 +192,21 @@ void Game::loadResources()
 {
     font.loadFromFile("./data/fonts/arial.ttf");
     vecTextures.push_back(sf::Texture());
-    vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");
+    vecTextures[0].loadFromFile("./data/projectiles/1.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[1].loadFromFile("./data/enemies/default_enemy.png");
+    vecTextures[1].loadFromFile("./data/projectiles/2.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[2].loadFromFile("./data/enemies/default_monster_nest.png");
+    vecTextures[2].loadFromFile("./data/projectiles/3.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[3].loadFromFile("./data/projectiles/projectile2.png");
+    vecTextures[3].loadFromFile("./data/projectiles/1B.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[4].loadFromFile("./data/projectiles/2B.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[5].loadFromFile("./data/projectiles/3B.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[6].loadFromFile("./data/enemies/default_enemy.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[7].loadFromFile("./data/enemies/default_monster_nest.png");
 }
 
 void Game::loadSettings()

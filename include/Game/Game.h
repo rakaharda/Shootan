@@ -15,6 +15,7 @@
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
 #include "Perks/Perk.h"
+#include "Perks/Medicine.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>

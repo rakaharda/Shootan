@@ -2,16 +2,18 @@
 #define PERK_H
 
 #include "Components/GameObject.h"
+#include "Player/Player.h"
 
 class Perk : public GameObject
 {
     public:
-        Perk(int _xPos, int _yPos);
+        Perk(int _xPos, int _yPos, Player **_player);
         virtual ~Perk();
-        void pickUp(){};
+        virtual void pickUp()=0;
         void update();
         bool checkActive();
     protected:
+        Player **player;
         sf::Texture texture;
         float activeTime;
 

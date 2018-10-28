@@ -1,11 +1,8 @@
 #include "Perks/Perk.h"
 
-Perk::Perk(int _xPos, int _yPos)
+Perk::Perk(int _xPos, int _yPos, Player **_player) :
+    player(_player)
 {
-    texture.loadFromFile("./data/perks/defolt.png");
-    m_sprite.setTexture(texture);
-    m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
-    m_sprite.setPosition(_xPos, _yPos);
     activeTime=10.f;
 }
 Perk::~Perk()
