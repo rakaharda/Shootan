@@ -19,7 +19,7 @@ Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints
     distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 50.f;
     toDelete = false;
-    weapon = nullptr;
+    weapon = NULL;
 }
 
 Enemy::~Enemy()
@@ -102,7 +102,7 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 void Enemy::setWeapon(Weapon* _weapon)
 {
-    if(weapon != nullptr)
+    if(weapon != NULL)
         delete(weapon);
     weapon = _weapon;
     attackDistance = weapon->getAttackDistance();

@@ -42,6 +42,7 @@ void Game::play()
         handleEvents();
         checkProjectiles();
         checkEnemies();
+        checkPerks();
         update();
         collectTrash();
         draw();
@@ -119,6 +120,7 @@ void Game::checkEnemies()
     {
         if(vecEnemies[i]->toDelete)
         {
+            vecPerks.push_back(new Perk(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             vecEnemies.erase(vecEnemies.begin() + i);
             cout<<i<<" deleted"<<endl;
         }
@@ -128,6 +130,21 @@ void Game::checkEnemies()
         if(checkCollision(player, vecEnemies[i]))
         {
             player->takeDamage(vecEnemies[i]->attack());
+        }
+    }
+}
+void Game::checkPerks()
+{
+     for(unsigned int i=0; i < vecPerks.size(); i++)
+    {
+        if(checkCollision(player, vecPerks[i]))
+        {
+            vecPerks.erase(vecPerks.begin() + i);
+            continue;
+        }
+        if(vecPerks[i]->checkActive())
+        {
+            vecPerks.erase(vecPerks.begin() + i);
         }
     }
 }
@@ -151,6 +168,8 @@ void Game::update()
         vecEnemies[i]->update();
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
+    for(unsigned int i=0; i<vecPerks.size(); i++)
+        vecPerks[i]->update();
 }
 void Game::draw()
 {
@@ -159,6 +178,8 @@ void Game::draw()
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
         window.draw(*vecEnemies[i]);
+    for(unsigned int i=0; i<vecPerks.size(); i++)
+        window.draw(*vecPerks[i]);
     window.draw(*player);
     window.draw(info);
     if(openMainMenu)

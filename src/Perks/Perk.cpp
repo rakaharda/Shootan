@@ -1,4 +1,4 @@
-#include "Perk.h"
+#include "Perks/Perk.h"
 
 Perk::Perk(int _xPos, int _yPos)
 {

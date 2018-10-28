@@ -51,7 +51,7 @@ Weapon* Player::getWeapon()
 
 void Player::setWeapon(Weapon* _weapon)
 {
-    if(weapon != nullptr)
+    if(weapon != NULL)
         delete(weapon);
     weapon = _weapon;
 }

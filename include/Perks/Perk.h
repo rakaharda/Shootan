@@ -1,7 +1,7 @@
 #ifndef PERK_H
 #define PERK_H
 
-#include "GameObject.h"
+#include "Components/GameObject.h"
 
 class Perk : public GameObject
 {
