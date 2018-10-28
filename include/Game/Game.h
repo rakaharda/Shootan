@@ -16,6 +16,8 @@
 #include "GUI/MainMenu.h"
 #include "Perks/Perk.h"
 #include "Perks/Medicine.h"
+#include "Perks/Fire.h"
+#include "Perks/Frost.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>

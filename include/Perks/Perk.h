@@ -7,20 +7,19 @@
 class Perk : public GameObject
 {
     public:
-        Perk(int _xPos, int _yPos, Player **_player);
+        Perk(int _xPos, int _yPos);
         virtual ~Perk();
         virtual void pickUp()=0;
         void update();
         bool checkActive();
+        static Player* player;
     protected:
-        Player **player;
         sf::Texture texture;
         float activeTime;
 
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
-
 extern sf::RenderWindow window;
 extern float frameTime;
 

@@ -8,6 +8,8 @@ Player::Player() : HealthPoints()
     m_sprite.setPosition(window.getSize().x / 2, window.getSize().y / 2);
     weapon = new SniperRifle(&m_sprite);
     speed = 150.f;
+    skill=0;
+    activeSkillTime=0.f;
 }
 
 Player::~Player()
@@ -24,6 +26,13 @@ void Player::update()
                         ));
     move();
     weapon->update();
+    if(skill)
+        activeSkillTime-=frameTime;
+    if(activeSkillTime<0.f)
+    {
+        activeSkillTime=0.f;
+        setSkill(0);
+    }
 }
 
 void Player::handleEvents(sf::Event event)
@@ -54,6 +63,14 @@ void Player::setWeapon(Weapon* _weapon)
     if(weapon != NULL)
         delete(weapon);
     weapon = _weapon;
+}
+
+void Player::setSkill(int _skill)
+{
+    if(_skill)
+    activeSkillTime=30.f;
+    skill=_skill;
+    weapon->setITexture(_skill);
 }
 
 void Player::move()

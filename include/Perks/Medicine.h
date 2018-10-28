@@ -2,13 +2,12 @@
 #define MEDICINE_H
 
 #include "Perks/Perk.h"
-#include "Player/Player.h"
 
 class Medicine : public Perk
 {
 public:
     void pickUp();
-    Medicine(int _xPos, int _yPos, Player **_player);
+    Medicine(int _xPos, int _yPos);
     virtual ~Medicine(){};
 };
 

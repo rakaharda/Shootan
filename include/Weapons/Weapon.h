@@ -24,6 +24,7 @@ public:
     virtual float attack() {return 0.f;};
     void          getDamage() {};
     void          setDamage(float _damage) {};
+    virtual void  setITexture(int _iTexture);
 protected:
     const sf::Sprite* player;
     float             reloadTime;

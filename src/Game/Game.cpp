@@ -30,7 +30,8 @@ void Game::play()
     srand(clock());
     loadResources();
     player = new Player;
-    player->setWeapon(new SniperRifle(&player->m_sprite, 1));
+    Perk::player=player;
+    player->setWeapon(new Gun(&player->m_sprite, 1));
     vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
     vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
     gameClock = new sf::Clock;
@@ -120,7 +121,7 @@ void Game::checkEnemies()
     {
         if(vecEnemies[i]->toDelete)
         {
-            vecPerks.push_back(new Medicine(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y, &player));
+            vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             vecEnemies.erase(vecEnemies.begin() + i);
             cout<<i<<" deleted"<<endl;
         }

@@ -21,12 +21,15 @@ public:
     void    handleEvents(sf::Event event);
     Weapon* getWeapon();
     void    setWeapon(Weapon* _weapon);
+    void setSkill(int _skill);
 private:
     sf::Texture texture;
     float       speed;
     Weapon*     weapon;
     void         move();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    int skill;
+    float activeSkillTime;
 };
 
 extern sf::RenderWindow window;

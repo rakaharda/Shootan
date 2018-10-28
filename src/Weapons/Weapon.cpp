@@ -79,3 +79,7 @@ float Weapon::getAttackDistance()
 {
     return wAttackDistance;
 }
+void Weapon::setITexture(int _iTexture)
+{
+    iTexture=_iTexture;
+}

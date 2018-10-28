@@ -1,6 +1,6 @@
 #include "Perks/Medicine.h"
 
-Medicine::Medicine(int _xPos, int _yPos, Player **_player) : Perk(_xPos, _yPos, _player)
+Medicine::Medicine(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 {
     texture.loadFromFile("./data/perks/HP.png");
     m_sprite.setTexture(texture);
@@ -10,5 +10,5 @@ Medicine::Medicine(int _xPos, int _yPos, Player **_player) : Perk(_xPos, _yPos, 
 
 void Medicine::pickUp()
 {
-    (*player)->setCurrentHealthPoints((*player)->getHealthPoints());
+    (player)->setCurrentHealthPoints((player)->getHealthPoints());
 }

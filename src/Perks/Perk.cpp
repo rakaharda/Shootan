@@ -1,7 +1,6 @@
 #include "Perks/Perk.h"
-
-Perk::Perk(int _xPos, int _yPos, Player **_player) :
-    player(_player)
+Player* Perk::player=NULL;
+Perk::Perk(int _xPos, int _yPos)
 {
     activeTime=10.f;
 }
