@@ -12,6 +12,7 @@
 #include "Gun.h"
 #include "SniperRifle.h"
 #include "Collision.h"
+#include "Perk.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
@@ -41,6 +42,7 @@ class Game : private Collision
         void collectTrash();
         void checkProjectiles();
         void checkEnemies();
+        void checkPerks();
         void update();
         void draw();
 };
@@ -50,5 +52,6 @@ extern float frameTime;
 extern vector <sf::Texture> vecTextures;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Enemy*> vecEnemies;
+extern vector <Perk*> vecPerks;
 #endif // GAME_H
 

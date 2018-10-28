@@ -26,10 +26,10 @@ void Game::play()
 {
     srand(clock());
     player = new Player;
-    //Weapon* autorifle = new Autorifle;
     player->setWeapon(new SniperRifle(&player->m_sprite,1));
     vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
     vecEnemies[vecEnemies.size()-1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size()-1])->m_sprite));
+    //vecPerks.push_back(new Perk(400,400));
     gameClock = new sf::Clock;
     while (isPlaying)
     {
@@ -38,6 +38,7 @@ void Game::play()
         processEvents();
         checkProjectiles();
         checkEnemies();
+        checkPerks();
         update();
         collectTrash();
         draw();
@@ -135,7 +136,10 @@ void Game::checkEnemies()
     for(unsigned int i=0; i < vecEnemies.size(); i++)
     {
         if(vecEnemies[i]->getCurrentHealthPoints() == 0.f)
+        {
+            vecPerks.push_back(new Perk(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             vecEnemies.erase(vecEnemies.begin() + i);
+        }
     }
     for(unsigned int i=0; i < vecEnemies.size(); i++)
     {
@@ -143,6 +147,21 @@ void Game::checkEnemies()
             {
                 player->takeDamage(vecEnemies[i]->attack());
             }
+    }
+}
+void Game::checkPerks()
+{
+     for(unsigned int i=0; i < vecPerks.size(); i++)
+    {
+        if(checkCollision(player, vecPerks[i]))
+        {
+            vecPerks.erase(vecPerks.begin() + i);
+            continue;
+        }
+        if(vecPerks[i]->checkActive())
+        {
+            vecPerks.erase(vecPerks.begin() + i);
+        }
     }
 }
 void Game::collectTrash()
@@ -163,6 +182,8 @@ void Game::update()
             vecEnemies[i]->update();
     for(unsigned int i=0; i<vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
+    for(unsigned int i=0; i<vecPerks.size(); i++)
+        vecPerks[i]->update();
 }
 void Game::draw()
 {
@@ -171,6 +192,8 @@ void Game::draw()
         window.draw(*vecProjectiles[i]);
     for(unsigned int i=0; i<vecEnemies.size(); i++)
         window.draw(*vecEnemies[i]);
+    for(unsigned int i=0; i<vecPerks.size(); i++)
+        window.draw(*vecPerks[i]);
     window.draw(*player);
     window.draw(info);
     window.display();
