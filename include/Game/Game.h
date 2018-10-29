@@ -12,6 +12,7 @@
 #include "Weapons/Gun.h"
 #include "Weapons/SniperRifle.h"
 #include "Components/Collision.h"
+#include "Game/Settings.h"
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
 #include <sstream>
@@ -29,16 +30,14 @@ public:
     virtual ~Game();
     void play();
 private:
-    Player*      player;
-    sf::Font     font;
-    sf::Text     info; //temporary
-    sf::Clock*   gameClock;
-    MainMenu     *menu;
-    bool         isPlaying;
-    bool         fullscreen;
-    bool         verticalSync;
-    sf::Vector2u resolution;
-    bool         openMainMenu;
+    Player*       player;
+    sf::Font      font;
+    sf::Text      info; //temporary
+    sf::Clock*    gameClock;
+    MainMenu      *menu;
+    VideoSettings *videoSettings;
+    bool          isPlaying;
+    bool          openMainMenu;
     void showStats();
     void loadResources();
     void loadSettings();
