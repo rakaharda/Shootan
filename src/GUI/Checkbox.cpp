@@ -1,6 +1,6 @@
 #include "GUI/CheckBox.h"
-CheckBox::CheckBox(string _name, float _size, float _xPos, float _yPos, int _id, bool _isSelect)
-    : Button(_name,"./data/interface/markBG.png",_size,_xPos,_yPos,_id)
+CheckBox::CheckBox(string _name, float _size, float _xPos, float _yPos, int _id, bool _isSelect, std::function<void(void)> _func)
+    : Button(_name, "./data/interface/markBG.png", _size, _xPos, _yPos, _func, _id)
 {
     m_sprite.setPosition(_xPos - 100, _yPos - m_sprite.getTexture()->getSize().y / 2);
     markTexture.loadFromFile("./data/interface/mark.png");

@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "Button.h"
+#include "GUI/Button.h"
 #include <vector>
 
 using namespace std;

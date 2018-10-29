@@ -1,12 +1,12 @@
 #ifndef CHECKBOX_H
 #define CHECKBOX_H
 
-#include "Button.h"
+#include "GUI/Button.h"
 
 class CheckBox : public Button
 {
 public:
-    CheckBox(string _name, float _size, float _xPos, float _yPos, int _id, bool _isSelect);
+    CheckBox(string _name, float _size, float _xPos, float _yPos, int _id, bool _isSelect, std::function<void(void)> _func);
     virtual ~CheckBox();
 private:
     sf::Texture markTexture;
