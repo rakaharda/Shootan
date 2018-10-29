@@ -22,6 +22,8 @@
 
 using namespace std;
 
+//*Field size 3840x2160 (2 times FullHD)
+
 class Game : private Collision
 {
 public:
@@ -30,9 +32,13 @@ public:
     void play();
 private:
     Player*       player;
+    sf::Sprite    background;
     sf::Font      font;
     sf::Text      info; //temporary
     sf::Clock*    gameClock;
+    sf::IntRect   fieldSize;
+    sf::Texture   backgroundTexture;
+    sf::View      view;
     MainMenu      *menu;
     VideoSettings *videoSettings;
     bool          isPlaying;

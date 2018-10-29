@@ -2,11 +2,10 @@
 #include <iostream>
 Game::Game() : isPlaying(true)
 {
+    //Loading settings
     videoSettings = new VideoSettings;
     loadSettings();
-    //openMainMenu = new bool;
-    openMainMenu = false;
-    window.setFramerateLimit(videoSettings->framerateLimit);
+    //Setting up window
     if(videoSettings->fullscreen)
         window.create(sf::VideoMode(videoSettings->width, videoSettings->height), "Shootan", sf::Style::Fullscreen);
     else
@@ -15,15 +14,23 @@ Game::Game() : isPlaying(true)
         window.setVerticalSyncEnabled(true);
     else
         window.setVerticalSyncEnabled(false);
+    window.setFramerateLimit(videoSettings->framerateLimit);
+    openMainMenu = false;
     loadResources();
+    fieldSize = sf::IntRect(0, 0, 3840, 2160);
+    background.setTexture(backgroundTexture);
+    background.setTextureRect(fieldSize);
     info.setFont(font);
     info.setFillColor(sf::Color::Black);
+    view.setSize(videoSettings->width, videoSettings->height);
+    view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
 }
 
 Game::~Game()
 {
     delete(gameClock);
     delete(player);
+    delete(videoSettings);
 }
 
 void Game::play()
@@ -140,10 +147,10 @@ void Game::collectTrash()
 {
     for(unsigned int i = 0; i<vecProjectiles.size(); i++)
     {
-        if(vecProjectiles[i]->m_sprite.getPosition().x > window.getSize().x + 100
-                || vecProjectiles[i]->m_sprite.getPosition().x < -100
-                || vecProjectiles[i]->m_sprite.getPosition().y > window.getSize().y + 100
-                || vecProjectiles[i]->m_sprite.getPosition().y < -100)
+        if(vecProjectiles[i]->m_sprite.getPosition().x > fieldSize.width + 200
+                || vecProjectiles[i]->m_sprite.getPosition().x < -200
+                || vecProjectiles[i]->m_sprite.getPosition().y > fieldSize.height + 200
+                || vecProjectiles[i]->m_sprite.getPosition().y < -200)
             vecProjectiles.erase(vecProjectiles.begin() + i);
     }
 }
@@ -156,10 +163,14 @@ void Game::update()
         vecEnemies[i]->update();
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
+    //TODO: Add borders and view lock on it
+    view.setCenter(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y);
+    window.setView(view);
 }
 void Game::draw()
 {
-    window.clear(sf::Color(235, 235, 235));
+    window.clear();
+    window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
@@ -182,6 +193,8 @@ void Game::loadResources()
     vecTextures[2].loadFromFile("./data/enemies/default_monster_nest.png");
     vecTextures.push_back(sf::Texture());
     vecTextures[3].loadFromFile("./data/projectiles/projectile2.png");
+    backgroundTexture.loadFromFile("./data/background/tile1.png");
+    backgroundTexture.setRepeated(true);
 }
 
 void Game::loadSettings()

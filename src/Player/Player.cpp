@@ -5,7 +5,7 @@ Player::Player() : HealthPoints()
     texture.loadFromFile("./data/player/sprite.png");
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
-    m_sprite.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    m_sprite.setPosition(3840 / 2, 2160 / 2);
     weapon = new SniperRifle(&m_sprite);
     speed = 150.f;
 }
@@ -17,10 +17,10 @@ Player::~Player()
 
 void Player::update()
 {
+    //TODO: make it relative to player position relative to the screen
     m_sprite.setRotation(-180 / M_PI * atan2(
-
-                             m_sprite.getPosition().y - sf::Mouse::getPosition(window).y,
-                             sf::Mouse::getPosition(window).x - m_sprite.getPosition().x
+                             window.getSize().y / 2.f - sf::Mouse::getPosition(window).y,
+                             sf::Mouse::getPosition(window).x - window.getSize().x / 2.f
                         ));
     move();
     weapon->update();
