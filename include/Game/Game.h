@@ -3,6 +3,10 @@
 
 #include <SFML\Window.hpp>
 #include <vector>
+#include <sstream>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 #include "Components/GameObject.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
@@ -15,11 +19,7 @@
 #include "Game/Settings.h"
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
-#include <sstream>
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
-
+#include "Utils/FPSCounter.h"
 
 using namespace std;
 
@@ -40,6 +40,7 @@ private:
     sf::IntRect   fieldSize;
     sf::Texture   backgroundTexture;
     sf::View      view;
+    FPSCounter    fpsCounter;
     MainMenu      *menu;
     VideoSettings *videoSettings;
     bool          isPlaying;

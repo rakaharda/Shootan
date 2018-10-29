@@ -163,20 +163,25 @@ void Game::update()
         vecEnemies[i]->update();
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
+    fpsCounter.update();
     //TODO: Add borders and view lock on it
     view.setCenter(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y);
-    window.setView(view);
 }
 void Game::draw()
 {
     window.clear();
+    //*View of the game board
+    window.setView(view);
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
         window.draw(*vecEnemies[i]);
     window.draw(*player);
+    //* UI
+    window.setView(window.getDefaultView());
     window.draw(info);
+    window.draw(fpsCounter);
     if(openMainMenu)
         window.draw(*menu);
     window.display();
