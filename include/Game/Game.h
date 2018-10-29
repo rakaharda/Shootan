@@ -29,14 +29,14 @@ public:
     virtual ~Game();
     void play();
 private:
-    Player*      player;
-    sf::Font     font;
-    sf::Text     info; //temporary
-    sf::Clock*   gameClock;
-    MainMenu     *menu;
-    VideoSettings videoSettings;
-    bool isPlaying;
-    bool         openMainMenu;
+    Player*       player;
+    sf::Font      font;
+    sf::Text      info; //temporary
+    sf::Clock*    gameClock;
+    MainMenu      *menu;
+    VideoSettings *videoSettings;
+    bool          isPlaying;
+    bool          openMainMenu;
     void showStats();
     void loadResources();
     void loadSettings();
