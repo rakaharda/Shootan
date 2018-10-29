@@ -1,7 +1,7 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-
+#include <functional>
 #include "Components/GameObject.h"
 
 using namespace std;
@@ -9,11 +9,12 @@ using namespace std;
 class Button: public GameObject
 {
 public:
-    Button(string _name, string _path, float _size, float _xPos, float _yPos, int _id);
+    Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func, int _id);
     virtual ~Button();
     void setID(int _id);
     void changeButtonName(string _name);
     void changeButtonSprite(string _path);
+    void m_function();
     int getID();
     bool isSelect;
 protected:

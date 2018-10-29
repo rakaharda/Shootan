@@ -1,6 +1,6 @@
 #include "GUI/Button.h"
 
-Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, int _id = 0)
+Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func, int _id = 0)
 {
     id = _id;
     texture.loadFromFile(_path);
@@ -45,6 +45,11 @@ void Button::setID(int _id)
 }
 
 void Button::update()
+{
+
+}
+
+void m_function()
 {
 
 }
