@@ -32,8 +32,10 @@ void Game::play()
     loadResources();
     player = new Player;
     player->setWeapon(new SniperRifle(&player->m_sprite, 1));
-    vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
-    vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
+    vecEnemies.push_back(new Enemy(500, 500, &player->m_sprite, 100.f));
+    vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f));
+    vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
+    vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
     gameClock = new sf::Clock;
     cout << "Starting main game loop"<<endl;
     while (isPlaying)
@@ -97,6 +99,7 @@ void Game::handleEvents()
 void Game::checkProjectiles()
 {
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+    {
         for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
             if(checkCollision(vecProjectiles[i], vecEnemies[j]))
@@ -105,13 +108,14 @@ void Game::checkProjectiles()
                     vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
                     vecProjectiles.erase(vecProjectiles.begin() + i);
                 }
-            if(checkCollision(vecProjectiles[i], player))
-                if(!(vecProjectiles[i]->person))
+        }
+        if(checkCollision(vecProjectiles[i], player))
+            if(!(vecProjectiles[i]->person))
                 {
                     player->takeDamage(vecProjectiles[i]->getDamage());
                     vecProjectiles.erase(vecProjectiles.begin() + i);
                 }
-        }
+    }
 }
 
 void Game::checkEnemies()
