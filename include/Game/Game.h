@@ -12,6 +12,7 @@
 #include "Weapons/Gun.h"
 #include "Weapons/SniperRifle.h"
 #include "Components/Collision.h"
+#include "Game/Settings.h"
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
 #include <sstream>
@@ -33,10 +34,8 @@ private:
     sf::Text     info; //temporary
     sf::Clock*   gameClock;
     MainMenu     *menu;
-    bool         isPlaying;
-    bool         fullscreen;
-    bool         verticalSync;
-    sf::Vector2u resolution;
+    VideoSettings videoSettings;
+    bool isPlaying;
     bool         openMainMenu;
     void showStats();
     void loadResources();

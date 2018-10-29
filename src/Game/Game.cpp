@@ -6,11 +6,11 @@ Game::Game() : isPlaying(true)
     //openMainMenu = new bool;
     openMainMenu = false;
     window.setFramerateLimit(200);
-    if(fullscreen)
-        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan", sf::Style::Fullscreen);
+    if(videoSettings.fullscreen)
+        window.create(sf::VideoMode(videoSettings.width, videoSettings.height), "Shootan", sf::Style::Fullscreen);
     else
-        window.create(sf::VideoMode(resolution.x, resolution.y), "Shootan");
-    if (verticalSync)
+        window.create(sf::VideoMode(videoSettings.width, videoSettings.height), "Shootan");
+    if (videoSettings.vsync)
         window.setVerticalSyncEnabled(true);
     else
         window.setVerticalSyncEnabled(false);
@@ -78,7 +78,7 @@ void Game::handleEvents()
             {
             case sf::Keyboard::Escape:
                 if(!openMainMenu)
-                    menu = new MainMenu(&openMainMenu, &fullscreen, &verticalSync);
+                    menu = new MainMenu(&openMainMenu, &videoSettings.fullscreen, &videoSettings.vsync);
                 else
                 {
                     openMainMenu = false;
@@ -184,14 +184,14 @@ void Game::loadSettings()
     FILE *fp = fopen("settings.conf", "r");
     unsigned int temp;
     fscanf(fp, "Fullscreen=%u\n", &temp);
-    fullscreen = (bool)temp;
+    videoSettings.fullscreen = (bool)temp;
     fscanf(fp, "VerticalSync=%u\n", &temp);
-    verticalSync = (bool)temp;
-    fscanf(fp, "Width=%u\n", &(resolution.x));
-    fscanf(fp, "Height=%u\n", &(resolution.y));
-    if(resolution.x < 640)
-        resolution.x = 640;
-    if(resolution.y < 480)
-        resolution.y = 480;
+    videoSettings.vsync = (bool)temp;
+    fscanf(fp, "Width=%u\n", &(videoSettings.width));
+    fscanf(fp, "Height=%u\n", &(videoSettings.height));
+    if(videoSettings.width < 640)
+        videoSettings.width = 640;
+    if(videoSettings.height < 480)
+        videoSettings.height = 480;
     fclose(fp);
 }
