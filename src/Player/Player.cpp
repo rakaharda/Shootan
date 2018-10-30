@@ -21,16 +21,16 @@ void Player::update()
     float x;
     float y;
     //? x
-    if (m_sprite.getPosition().x < window.getSize().x / 2.f)
+    if(m_sprite.getPosition().x < window.getSize().x / 2.f)
         x = m_sprite.getPosition().x;
-    else if (m_sprite.getPosition().x > FWIDTH - (window.getSize().x / 2.f))
+    else if(m_sprite.getPosition().x > FWIDTH - (window.getSize().x / 2.f))
         x = (float)(window.getSize().x) - FWIDTH + m_sprite.getPosition().x;
     else 
         x = window.getSize().x / 2.f;
     //? y
-    if (m_sprite.getPosition().y < window.getSize().y / 2.f)
+    if(m_sprite.getPosition().y < window.getSize().y / 2.f)
         y = m_sprite.getPosition().y;
-    else if (m_sprite.getPosition().y > FHEIGHT - (window.getSize().y / 2.f))
+    else if(m_sprite.getPosition().y > FHEIGHT - (window.getSize().y / 2.f))
         y = (float)(window.getSize().y) - FHEIGHT + m_sprite.getPosition().y;
     else 
         y = window.getSize().y / 2.f;
@@ -75,16 +75,44 @@ void Player::setWeapon(Weapon* _weapon)
 
 void Player::move()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        m_sprite.move(0.f, -1 * speed * frameTime);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        m_sprite.move(0.f, speed * frameTime);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        m_sprite.move(-1 * speed * frameTime, 0.f);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        m_sprite.move(speed * frameTime, 0.f);
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        weapon->addProjectile();
+    float angle = -1;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            angle = 5.f * M_PI / 4.f;
+        }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            angle = 3.f * M_PI / 4.f;
+        }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            angle = M_PI / 4.f;
+        }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            angle = 7.f * M_PI / 4.f;
+        }
+    else
+        {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            {
+                angle = 3.f * M_PI / 2.f;
+            }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            {
+                angle = M_PI / 2.f;
+            }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            {
+                angle = M_PI;
+            }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                angle = 0.f;
+            }
+        }
+    if(angle != -1)
+        m_sprite.move(cos(angle) * speed * frameTime, sin(angle) * speed * frameTime);
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const

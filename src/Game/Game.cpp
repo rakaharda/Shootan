@@ -170,11 +170,11 @@ void Game::update()
 void Game::updateView()
 {
     view.setCenter(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y);
-    if (view.getCenter().x < window.getSize().x / 2)
+    if(view.getCenter().x < window.getSize().x / 2)
         view.setCenter(window.getSize().x / 2, view.getCenter().y);
     else if(view.getCenter().x > fieldSize.width - (window.getSize().x / 2))
         view.setCenter(fieldSize.width - (window.getSize().x / 2), view.getCenter().y);
-    if (view.getCenter().y < window.getSize().y / 2)
+    if(view.getCenter().y < window.getSize().y / 2)
         view.setCenter(view.getCenter().x, window.getSize().y / 2);
     else if(view.getCenter().y > fieldSize.height - (window.getSize().y / 2))
         view.setCenter(view.getCenter().x, fieldSize.height - (window.getSize().y / 2));
