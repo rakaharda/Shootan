@@ -18,6 +18,7 @@ public:
     virtual void update();
     virtual void setWeapon(Weapon* _weapon);
     float        attack();
+    void         setSkill(int _skill);
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 protected:
@@ -34,6 +35,9 @@ protected:
     void calculateRotation();
     bool checkDistance();
     void checkHealth();
+    float timeSkill;
+    int skill;
+    float skillDamage;
 };
 
 extern sf::RenderWindow     window;

@@ -23,6 +23,7 @@ public:
     void  update();
     float getDamage();
     bool person;
+    int getSkill();
 private:
     float damage;
     float speed;

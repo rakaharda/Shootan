@@ -20,6 +20,9 @@ Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints
     speed = 50.f;
     toDelete = false;
     weapon = NULL;
+    skill=0;
+    timeSkill=0.f;
+    skillDamage=0.1f;
 }
 
 Enemy::~Enemy()
@@ -36,6 +39,18 @@ void Enemy::update()
     weapon->addProjectile();
     weapon->update();
     checkHealth();
+    if(timeSkill<0.f)
+    {
+        setSkill(0);
+    }
+    if(skill)
+    {
+        timeSkill-=frameTime;
+    }
+    if(skill==1)
+    {
+        takeDamage(skillDamage);
+    }
 }
 
 void Enemy::move()
@@ -111,4 +126,26 @@ void Enemy::setWeapon(Weapon* _weapon)
 float Enemy::attack()
 {
     return weapon->attack();
+}
+
+void Enemy::setSkill(int _skill)
+{
+    skill=_skill;
+    if(!skill)
+    {
+        timeSkill=0.f;
+        speed=50.f;
+        rotationRate=90.f;
+    }
+    if(skill==2)
+    {
+        timeSkill=5.f;
+        speed=20.f;
+        rotationRate=20.f;
+    }
+    if(skill==1)
+    {
+        timeSkill=5.f;
+    }
+
 }
