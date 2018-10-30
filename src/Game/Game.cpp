@@ -17,7 +17,7 @@ Game::Game() : isPlaying(true)
     window.setFramerateLimit(videoSettings->framerateLimit);
     openMainMenu = false;
     loadResources();
-    fieldSize = sf::IntRect(0, 0, 3840, 2160);
+    fieldSize = sf::IntRect(0, 0, 2560, 1440);
     background.setTexture(backgroundTexture);
     background.setTextureRect(fieldSize);
     info.setFont(font);
@@ -74,7 +74,7 @@ void Game::handleEvents()
     while(window.pollEvent(event))
     {
         if(openMainMenu)
-            menu->processEvents(event);
+            menu->handleEvents(event);
         else
             player->handleEvents(event);
         switch(event.type)
@@ -88,7 +88,7 @@ void Game::handleEvents()
             {
             case sf::Keyboard::Escape:
                 if(!openMainMenu)
-                    menu = new MainMenu(&openMainMenu, &videoSettings->fullscreen, &videoSettings->vsync);
+                    menu = new MainMenu(&openMainMenu, &videoSettings->fullscreen, &videoSettings->vsync, player->m_sprite);
                 else
                 {
                     openMainMenu = false;
@@ -156,8 +156,10 @@ void Game::collectTrash()
 }
 void Game::update()
 {
-    if(openMainMenu)
+    if(openMainMenu){
+//        menu->update();
         return;
+    }
     player->update();
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
         vecEnemies[i]->update();

@@ -7,7 +7,7 @@
 class MainMenu: public Menu
 {
 public:
-    MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync);
+    MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync, sf::Sprite& _playerSprite);
     bool *fullscreen;
     bool *verticalSync;
     virtual ~MainMenu();
@@ -17,6 +17,7 @@ private:
     void backToMainMenu();
     void refreshMenu();
     bool isSettings;
+    std::function<void(void)> buttonFunctions[2];
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };

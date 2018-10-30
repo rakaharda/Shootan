@@ -1,31 +1,25 @@
 #include "GUI/MainMenu.h"
-#include <iostream>
 
-void GG()
-{
-    int a = 0;
-    a++;
-}
-
-
-MainMenu::MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync)
+MainMenu::MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync, sf::Sprite& _playerSprite)
 {
     isSettings = false;
     verticalSync = _verticalSync;
     fullscreen = _fullscreen;
+//    buttonFunctions[0] = f1;
+//    buttonFunctions[1] = f2;
     string str[4];
     str[0] = "Play";
     str[1] = "Settings";
     str[2] = "Exit";
     str[3] = "./data/interface/button.png";
     for(int i = 0; i < 3; i++)
-        buttons.push_back(new Button(str[i],str[3],30.f,window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150, GG,i));
+        buttons.push_back(new Button(str[i],str[3],30.f,_playerSprite.getPosition().x,_playerSprite.getPosition().y - 150 + i*150, buttonFunctions[0],i));
     for(int i = 0; i < 4; i++)
         str[i].erase();
     backGroundTexture.loadFromFile("./data/interface/background.png");
     backGroundSprite.setTexture(backGroundTexture);
-    backGroundSprite.setPosition(window.getSize().x / 2 - backGroundSprite.getTexture()->getSize().x / 2,
-                                 window.getSize().y / 2 - backGroundSprite.getTexture()->getSize().y / 2);
+    backGroundSprite.setPosition(_playerSprite.getPosition().x - backGroundSprite.getTexture()->getSize().x / 2,
+                                 _playerSprite.getPosition().y - backGroundSprite.getTexture()->getSize().y / 2);
     menuStatus = _menuStatus;
     *menuStatus = true;
 }
@@ -44,7 +38,6 @@ void MainMenu::startProcess(int _id)
         return;
     case 1:
         createSettingsMenu();
-        //sf::sleep(sf::microseconds(5000000));
         return;
     case 2:
         window.close();
@@ -89,7 +82,6 @@ void MainMenu::startProcess(int _id)
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
             refreshMenu();
-            //buttons[2]->changeButtonName("1080");
         }
         else
         {
@@ -98,7 +90,6 @@ void MainMenu::startProcess(int _id)
             if (*verticalSync)
                 window.setVerticalSyncEnabled(true);
             refreshMenu();
-            //buttons[2]->changeButtonName("720");
         }
         break;
     case 6:
@@ -125,9 +116,9 @@ void MainMenu::createSettingsMenu()
     str[3] = "Back";
     str[4] = "./data/interface/button4.png";
     buttons.clear();
-    buttons.push_back(new CheckBox(str[0],28.f,window.getSize().x / 2,window.getSize().y / 2 - 176,3,verticalSync,GG));
+    buttons.push_back(new CheckBox(str[0],28.f,window.getSize().x / 2,window.getSize().y / 2 - 176,3,verticalSync,buttonFunctions[0]));
     for(int i = 1; i < 4; i++)
-        buttons.push_back(new Button(str[i],str[4],30.f,window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116, GG, i+3 ));
+        buttons.push_back(new Button(str[i],str[4],30.f,window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116, buttonFunctions[0], i+3 ));
     for(int i = 0; i < 5; i++)
         str[i].erase();
 }
@@ -142,7 +133,7 @@ void MainMenu::backToMainMenu()
     str[3] = "./data/interface/button.png";
     buttons.clear();
     for(int i = 0; i < 3; i++)
-        buttons.push_back(new Button(str[i],str[3],30.f,window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150,GG,i));
+        buttons.push_back(new Button(str[i],str[3],30.f,window.getSize().x / 2,window.getSize().y / 2 - 150 + i*150,buttonFunctions[0],i));
     for(int i = 0; i < 4; i++)
         str[i].erase();
 }
@@ -163,9 +154,9 @@ void MainMenu::refreshMenu()
     str[3] = "Back";
     str[4] = "./data/interface/button4.png";
     buttons.clear();
-    buttons.push_back(new CheckBox(str[0],28.f,window.getSize().x / 2,window.getSize().y / 2 - 176,3,verticalSync, GG));
+    buttons.push_back(new CheckBox(str[0],28.f,window.getSize().x / 2,window.getSize().y / 2 - 176,3,verticalSync, buttonFunctions[0]));
     for(int i = 1; i < 4; i++)
-        buttons.push_back(new Button(str[i],str[4],30.f,window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116, GG, i+3));
+        buttons.push_back(new Button(str[i],str[4],30.f,window.getSize().x / 2,window.getSize().y / 2 - 176 + i*116, buttonFunctions[0], i+3));
     for(int i = 0; i < 5; i++)
         str[i].erase();
     backGroundSprite.setPosition(window.getSize().x / 2 - backGroundSprite.getTexture()->getSize().x / 2,

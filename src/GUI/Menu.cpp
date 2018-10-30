@@ -10,19 +10,11 @@ Menu::~Menu()
     //dor
 }
 
-void Menu::processEvents(sf::Event event)
+void Menu::handleEvents(sf::Event event)
 {
+
     switch(event.type)
     {
-    case sf::Event::Closed:
-        window.close();
-        return;
-    case sf::Event::KeyPressed:
-        switch(event.key.code)
-        {
-        default:
-            break;
-        }
     case sf::Event::MouseButtonPressed:
         switch(event.mouseButton.button)
         {
