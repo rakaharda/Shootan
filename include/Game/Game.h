@@ -53,6 +53,7 @@ private:
     void checkProjectiles();
     void checkEnemies();
     void update();
+    void updateView();
     void draw();
 };
 
