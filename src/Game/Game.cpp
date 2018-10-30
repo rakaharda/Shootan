@@ -216,18 +216,5 @@ void Game::loadResources()
 
 void Game::loadSettings()
 {
-    FILE *fp = fopen("settings.conf", "r");
-    unsigned int temp;
-    fscanf(fp, "Fullscreen=%u\n", &temp);
-    videoSettings->fullscreen = (bool)temp;
-    fscanf(fp, "VerticalSync=%u\n", &temp);
-    videoSettings->vsync = (bool)temp;
-    fscanf(fp, "Width=%u\n", &videoSettings->width);
-    fscanf(fp, "Height=%u\n", &videoSettings->height);
-    if(videoSettings->width < 640)
-        videoSettings->width = 640;
-    if(videoSettings->height < 480)
-        videoSettings->height = 480;
-    fclose(fp);
-    videoSettings->framerateLimit = 200;
+    videoSettings->loadSettings();
 }

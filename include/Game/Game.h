@@ -16,7 +16,7 @@
 #include "Weapons/Gun.h"
 #include "Weapons/SniperRifle.h"
 #include "Components/Collision.h"
-#include "Game/Settings.h"
+#include "Game/VideoSettings.h"
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
 #include "Utils/FPSCounter.h"
