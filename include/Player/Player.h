@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <cmath>
+#include <iostream>
 #include "Components/GameObject.h"
 #include "Weapons/Weapon.h"
 #include "Weapons/Autorifle.h"
@@ -9,6 +10,9 @@
 #include "Weapons/SniperRifle.h"
 #include "Weapons/Gun.h"
 #include "Components/HealthPoints.h"
+
+#define FHEIGHT 2160
+#define FWIDTH 3840
 
 using namespace std;
 

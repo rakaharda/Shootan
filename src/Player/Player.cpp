@@ -5,9 +5,9 @@ Player::Player() : HealthPoints()
     texture.loadFromFile("./data/player/sprite.png");
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
-    m_sprite.setPosition(3840 / 2, 2160 / 2);
+    m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
     weapon = new SniperRifle(&m_sprite);
-    speed = 150.f;
+    speed = 200.f;
 }
 
 Player::~Player()
@@ -18,9 +18,26 @@ Player::~Player()
 void Player::update()
 {
     //TODO: make it relative to player position relative to the screen
+    float x;
+    float y;
+    //? x
+    if (m_sprite.getPosition().x < window.getSize().x / 2.f)
+        x = m_sprite.getPosition().x;
+    else if (m_sprite.getPosition().x > FWIDTH - (window.getSize().x / 2.f))
+        x = (float)(window.getSize().x) - FWIDTH + m_sprite.getPosition().x;
+    else 
+        x = window.getSize().x / 2.f;
+    //? y
+    if (m_sprite.getPosition().y < window.getSize().y / 2.f)
+        y = m_sprite.getPosition().y;
+    else if (m_sprite.getPosition().y > FHEIGHT - (window.getSize().y / 2.f))
+        y = (float)(window.getSize().y) - FHEIGHT + m_sprite.getPosition().y;
+    else 
+        y = window.getSize().y / 2.f;
+
     m_sprite.setRotation(-180 / M_PI * atan2(
-                             window.getSize().y / 2.f - sf::Mouse::getPosition(window).y,
-                             sf::Mouse::getPosition(window).x - window.getSize().x / 2.f
+                             y - sf::Mouse::getPosition(window).y,
+                             sf::Mouse::getPosition(window).x - x
                         ));
     move();
     weapon->update();
