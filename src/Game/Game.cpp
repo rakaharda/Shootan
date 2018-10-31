@@ -165,20 +165,37 @@ void Game::update()
         vecEnemies[i]->update();
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
-    //TODO: Add borders and view lock on it
+    fpsCounter.update();
+    updateView();
+}
+
+void Game::updateView()
+{
     view.setCenter(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y);
-    window.setView(view);
+    if(view.getCenter().x < window.getSize().x / 2)
+        view.setCenter(window.getSize().x / 2, view.getCenter().y);
+    else if(view.getCenter().x > fieldSize.width - (window.getSize().x / 2))
+        view.setCenter(fieldSize.width - (window.getSize().x / 2), view.getCenter().y);
+    if(view.getCenter().y < window.getSize().y / 2)
+        view.setCenter(view.getCenter().x, window.getSize().y / 2);
+    else if(view.getCenter().y > fieldSize.height - (window.getSize().y / 2))
+        view.setCenter(view.getCenter().x, fieldSize.height - (window.getSize().y / 2));
 }
 void Game::draw()
 {
     window.clear();
+    //*View of the game board
+    window.setView(view);
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
         window.draw(*vecEnemies[i]);
     window.draw(*player);
+    //* UI
+    window.setView(window.getDefaultView());
     window.draw(info);
+    window.draw(fpsCounter);
     if(openMainMenu)
         window.draw(*menu);
     window.display();
@@ -201,18 +218,5 @@ void Game::loadResources()
 
 void Game::loadSettings()
 {
-    FILE *fp = fopen("settings.conf", "r");
-    unsigned int temp;
-    fscanf(fp, "Fullscreen=%u\n", &temp);
-    videoSettings->fullscreen = (bool)temp;
-    fscanf(fp, "VerticalSync=%u\n", &temp);
-    videoSettings->vsync = (bool)temp;
-    fscanf(fp, "Width=%u\n", &videoSettings->width);
-    fscanf(fp, "Height=%u\n", &videoSettings->height);
-    if(videoSettings->width < 640)
-        videoSettings->width = 640;
-    if(videoSettings->height < 480)
-        videoSettings->height = 480;
-    fclose(fp);
-    videoSettings->framerateLimit = 200;
+    videoSettings->loadSettings();
 }
