@@ -9,19 +9,19 @@ using namespace std;
 
 class ResourceManager
 {
-    public:
-        ResourceManager();
-        virtual ~ResourceManager() {};
-        void addTexture(string _key, string _path);
-        void addTexture(string _key, string _path, bool _repeated);
-        void deleteTexture(string _key);
-        sf::Texture& getTexture(string _key);
-    protected:
-        map<string, sf::Texture> textureMap;
-        map<string, sf::SoundBuffer> soundBufferMap;
-        map<string, sf::Font> fontMap;
-    private:
-    
+public:
+    ResourceManager();
+    virtual ~ResourceManager() {};
+    void addTexture(string _key, string _path);
+    void addTexture(string _key, string _path, bool _repeated);
+    void deleteTexture(string _key);
+    sf::Texture& getTexture(string _key);
+protected:
+    map<string, sf::Texture> textureMap;
+    map<string, sf::SoundBuffer> soundBufferMap;
+    map<string, sf::Font> fontMap;
+private:
+
 };
 
 #endif // RESOURCEMANAGER_H

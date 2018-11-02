@@ -6,7 +6,7 @@ class SniperRifle: public Weapon
 {
 public:
     SniperRifle(sf::Sprite* _player, bool _person = 0);
-    virtual ~SniperRifle(){};
+    virtual ~SniperRifle() {};
 };
 
 #endif //SNIPERRIFLE

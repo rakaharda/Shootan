@@ -11,7 +11,10 @@ public:
     float getDamage();
     void  setDamage(float _damage);
     float attack();
-    bool  addProjectile() {return false;};
+    bool  addProjectile()
+    {
+        return false;
+    };
 protected:
 private:
 };

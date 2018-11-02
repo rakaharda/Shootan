@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SFML\Window.hpp>
+#include <SFML/Window.hpp>
 #include <vector>
 #include <sstream>
 #include <cstdlib>
@@ -17,6 +17,7 @@
 #include "Weapons/SniperRifle.h"
 #include "Components/Collision.h"
 #include "Game/VideoSettings.h"
+#include "Game/GSSurvival.h"
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
 #include "Utils/FPSCounter.h"
@@ -33,29 +34,24 @@ public:
     virtual ~Game();
     void play();
 private:
-    Player*         player;
-    sf::Sprite      background;
+    enum GameStates
+    {
+        GS_LOADING_SCREEN,
+        GS_MAINMENU,
+        GS_GAMEMODE_SURVIVAL
+    } gameState;
     sf::Font        font;
-    sf::Text        info; //temporary
     sf::Clock*      gameClock;
-    sf::IntRect     fieldSize;
-    sf::Texture     backgroundTexture;
-    sf::View        view;
     FPSCounter      fpsCounter;
     MainMenu        *menu;
     VideoSettings   *videoSettings;
     ResourceManager *resources;
+    GameState       *currentGameState;
     bool            isPlaying;
-    bool            openMainMenu;
-    void showStats();
     void loadResources();
     void loadSettings();
     void handleEvents();
-    void collectTrash();
-    void checkProjectiles();
-    void checkEnemies();
     void update();
-    void updateView();
     void draw();
 };
 

@@ -13,7 +13,7 @@ class Weapon : public Cooldown
 public:
     Weapon(sf::Sprite* _player, bool _person = 0);
     Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, bool _person=0);
-    virtual ~Weapon(){};
+    virtual ~Weapon() {};
     virtual void  update();
     virtual bool  addProjectile();
     float         getReloadTime();
@@ -21,7 +21,10 @@ public:
     int           getClipSize();
     int           getCurrentClipSize();
     float         getAttackDistance();
-    virtual float attack() {return 0.f;};
+    virtual float attack()
+    {
+        return 0.f;
+    };
     void          getDamage() {};
     void          setDamage(float _damage) {};
 protected:

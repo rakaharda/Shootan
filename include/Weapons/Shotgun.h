@@ -6,7 +6,7 @@ class Shotgun: public Weapon
 {
 public:
     Shotgun(sf::Sprite* _player, bool _person = 0);
-    virtual ~Shotgun(){};
+    virtual ~Shotgun() {};
     bool addProjectile();
     int waveCount;
 };

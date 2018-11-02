@@ -13,10 +13,10 @@ bool VideoSettings::loadSettings()
 {
     FILE *fp = fopen("settings.conf", "r");
     if (fp == NULL)
-        {
-            saveSettings();
-            return false;
-        }
+    {
+        saveSettings();
+        return false;
+    }
     unsigned int temp;
     fscanf(fp, "Fullscreen=%u\n", &temp);
     fullscreen = (bool)temp;
@@ -39,7 +39,7 @@ bool VideoSettings::saveSettings()
 {
     FILE *fp = fopen("settings.conf", "w");
     if (fp == NULL)
-            return false;
+        return false;
     fprintf(fp, "Fullscreen=%u\n", (unsigned)fullscreen);
     fprintf(fp, "Vertical Sync=%u\n", (unsigned)vsync);
     fprintf(fp, "Width=%u\n", width);

@@ -6,7 +6,7 @@ class Autorifle: public Weapon
 {
 public:
     Autorifle(sf::Sprite* _player, bool _person = 0);
-    virtual ~Autorifle(){};
+    virtual ~Autorifle() {};
 };
 
 #endif //AUTORIFLE
