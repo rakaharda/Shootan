@@ -4,6 +4,7 @@ Game::Game() : isPlaying(true)
 {
     //Loading settings
     videoSettings = new VideoSettings;
+    resources = new ResourceManager;
     loadSettings();
     //Setting up window
     if(videoSettings->fullscreen)
@@ -18,7 +19,7 @@ Game::Game() : isPlaying(true)
     openMainMenu = false;
     loadResources();
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
-    background.setTexture(backgroundTexture);
+    background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     info.setFont(font);
     info.setFillColor(sf::Color::Black);
@@ -201,6 +202,7 @@ void Game::draw()
 
 void Game::loadResources()
 {
+    resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
     font.loadFromFile("./data/fonts/arial.ttf");
     vecTextures.push_back(sf::Texture());
     vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");

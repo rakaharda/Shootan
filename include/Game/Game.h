@@ -20,6 +20,7 @@
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
 #include "Utils/FPSCounter.h"
+#include "Utils/ResourceManager.h"
 
 using namespace std;
 
@@ -32,19 +33,20 @@ public:
     virtual ~Game();
     void play();
 private:
-    Player*       player;
-    sf::Sprite    background;
-    sf::Font      font;
-    sf::Text      info; //temporary
-    sf::Clock*    gameClock;
-    sf::IntRect   fieldSize;
-    sf::Texture   backgroundTexture;
-    sf::View      view;
-    FPSCounter    fpsCounter;
-    MainMenu      *menu;
-    VideoSettings *videoSettings;
-    bool          isPlaying;
-    bool          openMainMenu;
+    Player*         player;
+    sf::Sprite      background;
+    sf::Font        font;
+    sf::Text        info; //temporary
+    sf::Clock*      gameClock;
+    sf::IntRect     fieldSize;
+    sf::Texture     backgroundTexture;
+    sf::View        view;
+    FPSCounter      fpsCounter;
+    MainMenu        *menu;
+    VideoSettings   *videoSettings;
+    ResourceManager *resources;
+    bool            isPlaying;
+    bool            openMainMenu;
     void showStats();
     void loadResources();
     void loadSettings();
