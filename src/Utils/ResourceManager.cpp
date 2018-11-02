@@ -7,11 +7,7 @@ ResourceManager::ResourceManager()
     textureMap["default"].setRepeated(true);
 }
 
-ResourceManager::~ResourceManager()
-{
-    //dtor
-}
-
+//* Textures
 void ResourceManager::addTexture(string _key, string _path)
 {
     textureMap.emplace(_key, sf::Texture());
@@ -34,3 +30,12 @@ sf::Texture& ResourceManager::getTexture(string _key)
     else 
         return textureMap["default"];
 }
+
+void ResourceManager::deleteTexture(string _key)
+{
+    textureMap.erase(_key);
+}
+
+//TODO: Fonts
+
+//TODO: SoundBuffers
