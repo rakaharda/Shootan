@@ -1,8 +1,8 @@
 #include "GUI/Button.h"
 
-Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func, int _id = 0)
+Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func)
 {
-    id = _id;
+    m_function = _func;
     texture.loadFromFile(_path);
     m_sprite.setTexture(texture);
     m_sprite.setPosition(_xPos - m_sprite.getTexture()->getSize().x / 2, _yPos - m_sprite.getTexture()->getSize().y / 2);

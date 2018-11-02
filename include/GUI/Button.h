@@ -9,12 +9,12 @@ using namespace std;
 class Button: public GameObject
 {
 public:
-    Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func, int _id);
+    Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func);
     virtual ~Button();
     void setID(int _id);
     void changeButtonName(string _name);
     void changeButtonSprite(string _path);
-    void m_function();
+    std::function <void(void)> m_function;
     int getID();
     bool isSelect;
 protected:

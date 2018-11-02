@@ -11,12 +11,13 @@ class Menu : public sf::Drawable
 public:
     Menu();
     virtual ~Menu();
-    void processEvents(sf::Event event);
+    void handleEvents(sf::Event event);
     bool *menuStatus;
 protected:
     void searchButton();
     virtual void startProcess(int _id);
     vector <Button*> buttons;
+    std::function<void(void)> *buttonFunctions;
     sf::Texture backGroundTexture;
     sf::Sprite backGroundSprite;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
