@@ -1,9 +1,0 @@
-#ifndef BUTTONFUNCTIONS_H_INCLUDED
-#define BUTTONFUNCTIONS_H_INCLUDED
-
-#include "Game/Game.h"
-
-
-
-
-#endif // BUTTONFUNCTIONS_H_INCLUDED

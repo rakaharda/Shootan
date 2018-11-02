@@ -3,23 +3,22 @@
 
 #include "Menu.h"
 #include "GUI/CheckBox.h"
+#include "Game/VideoSettings.h"
 
 class MainMenu: public Menu
 {
 public:
-    MainMenu(bool *_menuStatus, bool *_fullscreen, bool *_verticalSync, sf::Sprite& _playerSprite);
-    bool *fullscreen;
-    bool *verticalSync;
+    MainMenu(VideoSettings *_videoSettings, bool *_menuStatus, bool *_isPlaing);
     virtual ~MainMenu();
 private:
-    void startProcess(int _id);
-    void createSettingsMenu();
-    void backToMainMenu();
     void refreshMenu();
+    void setFunctions();
     bool isSettings;
-    std::function<void(void)> buttonFunctions[2];
+    bool *isPlaying;
+    VideoSettings *videoSettings;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
+friend Button;
+//    buttonFunctions;
 };
 
 extern sf::RenderWindow window;

@@ -36,7 +36,7 @@ void Menu::searchButton()
         if(buttons[i]->m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x,
                 sf::Mouse::getPosition(window).y))
         {
-            startProcess(buttons[i]->getID());
+            buttons[i]->m_function();
             return;
         }
     }

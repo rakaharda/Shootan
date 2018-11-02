@@ -88,7 +88,7 @@ void Game::handleEvents()
             {
             case sf::Keyboard::Escape:
                 if(!openMainMenu)
-                    menu = new MainMenu(&openMainMenu, &videoSettings->fullscreen, &videoSettings->vsync, player->m_sprite);
+                    menu = new MainMenu(videoSettings, &openMainMenu, &isPlaying);
                 else
                 {
                     openMainMenu = false;
