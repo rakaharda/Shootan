@@ -8,7 +8,7 @@
 class MainMenu: public Menu
 {
 public:
-    MainMenu(VideoSettings *_videoSettings, bool *_menuStatus, bool *_isPlaing);
+    MainMenu(VideoSettings *_videoSettings, bool *_menuStatus);
     virtual ~MainMenu();
 private:
     void refreshMenu();

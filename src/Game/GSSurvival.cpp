@@ -59,14 +59,14 @@ void GSSurvival::updateStats()
 void GSSurvival::handleEvents(sf::Event _event)
 {
     if(openMainMenu)
-            menu->processEvents(_event);
+            menu->handleEvents(_event);
         else
             player->handleEvents(_event);
     if(_event.type == sf::Event::KeyPressed)
         if(_event.key.code == sf::Keyboard::Escape)
             {
             if(!openMainMenu)
-                menu = new MainMenu(&openMainMenu, &videoSettings->fullscreen, &videoSettings->vsync);
+                menu = new MainMenu(videoSettings,&openMainMenu);
             else
                 openMainMenu = false;
             }

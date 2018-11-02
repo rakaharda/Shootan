@@ -1,9 +1,8 @@
 #include "GUI/MainMenu.h"
 
-MainMenu::MainMenu(VideoSettings *_videoSettings,bool *_menuStatus, bool *_isPlaing)
+MainMenu::MainMenu(VideoSettings *_videoSettings,bool *_menuStatus)
 {
     videoSettings = _videoSettings;
-    isPlaying = _isPlaing;
     menuStatus = _menuStatus;
     *menuStatus = true;
     isSettings = false;
@@ -58,7 +57,6 @@ void MainMenu::setFunctions()
     };
     buttonFunctions[2] = [this](){
         window.close();
-        *isPlaying = true;
     };
     buttonFunctions[3] = [this](){
         if (videoSettings->vsync)
