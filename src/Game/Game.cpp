@@ -26,6 +26,7 @@ Game::~Game()
 {
     delete(gameClock);
     delete(videoSettings);
+    delete(currentGameState);
 }
 
 void Game::play()
