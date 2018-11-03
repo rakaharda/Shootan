@@ -9,7 +9,8 @@ Player::Player() : HealthPoints()
     weapon = new SniperRifle(&m_sprite);
     speed = 150.f;
     skill=0;
-    activeSkillTime=0.f;
+    activeSkillTimeFire=0.f;
+    activeSkillTimeFrost=0.f;
 }
 
 Player::~Player()
@@ -26,13 +27,9 @@ void Player::update()
                         ));
     move();
     weapon->update();
-    if(skill)
-        activeSkillTime-=frameTime;
-    if(activeSkillTime<0.f)
-    {
-        activeSkillTime=0.f;
-        setSkill(0);
-    }
+    checkSkill();
+
+
 }
 
 void Player::handleEvents(sf::Event event)
@@ -68,10 +65,44 @@ void Player::setWeapon(Weapon* _weapon)
 
 void Player::setSkill(int _skill)
 {
-    if(_skill)
-    activeSkillTime=30.f;
-    skill=_skill;
-    weapon->setITexture(_skill);
+    if(_skill == 1)
+        activeSkillTimeFire = 30.f;
+    if(_skill == 2)
+        activeSkillTimeFrost = 30.f;
+    if((activeSkillTimeFire > 0.f) && (activeSkillTimeFrost > 0.f))
+        skill = 3;
+    else
+        skill = _skill;
+    weapon->setITexture(skill);
+}
+
+void Player::checkSkill()
+{
+    if(skill==1)
+        activeSkillTimeFire-=frameTime;
+    if(skill==2)
+        activeSkillTimeFrost-=frameTime;
+    if(skill==3)
+    {
+        activeSkillTimeFire-=frameTime;
+        activeSkillTimeFrost-=frameTime;
+        if(activeSkillTimeFire<=0.f)
+        {
+            activeSkillTimeFire=0.f;
+            setSkill(2);
+        }
+        if(activeSkillTimeFrost<=0.f)
+        {
+            activeSkillTimeFrost=0.f;
+            setSkill(1);
+        }
+    }
+    if((activeSkillTimeFire<=0.f)&&(activeSkillTimeFrost<=0.f))
+    {
+        activeSkillTimeFire=0.f;
+        activeSkillTimeFrost=0.f;
+        setSkill(0);
+    }
 }
 
 void Player::move()

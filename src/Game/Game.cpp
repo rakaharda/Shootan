@@ -2,6 +2,7 @@
 #include <iostream>
 Game::Game() : isPlaying(true)
 {
+    k=0;
     loadSettings();
     //openMainMenu = new bool;
     openMainMenu = false;
@@ -127,7 +128,12 @@ void Game::checkEnemies()
     {
         if(vecEnemies[i]->toDelete)
         {
-            vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
+            if(k)
+                vecPerks.push_back(new Frost(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
+            else
+                vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
+            k=1-k;
+            k++;
             vecEnemies.erase(vecEnemies.begin() + i);
             cout<<i<<" deleted"<<endl;
         }
@@ -209,15 +215,19 @@ void Game::loadResources()
     vecTextures.push_back(sf::Texture());
     vecTextures[2].loadFromFile("./data/projectiles/3.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[3].loadFromFile("./data/projectiles/1B.png");
+    vecTextures[3].loadFromFile("./data/projectiles/4.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[4].loadFromFile("./data/projectiles/2B.png");
+    vecTextures[4].loadFromFile("./data/projectiles/1B.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[5].loadFromFile("./data/projectiles/3B.png");
+    vecTextures[5].loadFromFile("./data/projectiles/2B.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[6].loadFromFile("./data/enemies/default_enemy.png");
+    vecTextures[6].loadFromFile("./data/projectiles/3B.png");
     vecTextures.push_back(sf::Texture());
-    vecTextures[7].loadFromFile("./data/enemies/default_monster_nest.png");
+    vecTextures[7].loadFromFile("./data/projectiles/4B.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[8].loadFromFile("./data/enemies/default_enemy.png");
+    vecTextures.push_back(sf::Texture());
+    vecTextures[9].loadFromFile("./data/enemies/default_monster_nest.png");
 }
 
 void Game::loadSettings()

@@ -52,6 +52,7 @@ private:
     void checkPerks();
     void update();
     void draw();
+    int k;
 };
 
 extern sf::RenderWindow     window;

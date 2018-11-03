@@ -29,7 +29,9 @@ private:
     void         move();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     int skill;
-    float activeSkillTime;
+    float activeSkillTimeFire;
+    float activeSkillTimeFrost;
+    void checkSkill();
 };
 
 extern sf::RenderWindow window;

@@ -8,10 +8,10 @@ Gun::Gun(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
     spread = 9;
     damage = 25.f;
     projectileSpeed = 0.7f;
-    iTexture=3;
+    iTexture=4;
 }
 
 void Gun::setITexture(int _iTexture)
 {
-    iTexture=_iTexture+3;
+    iTexture=_iTexture+4;
 }
