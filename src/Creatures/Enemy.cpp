@@ -20,9 +20,9 @@ Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints
     speed = 50.f;
     toDelete = false;
     weapon = NULL;
-    skill=0;
-    timeSkill=0.f;
-    skillDamage=0.1f;
+    iFrost=0;
+    iFire=0;
+    skillDamage=0.f;
 }
 
 Enemy::~Enemy()
@@ -39,20 +39,34 @@ void Enemy::update()
     weapon->addProjectile();
     weapon->update();
     checkHealth();
-    if(timeSkill<0.f)
+    checkSkill();
+    takeDamage(skillDamage);
+    cout<<getCurrentHealthPoints()<<endl;
+}
+void Enemy::checkSkill()
+{
+    for (int i = 0; i < vecSkills.size();i++)
     {
-        setSkill(0);
-    }
-    if(skill)
-    {
-        timeSkill-=frameTime;
-    }
-    if(skill==1)
-    {
-        takeDamage(skillDamage);
+        vecSkills[i]->skillTime -= frameTime;
+        if(vecSkills[i]->skillTime <=0.f)
+        {
+            if(vecSkills[i]->skill == 1)
+            {
+                iFire--;
+                skillDamage-=0.01f;
+                vecSkills.erase(vecSkills.begin() + i);
+            }
+            if(vecSkills[i]->skill == 2)
+            {
+
+                iFrost--;
+                rotationRate+=8.f;
+                speed+=5.f;
+                vecSkills.erase(vecSkills.begin() + i);
+            }
+        }
     }
 }
-
 void Enemy::move()
 {
     m_sprite.move(speed * frameTime * cos(currentAngle / 180 * M_PI), speed * frameTime * sin(currentAngle / 180 * M_PI));
@@ -130,22 +144,24 @@ float Enemy::attack()
 
 void Enemy::setSkill(int _skill)
 {
-    skill=_skill;
-    if(!skill)
+    if(((_skill==1)||(_skill==3))&&(iFire<10))
     {
-        timeSkill=0.f;
-        speed=50.f;
-        rotationRate=90.f;
+        skills *sk=new skills;
+        sk->skillTime=5.f;
+        sk->skill=1;
+        skillDamage+=0.01f;
+        vecSkills.push_back(sk);
+        iFire++;
     }
-    if(skill==2)
+    if(((_skill==2)||(_skill==3))&&(iFrost<10))
     {
-        timeSkill=5.f;
-        speed=20.f;
-        rotationRate=20.f;
-    }
-    if(skill==1)
-    {
-        timeSkill=5.f;
+        skills *sk=new skills;
+        sk->skillTime=5.f;
+        sk->skill=2;
+        rotationRate-=8.f;
+        speed-=5.f;
+        vecSkills.push_back(sk);
+        iFrost++;
     }
 
 }

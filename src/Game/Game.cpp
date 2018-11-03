@@ -2,7 +2,7 @@
 #include <iostream>
 Game::Game() : isPlaying(true)
 {
-    k=0;
+    k=0; //need delete
     loadSettings();
     //openMainMenu = new bool;
     openMainMenu = false;
@@ -32,11 +32,11 @@ void Game::play()
     loadResources();
     player = new Player;
     Perk::player=player;
-    player->setWeapon(new Gun(&player->m_sprite, 1));
+    player->setWeapon(new Autorifle(&player->m_sprite, 1));
     vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
     vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
-    vecEnemies.push_back(new Enemy (600,600,&player->m_sprite, 100.f));
-    vecEnemies[vecEnemies.size() - 1]->setWeapon(new Autorifle(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
+    //vecEnemies.push_back(new Enemy (600,600,&player->m_sprite, 100.f));
+    //vecEnemies[vecEnemies.size() - 1]->setWeapon(new Autorifle(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
     gameClock = new sf::Clock;
     cout << "Starting main game loop"<<endl;
     while (isPlaying)
@@ -128,12 +128,13 @@ void Game::checkEnemies()
     {
         if(vecEnemies[i]->toDelete)
         {
+            //
             if(k)
                 vecPerks.push_back(new Frost(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             else
                 vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             k=1-k;
-            k++;
+            k++; //fix this code
             vecEnemies.erase(vecEnemies.begin() + i);
             cout<<i<<" deleted"<<endl;
         }

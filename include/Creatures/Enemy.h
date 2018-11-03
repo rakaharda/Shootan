@@ -13,8 +13,8 @@ using namespace std;
 class Enemy : public GameObject, public HealthPoints
 {
 public:
-    struct skills { int thisskill;
-                    float thisskilltime;};
+    struct skills { int skill;
+                    float skillTime;};
     Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints);
     virtual ~Enemy();
     virtual void update();
@@ -24,7 +24,7 @@ public:
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 protected:
-    vector <skills*> vecSkolls;
+    vector <skills*> vecSkills;
     Weapon*           weapon;
     sf::Texture       texture;
     const sf::Sprite* player;
@@ -38,8 +38,9 @@ protected:
     void calculateRotation();
     bool checkDistance();
     void checkHealth();
-    float timeSkill;
-    int skill;
+    void checkSkill();
+    int iFrost;
+    int iFire;
     float skillDamage;
 };
 

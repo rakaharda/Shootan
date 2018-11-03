@@ -52,7 +52,7 @@ private:
     void checkPerks();
     void update();
     void draw();
-    int k;
+    int k; //need for different perks( need rewrite)
 };
 
 extern sf::RenderWindow     window;
