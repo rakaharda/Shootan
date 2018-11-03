@@ -9,7 +9,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
-    info.setFont(font);
+    info.setFont(resources->getFont("arial"));
     info.setFillColor(sf::Color::Black);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
@@ -20,6 +20,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f));
     vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
     vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
+
 }
 
 GSSurvival::~GSSurvival()
@@ -141,7 +142,7 @@ void GSSurvival::updateView()
 void GSSurvival::loadResources()
 {
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
-    font.loadFromFile("./data/fonts/arial.ttf");
+    resources->addFont("arial", "./data/fonts/arial.ttf");
     vecTextures.push_back(sf::Texture());
     vecTextures[0].loadFromFile("./data/projectiles/projectile1.png");
     vecTextures.push_back(sf::Texture());

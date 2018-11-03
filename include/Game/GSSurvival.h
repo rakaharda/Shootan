@@ -18,7 +18,6 @@ protected:
     sf::Text        info;
     sf::IntRect     fieldSize;
     sf::View        view;
-    sf::Font        font;
     MainMenu        *menu;
     VideoSettings   *videoSettings;
     ResourceManager *resources;
