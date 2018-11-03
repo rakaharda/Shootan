@@ -41,7 +41,6 @@ void Enemy::update()
     checkHealth();
     checkSkill();
     takeDamage(skillDamage);
-    cout<<getCurrentHealthPoints()<<endl;
 }
 void Enemy::checkSkill()
 {

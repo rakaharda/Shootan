@@ -11,6 +11,7 @@ Player::Player() : HealthPoints()
     skill=0;
     activeSkillTimeFire=0.f;
     activeSkillTimeFrost=0.f;
+    activeSpeedTime=0.f;
 }
 
 Player::~Player()
@@ -104,6 +105,13 @@ void Player::checkSkill()
         activeSkillTimeFire=0.f;
         activeSkillTimeFrost=0.f;
         setSkill(0);
+    }
+    if(activeSpeedTime>0.f)
+        activeSpeedTime-=frameTime;
+    if(activeSpeedTime<0.f)
+    {
+        activeSpeedTime=0.f;
+        speed=150.f;
     }
 }
 

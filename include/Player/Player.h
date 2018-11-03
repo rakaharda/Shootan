@@ -22,9 +22,10 @@ public:
     Weapon* getWeapon();
     void    setWeapon(Weapon* _weapon);
     void setSkill(int _skill);
+    float       speed;
+    float activeSpeedTime;
 private:
     sf::Texture texture;
-    float       speed;
     Weapon*     weapon;
     void         move();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

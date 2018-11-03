@@ -135,6 +135,7 @@ void Game::checkEnemies()
                 vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             k=1-k;
             k++; //fix this code
+            //vecPerks.push_back(new FindWeapon(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y,new Gun(&player->m_sprite, 1)));
             vecEnemies.erase(vecEnemies.begin() + i);
             cout<<i<<" deleted"<<endl;
         }

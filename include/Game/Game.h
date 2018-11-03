@@ -18,6 +18,8 @@
 #include "Perks/Medicine.h"
 #include "Perks/Fire.h"
 #include "Perks/Frost.h"
+#include "Perks/FindWeapon.h"
+#include "Perks/UpSpeed.h"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
