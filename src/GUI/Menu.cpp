@@ -29,27 +29,20 @@ void Menu::handleEvents(sf::Event event)
     }
 }
 
+void Menu::setFunctions()
+{
+    
+}
+
 void Menu::searchButton()
 {
     for(unsigned int i = 0; i < buttons.size(); i++)
     {
-        if(buttons[i]->m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x,
+        if(buttons[i]->isClicked(sf::Mouse::getPosition(window).x,
                 sf::Mouse::getPosition(window).y))
         {
-            buttons[i]->m_function();
             return;
         }
-    }
-}
-
-void Menu::startProcess(int _id)
-{
-    switch(_id)
-    {
-    case 0:
-        break;
-    default:
-        break;
     }
 }
 

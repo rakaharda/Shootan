@@ -19,6 +19,16 @@ Button::~Button()
     //dtor
 }
 
+bool Button::isClicked(float _xPos, float _yPos)
+{
+    if(m_sprite.getGlobalBounds().contains(_xPos, _yPos))
+    {
+        m_function();
+        return true;
+    }
+    else return false;
+}
+
 void Button::changeButtonName(string _name)
 {
     text.setString(_name);
@@ -34,15 +44,6 @@ void Button::changeButtonSprite(string _path)
     m_sprite.setTexture(texture);
 }
 
-int Button::getID()
-{
-    return id;
-}
-
-void Button::setID(int _id)
-{
-    id = _id;
-}
 
 void Button::update()
 {

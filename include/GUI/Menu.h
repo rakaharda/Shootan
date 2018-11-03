@@ -15,7 +15,7 @@ public:
     bool *menuStatus;
 protected:
     void searchButton();
-    virtual void startProcess(int _id);
+    virtual void setFunctions();
     vector <Button*> buttons;
     std::function<void(void)> *buttonFunctions;
     sf::Texture backGroundTexture;

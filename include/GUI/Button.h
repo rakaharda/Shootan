@@ -11,16 +11,15 @@ class Button: public GameObject
 public:
     Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func);
     virtual ~Button();
-    void setID(int _id);
     void changeButtonName(string _name);
     void changeButtonSprite(string _path);
-    std::function <void(void)> m_function;
-    int getID();
+    bool isClicked(float _xPos, float _yPos);
     bool isSelect;
 protected:
     sf::Texture texture;
     sf::Text text;
     sf::Font font;
+    std::function <void(void)> m_function;
     int id;
 private:
     virtual void update();
