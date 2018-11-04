@@ -23,10 +23,12 @@ public:
     void  update();
     float getDamage();
     bool person;
+    int getSkill();
 private:
     float damage;
     float speed;
     float angle;
+    int skill;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

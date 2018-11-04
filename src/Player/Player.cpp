@@ -6,8 +6,12 @@ Player::Player() : HealthPoints()
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
-    weapon = new SniperRifle(&m_sprite);
+    weapon = new Autorifle(&m_sprite);
     speed = 200.f;
+    skill=0;
+    activeSkillTimeFire=0.f;
+    activeSkillTimeFrost=0.f;
+    activeSpeedTime=0.f;
 }
 
 Player::~Player()
@@ -41,6 +45,9 @@ void Player::update()
                          ));
     move();
     weapon->update();
+    checkSkill();
+
+
 }
 
 void Player::handleEvents(sf::Event event)
@@ -68,9 +75,61 @@ Weapon* Player::getWeapon()
 
 void Player::setWeapon(Weapon* _weapon)
 {
-    if(weapon != nullptr)
+    if(weapon != NULL)
         delete(weapon);
     weapon = _weapon;
+    setSkill(skill);
+}
+
+void Player::setSkill(int _skill)
+{
+    if(_skill == 1)
+        activeSkillTimeFire = 30.f;
+    if(_skill == 2)
+        activeSkillTimeFrost = 30.f;
+    if((activeSkillTimeFire > 0.f) && (activeSkillTimeFrost > 0.f))
+        skill = 3;
+    else
+        skill = _skill;
+    weapon->setITexture(skill);
+}
+
+void Player::checkSkill()
+{
+    if(skill==1)
+        activeSkillTimeFire-=frameTime;
+    if(skill==2)
+        activeSkillTimeFrost-=frameTime;
+    if(skill==3)
+    {
+        activeSkillTimeFire-=frameTime;
+        activeSkillTimeFrost-=frameTime;
+        if(activeSkillTimeFire<=0.f)
+        {
+            activeSkillTimeFire=0.f;
+            skill=2;
+            weapon->setITexture(skill);
+        }
+        if(activeSkillTimeFrost<=0.f)
+        {
+            activeSkillTimeFrost=0.f;
+            skill=1;
+            weapon->setITexture(skill);
+        }
+    }
+    if((activeSkillTimeFire<=0.f)&&(activeSkillTimeFrost<=0.f))
+    {
+        activeSkillTimeFire=0.f;
+        activeSkillTimeFrost=0.f;
+        setSkill(0);
+    }
+    if(activeSpeedTime>0.f)
+        activeSpeedTime-=frameTime;
+    if(activeSpeedTime<0.f)
+    {
+        activeSpeedTime=0.f;
+        speed=200.f;
+    }
 }
 
 void Player::move()

@@ -4,14 +4,14 @@ HealthPoints::HealthPoints() :
     healthPoints(100.f),
     currentHealthPoints(healthPoints)
 {
-    
+
 }
 
 HealthPoints::HealthPoints(float _healthPoints) :
     healthPoints(_healthPoints),
-    currentHealthPoints(healthPoints) 
+    currentHealthPoints(healthPoints)
 {
-    
+
 }
 
 HealthPoints::~HealthPoints()
@@ -26,6 +26,10 @@ float HealthPoints::getHealthPoints()
 float HealthPoints::getCurrentHealthPoints()
 {
     return currentHealthPoints;
+}
+void HealthPoints::setCurrentHealthPoints(float _hp)
+{
+    currentHealthPoints=_hp;
 }
 void HealthPoints::takeDamage(float _damage)
 {

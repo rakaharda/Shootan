@@ -27,7 +27,9 @@ protected:
     void collectTrash();
     void checkProjectiles();
     void checkEnemies();
+    void checkPerks();
     void updateView();
+    int k; //need for different perks( need rewrite)
 private:
 };
 
@@ -36,5 +38,6 @@ extern float                frameTime;
 extern vector <sf::Texture> vecTextures;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Enemy*>      vecEnemies;
+extern vector <Perk*>       vecPerks;
 
 #endif // GSSURVIVAL_H

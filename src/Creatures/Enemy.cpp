@@ -2,7 +2,7 @@
 
 Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) :
     HealthPoints(_healthPoints),
-    texture(vecTextures[1]),
+    texture(vecTextures[8]),
     attackDistance(0.f)
 {
     m_sprite.setTexture(texture);
@@ -19,7 +19,10 @@ Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints
     distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 50.f;
     toDelete = false;
-    weapon = nullptr;
+    weapon = NULL;
+    iFrost=0;
+    iFire=0;
+    skillDamage=0.f;
 }
 
 Enemy::~Enemy()
@@ -36,8 +39,33 @@ void Enemy::update()
     weapon->addProjectile();
     weapon->update();
     checkHealth();
+    checkSkill();
+    takeDamage(skillDamage);
 }
+void Enemy::checkSkill()
+{
+    for (int i = 0; i < vecSkills.size();i++)
+    {
+        vecSkills[i]->skillTime -= frameTime;
+        if(vecSkills[i]->skillTime <=0.f)
+        {
+            if(vecSkills[i]->skill == 1)
+            {
+                iFire--;
+                skillDamage-=0.01f;
+                vecSkills.erase(vecSkills.begin() + i);
+            }
+            if(vecSkills[i]->skill == 2)
+            {
 
+                iFrost--;
+                rotationRate+=8.f;
+                speed+=5.f;
+                vecSkills.erase(vecSkills.begin() + i);
+            }
+        }
+    }
+}
 void Enemy::move()
 {
     m_sprite.move(speed * frameTime * cos(currentAngle / 180 * M_PI), speed * frameTime * sin(currentAngle / 180 * M_PI));
@@ -102,7 +130,7 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 void Enemy::setWeapon(Weapon* _weapon)
 {
-    if(weapon != nullptr)
+    if(weapon != NULL)
         delete(weapon);
     weapon = _weapon;
     attackDistance = weapon->getAttackDistance();
@@ -111,4 +139,28 @@ void Enemy::setWeapon(Weapon* _weapon)
 float Enemy::attack()
 {
     return weapon->attack();
+}
+
+void Enemy::setSkill(int _skill)
+{
+    if(((_skill==1)||(_skill==3))&&(iFire<10))
+    {
+        skills *sk=new skills;
+        sk->skillTime=5.f;
+        sk->skill=1;
+        skillDamage+=0.01f;
+        vecSkills.push_back(sk);
+        iFire++;
+    }
+    if(((_skill==2)||(_skill==3))&&(iFrost<10))
+    {
+        skills *sk=new skills;
+        sk->skillTime=5.f;
+        sk->skill=2;
+        rotationRate-=8.f;
+        speed-=5.f;
+        vecSkills.push_back(sk);
+        iFrost++;
+    }
+
 }

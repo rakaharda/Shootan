@@ -60,5 +60,6 @@ extern float                frameTime;
 extern vector <sf::Texture> vecTextures;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Enemy*>      vecEnemies;
+extern vector <Perk*>       vecPerks;
 #endif // GAME_H
 
