@@ -21,7 +21,6 @@ Player::~Player()
 
 void Player::update()
 {
-    //TODO: make it relative to player position relative to the screen
     float x;
     float y;
     //? x
@@ -43,6 +42,8 @@ void Player::update()
                              y - sf::Mouse::getPosition(window).y,
                              sf::Mouse::getPosition(window).x - x
                          ));
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        weapon->addProjectile();
     move();
     weapon->update();
     checkSkill();
@@ -52,20 +53,7 @@ void Player::update()
 
 void Player::handleEvents(sf::Event event)
 {
-    switch(event.type)
-    {
-    case sf::Event::MouseButtonPressed:
-        switch(event.mouseButton.button)
-        {
-        case sf::Mouse::Left:
-            weapon->addProjectile();
-        default:
-            break;
-        }
-        break;
-    default:
-        break;
-    }
+
 }
 
 Weapon* Player::getWeapon()

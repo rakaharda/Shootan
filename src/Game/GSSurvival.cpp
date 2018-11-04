@@ -22,7 +22,6 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f));
     vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
     vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
-
 }
 
 GSSurvival::~GSSurvival()

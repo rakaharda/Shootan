@@ -44,7 +44,7 @@ void Enemy::update()
 }
 void Enemy::checkSkill()
 {
-    for (int i = 0; i < vecSkills.size();i++)
+    for (unsigned int i = 0; i < vecSkills.size();i++)
     {
         vecSkills[i]->skillTime -= frameTime;
         if(vecSkills[i]->skillTime <=0.f)

@@ -6,7 +6,6 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, in
     speed(_speed)
 {
     speed=_speed;
-    srand(time(NULL));
     skill=_iTexture%4;
     m_sprite.setTexture(vecTextures[_iTexture]);
     m_sprite.setPosition(_sprite->getPosition());
@@ -18,8 +17,7 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, in
     speed(_speed)
 {
     speed=_speed;
-    srand(time(NULL));
-    skill=_iTexture%4;
+    skill=_iTexture % 4;
     m_sprite.setTexture(vecTextures[_iTexture]);
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 10;
