@@ -172,15 +172,10 @@ void GSSurvival::loadResources()
 {
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
     resources->addFont("arial", "./data/fonts/arial.ttf");
-    resources->addTexture("projectile_1", "./data/projectiles/1.png");
-    resources->addTexture("projectile_2", "./data/projectiles/2.png");
-    resources->addTexture("projectile_3", "./data/projectiles/3.png");
-    resources->addTexture("projectile_4", "./data/projectiles/4.png");
-    resources->addTexture("projectile_1B", "./data/projectiles/1B.png");
-    resources->addTexture("projectile_2B", "./data/projectiles/2B.png");
-    resources->addTexture("projectile_3B", "./data/projectiles/3B.png");
-    resources->addTexture("projectile_4B", "./data/projectiles/4B.png");
+    resources->addTexture("projectile_1", "./data/projectiles/projectile1.png");
+    resources->addTexture("projectile_2", "./data/projectiles/projectile2.png");
     resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
+    resources->addTexture("frost_buff", "./data/projectiles/frost.png");
 }
 
 void GSSurvival::draw()

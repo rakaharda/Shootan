@@ -7,7 +7,6 @@ class Gun: public Weapon
 public:
     Gun(sf::Sprite* _player);
     virtual ~Gun(){};
-    void setITexture(int _iTexture);
 };
 
 #endif //GUN

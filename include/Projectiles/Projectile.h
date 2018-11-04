@@ -2,6 +2,7 @@
 #define PROJECTILE_H
 
 #include "Components/GameObject.h"
+#include "Utils/ResourceManager.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -22,15 +23,16 @@ public:
     virtual ~Projectile();
     void  update();
     float getDamage();
-    int getSkill();
+    int   getSkill();
 private:
-    float damage;
-    float speed;
-    float angle;
-    int skill;
+    float             damage;
+    float             speed;
+    float             angle;
+    int               skill;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 extern float                frameTime;
 extern sf::RenderWindow     window;
+extern ResourceManager      *resources;
 #endif // PROJECTILE_H

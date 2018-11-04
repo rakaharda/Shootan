@@ -89,24 +89,24 @@ void Player::setSkill(int _skill)
 
 void Player::checkSkill()
 {
-    if(skill==1)
-        activeSkillTimeFire-=frameTime;
-    if(skill==2)
-        activeSkillTimeFrost-=frameTime;
-    if(skill==3)
+    if(skill == 1)
+        activeSkillTimeFire -= frameTime;
+    if(skill == 2)
+        activeSkillTimeFrost -= frameTime;
+    if(skill == 3)
     {
-        activeSkillTimeFire-=frameTime;
-        activeSkillTimeFrost-=frameTime;
-        if(activeSkillTimeFire<=0.f)
+        activeSkillTimeFire -= frameTime;
+        activeSkillTimeFrost -= frameTime;
+        if(activeSkillTimeFire <= 0.f)
         {
-            activeSkillTimeFire=0.f;
-            skill=2;
+            activeSkillTimeFire = 0.f;
+            skill = 2;
             weapon->setSkill(skill);
         }
-        if(activeSkillTimeFrost<=0.f)
+        if(activeSkillTimeFrost <= 0.f)
         {
-            activeSkillTimeFrost=0.f;
-            skill=1;
+            activeSkillTimeFrost = 0.f;
+            skill = 1;
             weapon->setSkill(skill);
         }
     }

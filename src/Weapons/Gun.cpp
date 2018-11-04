@@ -8,11 +8,6 @@ Gun::Gun(sf::Sprite* _player) : Weapon(_player)
     spread = 9;
     damage = 25.f;
     projectileSpeed = 0.7f;
-    skill = 4;
-    textureKey = "projectile_1B";
+    textureKey = "projectile_2";
 }
 
-void Gun::setITexture(int _iTexture)
-{
-    skill = _iTexture+4;
-}
