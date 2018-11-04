@@ -5,6 +5,7 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, in
     damage(_damage),
     speed(_speed)
 {
+    toDelete = false;
     speed=_speed;
     skill=_iTexture%4;
     m_sprite.setTexture(vecTextures[_iTexture]);
@@ -16,6 +17,7 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, in
     damage(_damage),
     speed(_speed)
 {
+    toDelete = false;
     speed=_speed;
     skill=_iTexture % 4;
     m_sprite.setTexture(vecTextures[_iTexture]);

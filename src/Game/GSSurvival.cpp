@@ -16,7 +16,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     player = new Player;
     //!
     k=0; //need delete
-    Perk::player=player;
+    Perk::player = player;
     player->setWeapon(new Autorifle(&player->m_sprite, 1));
     vecEnemies.push_back(new Enemy(500, 500, &player->m_sprite, 100.f));
     vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f));
@@ -100,15 +100,17 @@ void GSSurvival::checkProjectiles()
                 {
                     vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
                     vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
-                    vecProjectiles.erase(vecProjectiles.begin() + i);
+                    vecProjectiles[i]->toDelete = true;
                 }
         }
         if(checkCollision(vecProjectiles[i], player))
             if(!(vecProjectiles[i]->person))
             {
                 player->takeDamage(vecProjectiles[i]->getDamage());
-                vecProjectiles.erase(vecProjectiles.begin() + i);
+                vecProjectiles[i]->toDelete = true;
             }
+        if(vecProjectiles[i]->toDelete)
+            vecProjectiles.erase(vecProjectiles.begin()+i);
     }
 }
 

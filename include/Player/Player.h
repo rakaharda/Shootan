@@ -32,6 +32,7 @@ private:
     sf::Texture texture;
     Weapon*     weapon;
     void         move();
+    void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     int skill;
     float activeSkillTimeFire;
