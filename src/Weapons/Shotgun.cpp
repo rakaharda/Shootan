@@ -1,6 +1,6 @@
 #include "Weapons/Shotgun.h"
 
-Shotgun::Shotgun(sf::Sprite* _player, ResourceManager *_resources, bool _person) : Weapon(_player, _resources, _person)
+Shotgun::Shotgun(sf::Sprite* _player, ResourceManager *_resources) : Weapon(_player, _resources)
 {
     weaponCooldown = 1.0f;
     clipSize = 5;
@@ -29,7 +29,7 @@ bool Shotgun::addProjectile()
         currentCooldown = weaponCooldown;
         for(int i = 0; i < 4; i++)
         {
-            vecProjectiles.push_back(new Projectile(player, damage, spread, resources->getTexture(textureKey), i, projectileSpeed, person, skill));
+            vecProjectiles.push_back(new Projectile(player, damage, spread, resources->getTexture(textureKey), i, projectileSpeed, skill));
         }
         return true;
     }

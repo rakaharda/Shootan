@@ -25,19 +25,19 @@ public:
     void    handleEvents(sf::Event event);
     Weapon* getWeapon();
     void    setWeapon(Weapon* _weapon);
-    void setSkill(int _skill);
+    void    setSkill(int _skill);
     float       speed;
-    float activeSpeedTime;
+    float       activeSpeedTime;
 private:
     sf::Texture texture;
     Weapon*     weapon;
+    int         skill;
+    float       activeSkillTimeFire;
+    float       activeSkillTimeFrost;
+    void         checkSkill();
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    int  skill;
-    float activeSkillTimeFire;
-    float activeSkillTimeFrost;
-    void checkSkill();
 };
 
 extern sf::RenderWindow window;

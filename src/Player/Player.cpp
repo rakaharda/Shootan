@@ -84,7 +84,7 @@ void Player::setSkill(int _skill)
         skill = 3;
     else
         skill = _skill;
-    weapon->setITexture(skill);
+    weapon->setSkill(skill);
 }
 
 void Player::checkSkill()
@@ -101,13 +101,13 @@ void Player::checkSkill()
         {
             activeSkillTimeFire=0.f;
             skill=2;
-            weapon->setITexture(skill);
+            weapon->setSkill(skill);
         }
         if(activeSkillTimeFrost<=0.f)
         {
             activeSkillTimeFrost=0.f;
             skill=1;
-            weapon->setITexture(skill);
+            weapon->setSkill(skill);
         }
     }
     if((activeSkillTimeFire<=0.f)&&(activeSkillTimeFrost<=0.f))

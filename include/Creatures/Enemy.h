@@ -18,12 +18,13 @@ public:
         int skill;
         float skillTime;
     };
-    Enemy (int _xPos, int _yPos, const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture);
+    Enemy (const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture);
     virtual ~Enemy();
     virtual void update();
     virtual void setWeapon(Weapon* _weapon);
     float        attack();
     void         setSkill(int _skill);
+    void         setPosition(float _xPos, float _yPos);
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 protected:

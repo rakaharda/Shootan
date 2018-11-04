@@ -6,7 +6,7 @@
 class MeleeAttack : public Weapon
 {
 public:
-    MeleeAttack(sf::Sprite* _player,  ResourceManager *_resources, bool _person=0);
+    MeleeAttack(sf::Sprite* _player,  ResourceManager *_resources);
     virtual ~MeleeAttack() {};
     float getDamage();
     void  setDamage(float _damage);

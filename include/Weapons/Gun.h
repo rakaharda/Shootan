@@ -5,7 +5,7 @@
 class Gun: public Weapon
 {
 public:
-    Gun(sf::Sprite* _player, ResourceManager *_resources, bool _person = 0);
+    Gun(sf::Sprite* _player, ResourceManager *_resources);
     virtual ~Gun(){};
     void setITexture(int _iTexture);
 };

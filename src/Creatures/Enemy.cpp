@@ -1,12 +1,11 @@
 #include "Creatures/Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture) :
+Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture) :
     HealthPoints(_healthPoints),
     attackDistance(0.f)
 {
     m_sprite.setTexture(_texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
-    m_sprite.setPosition(_xPos, _yPos);
     player = _sprite;
     angle = 180 / M_PI * atan2(
                 player->getPosition().y - m_sprite.getPosition().y,
@@ -19,11 +18,15 @@ Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints
     speed = 50.f;
     toDelete = false;
     weapon = NULL;
-    iFrost=0;
-    iFire=0;
-    skillDamage=0.f;
+    iFrost = 0;
+    iFire = 0;
+    skillDamage = 0.f;
 }
 
+void Enemy::setPosition(float _xPos, float _yPos)
+{
+    m_sprite.setPosition(_xPos, _yPos);
+}
 Enemy::~Enemy()
 {
     //dtor

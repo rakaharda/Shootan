@@ -14,12 +14,13 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
-    player->setWeapon(new Autorifle(&player->m_sprite, resources, 1));
+    player->setWeapon(new Autorifle(&player->m_sprite, resources));
     //!
     k = 0; //need to delete
     Perk::player = player;
-    vecEnemies.push_back(new Enemy(500, 500, &player->m_sprite, 100.f, resources->getTexture("default_enemy")));
-    vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f, resources->getTexture("default_enemy")));
+    vecEnemies.push_back(new Enemy(&player->m_sprite, 100.f, resources->getTexture("default_enemy")));
+    vecEnemies[0]->setPosition(500, 500);
+    vecEnemies.push_back(new Enemy(&player->m_sprite, 50.f, resources->getTexture("default_enemy")));
     vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite, resources));
     vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite, resources));
 }
@@ -96,7 +97,6 @@ void GSSurvival::checkProjectiles()
         for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
             if(checkCollision(vecProjectiles[i], vecEnemies[j]))
-                if(vecProjectiles[i]->person)
                 {
                     vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
                     vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
@@ -104,7 +104,6 @@ void GSSurvival::checkProjectiles()
                 }
         }
         if(checkCollision(vecProjectiles[i], player))
-            if(!(vecProjectiles[i]->person))
             {
                 player->takeDamage(vecProjectiles[i]->getDamage());
                 vecProjectiles[i]->toDelete = true;
@@ -148,10 +147,6 @@ void GSSurvival::checkPerks()
         {
             vecPerks[i]->pickUp();
             vecPerks.erase(vecPerks.begin() + i);
-            //for test
-            vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f, resources->getTexture("default_enemy")));
-            vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite, resources));
-            //
             continue;
         }
         if(vecPerks[i]->checkActive())

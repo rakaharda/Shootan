@@ -13,8 +13,8 @@ using namespace std;
 class Weapon : public Cooldown
 {
 public:
-    Weapon(sf::Sprite* _player, ResourceManager *_resources, bool _person = 0);
-    Weapon(sf::Sprite* _player, ResourceManager *_resources, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, bool _person = 0);
+    Weapon(sf::Sprite* _player, ResourceManager *_resources);
+    Weapon(sf::Sprite* _player, ResourceManager *_resources, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread);
     virtual ~Weapon() {};
     virtual void  update();
     virtual bool  addProjectile();
@@ -23,13 +23,10 @@ public:
     int           getClipSize();
     int           getCurrentClipSize();
     float         getAttackDistance();
-    virtual float attack()
-    {
-        return 0.f;
-    };
+    virtual float attack(){return 0.f;};
     void          getDamage() {};
     void          setDamage(float _damage) {};
-    virtual void  setITexture(int _iTexture);
+    virtual void  setSkill(int _skill);
 protected:
     const sf::Sprite* player;
     float             reloadTime;
@@ -41,7 +38,6 @@ protected:
     int               skill;
     float             projectileSpeed;
     float             wAttackDistance;
-    bool              person;
     ResourceManager   *resources;
     string            textureKey;
 private:
