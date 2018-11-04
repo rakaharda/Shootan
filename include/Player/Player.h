@@ -34,7 +34,7 @@ private:
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    int skill;
+    int  skill;
     float activeSkillTimeFire;
     float activeSkillTimeFrost;
     void checkSkill();

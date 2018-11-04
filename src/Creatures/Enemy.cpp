@@ -1,11 +1,10 @@
 #include "Creatures/Enemy.h"
 
-Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints) :
+Enemy::Enemy(int _xPos, int _yPos,const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture) :
     HealthPoints(_healthPoints),
-    texture(vecTextures[8]),
     attackDistance(0.f)
 {
-    m_sprite.setTexture(texture);
+    m_sprite.setTexture(_texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(_xPos, _yPos);
     player = _sprite;

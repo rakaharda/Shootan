@@ -14,14 +14,14 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
+    player->setWeapon(new Autorifle(&player->m_sprite, resources, 1));
     //!
-    k=0; //need delete
+    k = 0; //need to delete
     Perk::player = player;
-    player->setWeapon(new Autorifle(&player->m_sprite, 1));
-    vecEnemies.push_back(new Enemy(500, 500, &player->m_sprite, 100.f));
-    vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f));
-    vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
-    vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
+    vecEnemies.push_back(new Enemy(500, 500, &player->m_sprite, 100.f, resources->getTexture("default_enemy")));
+    vecEnemies.push_back(new Enemy(0, 0, &player->m_sprite, 50.f, resources->getTexture("default_enemy")));
+    vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite, resources));
+    vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite, resources));
 }
 
 GSSurvival::~GSSurvival()
@@ -149,8 +149,8 @@ void GSSurvival::checkPerks()
             vecPerks[i]->pickUp();
             vecPerks.erase(vecPerks.begin() + i);
             //for test
-            vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f));
-            vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite));
+            vecEnemies.push_back(new Enemy (500,500,&player->m_sprite, 100.f, resources->getTexture("default_enemy")));
+            vecEnemies[vecEnemies.size() - 1]->setWeapon(new Gun(&(vecEnemies[vecEnemies.size() - 1])->m_sprite, resources));
             //
             continue;
         }
@@ -177,26 +177,15 @@ void GSSurvival::loadResources()
 {
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
     resources->addFont("arial", "./data/fonts/arial.ttf");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[0].loadFromFile("./data/projectiles/1.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[1].loadFromFile("./data/projectiles/2.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[2].loadFromFile("./data/projectiles/3.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[3].loadFromFile("./data/projectiles/4.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[4].loadFromFile("./data/projectiles/1B.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[5].loadFromFile("./data/projectiles/2B.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[6].loadFromFile("./data/projectiles/3B.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[7].loadFromFile("./data/projectiles/4B.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[8].loadFromFile("./data/enemies/default_enemy.png");
-    vecTextures.push_back(sf::Texture());
-    vecTextures[9].loadFromFile("./data/enemies/default_monster_nest.png");
+    resources->addTexture("projectile_1", "./data/projectiles/1.png");
+    resources->addTexture("projectile_2", "./data/projectiles/2.png");
+    resources->addTexture("projectile_3", "./data/projectiles/3.png");
+    resources->addTexture("projectile_4", "./data/projectiles/4.png");
+    resources->addTexture("projectile_1B", "./data/projectiles/1B.png");
+    resources->addTexture("projectile_2B", "./data/projectiles/2B.png");
+    resources->addTexture("projectile_3B", "./data/projectiles/3B.png");
+    resources->addTexture("projectile_4B", "./data/projectiles/4B.png");
+    resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
 }
 
 void GSSurvival::draw()

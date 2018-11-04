@@ -6,9 +6,9 @@ Player::Player() : HealthPoints()
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
-    weapon = new Autorifle(&m_sprite);
+    weapon = nullptr;
     speed = 200.f;
-    skill=0;
+    skill = 0;
     activeSkillTimeFire=0.f;
     activeSkillTimeFrost=0.f;
     activeSpeedTime=0.f;
@@ -68,7 +68,7 @@ Weapon* Player::getWeapon()
 
 void Player::setWeapon(Weapon* _weapon)
 {
-    if(weapon != NULL)
+    if(weapon != nullptr)
         delete(weapon);
     weapon = _weapon;
     setSkill(skill);

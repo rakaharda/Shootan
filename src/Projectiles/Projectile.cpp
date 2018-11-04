@@ -1,26 +1,26 @@
 #include "Projectiles/Projectile.h"
 
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _iTexture, float _speed, bool _person) :
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, float _speed, bool _person, int _skill) :
     person(_person),
     damage(_damage),
     speed(_speed)
 {
     toDelete = false;
-    speed=_speed;
-    skill=_iTexture%4;
-    m_sprite.setTexture(vecTextures[_iTexture]);
+    speed = _speed;
+    skill = _skill;
+    m_sprite.setTexture(_texture);
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
 }
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _iTexture, int _numberShot, float _speed, bool _person) :
+Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, bool _person, int _skill) :
     person(_person),
     damage(_damage),
     speed(_speed)
 {
     toDelete = false;
-    speed=_speed;
-    skill=_iTexture % 4;
-    m_sprite.setTexture(vecTextures[_iTexture]);
+    speed = _speed;
+    skill = _skill;
+    m_sprite.setTexture(_texture);
     m_sprite.setPosition(_sprite->getPosition());
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 10;
 }

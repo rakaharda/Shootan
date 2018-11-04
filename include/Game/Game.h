@@ -25,8 +25,6 @@
 
 using namespace std;
 
-//*Field size 3840x2160 (2 times FullHD)
-
 class Game : private Collision
 {
 public:
@@ -57,7 +55,6 @@ private:
 
 extern sf::RenderWindow     window;
 extern float                frameTime;
-extern vector <sf::Texture> vecTextures;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Enemy*>      vecEnemies;
 extern vector <Perk*>       vecPerks;

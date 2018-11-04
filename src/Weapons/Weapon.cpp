@@ -1,6 +1,6 @@
 #include "Weapons/Weapon.h"
 
-Weapon::Weapon(sf::Sprite* _player, bool _person) :
+Weapon::Weapon(sf::Sprite* _player, ResourceManager *_resources, bool _person) :
     Cooldown(0.4f),
     player(_player),
     reloadTime(3.f),
@@ -9,15 +9,17 @@ Weapon::Weapon(sf::Sprite* _player, bool _person) :
     currentClipSize(clipSize),
     damage(5.f),
     spread(6),
-    iTexture(0),
+    skill(0),
     projectileSpeed(1.f),
     wAttackDistance(40.f),
-    person(_person)
+    person(_person),
+    resources(_resources),
+    textureKey("projectile_1")
 {
     //ctor
 }
 
-Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread, bool _person) :
+Weapon::Weapon(sf::Sprite* _player, ResourceManager *_resources, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread, bool _person) :
     Cooldown(_weaponCooldown),
     player(_player),
     reloadTime(_reloadTime),
@@ -26,10 +28,12 @@ Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, in
     currentClipSize(clipSize),
     damage(_damage),
     spread(_spread),
-    iTexture(0),
+    skill(0),
     projectileSpeed(1.f),
     wAttackDistance(40.f),
-    person(_person)
+    person(_person),
+    resources(_resources),
+    textureKey("projectile_1")
 {
 
 }
@@ -47,7 +51,7 @@ bool Weapon::addProjectile()
     {
         currentClipSize--;
         currentCooldown = weaponCooldown;
-        vecProjectiles.push_back(new Projectile(player, damage, spread, iTexture, projectileSpeed, person));
+        vecProjectiles.push_back(new Projectile(player, damage, spread, resources->getTexture(textureKey), projectileSpeed, person, skill));
         return true;
     }
     if(currentClipSize <= 0)
@@ -81,5 +85,5 @@ float Weapon::getAttackDistance()
 }
 void Weapon::setITexture(int _iTexture)
 {
-    iTexture=_iTexture;
+    skill = _iTexture;
 }

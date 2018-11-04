@@ -1,6 +1,6 @@
 #include "Weapons/Gun.h"
 
-Gun::Gun(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
+Gun::Gun(sf::Sprite* _player, ResourceManager *_resources, bool _person) : Weapon(_player, _resources, _person)
 {
     weaponCooldown = 1.5f;
     clipSize = 10;
@@ -8,10 +8,11 @@ Gun::Gun(sf::Sprite* _player, bool _person) : Weapon(_player, _person)
     spread = 9;
     damage = 25.f;
     projectileSpeed = 0.7f;
-    iTexture=4;
+    skill = 4;
+    textureKey = "projectile_1B";
 }
 
 void Gun::setITexture(int _iTexture)
 {
-    iTexture=_iTexture+4;
+    skill = _iTexture+4;
 }

@@ -6,13 +6,15 @@
 #include <cmath>
 #include "Projectiles/Projectile.h"
 #include "Components/Cooldown.h"
+#include "Utils/ResourceManager.h"
+
 using namespace std;
 
 class Weapon : public Cooldown
 {
 public:
-    Weapon(sf::Sprite* _player, bool _person = 0);
-    Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, bool _person=0);
+    Weapon(sf::Sprite* _player, ResourceManager *_resources, bool _person = 0);
+    Weapon(sf::Sprite* _player, ResourceManager *_resources, float _weaponCooldown, float _reloadTime, int _clipSize,float _damage, int _spread, bool _person = 0);
     virtual ~Weapon() {};
     virtual void  update();
     virtual bool  addProjectile();
@@ -36,11 +38,12 @@ protected:
     int               currentClipSize;
     float             damage;
     int               spread;
-    int               iTexture;
+    int               skill;
     float             projectileSpeed;
     float             wAttackDistance;
     bool              person;
-
+    ResourceManager   *resources;
+    string            textureKey;
 private:
 };
 

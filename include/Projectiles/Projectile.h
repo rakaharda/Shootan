@@ -17,8 +17,8 @@ public:
         ptSprite,
         ptLine
     };
-    Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, float _speed, bool _person);
-    Projectile(const sf::Sprite* _sprite, float _damage, int _spread, int _numberTexture, int _numberShot, float _speed, bool _person);
+    Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, float _speed, bool _person, int _skill);
+    Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, bool _person, int _skill);
     virtual ~Projectile();
     void  update();
     float getDamage();
@@ -33,6 +33,5 @@ private:
 };
 
 extern float                frameTime;
-extern vector <sf::Texture> vecTextures;
 extern sf::RenderWindow     window;
 #endif // PROJECTILE_H
