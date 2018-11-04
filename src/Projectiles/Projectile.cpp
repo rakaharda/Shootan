@@ -12,6 +12,7 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf
                          _sprite->getPosition().y + ((_sprite->getTexture()->getSize().x + m_sprite.getTexture()->getSize().x) * sin(_sprite->getRotation() / 180 * M_PI)));
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
 }
+
 Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, int _skill) :
     damage(_damage),
     speed(_speed)
@@ -38,10 +39,12 @@ float Projectile::getDamage()
 {
     return damage;
 }
+
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
+
 int Projectile::getSkill()
 {
     return skill;

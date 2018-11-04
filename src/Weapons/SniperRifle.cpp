@@ -1,6 +1,6 @@
 #include "Weapons/SniperRifle.h"
 
-SniperRifle::SniperRifle(sf::Sprite* _player, ResourceManager *_resources) : Weapon(_player, _resources)
+SniperRifle::SniperRifle(sf::Sprite* _player) : Weapon(_player)
 {
     weaponCooldown = 1.2f;
     clipSize = 7;

@@ -1,6 +1,6 @@
 #include "Weapons/MeleeAttack.h"
 
-MeleeAttack::MeleeAttack(sf::Sprite* _player, ResourceManager *_resources) : Weapon(_player, _resources)
+MeleeAttack::MeleeAttack(sf::Sprite* _player) : Weapon(_player)
 {
     damage = 20.f;
     currentCooldown = 1.f;

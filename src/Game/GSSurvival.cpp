@@ -14,15 +14,15 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
-    player->setWeapon(new Autorifle(&player->m_sprite, resources));
+    player->setWeapon(new Autorifle(&player->m_sprite));
     //!
     k = 0; //need to delete
     Perk::player = player;
     vecEnemies.push_back(new Enemy(&player->m_sprite, 100.f, resources->getTexture("default_enemy")));
     vecEnemies[0]->setPosition(500, 500);
     vecEnemies.push_back(new Enemy(&player->m_sprite, 50.f, resources->getTexture("default_enemy")));
-    vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite, resources));
-    vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite, resources));
+    vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
+    vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
 }
 
 GSSurvival::~GSSurvival()

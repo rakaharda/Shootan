@@ -1,6 +1,6 @@
 #include "Weapons/Shotgun.h"
 
-Shotgun::Shotgun(sf::Sprite* _player, ResourceManager *_resources) : Weapon(_player, _resources)
+Shotgun::Shotgun(sf::Sprite* _player) : Weapon(_player)
 {
     weaponCooldown = 1.0f;
     clipSize = 5;

@@ -2,7 +2,7 @@
 
 sf::RenderWindow window;
 float frameTime;
-vector <sf::Texture> vecTextures;
+ResourceManager *resources;
 vector <Projectile*> vecProjectiles;
 vector <Enemy*> vecEnemies;
 vector <Perk*> vecPerks;

@@ -21,7 +21,6 @@ protected:
     sf::View        view;
     MainMenu        *menu;
     VideoSettings   *videoSettings;
-    ResourceManager *resources;
     bool            openMainMenu;
     void updateStats();
     void loadResources();
@@ -39,5 +38,5 @@ extern float                frameTime;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Enemy*>      vecEnemies;
 extern vector <Perk*>       vecPerks;
-
+extern ResourceManager      *resources;
 #endif // GSSURVIVAL_H

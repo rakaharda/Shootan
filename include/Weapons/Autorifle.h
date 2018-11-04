@@ -5,7 +5,7 @@
 class Autorifle: public Weapon
 {
 public:
-    Autorifle(sf::Sprite* _player, ResourceManager *_resources);
+    Autorifle(sf::Sprite* _player);
     virtual ~Autorifle() {};
 };
 

@@ -1,6 +1,6 @@
 #include "Weapons/Weapon.h"
 
-Weapon::Weapon(sf::Sprite* _player, ResourceManager *_resources) :
+Weapon::Weapon(sf::Sprite* _player) :
     Cooldown(0.4f),
     player(_player),
     reloadTime(3.f),
@@ -12,13 +12,12 @@ Weapon::Weapon(sf::Sprite* _player, ResourceManager *_resources) :
     skill(0),
     projectileSpeed(1.f),
     wAttackDistance(40.f),
-    resources(_resources),
     textureKey("projectile_1")
 {
     //ctor
 }
 
-Weapon::Weapon(sf::Sprite* _player, ResourceManager *_resources, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread) :
+Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread) :
     Cooldown(_weaponCooldown),
     player(_player),
     reloadTime(_reloadTime),
@@ -30,7 +29,6 @@ Weapon::Weapon(sf::Sprite* _player, ResourceManager *_resources, float _weaponCo
     skill(0),
     projectileSpeed(1.f),
     wAttackDistance(40.f),
-    resources(_resources),
     textureKey("projectile_1")
 {
 
