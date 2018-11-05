@@ -55,7 +55,6 @@ private:
 extern sf::RenderWindow     window;
 extern float                frameTime;
 extern vector <Projectile*> vecProjectiles;
-extern vector <Enemy*>      vecEnemies;
 extern vector <Perk*>       vecPerks;
 extern ResourceManager      *resources;
 #endif // GAME_H

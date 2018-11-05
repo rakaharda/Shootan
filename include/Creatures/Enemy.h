@@ -22,6 +22,7 @@ public:
     virtual ~Enemy();
     virtual void update();
     virtual void setWeapon(Weapon* _weapon);
+    Weapon*      getWeapon();
     float        attack();
     void         setSkill(int _skill);
     void         setPosition(float _xPos, float _yPos);

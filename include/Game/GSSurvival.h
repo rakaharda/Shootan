@@ -21,12 +21,14 @@ protected:
     sf::View        view;
     MainMenu        *menu;
     VideoSettings   *videoSettings;
+    EnemyFactory    *enemyFactory;
     bool            openMainMenu;
+    vector <Enemy*> vecEnemies;
     void updateStats();
     void loadResources();
     void collectTrash();
     void checkProjectiles();
-    void checkEnemies();
+    void checkMelee();
     void checkPerks();
     void updateView();
     void updateListener();
@@ -37,7 +39,6 @@ private:
 extern sf::RenderWindow     window;
 extern float                frameTime;
 extern vector <Projectile*> vecProjectiles;
-extern vector <Enemy*>      vecEnemies;
 extern vector <Perk*>       vecPerks;
 extern ResourceManager      *resources;
 #endif // GSSURVIVAL_H

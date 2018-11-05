@@ -36,20 +36,12 @@ bool Weapon::addProjectile()
         currentClipSize--;
         currentCooldown = weaponCooldown;
         vecProjectiles.push_back(new Projectile(source, damage, spread, resources->getTexture(textureKey), projectileSpeed, skill));
-        sounds.push_back(sf::Sound());
-        sounds.back().setBuffer(resources->getSoundBuffer(shotSoundKey));
-        sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
-        sounds.back().setMinDistance(500);
-        sounds.back().play();
+        playShotSound();
         return true;
     }
     if(currentClipSize <= 0)
     {
-        sounds.push_back(sf::Sound());
-        sounds.back().setBuffer(resources->getSoundBuffer(reloadSoundKey));
-        sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
-        sounds.back().setMinDistance(50);
-        sounds.back().play();
+        playReloadSound();
         currentReloadTime = reloadTime;
         currentClipSize = clipSize;
     }
@@ -80,4 +72,31 @@ float Weapon::getAttackDistance()
 void Weapon::setSkill(int _skill)
 {
     skill = _skill;
+}
+
+float Weapon::getDamage()
+{
+    return damage;
+}
+
+void Weapon::setDamage(float _damage)
+{
+    damage = _damage;
+}
+
+void Weapon::playShotSound()
+{
+    sounds.push_back(sf::Sound());
+    sounds.back().setBuffer(resources->getSoundBuffer(shotSoundKey));
+    sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
+    sounds.back().setMinDistance(500);
+    sounds.back().play();
+}
+void Weapon::playReloadSound()
+{
+    sounds.push_back(sf::Sound());
+    sounds.back().setBuffer(resources->getSoundBuffer(reloadSoundKey));
+    sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
+    sounds.back().setMinDistance(50);
+    sounds.back().play();
 }

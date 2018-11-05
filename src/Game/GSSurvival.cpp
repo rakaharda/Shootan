@@ -18,11 +18,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     //!
     k = 0; //need to delete
     Perk::player = player;
-    vecEnemies.push_back(new Enemy(&player->m_sprite, 100.f, resources->getTexture("default_enemy")));
-    vecEnemies[0]->setPosition(500, 500);
-    vecEnemies.push_back(new Enemy(&player->m_sprite, 50.f, resources->getTexture("default_enemy")));
-    vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
-    vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
+    enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
     // resources->getMusic("GXRCH - HARD")->play();
 }
 
@@ -35,9 +31,10 @@ void GSSurvival::update()
 {
     if(openMainMenu)
         return;
+    if(player->getCurrentHealthPoints() > 0.f)
+    {
     player->update();
-    for(unsigned int i = 0; i < vecEnemies.size(); i++)
-        vecEnemies[i]->update();
+    enemyFactory->update();
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         vecProjectiles[i]->update();
     for(unsigned int i=0; i<vecPerks.size(); i++)
@@ -46,11 +43,12 @@ void GSSurvival::update()
     updateListener();
     updateStats();
     checkProjectiles();
-    checkEnemies();
+    checkMelee();
     checkPerks();
     collectTrash();
     updateView();
     draw();
+    }
 }
 
 void GSSurvival::updateStats()
@@ -60,7 +58,8 @@ void GSSurvival::updateStats()
         ss << player->getWeapon()->getCurrentReloadTime() << '/' << player->getWeapon()->getReloadTime();
     else
         ss << player->getWeapon()->getCurrentClipSize() << '/' << player->getWeapon()->getClipSize();
-    ss << endl <<"HP: "<< player->getCurrentHealthPoints();
+    ss << endl << "HP: " << player->getCurrentHealthPoints();
+    ss << endl << "Score: " << enemyFactory->getScore();
     info.setString(ss.str());
 }
 
@@ -120,7 +119,18 @@ void GSSurvival::checkProjectiles()
     }
 }
 
-void GSSurvival::checkEnemies()
+void GSSurvival::checkMelee()
+{
+    for(unsigned int i = 0; i < vecEnemies.size(); i++)
+    {
+        if(checkCollision(player, vecEnemies[i]))
+        {
+            player->takeDamage(vecEnemies[i]->attack());
+        }
+    }
+}
+
+/*void GSSurvival::checkEnemies()
 {
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
@@ -145,7 +155,7 @@ void GSSurvival::checkEnemies()
             player->takeDamage(vecEnemies[i]->attack());
         }
     }
-}
+}*/
 void GSSurvival::checkPerks()
 {
      for(unsigned int i=0; i < vecPerks.size(); i++)

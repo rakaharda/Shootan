@@ -24,9 +24,11 @@ public:
     int           getCurrentClipSize();
     float         getAttackDistance();
     virtual float attack(){return 0.f;};
-    void          getDamage() {};
-    void          setDamage(float _damage) {};
+    float         getDamage();
+    void          setDamage(float _damage);
     virtual void  setSkill(int _skill);
+    void          playShotSound();
+    void          playReloadSound();
 protected:
     const sf::Sprite* source;
     float             reloadTime;

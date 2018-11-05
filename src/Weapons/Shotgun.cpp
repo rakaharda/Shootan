@@ -30,26 +30,14 @@ bool Shotgun::addProjectile()
         }
         currentCooldown = weaponCooldown;
         for(int i = 0; i < 4; i++)
-        {
             vecProjectiles.push_back(new Projectile(source, damage, spread, resources->getTexture(textureKey), i, projectileSpeed, skill));
-        }
         if(waveCount == 1)
-        {
-            sounds.push_back(sf::Sound());
-            sounds.back().setBuffer(resources->getSoundBuffer(shotSoundKey));
-            sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
-            sounds.back().setMinDistance(500);
-            sounds.back().play();
-        }
+            playShotSound();
         return true;
     }
     if(currentClipSize <= 0)
     {
-        sounds.push_back(sf::Sound());
-        sounds.back().setBuffer(resources->getSoundBuffer(reloadSoundKey));
-        sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
-        sounds.back().setMinDistance(50);
-        sounds.back().play();
+        playReloadSound();
         currentReloadTime = reloadTime;
         currentClipSize = clipSize;
     }

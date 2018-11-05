@@ -29,7 +29,7 @@ void Enemy::setPosition(float _xPos, float _yPos)
 }
 Enemy::~Enemy()
 {
-    //dtor
+    delete(weapon);
 }
 
 void Enemy::update()
@@ -165,4 +165,9 @@ void Enemy::setSkill(int _skill)
         iFrost++;
     }
 
+}
+
+Weapon* Enemy::getWeapon()
+{
+    return weapon;
 }

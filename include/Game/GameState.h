@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include "Game/EnemyFactory.h"
 #include "Components/GameObject.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
