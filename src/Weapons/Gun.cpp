@@ -1,6 +1,6 @@
 #include "Weapons/Gun.h"
 
-Gun::Gun(sf::Sprite* _player) : Weapon(_player)
+Gun::Gun(sf::Sprite* _source) : Weapon(_source)
 {
     weaponCooldown = 1.5f;
     clipSize = 10;

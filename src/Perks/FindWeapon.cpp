@@ -11,5 +11,5 @@ weapon(_weapon)
 
 void FindWeapon::pickUp()
 {
-    (player)->setWeapon(weapon);
+    player->setWeapon(weapon);
 }

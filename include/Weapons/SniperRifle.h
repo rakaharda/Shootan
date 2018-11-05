@@ -5,7 +5,7 @@
 class SniperRifle: public Weapon
 {
 public:
-    SniperRifle(sf::Sprite* _player);
+    SniperRifle(sf::Sprite* _source);
     virtual ~SniperRifle() {};
 };
 

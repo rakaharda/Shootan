@@ -29,6 +29,7 @@ protected:
     void checkEnemies();
     void checkPerks();
     void updateView();
+    void updateListener();
     int k; //need for different perks( need rewrite)
 private:
 };

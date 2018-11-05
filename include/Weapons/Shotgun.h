@@ -5,9 +5,10 @@
 class Shotgun: public Weapon
 {
 public:
-    Shotgun(sf::Sprite* _player);
+    Shotgun(sf::Sprite* _source);
     virtual ~Shotgun() {};
     bool addProjectile();
+private:
     int waveCount;
 };
 

@@ -11,7 +11,7 @@
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
 #include "Projectiles/Projectile.h"
-#include "Weapons/Autorifle.h"
+#include "Weapons/AssaultRifle.h"
 #include "Weapons/Shotgun.h"
 #include "Weapons/Gun.h"
 #include "Weapons/SniperRifle.h"

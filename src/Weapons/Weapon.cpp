@@ -1,35 +1,20 @@
 #include "Weapons/Weapon.h"
 
-Weapon::Weapon(sf::Sprite* _player) :
+Weapon::Weapon(sf::Sprite* _source) :
     Cooldown(0.4f),
-    player(_player),
+    source(_source),
     reloadTime(3.f),
     currentReloadTime(0.f),
     clipSize(12),
     currentClipSize(clipSize),
-    damage(5.f),
+    damage(20.f),
     spread(6),
     skill(0),
     projectileSpeed(1.f),
     wAttackDistance(40.f),
-    textureKey("projectile_1")
-{
-    //ctor
-}
-
-Weapon::Weapon(sf::Sprite* _player, float _weaponCooldown, float _reloadTime, int _clipSize, float _damage, int _spread) :
-    Cooldown(_weaponCooldown),
-    player(_player),
-    reloadTime(_reloadTime),
-    currentReloadTime(0.f),
-    clipSize(_clipSize),
-    currentClipSize(clipSize),
-    damage(_damage),
-    spread(_spread),
-    skill(0),
-    projectileSpeed(1.f),
-    wAttackDistance(40.f),
-    textureKey("projectile_1")
+    textureKey("projectile_1"),
+    shotSoundKey("pistol_shot"),
+    reloadSoundKey("pistol_reload")
 {
 
 }
@@ -39,6 +24,9 @@ void Weapon::update()
     reduceCooldown();
     if(currentReloadTime >= 0.f)
         currentReloadTime -= frameTime;
+    if(sounds.size() != 0)
+        if(sounds.front().getStatus() != sf::Sound::Playing)
+            sounds.pop_front();
 }
 
 bool Weapon::addProjectile()
@@ -47,11 +35,21 @@ bool Weapon::addProjectile()
     {
         currentClipSize--;
         currentCooldown = weaponCooldown;
-        vecProjectiles.push_back(new Projectile(player, damage, spread, resources->getTexture(textureKey), projectileSpeed, skill));
+        vecProjectiles.push_back(new Projectile(source, damage, spread, resources->getTexture(textureKey), projectileSpeed, skill));
+        sounds.push_back(sf::Sound());
+        sounds.back().setBuffer(resources->getSoundBuffer(shotSoundKey));
+        sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
+        sounds.back().setMinDistance(500);
+        sounds.back().play();
         return true;
     }
     if(currentClipSize <= 0)
     {
+        sounds.push_back(sf::Sound());
+        sounds.back().setBuffer(resources->getSoundBuffer(reloadSoundKey));
+        sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
+        sounds.back().setMinDistance(50);
+        sounds.back().play();
         currentReloadTime = reloadTime;
         currentClipSize = clipSize;
     }

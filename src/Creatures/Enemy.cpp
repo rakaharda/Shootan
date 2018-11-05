@@ -6,15 +6,15 @@ Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _textu
 {
     m_sprite.setTexture(_texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
-    player = _sprite;
+    target = _sprite;
     angle = 180 / M_PI * atan2(
-                player->getPosition().y - m_sprite.getPosition().y,
-                player->getPosition().x - m_sprite.getPosition().x
+                target->getPosition().y - m_sprite.getPosition().y,
+                target->getPosition().x - m_sprite.getPosition().x
             );
     m_sprite.setRotation(angle);
     currentAngle = angle;
     rotationRate = 90.f;
-    distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle / 180 * M_PI);
+    distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 50.f;
     toDelete = false;
     weapon = NULL;
@@ -76,8 +76,8 @@ void Enemy::move()
 void Enemy::calculateRotation()
 {
     angle = 180 / M_PI * atan2(
-                player->getPosition().y - m_sprite.getPosition().y,
-                player->getPosition().x - m_sprite.getPosition().x
+                target->getPosition().y - m_sprite.getPosition().y,
+                target->getPosition().x - m_sprite.getPosition().x
             );
     if(angle < 0)
         angle += 360 ;
@@ -115,8 +115,8 @@ void Enemy::calculateRotation()
 
 bool Enemy::checkDistance()
 {
-    distance = (m_sprite.getPosition().x - player->getPosition().x) / cos(angle / 180 * M_PI);
-    if(abs(distance) > m_sprite.getTexture()->getSize().x / 2 + player->getTexture()->getSize().x / 2 + attackDistance)
+    distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
+    if(abs(distance) > m_sprite.getTexture()->getSize().x / 2 + target->getTexture()->getSize().x / 2 + attackDistance)
         return true;
     return false;
 }

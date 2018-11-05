@@ -1,19 +1,21 @@
 #include "Weapons/Shotgun.h"
 
-Shotgun::Shotgun(sf::Sprite* _player) : Weapon(_player)
+Shotgun::Shotgun(sf::Sprite* _source) : Weapon(_source)
 {
     weaponCooldown = 1.0f;
     clipSize = 5;
     currentClipSize = clipSize;
-    damage = 1.f;
+    damage = 10.f;
     spread = 7;
     projectileSpeed = 0.9f;
     waveCount = 0;
+    shotSoundKey = "shotgun_shot";
+    reloadSoundKey = "shotgun_reload";
 }
 
 bool Shotgun::addProjectile()
 {
-    if(currentCooldown <= 0.f && currentReloadTime <= 0.f && currentClipSize > 0)
+    if(currentCooldown <= 0.f && currentReloadTime <= 0.f && (currentClipSize > 0 || waveCount != 0))
     {
         if(waveCount % 4 == 3)
         {
@@ -29,12 +31,25 @@ bool Shotgun::addProjectile()
         currentCooldown = weaponCooldown;
         for(int i = 0; i < 4; i++)
         {
-            vecProjectiles.push_back(new Projectile(player, damage, spread, resources->getTexture(textureKey), i, projectileSpeed, skill));
+            vecProjectiles.push_back(new Projectile(source, damage, spread, resources->getTexture(textureKey), i, projectileSpeed, skill));
+        }
+        if(waveCount == 1)
+        {
+            sounds.push_back(sf::Sound());
+            sounds.back().setBuffer(resources->getSoundBuffer(shotSoundKey));
+            sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
+            sounds.back().setMinDistance(500);
+            sounds.back().play();
         }
         return true;
     }
     if(currentClipSize <= 0)
     {
+        sounds.push_back(sf::Sound());
+        sounds.back().setBuffer(resources->getSoundBuffer(reloadSoundKey));
+        sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
+        sounds.back().setMinDistance(50);
+        sounds.back().play();
         currentReloadTime = reloadTime;
         currentClipSize = clipSize;
     }

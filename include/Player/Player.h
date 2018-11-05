@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Components/GameObject.h"
 #include "Weapons/Weapon.h"
-#include "Weapons/Autorifle.h"
+#include "Weapons/AssaultRifle.h"
 #include "Weapons/Shotgun.h"
 #include "Weapons/SniperRifle.h"
 #include "Weapons/Gun.h"

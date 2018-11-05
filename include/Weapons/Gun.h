@@ -5,7 +5,7 @@
 class Gun: public Weapon
 {
 public:
-    Gun(sf::Sprite* _player);
+    Gun(sf::Sprite* _source);
     virtual ~Gun(){};
 };
 

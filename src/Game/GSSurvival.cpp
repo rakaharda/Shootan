@@ -14,7 +14,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
-    player->setWeapon(new Autorifle(&player->m_sprite));
+    player->setWeapon(new Shotgun(&player->m_sprite));
     //!
     k = 0; //need to delete
     Perk::player = player;
@@ -23,6 +23,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     vecEnemies.push_back(new Enemy(&player->m_sprite, 50.f, resources->getTexture("default_enemy")));
     vecEnemies[0]->setWeapon(new Gun(&(vecEnemies[0])->m_sprite));
     vecEnemies[1]->setWeapon(new Gun(&(vecEnemies[1])->m_sprite));
+    // resources->getMusic("GXRCH - HARD")->play();
 }
 
 GSSurvival::~GSSurvival()
@@ -42,6 +43,7 @@ void GSSurvival::update()
     for(unsigned int i=0; i<vecPerks.size(); i++)
         vecPerks[i]->update();
     updateView();
+    updateListener();
     updateStats();
     checkProjectiles();
     checkEnemies();
@@ -60,6 +62,11 @@ void GSSurvival::updateStats()
         ss << player->getWeapon()->getCurrentClipSize() << '/' << player->getWeapon()->getClipSize();
     ss << endl <<"HP: "<< player->getCurrentHealthPoints();
     info.setString(ss.str());
+}
+
+void GSSurvival::updateListener()
+{
+    sf::Listener::setPosition(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y, 0.f);
 }
 
 void GSSurvival::handleEvents(sf::Event _event)
@@ -82,10 +89,10 @@ void GSSurvival::collectTrash()
 {
     for(unsigned int i = 0; i<vecProjectiles.size(); i++)
     {
-        if(vecProjectiles[i]->m_sprite.getPosition().x > fieldSize.width + 200
-                || vecProjectiles[i]->m_sprite.getPosition().x < -200
-                || vecProjectiles[i]->m_sprite.getPosition().y > fieldSize.height + 200
-                || vecProjectiles[i]->m_sprite.getPosition().y < -200)
+        if(vecProjectiles[i]->m_sprite.getPosition().x > fieldSize.width + 400
+                || vecProjectiles[i]->m_sprite.getPosition().x < -400
+                || vecProjectiles[i]->m_sprite.getPosition().y > fieldSize.height + 400
+                || vecProjectiles[i]->m_sprite.getPosition().y < -400)
             vecProjectiles.erase(vecProjectiles.begin() + i);
     }
 }
@@ -175,7 +182,14 @@ void GSSurvival::loadResources()
     resources->addTexture("projectile_1", "./data/projectiles/projectile1.png");
     resources->addTexture("projectile_2", "./data/projectiles/projectile2.png");
     resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
-    resources->addTexture("frost_buff", "./data/projectiles/frost.png");
+    resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
+    resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
+    resources->addSoundBuffer("assaultrifle_shot",   "./data/sounds/assaultrifle_shot.wav");
+    resources->addSoundBuffer("assaultrifle_reload", "./data/sounds/assaultrifle_reload.wav");
+    resources->addSoundBuffer("sniperrifle_shot",    "./data/sounds/sniperrifle_shot.wav");
+    resources->addSoundBuffer("shotgun_shot",        "./data/sounds/shotgun_shot.wav");
+    resources->addSoundBuffer("shotgun_reload",  "./data/sounds/shotgun_reload.wav");
+    resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
 
 void GSSurvival::draw()

@@ -6,12 +6,12 @@ Player::Player() : HealthPoints()
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
-    weapon = nullptr;
+    weapon = new Weapon(&m_sprite);
     speed = 200.f;
     skill = 0;
-    activeSkillTimeFire=0.f;
-    activeSkillTimeFrost=0.f;
-    activeSpeedTime=0.f;
+    activeSkillTimeFire = 0.f;
+    activeSkillTimeFrost = 0.f;
+    activeSpeedTime = 0.f;
 }
 
 Player::~Player()
@@ -110,18 +110,18 @@ void Player::checkSkill()
             weapon->setSkill(skill);
         }
     }
-    if((activeSkillTimeFire<=0.f)&&(activeSkillTimeFrost<=0.f))
+    if((activeSkillTimeFire <= 0.f)&&(activeSkillTimeFrost <= 0.f))
     {
-        activeSkillTimeFire=0.f;
-        activeSkillTimeFrost=0.f;
+        activeSkillTimeFire = 0.f;
+        activeSkillTimeFrost = 0.f;
         setSkill(0);
     }
-    if(activeSpeedTime>0.f)
-        activeSpeedTime-=frameTime;
-    if(activeSpeedTime<0.f)
+    if(activeSpeedTime > 0.f)
+        activeSpeedTime -= frameTime;
+    if(activeSpeedTime < 0.f)
     {
-        activeSpeedTime=0.f;
-        speed=200.f;
+        activeSpeedTime = 0.f;
+        speed = 200.f;
     }
 }
 

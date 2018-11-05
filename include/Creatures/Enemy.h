@@ -30,7 +30,7 @@ private:
 protected:
     vector <skills*> vecSkills;
     Weapon*           weapon;
-    const sf::Sprite* player;
+    const sf::Sprite* target;
     float             speed;
     float             angle;
     float             currentAngle;
