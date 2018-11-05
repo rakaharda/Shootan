@@ -59,16 +59,14 @@ void EnemyFactory::spawnEnemy()
         }
         vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("default_enemy")));
         vecEnemies->back()->setPosition(x, y);
-        switch(rand() % 2)
+        switch(rand() % 10)
         {
             case 0:
-                vecEnemies->back()->setWeapon(new MeleeAttack(&(vecEnemies->back()->m_sprite)));
-                break;
-            case 1:
                 vecEnemies->back()->setWeapon(new Gun(&(vecEnemies->back()->m_sprite)));
                 vecEnemies->back()->getWeapon()->setDamage(5.f);
                 break;
             default:
+                vecEnemies->back()->setWeapon(new MeleeAttack(&(vecEnemies->back()->m_sprite)));
                 break;
         }
         currentSpawnTimer = spawnTimer;
@@ -77,7 +75,8 @@ void EnemyFactory::spawnEnemy()
 
 void EnemyFactory::increaseDifficulty()
 {
-    spawnTimer -= (spawnTimer / 10.f) * (gameTimer / 100) * (score / 1000);
+    if (spawnTimer > 1.f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 10000);
+    cout<< endl << spawnTimer;
 }
 
 void EnemyFactory::checkEnemies()
@@ -86,6 +85,23 @@ void EnemyFactory::checkEnemies()
         if(vecEnemies->at(i)->toDelete)
         {
             score += vecEnemies->at(i)->getHealthPoints() + vecEnemies->at(i)->getWeapon()->getDamage();
+            switch(rand() % 40)
+            {
+                case 0:
+                    vecPerks.push_back(new Frost(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    break;
+                case 1:
+                    vecPerks.push_back(new Fire(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    break;
+                case 2:
+                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    break;
+                case 3:
+                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    break;
+                default:
+                    break;                
+            }
             vecEnemies->erase(vecEnemies->begin() + i);
         }
 }

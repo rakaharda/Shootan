@@ -1,6 +1,11 @@
 #ifndef ENEMYFACTORY_H
 #define ENEMYFACTORY_H
 
+#include "Perks/Perk.h"
+#include "Perks/Frost.h"
+#include "Perks/Fire.h"
+#include "Perks/Medicine.h"
+#include "Perks/UpSpeed.h"
 #include "Creatures/Enemy.h"
 #include "Weapons/Weapons.h"
 #include "Components/GameObject.h"
@@ -29,7 +34,7 @@ private:
     void increaseDifficulty();
 };
 
-extern float frameTime;
+extern float                frameTime;
 extern ResourceManager      *resources;
-
+extern vector <Perk*>       vecPerks;
 #endif // ENEMYFACTORY_H
