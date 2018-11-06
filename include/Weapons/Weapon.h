@@ -18,6 +18,7 @@ public:
     virtual ~Weapon() {};
     virtual void  update();
     virtual bool  addProjectile();
+    void          reload();
     float         getReloadTime();
     float         getCurrentReloadTime();
     int           getClipSize();

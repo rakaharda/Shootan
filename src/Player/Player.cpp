@@ -59,7 +59,9 @@ void Player::setOrientation()
 
 void Player::handleEvents(sf::Event event)
 {
-
+    if(event.type == sf::Event::KeyPressed)
+        if((event.key.code == sf::Keyboard::R) && (weapon->getCurrentClipSize() != weapon->getClipSize()))
+            weapon->reload();
 }
 
 Weapon* Player::getWeapon()

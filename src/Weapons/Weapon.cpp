@@ -48,6 +48,13 @@ bool Weapon::addProjectile()
     return false;
 }
 
+void Weapon::reload()
+{
+    playReloadSound();
+    currentReloadTime = reloadTime;
+    currentClipSize = clipSize;
+}
+
 float Weapon::getReloadTime()
 {
     return reloadTime;
