@@ -19,8 +19,9 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     k = 0; //need to delete
     Perk::player = player;
     enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
-    //resources->getMusic("GXRCH - HARD")->setVolume(50.f);
-    //resources->getMusic("GXRCH - HARD")->play();
+    resources->getMusic("GXRCH - HARD")->setVolume(50.f);
+    resources->getMusic("GXRCH - HARD")->setLoop(true);
+    resources->getMusic("GXRCH - HARD")->play();
 }
 
 GSSurvival::~GSSurvival()

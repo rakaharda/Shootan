@@ -15,7 +15,7 @@ Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _textu
     currentAngle = angle;
     rotationRate = 90.f;
     distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
-    speed = 50.f;
+    speed = 150.f;
     toDelete = false;
     weapon = NULL;
     iFrost = 0;

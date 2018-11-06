@@ -8,7 +8,7 @@ Player::Player() : HealthPoints()
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
     weapon = new Weapon(&m_sprite);
-    speed = 200.f;
+    speed = 300.f;
     skill = 0;
     activeSkillTimeFire = 0.f;
     activeSkillTimeFrost = 0.f;
