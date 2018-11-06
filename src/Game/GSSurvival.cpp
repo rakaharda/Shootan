@@ -191,7 +191,7 @@ void GSSurvival::loadResources()
 {
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
     resources->addFont("arial", "./data/fonts/arial.ttf");
-    resources->addTexture("projectile_1", "./data/projectiles/projectile1.png");
+    resources->addTexture("projectile_1", "./data/projectiles/projectile1_test.png");
     resources->addTexture("projectile_2", "./data/projectiles/projectile2.png");
     resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
     resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
@@ -208,7 +208,7 @@ void GSSurvival::draw()
 {
     //*View of the game board
     window.setView(view);
-    window.draw(background);
+    //window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)

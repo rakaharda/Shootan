@@ -2,7 +2,7 @@
 
 Player::Player() : HealthPoints()
 {
-    texture.loadFromFile("./data/player/sprite.png");
+    texture.loadFromFile("./data/player/sprite2.png");
     m_sprite.setTexture(texture);
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
