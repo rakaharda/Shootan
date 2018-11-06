@@ -9,7 +9,7 @@ EnemyFactory::EnemyFactory(sf::Sprite* _target, sf::IntRect _fieldSize, vector<E
     currentSpawnTimer(0.f),
     score(0.f)
 {
-
+    
 }
 
 EnemyFactory::~EnemyFactory()
@@ -57,18 +57,19 @@ void EnemyFactory::spawnEnemy()
             default:
                 break;
         }
-        vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("default_enemy")));
-        vecEnemies->back()->setPosition(x, y);
         switch(rand() % 10)
         {
             case 0:
+                vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_range")));
                 vecEnemies->back()->setWeapon(new Gun(&(vecEnemies->back()->m_sprite)));
                 vecEnemies->back()->getWeapon()->setDamage(5.f);
                 break;
             default:
+                vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_melee")));
                 vecEnemies->back()->setWeapon(new MeleeAttack(&(vecEnemies->back()->m_sprite)));
                 break;
         }
+        vecEnemies->back()->setPosition(x, y);
         currentSpawnTimer = spawnTimer;
     }
 }

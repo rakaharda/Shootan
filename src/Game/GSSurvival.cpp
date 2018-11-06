@@ -194,6 +194,8 @@ void GSSurvival::loadResources()
     resources->addTexture("projectile_1", "./data/projectiles/projectile1_test.png");
     resources->addTexture("projectile_2", "./data/projectiles/projectile2.png");
     resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
+    resources->addTexture("enemy_melee", "./data/enemies/enemy_melee.png");
+    resources->addTexture("enemy_range", "./data/enemies/enemy_range.png");
     resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
     resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
     resources->addSoundBuffer("assaultrifle_shot",   "./data/sounds/assaultrifle_shot.wav");
