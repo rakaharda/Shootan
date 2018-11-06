@@ -6,6 +6,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     resources = new ResourceManager;
     openMainMenu = false;
     openPerkMenu = false;
+    perkMenu = new PerkMenu(&openPerkMenu);
     loadResources();
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
@@ -80,6 +81,9 @@ void GSSurvival::handleEvents(sf::Event _event)
         else if(openPerkMenu)
                 {
                     perkMenu->handleEvents(_event);
+                    if(_event.type == sf::Event::KeyPressed)
+                        if(_event.key.code == sf::Keyboard::L)
+                        openPerkMenu = false;
                     return;
                 }
                 else
@@ -91,7 +95,7 @@ void GSSurvival::handleEvents(sf::Event _event)
                 menu = new MainMenu(videoSettings,&openMainMenu);
         if(_event.key.code == sf::Keyboard::L)
             if(!openPerkMenu)
-                perkMenu = new PerkMenu(&openPerkMenu);
+                openPerkMenu = true;
     }
 }
 

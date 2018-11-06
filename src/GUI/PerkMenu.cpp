@@ -3,7 +3,6 @@
 PerkMenu::PerkMenu(bool *_menuStatus)
 {
     menuStatus = _menuStatus;
-    *menuStatus = true;
     setFunctions();
     string str[4];
     str[0] = "Play";
