@@ -5,6 +5,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     videoSettings = _videoSettings;
     resources = new ResourceManager;
     openMainMenu = false;
+    openPerkMenu = false;
     loadResources();
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
@@ -33,7 +34,7 @@ GSSurvival::~GSSurvival()
 
 void GSSurvival::update()
 {
-    if(openMainMenu)
+    if(openMainMenu||openPerkMenu)
         return;
     player->update();
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
@@ -72,17 +73,26 @@ void GSSurvival::updateListener()
 void GSSurvival::handleEvents(sf::Event _event)
 {
     if(openMainMenu)
+        {
             menu->handleEvents(_event);
-        else
-            player->handleEvents(_event);
+            return;
+        }
+        else if(openPerkMenu)
+                {
+                    perkMenu->handleEvents(_event);
+                    return;
+                }
+                else
+                    player->handleEvents(_event);
     if(_event.type == sf::Event::KeyPressed)
+    {
         if(_event.key.code == sf::Keyboard::Escape)
-            {
             if(!openMainMenu)
                 menu = new MainMenu(videoSettings,&openMainMenu);
-            else
-                openMainMenu = false;
-            }
+        if(_event.key.code == sf::Keyboard::L)
+            if(!openPerkMenu)
+                perkMenu = new PerkMenu(&openPerkMenu);
+    }
 }
 
 void GSSurvival::collectTrash()
@@ -209,4 +219,6 @@ void GSSurvival::draw()
     window.draw(info);
     if(openMainMenu)
         window.draw(*menu);
+    if(openPerkMenu)
+        window.draw(*perkMenu);
 }

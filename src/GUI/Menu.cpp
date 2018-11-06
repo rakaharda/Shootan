@@ -24,6 +24,12 @@ void Menu::handleEvents(sf::Event event)
         default:
             break;
         }
+    case sf::Event::KeyPressed:
+        {
+            if(event.key.code == sf::Keyboard::Escape)
+            *menuStatus = false;
+            break;
+        }
     default:
         break;
     }
@@ -31,7 +37,7 @@ void Menu::handleEvents(sf::Event event)
 
 void Menu::setFunctions()
 {
-    
+
 }
 
 void Menu::searchButton()

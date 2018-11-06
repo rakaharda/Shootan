@@ -20,8 +20,10 @@ protected:
     sf::IntRect     fieldSize;
     sf::View        view;
     MainMenu        *menu;
+    PerkMenu        *perkMenu;
     VideoSettings   *videoSettings;
     bool            openMainMenu;
+    bool            openPerkMenu;
     void updateStats();
     void loadResources();
     void collectTrash();
