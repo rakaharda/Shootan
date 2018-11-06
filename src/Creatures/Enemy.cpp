@@ -29,7 +29,10 @@ void Enemy::setPosition(float _xPos, float _yPos)
 }
 Enemy::~Enemy()
 {
-    //dtor
+    for(unsigned int i = 0; i < vecSkills.size(); i++)
+    {
+        vecSkills.erase(vecSkills.begin() + i);
+    }
 }
 
 void Enemy::update()
