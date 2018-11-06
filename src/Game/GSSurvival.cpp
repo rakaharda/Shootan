@@ -10,7 +10,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     info.setFont(resources->getFont("arial"));
-    info.setFillColor(sf::Color::Black);
+    info.setFillColor(sf::Color::Red);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
@@ -208,7 +208,7 @@ void GSSurvival::draw()
 {
     //*View of the game board
     window.setView(view);
-    //window.draw(background);
+    window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)

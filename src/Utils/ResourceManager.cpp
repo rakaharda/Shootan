@@ -21,6 +21,7 @@ void ResourceManager::addTexture(string _key, string _path)
     {
         textureMap[_key].loadFromFile("./data/default/default.png");
     }
+    textureMap[_key].setSmooth(true);
 }
 
 void ResourceManager::addTexture(string _key, string _path, bool _repeated)
