@@ -18,7 +18,7 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf
     Projectile(_sprite, _damage, _spread, _texture, _speed, _skill)
 {
 
-    angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 10;
+    angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 20;
 }
 
 Projectile::~Projectile()

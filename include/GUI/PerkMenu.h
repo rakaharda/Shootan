@@ -8,10 +8,14 @@
 class PerkMenu: public Menu
 {
 public:
-    PerkMenu(bool *_menuStatus);
+    PerkMenu(bool *_menuStatus, Player** _player);
     virtual ~PerkMenu();
-    static Player* player;
 private:
+    int maxHP;
+    int currentHP;
+    int maxSpeed;
+    int currentSpeed;
+    Player* player;
     void setFunctions();
 friend Button;
 //    buttonFunctions;

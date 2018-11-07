@@ -8,8 +8,6 @@ public:
     Shotgun(sf::Sprite* _source);
     virtual ~Shotgun() {};
     bool addProjectile();
-private:
-    int waveCount;
 };
 
 extern ResourceManager      *resources;

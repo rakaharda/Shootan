@@ -31,6 +31,10 @@ void HealthPoints::setCurrentHealthPoints(float _hp)
 {
     currentHealthPoints=_hp;
 }
+void HealthPoints::setHealthPoints(float _hp)
+{
+    healthPoints=_hp;
+}
 void HealthPoints::takeDamage(float _damage)
 {
     if(currentHealthPoints < _damage)

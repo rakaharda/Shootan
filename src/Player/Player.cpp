@@ -8,6 +8,7 @@ Player::Player() : HealthPoints()
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
     weapon = new Weapon(&m_sprite);
     speed = 200.f;
+    upSpeed = 100.f;
     skill = 0;
     activeSkillTimeFire = 0.f;
     activeSkillTimeFrost = 0.f;
@@ -121,7 +122,7 @@ void Player::checkSkill()
     if(activeSpeedTime < 0.f)
     {
         activeSpeedTime = 0.f;
-        speed = 200.f;
+        speed -= upSpeed;
     }
 }
 

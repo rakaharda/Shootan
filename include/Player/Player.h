@@ -27,6 +27,7 @@ public:
     void    setWeapon(Weapon* _weapon);
     void    setSkill(int _skill);
     float       speed;
+    float       upSpeed;
     float       activeSpeedTime;
 private:
     sf::Texture texture;

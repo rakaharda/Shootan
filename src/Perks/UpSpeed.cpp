@@ -10,6 +10,7 @@ UpSpeed::UpSpeed(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 
 void UpSpeed::pickUp()
 {
-    (player)->speed=300.f;
-    (player)->activeSpeedTime=30.f;
+    if((player)->speed == 200.f)
+        (player)->speed += (player)->upSpeed;
+    (player)->activeSpeedTime = 30.f;
 }

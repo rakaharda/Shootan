@@ -6,7 +6,6 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     resources = new ResourceManager;
     openMainMenu = false;
     openPerkMenu = false;
-    perkMenu = new PerkMenu(&openPerkMenu);
     loadResources();
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
@@ -17,6 +16,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
     player->setWeapon(new Shotgun(&player->m_sprite));
+    perkMenu = new PerkMenu(&openPerkMenu, &player);
     //!
     k = 0; //need to delete
     Perk::player = player;
@@ -142,7 +142,7 @@ void GSSurvival::checkEnemies()
         {
             //
             if(k)
-                vecPerks.push_back(new Frost(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
+                vecPerks.push_back(new UpSpeed(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             else
                 vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
             k=1-k;
