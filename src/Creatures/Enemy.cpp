@@ -2,10 +2,11 @@
 
 Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture) :
     HealthPoints(_healthPoints),
-    attackDistance(0.f)
+    attackDistance(-10.f)
 {
     m_sprite.setTexture(_texture);
-    m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, m_sprite.getTexture()->getSize().y / 2);
+    m_sprite.setTextureRect(sf::IntRect(0, 0, _texture.getSize().y,_texture.getSize().y));
+    m_sprite.setOrigin(m_sprite.getTexture()->getSize().y / 2, m_sprite.getTexture()->getSize().y / 2);
     target = _sprite;
     angle = 180 / M_PI * atan2(
                 target->getPosition().y - m_sprite.getPosition().y,
@@ -17,7 +18,7 @@ Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _textu
     distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 150.f;
     toDelete = false;
-    weapon = NULL;
+    weapon = new MeleeAttack(&m_sprite);
     iFrost = 0;
     iFire = 0;
     skillDamage = 0.f;
@@ -43,6 +44,7 @@ void Enemy::update()
     checkHealth();
     checkSkill();
     takeDamage(skillDamage);
+    updateTexture();
 }
 void Enemy::checkSkill()
 {
@@ -68,6 +70,7 @@ void Enemy::checkSkill()
         }
     }
 }
+
 void Enemy::move()
 {
     m_sprite.move(speed * frameTime * cos(currentAngle / 180 * M_PI), speed * frameTime * sin(currentAngle / 180 * M_PI));
@@ -116,7 +119,7 @@ void Enemy::calculateRotation()
 bool Enemy::checkDistance()
 {
     distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
-    if(abs(distance) > m_sprite.getTexture()->getSize().x / 2 + target->getTexture()->getSize().x / 2 + attackDistance)
+    if(abs(distance) > m_sprite.getTexture()->getSize().y / 2 + target->getTexture()->getSize().y / 2 + attackDistance)
         return true;
     return false;
 }
@@ -132,7 +135,7 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 void Enemy::setWeapon(Weapon* _weapon)
 {
-    if(weapon != NULL)
+    if(weapon != nullptr)
         delete(weapon);
     weapon = _weapon;
     attackDistance = weapon->getAttackDistance();
@@ -145,29 +148,40 @@ float Enemy::attack()
 
 void Enemy::setSkill(int _skill)
 {
-    if(((_skill==1)||(_skill==3))&&(iFire<10))
+    if(((_skill == 1)||(_skill == 3)) && (iFire < 10))
     {
         skills *sk=new skills;
-        sk->skillTime=5.f;
-        sk->skill=1;
-        skillDamage+=0.01f;
+        sk->skillTime = 5.f;
+        sk->skill = 1;
+        skillDamage += 0.01f;
         vecSkills.push_back(sk);
         iFire++;
     }
-    if(((_skill==2)||(_skill==3))&&(iFrost<10))
+    if(((_skill == 2) || (_skill == 3)) && (iFrost < 10))
     {
-        skills *sk=new skills;
-        sk->skillTime=5.f;
-        sk->skill=2;
-        rotationRate-=8.f;
-        speed-=5.f;
+        skills *sk = new skills;
+        sk->skillTime = 5.f;
+        sk->skill = 2;
+        rotationRate -= 8.f;
+        speed -= 5.f;
         vecSkills.push_back(sk);
         iFrost++;
     }
-
 }
 
 Weapon* Enemy::getWeapon()
 {
     return weapon;
+}
+
+void Enemy::updateTexture()
+{
+    if(iFrost > 0 && iFire > 0)
+        m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y * 3, 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
+    else if(iFire > 0)
+        m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y    , 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
+    else if(iFrost > 0)
+        m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y * 2, 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
+    else
+        m_sprite.setTextureRect(sf::IntRect(0,                                      0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
 }

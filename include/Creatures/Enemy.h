@@ -38,14 +38,15 @@ protected:
     float             rotationRate;
     float             distance;
     float             attackDistance;
+    float             skillDamage;
+    int               iFrost;
+    int               iFire;
     void move();
     void calculateRotation();
     bool checkDistance();
     void checkHealth();
     void checkSkill();
-    int iFrost;
-    int iFire;
-    float skillDamage;
+    void updateTexture();
 };
 
 extern sf::RenderWindow     window;
