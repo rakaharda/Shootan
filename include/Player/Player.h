@@ -29,7 +29,7 @@ public:
     float   getSpeed();
     void    setSpeed(float _speed);
     float   getActiveSpeedTime();
-    void    setActiveSpeedTime(float _activeSpeedtime);
+    void         setActiveSpeedTime(float _activeSpeedtime);
 private:
     sf::Texture texture;
     Weapon*     weapon;

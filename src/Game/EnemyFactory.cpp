@@ -62,7 +62,7 @@ void EnemyFactory::spawnEnemy()
             case 0:
                 vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_range")));
                 vecEnemies->back()->setWeapon(new Gun(&(vecEnemies->back()->m_sprite)));
-                vecEnemies->back()->getWeapon()->setDamage(5.f);
+                vecEnemies->back()->getWeapon()->setDamage(10.f);
                 break;
             default:
                 vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_melee")));
