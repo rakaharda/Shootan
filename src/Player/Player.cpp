@@ -174,3 +174,23 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
+
+float Player::getSpeed()
+{
+    return speed;
+}
+
+void Player::setSpeed(float _speed)
+{
+    speed = _speed;
+}
+
+float Player::getActiveSpeedTime()
+{
+    return activeSpeedTime;
+}
+
+void Player::setActiveSpeedTime(float _activeSpeedTime)
+{
+    activeSpeedTime = _activeSpeedTime;
+}
