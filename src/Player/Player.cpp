@@ -124,7 +124,7 @@ void Player::checkSkill()
     if(activeSpeedTime < 0.f)
     {
         activeSpeedTime = 0.f;
-        speed = 200.f;
+        speed = 300.f;
     }
 }
 
