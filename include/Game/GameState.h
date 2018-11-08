@@ -26,6 +26,7 @@
 #include "Game/VideoSettings.h"
 #include "GUI/Menu.h"
 #include "GUI/MainMenu.h"
+#include "GUI/HealthBar.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
 

@@ -14,6 +14,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
+    healthBar = new HealthBar(player);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
     //!
     k = 0; //need to delete
@@ -41,6 +42,7 @@ void GSSurvival::update()
         vecProjectiles[i]->update();
     for(unsigned int i=0; i<vecPerks.size(); i++)
         vecPerks[i]->update();
+    healthBar->update();
     updateView();
     updateListener();
     updateStats();
@@ -179,6 +181,9 @@ void GSSurvival::loadResources()
         //Perks
     resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
     resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
+        //GUI
+    resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
+    resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
     //*Sound buffers
     resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
     resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
@@ -205,6 +210,7 @@ void GSSurvival::draw()
     window.draw(*player);
     //* UI
     window.setView(window.getDefaultView());
+    window.draw(*healthBar);
     window.draw(info);
     if(openMainMenu)
         window.draw(*menu);

@@ -24,6 +24,7 @@ protected:
     EnemyFactory    *enemyFactory;
     bool            openMainMenu;
     vector <Enemy*> vecEnemies;
+    HealthBar       *healthBar;
     void updateStats();
     void loadResources();
     void collectTrash();

@@ -38,3 +38,14 @@
 *.layout
 *.cbp
 *.depend
+
+#Visual Studio
+*.db
+*.opendb
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sqlite
+*.suo
+*.log
