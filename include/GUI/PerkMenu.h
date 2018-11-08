@@ -10,6 +10,7 @@ class PerkMenu: public Menu
 public:
     PerkMenu(bool *_menuStatus, Player** _player);
     virtual ~PerkMenu();
+    void handleEvents(sf::Event event);
 private:
     int maxHP;
     int currentHP;

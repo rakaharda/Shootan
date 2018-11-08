@@ -28,14 +28,13 @@ public:
     void    setSkill(int _skill);
     float       speed;
     float       upSpeed;
+    float       defoltSpeed;
     float       activeSpeedTime;
+    void        checkSkill();
 private:
     sf::Texture texture;
     Weapon*     weapon;
     int         skill;
-    float       activeSkillTimeFire;
-    float       activeSkillTimeFrost;
-    void         checkSkill();
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

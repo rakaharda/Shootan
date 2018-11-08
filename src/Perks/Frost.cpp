@@ -10,5 +10,5 @@ Frost::Frost(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 
 void Frost::pickUp()
 {
-    player->setSkill(2);
+    //player->setSkill(2);
 }

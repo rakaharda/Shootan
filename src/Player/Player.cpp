@@ -8,10 +8,9 @@ Player::Player() : HealthPoints()
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
     weapon = new Weapon(&m_sprite);
     speed = 200.f;
+    defoltSpeed = 200.f;
     upSpeed = 100.f;
     skill = 0;
-    activeSkillTimeFire = 0.f;
-    activeSkillTimeFrost = 0.f;
     activeSpeedTime = 0.f;
 }
 
@@ -77,46 +76,14 @@ void Player::setWeapon(Weapon* _weapon)
 
 void Player::setSkill(int _skill)
 {
-    if(_skill == 1)
-        activeSkillTimeFire = 30.f;
-    if(_skill == 2)
-        activeSkillTimeFrost = 30.f;
-    if((activeSkillTimeFire > 0.f) && (activeSkillTimeFrost > 0.f))
-        skill = 3;
-    else
+    if(skill == 0)
         skill = _skill;
+        else skill = 3;
     weapon->setSkill(skill);
 }
 
 void Player::checkSkill()
 {
-    if(skill == 1)
-        activeSkillTimeFire -= frameTime;
-    if(skill == 2)
-        activeSkillTimeFrost -= frameTime;
-    if(skill == 3)
-    {
-        activeSkillTimeFire -= frameTime;
-        activeSkillTimeFrost -= frameTime;
-        if(activeSkillTimeFire <= 0.f)
-        {
-            activeSkillTimeFire = 0.f;
-            skill = 2;
-            weapon->setSkill(skill);
-        }
-        if(activeSkillTimeFrost <= 0.f)
-        {
-            activeSkillTimeFrost = 0.f;
-            skill = 1;
-            weapon->setSkill(skill);
-        }
-    }
-    if((activeSkillTimeFire <= 0.f)&&(activeSkillTimeFrost <= 0.f))
-    {
-        activeSkillTimeFire = 0.f;
-        activeSkillTimeFrost = 0.f;
-        setSkill(0);
-    }
     if(activeSpeedTime > 0.f)
         activeSpeedTime -= frameTime;
     if(activeSpeedTime < 0.f)
