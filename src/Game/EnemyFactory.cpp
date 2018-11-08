@@ -77,7 +77,6 @@ void EnemyFactory::spawnEnemy()
 void EnemyFactory::increaseDifficulty()
 {
     if (spawnTimer > 1.f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 10000);
-    cout<< endl << spawnTimer;
 }
 
 void EnemyFactory::checkEnemies()

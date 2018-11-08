@@ -9,7 +9,7 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf
     skill = _skill;
     m_sprite.setTexture(_texture);
     m_sprite.setTextureRect(sf::IntRect(_texture.getSize().y * skill, 0, _texture.getSize().y, _texture.getSize().y));
-    m_sprite.setOrigin(_texture.getSize().y * skill + _texture.getSize().y / 2, _texture.getSize().y / 2);
+    m_sprite.setOrigin(_texture.getSize().y / 2, _texture.getSize().y / 2);
     m_sprite.setPosition(_sprite->getPosition().x + ((_sprite->getTexture()->getSize().y + m_sprite.getTexture()->getSize().y / 2.f) * cos(_sprite->getRotation() / 180.f * M_PI)),
                          _sprite->getPosition().y + ((_sprite->getTexture()->getSize().y + m_sprite.getTexture()->getSize().y / 2.f) * sin(_sprite->getRotation() / 180.f * M_PI)));
     angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;

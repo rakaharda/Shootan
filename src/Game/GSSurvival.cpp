@@ -194,12 +194,12 @@ void GSSurvival::loadResources()
     resources->addFont("arial", "./data/fonts/arial.ttf");
     //Textures
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
-    resources->addTexture("projectile_1", "./data/projectiles/projectile1_test.png");
-    resources->addTexture("projectile_2", "./data/projectiles/projectile2.png");
-    resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
-    resources->addTexture("enemy_melee", "./data/enemies/enemy_melee.png");
-    resources->addTexture("enemy_range", "./data/enemies/enemy_range.png");
-    resources->addTexture("perk_cross", "./data/perks/perk_cross.png");
+    resources->addTexture("projectile_1",   "./data/projectiles/projectile1_test.png");
+    resources->addTexture("projectile_2",   "./data/projectiles/projectile2.png");
+    resources->addTexture("default_enemy",  "./data/enemies/default_enemy.png");
+    resources->addTexture("enemy_melee",    "./data/enemies/enemy_melee.png");
+    resources->addTexture("enemy_range",    "./data/enemies/enemy_range.png");
+    resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
     //Sound buffers
     resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
     resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
@@ -207,7 +207,7 @@ void GSSurvival::loadResources()
     resources->addSoundBuffer("assaultrifle_reload", "./data/sounds/assaultrifle_reload.wav");
     resources->addSoundBuffer("sniperrifle_shot",    "./data/sounds/sniperrifle_shot.wav");
     resources->addSoundBuffer("shotgun_shot",        "./data/sounds/shotgun_shot.wav");
-    resources->addSoundBuffer("shotgun_reload",  "./data/sounds/shotgun_reload.wav");
+    resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
     //Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }

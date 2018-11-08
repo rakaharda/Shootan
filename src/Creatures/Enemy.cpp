@@ -179,21 +179,17 @@ void Enemy::updateTexture()
     if(iFrost > 0 && iFire > 0)
     {
         m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y * 3, 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
-        m_sprite.setOrigin(m_sprite.getTexture()->getSize().y * 3 + m_sprite.getTexture()->getSize().y / 2, m_sprite.getTexture()->getSize().y / 2);
     }
     else if(iFire > 0)
     {
         m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y    , 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
-        m_sprite.setOrigin(m_sprite.getTexture()->getSize().y + m_sprite.getTexture()->getSize().y / 2, m_sprite.getTexture()->getSize().y / 2);
     }
     else if(iFrost > 0)
     {
         m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y * 2, 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
-        m_sprite.setOrigin(m_sprite.getTexture()->getSize().y * 2 + m_sprite.getTexture()->getSize().y / 2, m_sprite.getTexture()->getSize().y / 2);
     }
     else
     {
         m_sprite.setTextureRect(sf::IntRect(0,                                      0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
-        m_sprite.setOrigin(m_sprite.getTexture()->getSize().y / 2, m_sprite.getTexture()->getSize().y / 2);
     }
 }
