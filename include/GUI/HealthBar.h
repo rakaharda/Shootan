@@ -19,6 +19,14 @@ private:
     Player* player;
     sf::Sprite frame;
     sf::Sprite healthCells;
+    sf::Vector2f origin;
+    float amplitude;
+    float prevHealthPoints;
+    bool isDamaged;
+    bool direction;
+    void         shake();
+    void         moveToOrigin();
+    void         move(float _x);   
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
