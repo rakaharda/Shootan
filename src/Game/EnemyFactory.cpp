@@ -9,7 +9,6 @@ EnemyFactory::EnemyFactory(sf::Sprite* _target, sf::IntRect _fieldSize, vector<E
     currentSpawnTimer(0.f),
     score(0.f)
 {
-    
 }
 
 EnemyFactory::~EnemyFactory()
@@ -88,16 +87,16 @@ void EnemyFactory::checkEnemies()
             switch(rand() % 40)
             {
                 case 0:
-                    vecPerks.push_back(new Frost(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Frost(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 case 1:
-                    vecPerks.push_back(new Fire(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Fire(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 case 2:
-                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 case 3:
-                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 default:
                     break;                

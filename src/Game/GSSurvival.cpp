@@ -133,32 +133,6 @@ void GSSurvival::checkMelee()
     }
 }
 
-/*void GSSurvival::checkEnemies()
-{
-    for(unsigned int i = 0; i < vecEnemies.size(); i++)
-    {
-        if(vecEnemies[i]->toDelete)
-        {
-            //
-            if(k)
-                vecPerks.push_back(new Frost(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
-            else
-                vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
-            k=1-k;
-            k++; //fix this code
-            //vecPerks.push_back(new FindWeapon(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y,new Gun(&player->m_sprite, 1)));
-            vecEnemies.erase(vecEnemies.begin() + i);
-            cout<<i<<" deleted"<<endl;
-        }
-    }
-    for(unsigned int i = 0; i < vecEnemies.size(); i++)
-    {
-        if(checkCollision(player, vecEnemies[i]))
-        {
-            player->takeDamage(vecEnemies[i]->attack());
-        }
-    }
-}*/
 void GSSurvival::checkPerks()
 {
      for(unsigned int i=0; i < vecPerks.size(); i++)
@@ -190,17 +164,22 @@ void GSSurvival::updateView()
 
 void GSSurvival::loadResources()
 {
-    //Fonts
+    //*Fonts
     resources->addFont("arial", "./data/fonts/arial.ttf");
-    //Textures
+    //*Textures
+        //Background
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
+        //Projectiles
     resources->addTexture("projectile_1",   "./data/projectiles/projectile1_test.png");
     resources->addTexture("projectile_2",   "./data/projectiles/projectile2.png");
+        //Enemies
     resources->addTexture("default_enemy",  "./data/enemies/default_enemy.png");
     resources->addTexture("enemy_melee",    "./data/enemies/enemy_melee.png");
     resources->addTexture("enemy_range",    "./data/enemies/enemy_range.png");
+        //Perks
     resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
-    //Sound buffers
+    resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
+    //*Sound buffers
     resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
     resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
     resources->addSoundBuffer("assaultrifle_shot",   "./data/sounds/assaultrifle_shot.wav");
@@ -208,7 +187,7 @@ void GSSurvival::loadResources()
     resources->addSoundBuffer("sniperrifle_shot",    "./data/sounds/sniperrifle_shot.wav");
     resources->addSoundBuffer("shotgun_shot",        "./data/sounds/shotgun_shot.wav");
     resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
-    //Music
+    //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
 
