@@ -9,7 +9,6 @@ EnemyFactory::EnemyFactory(sf::Sprite* _target, sf::IntRect _fieldSize, vector<E
     currentSpawnTimer(0.f),
     score(0.f)
 {
-    
 }
 
 EnemyFactory::~EnemyFactory()
@@ -62,7 +61,7 @@ void EnemyFactory::spawnEnemy()
             case 0:
                 vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_range")));
                 vecEnemies->back()->setWeapon(new Gun(&(vecEnemies->back()->m_sprite)));
-                vecEnemies->back()->getWeapon()->setDamage(5.f);
+                vecEnemies->back()->getWeapon()->setDamage(10.f);
                 break;
             default:
                 vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_melee")));
@@ -77,7 +76,6 @@ void EnemyFactory::spawnEnemy()
 void EnemyFactory::increaseDifficulty()
 {
     if (spawnTimer > 1.f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 10000);
-    cout<< endl << spawnTimer;
 }
 
 void EnemyFactory::checkEnemies()
@@ -89,16 +87,16 @@ void EnemyFactory::checkEnemies()
             switch(rand() % 40)
             {
                 case 0:
-                    vecPerks.push_back(new Frost(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Frost(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 case 1:
-                    vecPerks.push_back(new Fire(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Fire(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 case 2:
-                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 case 3:
-                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x,vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 default:
                     break;                

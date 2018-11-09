@@ -14,6 +14,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
+    healthBar = new HealthBar(player);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
     //!
     k = 0; //need to delete
@@ -21,7 +22,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
     resources->getMusic("GXRCH - HARD")->setVolume(50.f);
     resources->getMusic("GXRCH - HARD")->setLoop(true);
-    resources->getMusic("GXRCH - HARD")->play();
+    //resources->getMusic("GXRCH - HARD")->play();
 }
 
 GSSurvival::~GSSurvival()
@@ -41,6 +42,7 @@ void GSSurvival::update()
         vecProjectiles[i]->update();
     for(unsigned int i=0; i<vecPerks.size(); i++)
         vecPerks[i]->update();
+    healthBar->update();
     updateView();
     updateListener();
     updateStats();
@@ -133,32 +135,6 @@ void GSSurvival::checkMelee()
     }
 }
 
-/*void GSSurvival::checkEnemies()
-{
-    for(unsigned int i = 0; i < vecEnemies.size(); i++)
-    {
-        if(vecEnemies[i]->toDelete)
-        {
-            //
-            if(k)
-                vecPerks.push_back(new Frost(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
-            else
-                vecPerks.push_back(new Fire(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y));
-            k=1-k;
-            k++; //fix this code
-            //vecPerks.push_back(new FindWeapon(vecEnemies[i]->m_sprite.getPosition().x,vecEnemies[i]->m_sprite.getPosition().y,new Gun(&player->m_sprite, 1)));
-            vecEnemies.erase(vecEnemies.begin() + i);
-            cout<<i<<" deleted"<<endl;
-        }
-    }
-    for(unsigned int i = 0; i < vecEnemies.size(); i++)
-    {
-        if(checkCollision(player, vecEnemies[i]))
-        {
-            player->takeDamage(vecEnemies[i]->attack());
-        }
-    }
-}*/
 void GSSurvival::checkPerks()
 {
      for(unsigned int i=0; i < vecPerks.size(); i++)
@@ -190,20 +166,33 @@ void GSSurvival::updateView()
 
 void GSSurvival::loadResources()
 {
-    resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
+    //*Fonts
     resources->addFont("arial", "./data/fonts/arial.ttf");
-    resources->addTexture("projectile_1", "./data/projectiles/projectile1_test.png");
-    resources->addTexture("projectile_2", "./data/projectiles/projectile2.png");
-    resources->addTexture("default_enemy", "./data/enemies/default_enemy.png");
-    resources->addTexture("enemy_melee", "./data/enemies/enemy_melee.png");
-    resources->addTexture("enemy_range", "./data/enemies/enemy_range.png");
+    //*Textures
+        //Background
+    resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
+        //Projectiles
+    resources->addTexture("projectile_1",   "./data/projectiles/projectile1_test.png");
+    resources->addTexture("projectile_2",   "./data/projectiles/projectile2.png");
+        //Enemies
+    resources->addTexture("default_enemy",  "./data/enemies/default_enemy.png");
+    resources->addTexture("enemy_melee",    "./data/enemies/enemy_melee.png");
+    resources->addTexture("enemy_range",    "./data/enemies/enemy_range.png");
+        //Perks
+    resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
+    resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
+        //GUI
+    resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
+    resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
+    //*Sound buffers
     resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
     resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
     resources->addSoundBuffer("assaultrifle_shot",   "./data/sounds/assaultrifle_shot.wav");
     resources->addSoundBuffer("assaultrifle_reload", "./data/sounds/assaultrifle_reload.wav");
     resources->addSoundBuffer("sniperrifle_shot",    "./data/sounds/sniperrifle_shot.wav");
     resources->addSoundBuffer("shotgun_shot",        "./data/sounds/shotgun_shot.wav");
-    resources->addSoundBuffer("shotgun_reload",  "./data/sounds/shotgun_reload.wav");
+    resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
+    //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
 
@@ -221,6 +210,7 @@ void GSSurvival::draw()
     window.draw(*player);
     //* UI
     window.setView(window.getDefaultView());
+    window.draw(*healthBar);
     window.draw(info);
     if(openPauseMenu)
         window.draw(*pauseMenu);

@@ -124,7 +124,7 @@ void Player::checkSkill()
     if(activeSpeedTime < 0.f)
     {
         activeSpeedTime = 0.f;
-        speed = 200.f;
+        speed = 300.f;
     }
 }
 
@@ -173,4 +173,24 @@ void Player::move()
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
+}
+
+float Player::getSpeed()
+{
+    return speed;
+}
+
+void Player::setSpeed(float _speed)
+{
+    speed = _speed;
+}
+
+float Player::getActiveSpeedTime()
+{
+    return activeSpeedTime;
+}
+
+void Player::setActiveSpeedTime(float _activeSpeedTime)
+{
+    activeSpeedTime = _activeSpeedTime;
 }

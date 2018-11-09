@@ -11,4 +11,6 @@ public:
     virtual ~Medicine(){};
 };
 
+extern ResourceManager      *resources;
+
 #endif // MEDICINE_H
