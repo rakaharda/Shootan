@@ -9,18 +9,14 @@ using namespace std;
 class Button: public GameObject
 {
 public:
-    Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func);
+    Button(sf::Texture& _texture, float _xPos, float _yPos);
     virtual ~Button();
-    void changeButtonName(string _name);
-    void changeButtonSprite(string _path);
+    void changeButtonSprite(sf::Texture& _texture);
+    void setFunction(std::function <void()> _function);
     bool isClicked(float _xPos, float _yPos);
     bool isSelect;
 protected:
-    sf::Texture texture;
-    sf::Text text;
-    sf::Font font;
     std::function <void(void)> m_function;
-    int id;
 private:
     virtual void update();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

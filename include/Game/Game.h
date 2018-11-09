@@ -19,7 +19,7 @@
 #include "Game/VideoSettings.h"
 #include "Game/GSSurvival.h"
 #include "GUI/Menu.h"
-#include "GUI/MainMenu.h"
+#include "GUI/PauseMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
 
@@ -41,7 +41,7 @@ private:
     sf::Font        font;
     sf::Clock*      gameClock;
     FPSCounter      fpsCounter;
-    MainMenu        *menu;
+    PauseMenu        *pauseMenu;
     VideoSettings   *videoSettings;
     GameState       *currentGameState;
     bool            isPlaying;

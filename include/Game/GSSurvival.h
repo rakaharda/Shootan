@@ -19,10 +19,10 @@ protected:
     sf::Text        info;
     sf::IntRect     fieldSize;
     sf::View        view;
-    MainMenu        *menu;
+    PauseMenu        *pauseMenu;
     VideoSettings   *videoSettings;
     EnemyFactory    *enemyFactory;
-    bool            openMainMenu;
+    bool            openPauseMenu;
     vector <Enemy*> vecEnemies;
     void updateStats();
     void loadResources();

@@ -7,6 +7,7 @@ VideoSettings::VideoSettings()
     framerateLimit = 200;
     fullscreen = false;
     vsync = false;
+    fillResolutions();
 }
 
 bool VideoSettings::loadSettings()
@@ -32,6 +33,9 @@ bool VideoSettings::loadSettings()
         height = 480;
     if(framerateLimit > 200)
         framerateLimit = 200;
+     for(selectedResol = 0; selectedResol < resolutions.size(); selectedResol++)
+        if(resolutions[selectedResol]->x == width && resolutions[selectedResol]->y == height)
+            break;
     return true;
 }
 
@@ -47,4 +51,15 @@ bool VideoSettings::saveSettings()
     fprintf(fp, "Framerate Limit=%u\n", framerateLimit);
     fclose(fp);
     return true;
+}
+
+void VideoSettings::fillResolutions()
+{
+    resolutions.push_back(new sf::Vector2i(3840,2160));
+    resolutions.push_back(new sf::Vector2i(1920,1080));
+    resolutions.push_back(new sf::Vector2i(1600,900));
+    resolutions.push_back(new sf::Vector2i(1366,768));
+    resolutions.push_back(new sf::Vector2i(1280,720));
+    resolutions.push_back(new sf::Vector2i(1024,768));
+
 }

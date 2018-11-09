@@ -1,12 +1,16 @@
 #include "GUI/CheckBox.h"
-CheckBox::CheckBox(string _name, float _size, float _xPos, float _yPos, bool _isSelect, std::function<void(void)> _func)
-    : Button(_name, "./data/interface/markBG.png", _size, _xPos, _yPos, _func)
+CheckBox::CheckBox(string _name, float _xPos, float _yPos, bool _isSelect)
+    : Button(resources->getTexture("buttonSettingsMarkBorder"), _xPos, _yPos)
 {
     m_sprite.setPosition(_xPos - 100, _yPos - m_sprite.getTexture()->getSize().y / 2);
-    markTexture.loadFromFile("./data/interface/mark.png");
-    markSprite.setTexture(markTexture);
+    markSprite.setTexture(resources->getTexture("buttonSettingsMark"));
     markSprite.setPosition(_xPos - 100, _yPos - m_sprite.getTexture()->getSize().y / 2 - 5);
-    text.setPosition(_xPos - 50,
+    font.loadFromFile("./data/fonts/arial.ttf");
+    text.setFont(font);
+    text.setColor(sf::Color(50,50,50));
+    text.setString(_name);
+    text.setCharacterSize(30);
+    text.setPosition(_xPos - 35,
                      _yPos - 20);
     isSelect = _isSelect;
 }

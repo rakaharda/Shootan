@@ -1,20 +1,23 @@
-#ifndef MAINMENU_H
-#define MAINMENU_H
+#ifndef PAUSEMENU_H
+#define PAUSEMENU_H
 
 #include "Menu.h"
 #include "GUI/CheckBox.h"
 #include "Game/VideoSettings.h"
+#include "Utils/ResourceManager.h"
 
-class MainMenu: public Menu
+class PauseMenu: public Menu
 {
 public:
-    MainMenu(VideoSettings *_videoSettings, bool *_menuStatus);
-    virtual ~MainMenu();
+    PauseMenu(VideoSettings *_videoSettings, bool *_menuStatus);
+    virtual ~PauseMenu();
 private:
     void refreshMenu();
     void setFunctions();
+    void loadResources();
     bool isSettings;
     bool *isPlaying;
+    VideoSettings tempVideoSettings;
     VideoSettings *videoSettings;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 friend Button;
@@ -22,6 +25,6 @@ friend Button;
 };
 
 extern sf::RenderWindow window;
+extern ResourceManager      *resources;
 
-
-#endif // MAINMENU_H
+#endif // PAUSEMENU_H

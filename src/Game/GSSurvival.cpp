@@ -4,7 +4,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
 {
     videoSettings = _videoSettings;
     resources = new ResourceManager;
-    openMainMenu = false;
+    openPauseMenu = false;
     loadResources();
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
@@ -31,7 +31,7 @@ GSSurvival::~GSSurvival()
 
 void GSSurvival::update()
 {
-    if(openMainMenu)
+    if(openPauseMenu)
         return;
     if(player->getCurrentHealthPoints() > 0.f)
     {
@@ -73,17 +73,17 @@ void GSSurvival::updateListener()
 
 void GSSurvival::handleEvents(sf::Event _event)
 {
-    if(openMainMenu)
-            menu->handleEvents(_event);
+    if(openPauseMenu)
+            pauseMenu->handleEvents(_event);
         else
             player->handleEvents(_event);
     if(_event.type == sf::Event::KeyPressed)
         if(_event.key.code == sf::Keyboard::Escape)
             {
-            if(!openMainMenu)
-                menu = new MainMenu(videoSettings,&openMainMenu);
+            if(!openPauseMenu)
+                pauseMenu = new PauseMenu(videoSettings,&openPauseMenu);
             else
-                openMainMenu = false;
+                openPauseMenu = false;
             }
 }
 
@@ -222,6 +222,6 @@ void GSSurvival::draw()
     //* UI
     window.setView(window.getDefaultView());
     window.draw(info);
-    if(openMainMenu)
-        window.draw(*menu);
+    if(openPauseMenu)
+        window.draw(*pauseMenu);
 }

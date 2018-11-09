@@ -2,17 +2,20 @@
 #define CHECKBOX_H
 
 #include "GUI/Button.h"
+#include "Utils/ResourceManager.h"
 
 class CheckBox : public Button
 {
 public:
-    CheckBox(string _name, float _size, float _xPos, float _yPos, bool _isSelect, std::function<void(void)> _func);
+    CheckBox(string _name, float _xPos, float _yPos, bool _isSelect);
     virtual ~CheckBox();
 private:
-    sf::Texture markTexture;
     sf::Sprite markSprite;
+    sf::Font font;
+    sf::Text text;
     virtual void update();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
+extern ResourceManager *resources;
 #endif //CHECKBOX_H

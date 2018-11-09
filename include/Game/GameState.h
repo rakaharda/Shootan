@@ -25,7 +25,7 @@
 #include "Components/Collision.h"
 #include "Game/VideoSettings.h"
 #include "GUI/Menu.h"
-#include "GUI/MainMenu.h"
+#include "GUI/PauseMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
 

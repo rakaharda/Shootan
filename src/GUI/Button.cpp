@@ -1,17 +1,10 @@
 #include "GUI/Button.h"
 
-Button::Button(string _name, string _path, float _size, float _xPos, float _yPos, std::function<void(void)> _func)
+Button::Button(sf::Texture& _texture, float _xPos, float _yPos)
 {
-    m_function = _func;
-    texture.loadFromFile(_path);
-    m_sprite.setTexture(texture);
+    m_function = []{};
+    m_sprite.setTexture(_texture);
     m_sprite.setPosition(_xPos - m_sprite.getTexture()->getSize().x / 2, _yPos - m_sprite.getTexture()->getSize().y / 2);
-    text.setString(_name);
-    font.loadFromFile("./data/fonts/arial.ttf");
-    text.setFont(font);
-    text.setCharacterSize(_size);
-    text.setPosition(_xPos - _name.size()*14/2,
-                     _yPos - 20);
 }
 
 Button::~Button()
@@ -29,21 +22,15 @@ bool Button::isClicked(float _xPos, float _yPos)
     else return false;
 }
 
-void Button::changeButtonName(string _name)
+void Button::changeButtonSprite(sf::Texture& _texture)
 {
-    text.setString(_name);
-    font.loadFromFile("./data/fonts/arial.ttf");
-    text.setFont(font);
-    text.setPosition(m_sprite.getPosition().x + m_sprite.getTexture()->getSize().x/2  - _name.size()*14/2,
-                     m_sprite.getPosition().y + m_sprite.getTexture()->getSize().y/2  - 20);
+    m_sprite.setTexture(_texture);
 }
 
-void Button::changeButtonSprite(string _path)
+void Button::setFunction(std::function <void()> _function)
 {
-    texture.loadFromFile(_path);
-    m_sprite.setTexture(texture);
+    m_function = _function;
 }
-
 
 void Button::update()
 {
@@ -58,6 +45,5 @@ void m_function()
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite,states);
-    target.draw(text,states);
 }
 

@@ -2,6 +2,8 @@
 #define VIDEOSETTINGS_H
 
 #include <iostream>
+#include <vector>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -13,6 +15,9 @@ public:
     unsigned int width;
     unsigned int height;
     unsigned int framerateLimit;
+    unsigned int selectedResol;
+    vector <sf::Vector2i*> resolutions;
+    void fillResolutions();
     bool fullscreen;
     bool vsync;
     bool loadSettings();
