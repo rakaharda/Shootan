@@ -90,8 +90,8 @@ void GSSurvival::handleEvents(sf::Event _event)
         if(_event.key.code == sf::Keyboard::Escape)
             if(!openMainMenu)
                 menu = new MainMenu(videoSettings,&openMainMenu);
-            else
-                openMainMenu = false;
+                else
+                    openMainMenu = false;
         if(_event.key.code == sf::Keyboard::L && !openMainMenu)
             if(!openPerkMenu)
                 openPerkMenu = true;

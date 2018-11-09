@@ -78,7 +78,8 @@ void Player::setSkill(int _skill)
 {
     if(skill == 0)
         skill = _skill;
-        else skill = 3;
+        else if (skill != _skill)
+                skill = 3;
     weapon->setSkill(skill);
 }
 

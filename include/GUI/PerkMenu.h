@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "Game/VideoSettings.h"
 #include "Player/Player.h"
+#include "Creatures/Enemy.h"
 
 class PerkMenu: public Menu
 {
@@ -16,6 +17,12 @@ private:
     int currentHP;
     int maxSpeed;
     int currentSpeed;
+    int maxPlayerSpeed;
+    int currentPlayerSpeed;
+    int maxFrost;
+    int currentFrost;
+    int maxFire;
+    int currentFire;
     Player* player;
     void setFunctions();
 friend Button;

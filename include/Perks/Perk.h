@@ -4,6 +4,7 @@
 #include "Components/GameObject.h"
 #include "Player/Player.h"
 
+
 class Perk : public GameObject
 {
     public:
@@ -16,6 +17,13 @@ class Perk : public GameObject
     protected:
         sf::Texture texture;
         float activeTime;
+        float raz;
+        float currentTimeIncrease;
+        float currentTimeTurn;
+        float timeIncrease1;
+        float timeIncrease2;
+        float timeTurn;
+        int degree;
 
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

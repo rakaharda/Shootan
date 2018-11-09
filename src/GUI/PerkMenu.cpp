@@ -6,19 +6,26 @@ PerkMenu::PerkMenu(bool *_menuStatus, Player** _player)
     currentHP=0;
     maxSpeed=5;
     currentSpeed=0;
+    maxPlayerSpeed=5;
+    currentPlayerSpeed=0;
+    maxFire=5;
+    currentFire=0;
+    maxFrost=5;
+    currentFrost=0;
     player=*_player;
     menuStatus = _menuStatus;
     setFunctions();
-    string str[6];
+    string str[7];
     str[0] = "Play";
     str[1] = "+HP";
     str[2] = "+SPEED";
-    str[3] = "+Frost";
-    str[4] = "+Fire";
-    str[5] = "./data/interface/button3.png";
-    for(int i = 0; i < 5; i++)
-        buttons.push_back(new Button(str[i], str[5], 30.f, window.getSize().x/2, window.getSize().y/2 - 250 + i*100, buttonFunctions[i]));
+    str[3] = "+PLAYERSPEED";
+    str[4] = "+Frost";
+    str[5] = "+Fire";
+    str[6] = "./data/interface/button3.png";
     for(int i = 0; i < 6; i++)
+        buttons.push_back(new Button(str[i], str[6], 30.f, window.getSize().x/2, window.getSize().y/2 - 250 + i*100, buttonFunctions[i]));
+    for(int i = 0; i < 7; i++)
         str[i].erase();
     backGroundTexture.loadFromFile("./data/interface/background.png");
     backGroundSprite.setTexture(backGroundTexture);
@@ -34,7 +41,7 @@ PerkMenu::~PerkMenu()
 
 void PerkMenu::setFunctions()
 {
-    buttonFunctions = new std::function<void(void)> [5];
+    buttonFunctions = new std::function<void(void)> [6];
     buttonFunctions[0] = [this](){
         *menuStatus = false;
     };
@@ -62,12 +69,32 @@ void PerkMenu::setFunctions()
             player->upSpeed += 50.f;
         }
     };
-        buttonFunctions[3] = [this](){
-        player->setSkill(2);
+    buttonFunctions[3] = [this](){
+        if(currentPlayerSpeed<maxPlayerSpeed)
+        {
+            currentPlayerSpeed++;
+            player->defoltSpeed+=20.f;
+            player->speed+=20.f;
+        }
 
     };
         buttonFunctions[4] = [this](){
-        player->setSkill(1);
+            if(currentFrost<maxFrost)
+        {
+            currentFrost++;
+            Enemy::FrostRotationRate = 90.f - (currentFrost * 20.f - ((currentFrost - 2) * 10.f));
+            Enemy::FrostSpeed = 50.f - (currentFrost * 10.f - ((currentFrost - 2) * 5.f));
+            player->setSkill(2);
+        }
+
+    };
+        buttonFunctions[5] = [this](){
+            if(currentFire<maxFire)
+        {
+            currentFire++;
+            Enemy::percentDamage = currentFire * 0.05;
+            player->setSkill(1);
+        }
 
     };
 }
