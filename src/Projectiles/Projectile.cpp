@@ -1,6 +1,7 @@
 #include "Projectiles/Projectile.h"
 
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, float _speed, int _skill) :
+Projectile::Projectile(const sf::Sprite* _source, float _damage, int _spread, sf::Texture& _texture, float _speed, int _skill) :
+    source(_source),
     damage(_damage),
     speed(_speed)
 {
@@ -10,16 +11,16 @@ Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf
     m_sprite.setTexture(_texture);
     m_sprite.setTextureRect(sf::IntRect(_texture.getSize().y * skill, 0, _texture.getSize().y, _texture.getSize().y));
     m_sprite.setOrigin(_texture.getSize().y / 2, _texture.getSize().y / 2);
-    m_sprite.setPosition(_sprite->getPosition().x + ((_sprite->getTexture()->getSize().y + m_sprite.getTexture()->getSize().y / 2.f) * cos(_sprite->getRotation() / 180.f * M_PI)),
-                         _sprite->getPosition().y + ((_sprite->getTexture()->getSize().y + m_sprite.getTexture()->getSize().y / 2.f) * sin(_sprite->getRotation() / 180.f * M_PI)));
-    angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI;
+    m_sprite.setPosition(source->getPosition().x + ((source->getTexture()->getSize().y + m_sprite.getTexture()->getSize().y) / 2.f * cos(source->getRotation() / 180.f * M_PI)),
+                         source->getPosition().y + ((source->getTexture()->getSize().y + m_sprite.getTexture()->getSize().y) / 2.f * sin(source->getRotation() / 180.f * M_PI)));
+    angle = ((rand() % _spread - _spread / 2) + source->getRotation()) / 180 * M_PI;
 }
 
-Projectile::Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, int _skill) :
-    Projectile(_sprite, _damage, _spread, _texture, _speed, _skill)
+Projectile::Projectile(const sf::Sprite* _source, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, int _skill) :
+    Projectile(_source, _damage, _spread, _texture, _speed, _skill)
 {
 
-    angle = ((rand() % _spread - _spread / 2) + _sprite->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 10;
+    angle = ((rand() % _spread - _spread / 2) + source->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 10;
 }
 
 Projectile::~Projectile()
@@ -45,4 +46,9 @@ void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 int Projectile::getSkill()
 {
     return skill;
+}
+
+const sf::Sprite* Projectile::getSource()
+{
+    return source;
 }

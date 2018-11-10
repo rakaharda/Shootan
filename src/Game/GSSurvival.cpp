@@ -16,6 +16,11 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     player = new Player;
     healthBar = new HealthBar(player);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
+    vecEnemies.reserve(200);
+    vecProjectiles.clear();
+    vecProjectiles.reserve(200);
+    vecPerks.clear();
+    vecPerks.reserve(20);
     //!
     k = 0; //need to delete
     Perk::player = player;
@@ -107,18 +112,20 @@ void GSSurvival::checkProjectiles()
     {
         for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
-            if(checkCollision(vecProjectiles[i], vecEnemies[j]))
+            if(vecProjectiles[i]->getSource() != &vecEnemies[j]->m_sprite)
+                if(checkCollision(vecProjectiles[i], vecEnemies[j]))
+                    {
+                        vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
+                        vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
+                        vecProjectiles[i]->toDelete = true;
+                    }
+        }
+        if(vecProjectiles[i]->getSource() != &player->m_sprite)
+            if(checkCollision(vecProjectiles[i], player))
                 {
-                    vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                    vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
+                    player->takeDamage(vecProjectiles[i]->getDamage());
                     vecProjectiles[i]->toDelete = true;
                 }
-        }
-        if(checkCollision(vecProjectiles[i], player))
-            {
-                player->takeDamage(vecProjectiles[i]->getDamage());
-                vecProjectiles[i]->toDelete = true;
-            }
         if(vecProjectiles[i]->toDelete)
             vecProjectiles.erase(vecProjectiles.begin()+i);
     }

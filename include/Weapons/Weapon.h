@@ -16,20 +16,21 @@ class Weapon : public Cooldown
 public:
     Weapon(sf::Sprite* _source);
     virtual ~Weapon() {};
-    virtual void  update();
-    virtual bool  addProjectile();
-    void          reload();
-    float         getReloadTime();
-    float         getCurrentReloadTime();
-    int           getClipSize();
-    int           getCurrentClipSize();
-    float         getAttackDistance();
-    virtual float attack(){return 0.f;};
-    float         getDamage();
-    void          setDamage(float _damage);
-    virtual void  setSkill(int _skill);
-    void          playShotSound();
-    void          playReloadSound();
+    virtual void      update();
+    virtual bool      addProjectile();
+    void              reload();
+    float             getReloadTime();
+    float             getCurrentReloadTime();
+    int               getClipSize();
+    int               getCurrentClipSize();
+    float             getAttackDistance();
+    virtual float     attack(){return 0.f;};
+    float             getDamage();
+    void              setDamage(float _damage);
+    virtual void      setSkill(int _skill);
+    void              playShotSound();
+    void              playReloadSound();
+    const sf::Sprite* getSource();
 protected:
     const sf::Sprite* source;
     float             reloadTime;

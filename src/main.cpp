@@ -5,6 +5,7 @@ float frameTime;
 ResourceManager *resources;
 vector <Projectile*> vecProjectiles;
 vector <Perk*> vecPerks;
+
 int main()
 {
     Game* game;
