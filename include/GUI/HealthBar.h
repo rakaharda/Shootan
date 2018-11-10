@@ -22,11 +22,13 @@ private:
     sf::Vector2f origin;
     float amplitude;
     float prevHealthPoints;
+    int prevWindowsHeight;
     bool isDamaged;
     bool direction;
     void         shake();
     void         moveToOrigin();
     void         move(float _x);   
+    void         updateOrigin();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
