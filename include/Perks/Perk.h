@@ -27,6 +27,7 @@ class Perk : public GameObject
 
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        int iAnimation;
 };
 extern sf::RenderWindow window;
 extern float frameTime;

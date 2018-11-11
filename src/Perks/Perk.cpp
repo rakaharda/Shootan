@@ -2,17 +2,18 @@
 Player* Perk::player=NULL;
 Perk::Perk(int _xPos, int _yPos)
 {
-    activeTime = 10.f;
-    raz = 1.2f;
+    activeTime = 15.f;
+    raz = 1.1f;
     currentTimeIncrease = 1.f;
     currentTimeTurn = 0.01f;
     timeIncrease1 = 1.f;
-    timeIncrease2 = 0.1f;
+    timeIncrease2 = 0.03f;
     timeTurn = 0.01f;
     float angle;
     degree = 0;
     angle = degree / M_PI;
     m_sprite.setRotation(angle);
+    iAnimation=0;
 }
 Perk::~Perk()
 {
@@ -23,6 +24,23 @@ void Perk::update()
     activeTime -= frameTime;
     currentTimeIncrease -= frameTime;
     currentTimeTurn -= frameTime;
+    if(activeTime < 2.f)
+    {
+        if(currentTimeIncrease < 0.f)
+        {
+            m_sprite.scale(0.9f, 0.9f);
+            currentTimeIncrease = 0.1;
+        }
+        if(currentTimeTurn < 0.f)
+        {
+            float angle;
+            degree +=5;
+            angle = degree / M_PI;
+            m_sprite.setRotation(angle);
+            currentTimeTurn = 0.001f;
+        }
+        return ;
+    }
     if(currentTimeTurn < 0.f)
     {
         float angle;
@@ -31,22 +49,24 @@ void Perk::update()
         m_sprite.setRotation(angle);
         currentTimeTurn = timeTurn;
     }
-    if(activeTime < 4.f)
+    if(activeTime < 6.f)
     {
         timeIncrease1 = 0.5f;
     }
     if(currentTimeIncrease < 0.f)
     {
         m_sprite.scale(raz, raz);
-        if(raz == 0.83333f)
+        iAnimation++;
+        currentTimeIncrease = timeIncrease2;
+        if (iAnimation == 3)
         {
-            raz = 1.2f;
-            currentTimeIncrease = timeIncrease1;
+            raz = 0.90909091;
         }
-        else
+        if (iAnimation == 6)
         {
-            raz = 0.83333f;
-            currentTimeIncrease = timeIncrease2;
+            iAnimation = 0;
+            raz = 1.1f;
+            currentTimeIncrease = timeIncrease1;
         }
     }
 }

@@ -16,7 +16,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
     healthBar = new HealthBar(player);
-    player->setWeapon(new Gun(&player->m_sprite));
+    player->setWeapon(new AssaultRifle(&player->m_sprite));
     vecEnemies.reserve(200);
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
