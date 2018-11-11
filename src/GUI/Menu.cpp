@@ -31,7 +31,7 @@ void Menu::handleEvents(sf::Event event)
 
 void Menu::setFunctions()
 {
-    
+
 }
 
 void Menu::searchButton()

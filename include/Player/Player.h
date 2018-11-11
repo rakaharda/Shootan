@@ -30,13 +30,13 @@ public:
     void    setSpeed(float _speed);
     float   getActiveSpeedTime();
     void    setActiveSpeedTime(float _activeSpeedtime);
+    float       speed;
+    float       upSpeed;
+    float       defoltSpeed;
 private:
     sf::Texture texture;
     Weapon*     weapon;
     int         skill;
-    float       activeSkillTimeFire;
-    float       activeSkillTimeFrost;
-    float       speed;
     float       activeSpeedTime;
     void         checkSkill();
     void         move();

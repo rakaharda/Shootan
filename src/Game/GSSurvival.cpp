@@ -5,6 +5,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     videoSettings = _videoSettings;
     resources = new ResourceManager;
     openPauseMenu = false;
+    openPerkMenu = false;
     loadResources();
     fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
@@ -15,12 +16,13 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings)
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player = new Player;
     healthBar = new HealthBar(player);
-    player->setWeapon(new AssaultRifle(&player->m_sprite));
+    player->setWeapon(new Gun(&player->m_sprite));
     vecEnemies.reserve(200);
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
     vecPerks.clear();
     vecPerks.reserve(20);
+    perkMenu = new PerkMenu(&openPerkMenu, &player);
     //!
     k = 0; //need to delete
     Perk::player = player;
@@ -37,7 +39,7 @@ GSSurvival::~GSSurvival()
 
 void GSSurvival::update()
 {
-    if(openPauseMenu)
+    if(openPauseMenu||openPerkMenu)
         return;
     if(player->getCurrentHealthPoints() > 0.f)
     {
@@ -81,10 +83,19 @@ void GSSurvival::updateListener()
 void GSSurvival::handleEvents(sf::Event _event)
 {
     if(openPauseMenu)
-            pauseMenu->handleEvents(_event);
-        else
-            player->handleEvents(_event);
+        pauseMenu->handleEvents(_event);
+        else if(openPerkMenu)
+                {
+                    perkMenu->handleEvents(_event);
+                    if(_event.type == sf::Event::KeyPressed)
+                        if(_event.key.code == sf::Keyboard::L)
+                        openPerkMenu = false;
+                    return;
+                }
+                else
+                    player->handleEvents(_event);
     if(_event.type == sf::Event::KeyPressed)
+    {
         if(_event.key.code == sf::Keyboard::Escape)
             {
             if(!openPauseMenu)
@@ -92,6 +103,10 @@ void GSSurvival::handleEvents(sf::Event _event)
             else
                 openPauseMenu = false;
             }
+        //if(_event.key.code == sf::Keyboard::L && !openPauseMenu)
+            //if(!openPerkMenu)
+                //openPerkMenu = true;
+    }
 }
 
 void GSSurvival::collectTrash()
@@ -135,6 +150,7 @@ void GSSurvival::checkMelee()
 {
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
+
         if(checkCollision(player, vecEnemies[i]))
         {
             player->takeDamage(vecEnemies[i]->attack());
@@ -221,4 +237,6 @@ void GSSurvival::draw()
     window.draw(info);
     if(openPauseMenu)
         window.draw(*pauseMenu);
+    if(openPerkMenu)
+        window.draw(*perkMenu);
 }

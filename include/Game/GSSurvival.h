@@ -25,6 +25,8 @@ protected:
     bool            openPauseMenu;
     vector <Enemy*> vecEnemies;
     HealthBar       *healthBar;
+    PerkMenu        *perkMenu;
+    bool            openPerkMenu;
     void updateStats();
     void loadResources();
     void collectTrash();

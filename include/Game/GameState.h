@@ -27,6 +27,7 @@
 #include "GUI/Menu.h"
 #include "GUI/PauseMenu.h"
 #include "GUI/HealthBar.h"
+#include "GUI/PerkMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
 

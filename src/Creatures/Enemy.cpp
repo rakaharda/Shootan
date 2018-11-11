@@ -1,5 +1,9 @@
 #include "Creatures/Enemy.h"
 
+float Enemy::percentDamage = 0.f;
+float Enemy::FrostSpeed = 150.f;
+float Enemy::FrostRotationRate = 90.f;
+
 Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture) :
     HealthPoints(_healthPoints),
     attackDistance(-10.f)
@@ -14,14 +18,15 @@ Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _textu
             );
     m_sprite.setRotation(angle);
     currentAngle = angle;
-    rotationRate = 90.f;
     distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 150.f;
     toDelete = false;
     weapon = new MeleeAttack(&m_sprite);
-    iFrost = 0;
-    iFire = 0;
+    rotationRate = 90.f;
     skillDamage = 0.f;
+    skill = 0;
+    skillTime = 1.f;
+    currentSkillTime = skillTime;
 }
 
 void Enemy::setPosition(float _xPos, float _yPos)
@@ -43,31 +48,16 @@ void Enemy::update()
     weapon->update();
     checkHealth();
     checkSkill();
-    takeDamage(skillDamage);
     updateTexture();
 }
 void Enemy::checkSkill()
 {
-    for (unsigned int i = 0; i < vecSkills.size();i++)
+    currentSkillTime -= frameTime;
+    if(currentSkillTime < 0.f)
     {
-        vecSkills[i]->skillTime -= frameTime;
-        if(vecSkills[i]->skillTime <=0.f)
-        {
-            if(vecSkills[i]->skill == 1)
-            {
-                iFire--;
-                skillDamage-=0.01f;
-                vecSkills.erase(vecSkills.begin() + i);
-            }
-            if(vecSkills[i]->skill == 2)
-            {
-
-                iFrost--;
-                rotationRate+=8.f;
-                speed+=5.f;
-                vecSkills.erase(vecSkills.begin() + i);
-            }
-        }
+        takeDamage(skillDamage);
+        currentSkillTime = skillTime;
+        std::cout<<speed<<endl;
     }
 }
 
@@ -148,24 +138,22 @@ float Enemy::attack()
 
 void Enemy::setSkill(int _skill)
 {
-    if(((_skill == 1)||(_skill == 3)) && (iFire < 10))
+    if(skill == 0)
     {
-        skills *sk=new skills;
-        sk->skillTime = 5.f;
-        sk->skill = 1;
-        skillDamage += 0.01f;
-        vecSkills.push_back(sk);
-        iFire++;
+       skill = _skill;
     }
-    if(((_skill == 2) || (_skill == 3)) && (iFrost < 10))
+    else if(skill != _skill)
+            {
+                skill = 3;
+            }
+    if((skill == 2)||(skill == 3))
     {
-        skills *sk = new skills;
-        sk->skillTime = 5.f;
-        sk->skill = 2;
-        rotationRate -= 8.f;
-        speed -= 5.f;
-        vecSkills.push_back(sk);
-        iFrost++;
+        speed = FrostSpeed;
+        rotationRate = FrostRotationRate;
+    }
+    if((skill == 1)||(skill == 3))
+    {
+        skillDamage = getHealthPoints() * percentDamage;
     }
 }
 
@@ -176,15 +164,15 @@ Weapon* Enemy::getWeapon()
 
 void Enemy::updateTexture()
 {
-    if(iFrost > 0 && iFire > 0)
+    if(skill == 3)
     {
         m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y * 3, 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
     }
-    else if(iFire > 0)
+    else if(skill == 1)
     {
         m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y    , 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
     }
-    else if(iFrost > 0)
+    else if(skill == 2)
     {
         m_sprite.setTextureRect(sf::IntRect(m_sprite.getTexture()->getSize().y * 2, 0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
     }
