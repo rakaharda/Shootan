@@ -2,6 +2,7 @@
 #define PERKMENU_H
 
 #include "Menu.h"
+#include "Utils/ResourceManager.h"
 #include "Game/VideoSettings.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
@@ -25,11 +26,13 @@ private:
     int currentFire;
     Player* player;
     void setFunctions();
+    void loadResources();
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 friend Button;
 //    buttonFunctions;
 };
 
 extern sf::RenderWindow window;
-
+extern ResourceManager      *resources;
 
 #endif // PERKMENU_H

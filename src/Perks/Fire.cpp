@@ -10,5 +10,5 @@ Fire::Fire(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 
 void Fire::pickUp()
 {
-    player->setSkill(1);
+    //player->setSkill(1);
 }

@@ -57,7 +57,6 @@ void Enemy::checkSkill()
     {
         takeDamage(skillDamage);
         currentSkillTime = skillTime;
-        std::cout<<speed<<endl;
     }
 }
 

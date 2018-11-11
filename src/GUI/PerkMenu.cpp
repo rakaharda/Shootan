@@ -15,20 +15,21 @@ PerkMenu::PerkMenu(bool *_menuStatus, Player** _player)
     player=*_player;
     menuStatus = _menuStatus;
     setFunctions();
-    string str[7];
-    str[0] = "Play";
-    str[1] = "+HP";
-    str[2] = "+SPEED";
-    str[3] = "+PLAYERSPEED";
-    str[4] = "+Frost";
-    str[5] = "+Fire";
-    str[6] = "./data/interface/button3.png";
+    string str[6];
+    str[0] = "buttonPlay";
+    str[1] = "buttonHP";
+    str[2] = "buttonSpeedUp";
+    str[3] = "buttonSpeed";
+    str[4] = "buttonFrost";
+    str[5] = "buttonFire";
     for(int i = 0; i < 6; i++)
-//        buttons.push_back(new Button(str[i], str[6], 30.f, window.getSize().x/2, window.getSize().y/2 - 250 + i*100, buttonFunctions[i]));
-    for(int i = 0; i < 7; i++)
+    {
+        buttons.push_back(new Button(resources->getTexture(str[i]), window.getSize().x/2 - 230 + (i * 60), window.getSize().y/2));
+        buttons.back()->setFunction(buttonFunctions[i]);
+    }
+    for(int i = 0; i < 6; i++)
         str[i].erase();
-    backGroundTexture.loadFromFile("./data/interface/background.png");
-    backGroundSprite.setTexture(backGroundTexture);
+    backGroundSprite.setTexture(resources->getTexture("backGround"));
     backGroundSprite.setPosition(window.getSize().x/2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y/2 - backGroundSprite.getTexture()->getSize().y / 2);
 
@@ -37,6 +38,17 @@ PerkMenu::PerkMenu(bool *_menuStatus, Player** _player)
 PerkMenu::~PerkMenu()
 {
     //dtor
+}
+
+void PerkMenu::loadResources()
+{
+    resources->addTexture("buttonPlay",     "./data/GUI/perkMenu/buttonPlay.png");
+    resources->addTexture("buttonHP", "./data/GUI/perkMenu/buttonHP.png");
+    resources->addTexture("buttonFire",     "./data/GUI/perkMenu/buttonFire.png");
+    resources->addTexture("buttonFrost", "./data/GUI/perkMenu/buttonFrost.png");
+    resources->addTexture("buttonSpeed",   "./data/GUI/perkMenu/buttonSpeed.png");
+    resources->addTexture("buttonSpeedUp",       "./data/GUI/perkMenu/buttonSpeedUp.png");
+    resources->addTexture("backGround",      "./data/GUI/perkMenu/backGround.png");
 }
 
 void PerkMenu::setFunctions()
@@ -121,4 +133,10 @@ void PerkMenu::handleEvents(sf::Event event)
     default:
         break;
     }
+}
+void PerkMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(backGroundSprite,states);
+    for(unsigned int i = 0; i < buttons.size(); i++)
+        target.draw(*buttons[i],states);
 }

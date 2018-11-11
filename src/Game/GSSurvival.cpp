@@ -103,9 +103,9 @@ void GSSurvival::handleEvents(sf::Event _event)
             else
                 openPauseMenu = false;
             }
-        //if(_event.key.code == sf::Keyboard::L && !openPauseMenu)
-            //if(!openPerkMenu)
-                //openPerkMenu = true;
+        if(_event.key.code == sf::Keyboard::L && !openPauseMenu)
+            if(!openPerkMenu)
+                openPerkMenu = true;
     }
 }
 
