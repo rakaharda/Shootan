@@ -107,3 +107,9 @@ void Weapon::playReloadSound()
     sounds.back().setMinDistance(50);
     sounds.back().play();
 }
+
+
+const sf::Sprite* Weapon::getSource()
+{
+    return source;
+}

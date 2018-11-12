@@ -9,5 +9,7 @@ Medicine::Medicine(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 
 void Medicine::pickUp()
 {
-    (player)->setCurrentHealthPoints((player)->getHealthPoints());
+    (player)->setCurrentHealthPoints((int)((player)->getHealthPoints()/4) + (player)->getCurrentHealthPoints());
+    if((player)->getCurrentHealthPoints() > (player)->getHealthPoints())
+        (player)->setCurrentHealthPoints( (player)->getHealthPoints() );
 }

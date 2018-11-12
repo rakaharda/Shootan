@@ -16,17 +16,19 @@ public:
     void update();
 protected:
 private:
-    Player* player;
-    sf::Sprite frame;
-    sf::Sprite healthCells;
+    Player*      player;
+    sf::Sprite   frame;
+    sf::Sprite   healthCells;
     sf::Vector2f origin;
-    float amplitude;
-    float prevHealthPoints;
-    bool isDamaged;
-    bool direction;
+    float        amplitude;
+    float        prevHealthPoints;
+    unsigned int prevWindowsHeight;
+    bool         isDamaged;
+    bool         direction;
     void         shake();
     void         moveToOrigin();
-    void         move(float _x);   
+    void         move(float _x);
+    void         updateOrigin();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

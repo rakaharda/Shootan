@@ -49,3 +49,10 @@
 *.sqlite
 *.suo
 *.log
+*.tlog
+*.ipch
+*.lastbuildstate
+*.ilk
+*.pdb
+*.idb
+/x64/

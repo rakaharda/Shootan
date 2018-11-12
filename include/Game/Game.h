@@ -8,6 +8,7 @@
 #include <ctime>
 #include <iostream>
 #include "Components/GameObject.h"
+#include "Components/GameStates.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
 #include "Projectiles/Projectile.h"
@@ -33,7 +34,11 @@ public:
     virtual ~Game();
     void play();
 private:
+<<<<<<< HEAD
     GameStates gameState;
+=======
+    GameStates      gameState;
+>>>>>>> a77e3095e7cebb8422b2faba0a32b0fa11ebcf1b
     sf::Font        font;
     sf::Clock*      gameClock;
     FPSCounter      fpsCounter;

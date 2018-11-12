@@ -18,13 +18,15 @@ public:
         ptSprite,
         ptLine
     };
-    Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, float _speed, int _skill);
-    Projectile(const sf::Sprite* _sprite, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, int _skill);
+    Projectile(const sf::Sprite* _source, float _damage, int _spread, sf::Texture& _texture, float _speed, int _skill);
+    Projectile(const sf::Sprite* _source, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, int _skill);
     virtual ~Projectile();
-    void  update();
-    float getDamage();
-    int   getSkill();
+    void              update();
+    float             getDamage();
+    int               getSkill();
+    const sf::Sprite* getSource();
 private:
+    const sf::Sprite* source;
     float             damage;
     float             speed;
     float             angle;

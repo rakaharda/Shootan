@@ -55,11 +55,11 @@ bool VideoSettings::saveSettings()
 
 void VideoSettings::fillResolutions()
 {
-    resolutions.push_back(new sf::Vector2i(3840,2160));
-    resolutions.push_back(new sf::Vector2i(1920,1080));
-    resolutions.push_back(new sf::Vector2i(1600,900));
-    resolutions.push_back(new sf::Vector2i(1366,768));
-    resolutions.push_back(new sf::Vector2i(1280,720));
-    resolutions.push_back(new sf::Vector2i(1024,768));
+    resolutions.push_back(new sf::Vector2u(3840,2160));
+    resolutions.push_back(new sf::Vector2u(1920,1080));
+    resolutions.push_back(new sf::Vector2u(1600,900));
+    resolutions.push_back(new sf::Vector2u(1366,768));
+    resolutions.push_back(new sf::Vector2u(1280,720));
+    resolutions.push_back(new sf::Vector2u(1024,768));
 
 }

@@ -1,21 +1,28 @@
 #include "Game/GSSurvival.h"
 
-GSSurvival::GSSurvival(VideoSettings *_videoSettings)
+GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
+    player(new Player),
+    fieldSize(sf::IntRect(0, 0, 3840, 2160)),
+    videoSettings(_videoSettings),
+    openPauseMenu(false),
+    openPerkMenu(false),
+    perkMenu(new PerkMenu(&openPerkMenu, &player))
 {
-    videoSettings = _videoSettings;
     resources = new ResourceManager;
-    openPauseMenu = false;
     loadResources();
-    fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     info.setFont(resources->getFont("arial"));
     info.setFillColor(sf::Color::Red);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
-    player = new Player;
-    healthBar = new HealthBar(player);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
+    healthBar = new HealthBar(player);
+    vecEnemies.reserve(200);
+    vecProjectiles.clear();
+    vecProjectiles.reserve(200);
+    vecPerks.clear();
+    vecPerks.reserve(20);
     //!
     k = 0; //need to delete
     Perk::player = player;
@@ -30,29 +37,30 @@ GSSurvival::~GSSurvival()
     delete(player);
 }
 
-void GSSurvival::update()
+GameStates GSSurvival::update()
 {
-    if(openPauseMenu)
-        return;
+    if(openPauseMenu||openPerkMenu)
+        return GameStates::GS_GAMEMODE_SURVIVAL;
     if(player->getCurrentHealthPoints() > 0.f)
     {
-    player->update();
-    enemyFactory->update();
-    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-        vecProjectiles[i]->update();
-    for(unsigned int i=0; i<vecPerks.size(); i++)
-        vecPerks[i]->update();
-    healthBar->update();
-    updateView();
-    updateListener();
-    updateStats();
-    checkProjectiles();
-    checkMelee();
-    checkPerks();
-    collectTrash();
-    updateView();
-    draw();
+        player->update();
+        enemyFactory->update();
+        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+            vecProjectiles[i]->update();
+        for(unsigned int i=0; i<vecPerks.size(); i++)
+            vecPerks[i]->update();
+        healthBar->update();
+        updateView();
+        updateListener();
+        updateStats();
+        checkProjectiles();
+        checkMelee();
+        checkPerks();
+        collectTrash();
+        updateView();
+        draw();
     }
+    return GameStates::GS_GAMEMODE_SURVIVAL;
 }
 
 void GSSurvival::updateStats()
@@ -76,10 +84,19 @@ void GSSurvival::updateListener()
 void GSSurvival::handleEvents(sf::Event _event)
 {
     if(openPauseMenu)
-            pauseMenu->handleEvents(_event);
-        else
-            player->handleEvents(_event);
+        pauseMenu->handleEvents(_event);
+        else if(openPerkMenu)
+                {
+                    perkMenu->handleEvents(_event);
+                    if(_event.type == sf::Event::KeyPressed)
+                        if(_event.key.code == sf::Keyboard::L)
+                        openPerkMenu = false;
+                    return;
+                }
+                else
+                    player->handleEvents(_event);
     if(_event.type == sf::Event::KeyPressed)
+    {
         if(_event.key.code == sf::Keyboard::Escape)
             {
             if(!openPauseMenu)
@@ -87,6 +104,10 @@ void GSSurvival::handleEvents(sf::Event _event)
             else
                 openPauseMenu = false;
             }
+        if(_event.key.code == sf::Keyboard::L && !openPauseMenu)
+            if(!openPerkMenu)
+                openPerkMenu = true;
+    }
 }
 
 void GSSurvival::collectTrash()
@@ -107,18 +128,20 @@ void GSSurvival::checkProjectiles()
     {
         for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
-            if(checkCollision(vecProjectiles[i], vecEnemies[j]))
+            if(vecProjectiles[i]->getSource() != &vecEnemies[j]->m_sprite)
+                if(checkCollision(vecProjectiles[i], vecEnemies[j]))
+                    {
+                        vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
+                        vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
+                        vecProjectiles[i]->toDelete = true;
+                    }
+        }
+        if(vecProjectiles[i]->getSource() != &player->m_sprite)
+            if(checkCollision(vecProjectiles[i], player))
                 {
-                    vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                    vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
+                    player->takeDamage(vecProjectiles[i]->getDamage());
                     vecProjectiles[i]->toDelete = true;
                 }
-        }
-        if(checkCollision(vecProjectiles[i], player))
-            {
-                player->takeDamage(vecProjectiles[i]->getDamage());
-                vecProjectiles[i]->toDelete = true;
-            }
         if(vecProjectiles[i]->toDelete)
             vecProjectiles.erase(vecProjectiles.begin()+i);
     }
@@ -128,6 +151,7 @@ void GSSurvival::checkMelee()
 {
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
+
         if(checkCollision(player, vecEnemies[i]))
         {
             player->takeDamage(vecEnemies[i]->attack());
@@ -194,6 +218,8 @@ void GSSurvival::loadResources()
     resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
+    //*For button
+    resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
 }
 
 void GSSurvival::draw()
@@ -214,4 +240,6 @@ void GSSurvival::draw()
     window.draw(info);
     if(openPauseMenu)
         window.draw(*pauseMenu);
+    if(openPerkMenu)
+        window.draw(*perkMenu);
 }

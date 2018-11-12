@@ -16,7 +16,7 @@ public:
     unsigned int height;
     unsigned int framerateLimit;
     unsigned int selectedResol;
-    vector <sf::Vector2i*> resolutions;
+    vector <sf::Vector2u*> resolutions;
     void fillResolutions();
     bool fullscreen;
     bool vsync;
