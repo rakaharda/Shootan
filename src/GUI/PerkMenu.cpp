@@ -16,20 +16,21 @@ PerkMenu::PerkMenu(bool *_menuStatus, Player** _player)
     menuStatus = _menuStatus;
     setFunctions();
     string str[6];
-    str[0] = "buttonPlay";
-    str[1] = "buttonHP";
-    str[2] = "buttonSpeedUp";
-    str[3] = "buttonSpeed";
-    str[4] = "buttonFrost";
-    str[5] = "buttonFire";
+    str[0] = "perkmenu_buttonPlay";
+    str[1] = "perkmenu_buttonHP";
+    str[2] = "perkmenu_buttonSpeedUp";
+    str[3] = "perkmenu_buttonSpeed";
+    str[4] = "perkmenu_buttonFrost";
+    str[5] = "perkmenu_buttonFire";
+    loadResources();
     for(int i = 0; i < 6; i++)
     {
-        buttons.push_back(new Button(resources->getTexture(str[i]), window.getSize().x/2 - 230 + (i * 60), window.getSize().y/2));
+        buttons.push_back(new Button(resources->getTexture(str[i]), window.getSize().x/2 - 200 + (i * 80), window.getSize().y/2));
         buttons.back()->setFunction(buttonFunctions[i]);
     }
     for(int i = 0; i < 6; i++)
         str[i].erase();
-    backGroundSprite.setTexture(resources->getTexture("backGround"));
+    backGroundSprite.setTexture(resources->getTexture("perkmenu_background"));
     backGroundSprite.setPosition(window.getSize().x/2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y/2 - backGroundSprite.getTexture()->getSize().y / 2);
 
@@ -42,13 +43,20 @@ PerkMenu::~PerkMenu()
 
 void PerkMenu::loadResources()
 {
-    resources->addTexture("buttonPlay",     "./data/GUI/perkMenu/buttonPlay.png");
-    resources->addTexture("buttonHP", "./data/GUI/perkMenu/buttonHP.png");
-    resources->addTexture("buttonFire",     "./data/GUI/perkMenu/buttonFire.png");
-    resources->addTexture("buttonFrost", "./data/GUI/perkMenu/buttonFrost.png");
-    resources->addTexture("buttonSpeed",   "./data/GUI/perkMenu/buttonSpeed.png");
-    resources->addTexture("buttonSpeedUp",       "./data/GUI/perkMenu/buttonSpeedUp.png");
-    resources->addTexture("backGround",      "./data/GUI/perkMenu/backGround.png");
+    resources->addTexture("perkmenu_buttonPlay",    "./data/GUI/perkMenu/buttonPlay.png");
+    resources->addTexture("perkmenu_buttonHP",      "./data/GUI/perkMenu/buttonHP.png");
+    resources->addTexture("perkmenu_buttonFire",    "./data/GUI/perkMenu/buttonFire.png");
+    resources->addTexture("perkmenu_buttonFrost",   "./data/GUI/perkMenu/buttonFrost.png");
+    resources->addTexture("perkmenu_buttonSpeed",   "./data/GUI/perkMenu/buttonSpeed.png");
+    resources->addTexture("perkmenu_buttonSpeedUp", "./data/GUI/perkMenu/buttonSpeedUp.png");
+    resources->addTexture("perkmenu_background",    "./data/GUI/perkMenu/background.png");
+
+    resources->addTexture("maxPerkmenu_buttonPlay",    "./data/GUI/perkMenu/maxButtonPlay.png");
+    resources->addTexture("maxPerkmenu_buttonHP",      "./data/GUI/perkMenu/maxButtonHP.png");
+    resources->addTexture("maxPerkmenu_buttonFire",    "./data/GUI/perkMenu/maxButtonFire.png");
+    resources->addTexture("maxPerkmenu_buttonFrost",   "./data/GUI/perkMenu/maxButtonFrost.png");
+    resources->addTexture("maxPerkmenu_buttonSpeed",   "./data/GUI/perkMenu/maxButtonSpeed.png");
+    resources->addTexture("maxPerkmenu_buttonSpeedUp", "./data/GUI/perkMenu/maxButtonSpeedUp.png");
 }
 
 void PerkMenu::setFunctions()
@@ -61,6 +69,12 @@ void PerkMenu::setFunctions()
         //HP++
         if(currentHP<maxHP)
         {
+            buttons[1]->setlvl(currentHP + 1);
+            if(currentHP == 4)
+            {
+                buttons[1]->setTextureButton(resources->getTexture("maxPerkmenu_buttonHP"));
+                buttons[1]->setlvl(0);
+            }
             currentHP++;
             player->setHealthPoints(player->getHealthPoints() + 50);
             player->setCurrentHealthPoints(player->getHealthPoints());
@@ -70,39 +84,63 @@ void PerkMenu::setFunctions()
         //Perk UpSpeed++
         if(currentSpeed<maxSpeed)
         {
+            buttons[2]->setlvl(currentSpeed + 1);
+            if(currentSpeed == 4)
+            {
+                buttons[2]->setTextureButton(resources->getTexture("maxPerkmenu_buttonSpeedUp"));
+                buttons[2]->setlvl(0);
+            }
             currentSpeed++;
             if(player->speed != player->defoltSpeed)
             {
                 player->speed -= player->upSpeed;
-                player->upSpeed += 50.f;
+                player->upSpeed += 30.f;
                 player->speed += player->upSpeed;
             }
             else
-            player->upSpeed += 50.f;
+            player->upSpeed += 30.f;
         }
     };
     buttonFunctions[3] = [this](){
         if(currentPlayerSpeed<maxPlayerSpeed)
         {
+            buttons[3]->setlvl(currentPlayerSpeed + 1);
+            if(currentPlayerSpeed == 4)
+            {
+                buttons[3]->setTextureButton(resources->getTexture("maxPerkmenu_buttonSpeed"));
+                buttons[3]->setlvl(0);
+            }
             currentPlayerSpeed++;
             player->defoltSpeed+=20.f;
             player->speed+=20.f;
         }
 
     };
-        buttonFunctions[4] = [this](){
-            if(currentFrost<maxFrost)
+    buttonFunctions[4] = [this](){
+        if(currentFrost<maxFrost)
         {
+            buttons[4]->setlvl(currentFrost + 1);
+            if(currentFrost == 4)
+            {
+                buttons[4]->setTextureButton(resources->getTexture("maxPerkmenu_buttonFrost"));
+                buttons[4]->setlvl(0);
+            }
             currentFrost++;
             Enemy::FrostRotationRate = 90.f - (currentFrost * 20.f - ((currentFrost - 2) * 10.f));
-            Enemy::FrostSpeed = 50.f - (currentFrost * 10.f - ((currentFrost - 2) * 5.f));
+            Enemy::FrostSpeed = 150.f - (currentFrost * 20.f - ((currentFrost - 2) * 10.f));
             player->setSkill(2);
         }
 
     };
-        buttonFunctions[5] = [this](){
-            if(currentFire<maxFire)
+    buttonFunctions[5] = [this](){
+        if(currentFire<maxFire)
         {
+            buttons[5]->setlvl(currentFire + 1);
+            if(currentFire == 4)
+            {
+                buttons[5]->setTextureButton(resources->getTexture("maxPerkmenu_buttonFire"));
+                buttons[5]->setlvl(0);
+            }
             currentFire++;
             Enemy::percentDamage = currentFire * 0.05;
             player->setSkill(1);
@@ -136,7 +174,7 @@ void PerkMenu::handleEvents(sf::Event event)
 }
 void PerkMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(backGroundSprite,states);
+    target.draw(backGroundSprite, states);
     for(unsigned int i = 0; i < buttons.size(); i++)
-        target.draw(*buttons[i],states);
+        target.draw(*buttons[i], states);
 }

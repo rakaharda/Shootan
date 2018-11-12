@@ -217,6 +217,8 @@ void GSSurvival::loadResources()
     resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
+    //*For button
+    resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
 }
 
 void GSSurvival::draw()
