@@ -82,6 +82,7 @@ void Game::update()
                 currentGameState = new GSSurvival(videoSettings);
                 break;
             default:
+                break;
         }
     }
 }

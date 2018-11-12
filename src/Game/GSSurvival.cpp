@@ -5,7 +5,6 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     fieldSize(sf::IntRect(0, 0, 3840, 2160)),
     videoSettings(_videoSettings),
     openPauseMenu(false),
-    healthBar(new HealthBar(player)),
     openPerkMenu(false),
     perkMenu(new PerkMenu(&openPerkMenu, &player))
 {
@@ -18,6 +17,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
+    healthBar = new HealthBar(player);
     vecEnemies.reserve(200);
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
