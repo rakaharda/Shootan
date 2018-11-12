@@ -18,7 +18,8 @@
 #include "Components/Collision.h"
 #include "Game/VideoSettings.h"
 #include "Game/GSSurvival.h"
-#include "GUI/Menu.h"
+#include "Game/GSMainMenu.h"
+#include "Game/GameStates.h"
 #include "GUI/PauseMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
@@ -32,12 +33,7 @@ public:
     virtual ~Game();
     void play();
 private:
-    enum GameStates
-    {
-        GS_LOADING_SCREEN,
-        GS_MAINMENU,
-        GS_GAMEMODE_SURVIVAL
-    } gameState;
+    GameStates gameState;
     sf::Font        font;
     sf::Clock*      gameClock;
     FPSCounter      fpsCounter;

@@ -11,7 +11,7 @@ class Menu : public sf::Drawable
 public:
     Menu();
     virtual ~Menu();
-    void handleEvents(sf::Event event);
+    virtual void handleEvents(sf::Event event);
     bool *menuStatus;
 protected:
     void searchButton();

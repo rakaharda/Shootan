@@ -2,6 +2,7 @@
 #define PAUSEMENU_H
 
 #include "Menu.h"
+#include "GUI/Button.h"
 #include "GUI/CheckBox.h"
 #include "Game/VideoSettings.h"
 #include "Utils/ResourceManager.h"

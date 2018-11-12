@@ -19,7 +19,8 @@ Game::Game() : isPlaying(true)
     loadResources();
     gameState = GS_GAMEMODE_SURVIVAL;
     if(gameState == GS_GAMEMODE_SURVIVAL)
-        currentGameState = new GSSurvival(videoSettings);
+        currentGameState = new GSMainMenu(videoSettings,&gameState);
+        //currentGameState = new GSSurvival(videoSettings);
 }
 
 Game::~Game()
