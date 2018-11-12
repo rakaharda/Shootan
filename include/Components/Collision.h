@@ -1,7 +1,7 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-#include "GameObject.h"
+#include "Components/GameObject.h"
 
 class Collision
 {

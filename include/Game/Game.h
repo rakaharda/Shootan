@@ -8,6 +8,7 @@
 #include <ctime>
 #include <iostream>
 #include "Components/GameObject.h"
+#include "Components/GameStates.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
 #include "Projectiles/Projectile.h"
@@ -32,12 +33,7 @@ public:
     virtual ~Game();
     void play();
 private:
-    enum GameStates
-    {
-        GS_LOADING_SCREEN,
-        GS_MAINMENU,
-        GS_GAMEMODE_SURVIVAL
-    } gameState;
+    GameStates      gameState;
     sf::Font        font;
     sf::Clock*      gameClock;
     FPSCounter      fpsCounter;

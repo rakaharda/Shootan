@@ -70,7 +70,20 @@ void Game::handleEvents()
 void Game::update()
 {
     fpsCounter.update();
-    currentGameState->update();
+    GameStates updatedGameState;
+    updatedGameState = currentGameState->update();
+    if(updatedGameState != gameState)
+    {
+        delete(currentGameState);
+        gameState = updatedGameState;
+        switch(gameState)
+        {
+            case GameStates::GS_GAMEMODE_SURVIVAL:
+                currentGameState = new GSSurvival(videoSettings);
+                break;
+            default:
+        }
+    }
 }
 
 void Game::draw()

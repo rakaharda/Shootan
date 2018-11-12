@@ -1,28 +1,28 @@
 #include "Game/GSSurvival.h"
 
-GSSurvival::GSSurvival(VideoSettings *_videoSettings)
+GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
+    player(new Player),
+    fieldSize(sf::IntRect(0, 0, 3840, 2160)),
+    videoSettings(_videoSettings),
+    openPauseMenu(false),
+    healthBar(new HealthBar(player)),
+    openPerkMenu(false),
+    perkMenu(new PerkMenu(&openPerkMenu, &player))
 {
-    videoSettings = _videoSettings;
     resources = new ResourceManager;
-    openPauseMenu = false;
-    openPerkMenu = false;
     loadResources();
-    fieldSize = sf::IntRect(0, 0, 3840, 2160);
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     info.setFont(resources->getFont("arial"));
     info.setFillColor(sf::Color::Red);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
-    player = new Player;
-    healthBar = new HealthBar(player);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
     vecEnemies.reserve(200);
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
     vecPerks.clear();
     vecPerks.reserve(20);
-    perkMenu = new PerkMenu(&openPerkMenu, &player);
     //!
     k = 0; //need to delete
     Perk::player = player;
@@ -37,29 +37,30 @@ GSSurvival::~GSSurvival()
     delete(player);
 }
 
-void GSSurvival::update()
+GameStates GSSurvival::update()
 {
     if(openPauseMenu||openPerkMenu)
-        return;
+        return GameStates::GS_GAMEMODE_SURVIVAL;
     if(player->getCurrentHealthPoints() > 0.f)
     {
-    player->update();
-    enemyFactory->update();
-    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-        vecProjectiles[i]->update();
-    for(unsigned int i=0; i<vecPerks.size(); i++)
-        vecPerks[i]->update();
-    healthBar->update();
-    updateView();
-    updateListener();
-    updateStats();
-    checkProjectiles();
-    checkMelee();
-    checkPerks();
-    collectTrash();
-    updateView();
-    draw();
+        player->update();
+        enemyFactory->update();
+        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+            vecProjectiles[i]->update();
+        for(unsigned int i=0; i<vecPerks.size(); i++)
+            vecPerks[i]->update();
+        healthBar->update();
+        updateView();
+        updateListener();
+        updateStats();
+        checkProjectiles();
+        checkMelee();
+        checkPerks();
+        collectTrash();
+        updateView();
+        draw();
     }
+    return GameStates::GS_GAMEMODE_SURVIVAL;
 }
 
 void GSSurvival::updateStats()

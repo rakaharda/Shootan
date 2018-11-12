@@ -10,7 +10,7 @@ class GSSurvival : public GameState, public Collision
 public:
     GSSurvival(VideoSettings *_videoSettings);
     virtual ~GSSurvival();
-    void update();
+    GameStates update();
     void draw();
     void handleEvents(sf::Event _event);
 protected:
@@ -25,8 +25,8 @@ protected:
     bool            openPauseMenu;
     vector <Enemy*> vecEnemies;
     HealthBar       *healthBar;
-    PerkMenu        *perkMenu;
     bool            openPerkMenu;
+    PerkMenu        *perkMenu;
     void updateStats();
     void loadResources();
     void collectTrash();
