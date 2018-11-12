@@ -17,10 +17,10 @@
 #include "Weapons/Gun.h"
 #include "Weapons/SniperRifle.h"
 #include "Components/Collision.h"
+#include "Components/GameStates.h"
 #include "Game/VideoSettings.h"
 #include "Game/GSSurvival.h"
 #include "Game/GSMainMenu.h"
-#include "Game/GameStates.h"
 #include "GUI/PauseMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
@@ -34,11 +34,7 @@ public:
     virtual ~Game();
     void play();
 private:
-<<<<<<< HEAD
-    GameStates gameState;
-=======
     GameStates      gameState;
->>>>>>> a77e3095e7cebb8422b2faba0a32b0fa11ebcf1b
     sf::Font        font;
     sf::Clock*      gameClock;
     FPSCounter      fpsCounter;

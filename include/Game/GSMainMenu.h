@@ -3,22 +3,22 @@
 
 #include "GUI/MainMenu.h"
 #include "GUI/SettingsMenu.h"
-#include "Game/GameStates.h"
+#include "Components/GameStates.h"
 #include "Game/GameState.h"
 
 class GSMainMenu: public GameState
 {
 public:
-    GSMainMenu(VideoSettings *_videoSettings, GameStates *_gameState);
+    GSMainMenu(VideoSettings *_videoSettings);
     virtual ~GSMainMenu();
-    void update();
+    GameStates update();
     void draw();
     void handleEvents(sf::Event _event);
 private:
     bool isSettings;
     void loadresources();
+    GameStates gameState;
     VideoSettings *videoSettings;
-    GameStates *gameState;
     MainMenu *mainMenu;
     SettingsMenu *settingsMenu;
     sf::Sprite background;

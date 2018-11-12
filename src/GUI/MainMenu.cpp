@@ -32,7 +32,7 @@ void MainMenu::handleEvents(sf::Event event)
 
     /*if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         slider->isPressed(sf::Mouse::getPosition(window).x,
-                sf::Mouse::getPosition(window).y); 
+                sf::Mouse::getPosition(window).y);
     else slider->pressed = false; */
     switch(event.type)
     {

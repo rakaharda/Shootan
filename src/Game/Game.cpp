@@ -17,9 +17,9 @@ Game::Game() : isPlaying(true)
         window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(videoSettings->framerateLimit);
     loadResources();
-    gameState = GS_GAMEMODE_SURVIVAL;
-    if(gameState == GS_GAMEMODE_SURVIVAL)
-        currentGameState = new GSMainMenu(videoSettings,&gameState);
+    gameState = GS_MAINMENU;
+    if(gameState == GS_MAINMENU)
+        currentGameState = new GSMainMenu(videoSettings);
         //currentGameState = new GSSurvival(videoSettings);
 }
 

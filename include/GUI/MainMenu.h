@@ -3,7 +3,7 @@
 
 #include "GUI/Menu.h"
 #include "Utils/ResourceManager.h"
-#include "Game/GameStates.h"
+#include "Components/GameStates.h"
 #include "GUI/Slider.h"
 
 class MainMenu: public Menu
