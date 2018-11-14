@@ -19,6 +19,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     player->setWeapon(new AssaultRifle(&player->m_sprite));
     healthBar = new HealthBar(player);
     vecEnemies.reserve(200);
+    vecDestroyers.reserve(200);
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
     vecPerks.clear();
@@ -49,6 +50,8 @@ GameStates GSSurvival::update()
             vecProjectiles[i]->update();
         for(unsigned int i=0; i<vecPerks.size(); i++)
             vecPerks[i]->update();
+        for(unsigned int i=0; i<vecDestroyers.size(); i++)
+            vecDestroyers[i].update();
         healthBar->update();
         updateView();
         updateListener();
@@ -56,6 +59,7 @@ GameStates GSSurvival::update()
         checkProjectiles();
         checkMelee();
         checkPerks();
+        checkDestroyers();
         collectTrash();
         updateView();
         draw();
@@ -129,12 +133,13 @@ void GSSurvival::checkProjectiles()
         for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
             if(vecProjectiles[i]->getSource() != &vecEnemies[j]->m_sprite)
-                if(checkCollision(vecProjectiles[i], vecEnemies[j]))
-                    {
-                        vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
-                        vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
-                        vecProjectiles[i]->toDelete = true;
-                    }
+                if(vecEnemies[j]->isAlive)
+                    if(checkCollision(vecProjectiles[i], vecEnemies[j]))
+                        {
+                            vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
+                            vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
+                            vecProjectiles[i]->toDelete = true;
+                        }
         }
         if(vecProjectiles[i]->getSource() != &player->m_sprite)
             if(checkCollision(vecProjectiles[i], player))
@@ -151,11 +156,11 @@ void GSSurvival::checkMelee()
 {
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
-
-        if(checkCollision(player, vecEnemies[i]))
-        {
-            player->takeDamage(vecEnemies[i]->attack());
-        }
+        if(vecEnemies[i]->isAlive)
+            if(checkCollision(player, vecEnemies[i]))
+            {
+                player->takeDamage(vecEnemies[i]->attack());
+            }
     }
 }
 
@@ -175,6 +180,25 @@ void GSSurvival::checkPerks()
         }
     }
 }
+
+void GSSurvival::checkDestroyers()
+{
+    for(unsigned int i = 0; i < vecEnemies.size(); i++)
+        {
+        if(!vecEnemies[i]->isAlive)
+            if(!vecEnemies[i]->isBeingDestroyed)
+            {
+                vecDestroyers.push_back(EntityDestroyer(vecEnemies[i]));
+                vecEnemies[i]->isBeingDestroyed = true;
+            }
+        }
+    for(unsigned int i = 0; i < vecDestroyers.size(); i++)
+        if(vecDestroyers[i].toDelete == true)
+        {
+            vecDestroyers.erase(vecDestroyers.begin() + i);
+        }
+}
+
 void GSSurvival::updateView()
 {
     view.setCenter(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y);
@@ -202,6 +226,7 @@ void GSSurvival::loadResources()
     resources->addTexture("default_enemy",  "./data/enemies/default_enemy.png");
     resources->addTexture("enemy_melee",    "./data/enemies/enemy_melee.png");
     resources->addTexture("enemy_range",    "./data/enemies/enemy_range.png");
+    resources->addTexture("destroyer_bar",  "./data/enemies/destroyer_bar.png", true);
         //Perks
     resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
     resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
@@ -231,6 +256,8 @@ void GSSurvival::draw()
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
         window.draw(*vecEnemies[i]);
+    for(unsigned int i = 0; i < vecDestroyers.size(); i++)
+        window.draw(vecDestroyers[i]);
     for(unsigned int i=0; i<vecPerks.size(); i++)
         window.draw(*vecPerks[i]);
     window.draw(*player);

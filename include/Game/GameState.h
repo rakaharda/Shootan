@@ -8,6 +8,7 @@
 #include <ctime>
 #include <iostream>
 #include "Game/EnemyFactory.h"
+#include "Game/EntityDestroyer.h"
 #include "Game/VideoSettings.h"
 #include "Components/GameObject.h"
 #include "Components/GameStates.h"

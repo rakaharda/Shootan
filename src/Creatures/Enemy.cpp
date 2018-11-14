@@ -21,6 +21,8 @@ Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _textu
     distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 150.f;
     toDelete = false;
+    isAlive = true;
+    isBeingDestroyed = false;
     weapon = new MeleeAttack(&m_sprite);
     rotationRate = 90.f;
     skillDamage = 0.f;
@@ -40,15 +42,18 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    calculateRotation();
-    m_sprite.setRotation(currentAngle);
-    if(checkDistance())
-        move();
-    weapon->addProjectile();
-    weapon->update();
-    checkHealth();
-    checkSkill();
-    updateTexture();
+    if(isAlive)
+    {
+        calculateRotation();
+        m_sprite.setRotation(currentAngle);
+        if(checkDistance())
+            move();
+        weapon->addProjectile();
+        weapon->update();
+        checkHealth();
+        checkSkill();
+        updateTexture();
+    }
 }
 void Enemy::checkSkill()
 {
@@ -116,7 +121,7 @@ bool Enemy::checkDistance()
 void Enemy::checkHealth()
 {
     if(currentHealthPoints == 0.f)
-        toDelete = true;
+        isAlive = false;
 }
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
