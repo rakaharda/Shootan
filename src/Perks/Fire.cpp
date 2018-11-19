@@ -10,5 +10,8 @@ Fire::Fire(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 
 void Fire::pickUp()
 {
-    //player->setSkill(1);
+    for(int i = 0; i < 60; i++)
+        {
+            vecProjectiles.push_back(new Projectile(&(player->m_sprite), resources->getTexture("projectile_1"), i, 1));
+        }
 }

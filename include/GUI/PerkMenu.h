@@ -6,6 +6,7 @@
 #include "Game/VideoSettings.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
+#include <sstream>
 
 class PerkMenu: public Menu
 {
@@ -13,6 +14,7 @@ public:
     PerkMenu(bool *_menuStatus, Player** _player);
     virtual ~PerkMenu();
     void handleEvents(sf::Event event);
+    void updatelvl(int _score);
 private:
     int maxHP;
     int currentHP;
@@ -28,6 +30,9 @@ private:
     void setFunctions();
     void loadResources();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    int currentlvl;
+    int LVL;
+    sf::Text info;
 friend Button;
 //    buttonFunctions;
 };

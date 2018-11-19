@@ -19,6 +19,7 @@ public:
         ptLine
     };
     Projectile(const sf::Sprite* _source, float _damage, int _spread, sf::Texture& _texture, float _speed, int _skill);
+    Projectile(const sf::Sprite* _source, sf::Texture& _texture, int _numberShot, int _skill);
     Projectile(const sf::Sprite* _source, float _damage, int _spread, sf::Texture& _texture, int _numberShot, float _speed, int _skill);
     virtual ~Projectile();
     void              update();

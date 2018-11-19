@@ -11,6 +11,5 @@ public:
     virtual ~UpSpeed(){};
 };
 
-extern ResourceManager      *resources;
 
 #endif // UPSPEED_H
