@@ -13,7 +13,7 @@ Weapon::Weapon(sf::Sprite* _source) :
     projectileSpeed(1.f),
     wAttackDistance(40.f),
     textureKey("projectile_1"),
-    shotSoundKey("pistol_shot"),
+    shotSoundKey("laser1"),
     reloadSoundKey("pistol_reload")
 {
 
@@ -41,7 +41,7 @@ bool Weapon::addProjectile()
     }
     if(currentClipSize <= 0)
     {
-        playReloadSound();
+        //playReloadSound();
         currentReloadTime = reloadTime;
         currentClipSize = clipSize;
     }
