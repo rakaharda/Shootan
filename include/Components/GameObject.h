@@ -8,7 +8,7 @@
 class GameObject : public sf::Drawable
 {
 public:
-    GameObject() {};
+    GameObject() {toDelete = false;};
     virtual ~GameObject() {};
     virtual void update() = 0;
     sf::Sprite       m_sprite;

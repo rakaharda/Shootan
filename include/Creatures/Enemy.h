@@ -24,6 +24,8 @@ public:
     static float percentDamage;
     static float      FrostSpeed;
     static float      FrostRotationRate;
+    bool              isAlive;
+    bool              isBeingDestroyed;
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 protected:

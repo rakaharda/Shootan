@@ -24,6 +24,7 @@ protected:
     EnemyFactory    *enemyFactory;
     bool            openPauseMenu;
     vector <Enemy*> vecEnemies;
+    vector <EntityDestroyer> vecDestroyers;
     HealthBar       *healthBar;
     bool            openPerkMenu;
     PerkMenu        *perkMenu;
@@ -33,6 +34,7 @@ protected:
     void checkProjectiles();
     void checkMelee();
     void checkPerks();
+    void checkDestroyers();
     void updateView();
     void updateListener();
     int k; //need for different perks( need rewrite)
