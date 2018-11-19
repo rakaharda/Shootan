@@ -5,11 +5,11 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     fieldSize(sf::IntRect(0, 0, 3840, 2160)),
     videoSettings(_videoSettings),
     openPauseMenu(false),
-    openPerkMenu(false),
-    perkMenu(new PerkMenu(&openPerkMenu, &player))
+    openPerkMenu(false)
 {
-    resources = new ResourceManager;
     loadResources();
+    perkMenu = new PerkMenu(&openPerkMenu, &player);
+    pauseMenu = new PauseMenu(videoSettings,&openPauseMenu);
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     info.setFont(resources->getFont("arial"));
@@ -27,20 +27,21 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     k = 0; //need to delete
     Perk::player = player;
     enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
-    resources->getMusic("GXRCH - HARD")->setVolume(50.f);
     resources->getMusic("GXRCH - HARD")->setLoop(true);
-    //resources->getMusic("GXRCH - HARD")->play();
+    resources->getMusic("GXRCH - HARD")->play();
 }
 
 GSSurvival::~GSSurvival()
 {
     delete(player);
+    delete(pauseMenu);
+    delete(perkMenu);
 }
 
 GameStates GSSurvival::update()
 {
     if(openPauseMenu||openPerkMenu)
-        return GameStates::GS_GAMEMODE_SURVIVAL;
+        return pauseMenu->gameState;
     if(player->getCurrentHealthPoints() > 0.f)
     {
         player->update();
@@ -100,7 +101,7 @@ void GSSurvival::handleEvents(sf::Event _event)
         if(_event.key.code == sf::Keyboard::Escape)
             {
             if(!openPauseMenu)
-                pauseMenu = new PauseMenu(videoSettings,&openPauseMenu);
+                openPauseMenu = true;
             else
                 openPauseMenu = false;
             }
@@ -208,16 +209,6 @@ void GSSurvival::loadResources()
         //GUI
     resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
-    //*Sound buffers
-    resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
-    resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
-    resources->addSoundBuffer("assaultrifle_shot",   "./data/sounds/assaultrifle_shot.wav");
-    resources->addSoundBuffer("assaultrifle_reload", "./data/sounds/assaultrifle_reload.wav");
-    resources->addSoundBuffer("sniperrifle_shot",    "./data/sounds/sniperrifle_shot.wav");
-    resources->addSoundBuffer("shotgun_shot",        "./data/sounds/shotgun_shot.wav");
-    resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
-    //*Music
-    resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
     //*For button
     resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
 }

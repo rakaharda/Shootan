@@ -3,6 +3,7 @@
 
 #include "GUI/MainMenu.h"
 #include "GUI/SettingsMenu.h"
+#include "GUI/MenuStates.h"
 #include "Components/GameStates.h"
 #include "Game/GameState.h"
 
@@ -15,9 +16,9 @@ public:
     void draw();
     void handleEvents(sf::Event _event);
 private:
-    bool isSettings;
     void loadresources();
     GameStates gameState;
+    MenuStates *menuState;
     VideoSettings *videoSettings;
     MainMenu *mainMenu;
     SettingsMenu *settingsMenu;

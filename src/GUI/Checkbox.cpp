@@ -2,12 +2,13 @@
 CheckBox::CheckBox(string _name, float _xPos, float _yPos, bool _isSelect)
     : Button(resources->getTexture("buttonSettingsMarkBorder"), _xPos, _yPos)
 {
-    m_sprite.setPosition(_xPos - 200, _yPos - m_sprite.getTexture()->getSize().y / 2);
+    m_sprite.setPosition(_xPos - 2.5*m_sprite.getTexture()->getSize().x, _yPos - m_sprite.getTexture()->getSize().y / 2);
     markSprite.setTexture(resources->getTexture("buttonSettingsMark"));
-    markSprite.setPosition(_xPos - 200 + 5, _yPos - m_sprite.getTexture()->getSize().y / 2 + 5);
-    font.loadFromFile("./data/fonts/arial.ttf");
+    markSprite.setPosition(_xPos - 2.5*m_sprite.getTexture()->getSize().x + 5, _yPos - m_sprite.getTexture()->getSize().y / 2 + 5);
+    font.loadFromFile("./data/fonts/Mylodon-Light.otf");
     text.setFont(font);
-    text.setFillColor(sf::Color(50,50,50));
+    text.setCharacterSize(m_sprite.getTexture()->getSize().y);
+    text.setFillColor(sf::Color(30,150,255));
     text.setString(_name);
     text.setCharacterSize(30);
     text.setPosition(_xPos - 35,

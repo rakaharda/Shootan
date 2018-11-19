@@ -1,11 +1,12 @@
 #include "GUI/MainMenu.h"
 #include <iostream>
-MainMenu::MainMenu(GameStates *_gameState, bool *_isSettings)
+MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
 {
     setFunctions();
     loadResources();
-    isSettings = _isSettings;
     gameState = _gameState;
+    menuState = _menuState;
+    *menuState = MenuStates::MS_MAIN_MENU;
     string buttonName[4];
     buttonName[0] = "buttonMainPlay";
     buttonName[1] = "buttonMainSettings";
@@ -18,22 +19,23 @@ MainMenu::MainMenu(GameStates *_gameState, bool *_isSettings)
     for(unsigned int i = 0; i < 4; i++){
         buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 240 + i*160));
         buttons.back()->setFunction(buttonFunctions[i]);
-        buttonName[i].erase();
+        buttons.back()->setLightButton(buttonName[i]+"Light");
     }
 }
 
 MainMenu::~MainMenu()
 {
-    //dtor
+    resources->deleteTexture("buttonMainPlay");
+    resources->deleteTexture("buttonMainSettings");
+    resources->deleteTexture("buttonMainCredits");
+    resources->deleteTexture("buttonMainExit");
 }
 
 void MainMenu::handleEvents(sf::Event event)
 {
 
-    /*if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        slider->isPressed(sf::Mouse::getPosition(window).x,
-                sf::Mouse::getPosition(window).y);
-    else slider->pressed = false; */
+    for(unsigned int i = 0; i < buttons.size(); i++)
+        buttons[i]->update();
     switch(event.type)
     {
     case sf::Event::MouseButtonPressed:
@@ -56,11 +58,12 @@ void MainMenu::setFunctions()
         *gameState = GameStates::GS_GAMEMODE_SURVIVAL;
     };
     buttonFunctions[1] = [this](){
-        *isSettings = true;
+        *menuState = MenuStates::MS_CREATE_SETTINGS_MENU;
     };
     buttonFunctions[2] = [](){};
-    buttonFunctions[3] = [this](){
+    buttonFunctions[3] = [](){
         //*isPlaying = false;
+        window.close();
     };
 }
 
@@ -71,9 +74,11 @@ void MainMenu::loadResources()
     resources->addTexture("buttonMainSettings","./data/GUI/MainMenu/buttonMainSettings.png");
     resources->addTexture("buttonMainCredits","./data/GUI/MainMenu/buttonMainCredits.png");
     resources->addTexture("buttonMainExit","./data/GUI/MainMenu/buttonMainExit.png");
+    resources->addTexture("buttonMainPlayLight","./data/GUI/MainMenu/buttonMainPlayLight.png");
+    resources->addTexture("buttonMainSettingsLight","./data/GUI/MainMenu/buttonMainSettingsLight.png");
+    resources->addTexture("buttonMainCreditsLight","./data/GUI/MainMenu/buttonMainCreditsLight.png");
+    resources->addTexture("buttonMainExitLight","./data/GUI/MainMenu/buttonMainExitLight.png");
     resources->addTexture("backgroundMainMenu","./data/GUI/MainMenu/backgroundMainMenu.png");
-    resources->addTexture("sliderLine", "./data/GUI/mainSettingsMenu/sliderLineMainSettingsMenu.png");
-    resources->addTexture("sliderButton", "./data/GUI/mainSettingsMenu/sliderMainSettingsMenu.png");
 }
 
 void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const

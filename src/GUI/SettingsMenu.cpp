@@ -1,24 +1,50 @@
 #include "GUI/SettingsMenu.h"
 #include <iostream>
-SettingsMenu::SettingsMenu(VideoSettings *_videoSettings, bool *_isSettings)
+SettingsMenu::SettingsMenu(VideoSettings *_videoSettings, MenuStates *_menuState)
 {
-    isSettings = _isSettings;
+    menuState = _menuState;
     videoSettings = _videoSettings;
     tempVideoSettings = *videoSettings;
+    *menuState = MenuStates::MS_SETTINGS_MENU;
     setFunctions();
     loadResources();
-    refreshMenu();
+    refreshVideoMenu();
 }
 
 SettingsMenu::~SettingsMenu()
 {
-    //dtor
+    resources->deleteTexture("buttonMainPlayLight");
+    resources->deleteTexture("buttonMainSettingsLight");
+    resources->deleteTexture("buttonMainCreditsLight");
+    resources->deleteTexture("buttonMainExitLight");
+    resources->deleteTexture("backgroundMainMenu");
+    resources->deleteTexture("mainSettingsMenuBackground");
+    resources->deleteTexture("buttonMainSettingsVideo");
+    resources->deleteTexture("buttonMainSettingsAudio");
+    resources->deleteTexture("buttonMainSettingsLeft");
+    resources->deleteTexture("buttonMainSettingsRight");
+    resources->deleteTexture("buttonMainSettingsBack");
+    resources->deleteTexture("buttonMainSettingsApply");
+    resources->deleteTexture("buttonMainSettingsFullscreen");
+    resources->deleteTexture("buttonMainSettingsWindowed");
+    resources->deleteTexture("buttonMainSettingsResulution38402160");
+    resources->deleteTexture("buttonMainSettingsResulution19201080");
+    resources->deleteTexture("buttonMainSettingsResulution1600900");
+    resources->deleteTexture("buttonMainSettingsResulution1366768");
+    resources->deleteTexture("buttonMainSettingsResulution1280720");
+    resources->deleteTexture("buttonMainSettingsResulution1024768");
+    resources->deleteTexture("buttonSettingsMark");
+    resources->deleteTexture("buttonSettingsMarkBorder");
+    resources->deleteTexture("sliderLine");
+    resources->deleteTexture("sliderButton");
 }
 
 void SettingsMenu::loadResources()
 {
-    //resources->addTexture("MainSettingsMenuBackground", "./data/GUI/MainSettingsMenu/MainSettingsMenuBackground.png");
-    resources->addTexture("buttonMainSettingsLeft",   "./data/GUI/MainSettingsMenu/buttonSettingsLeft.png");
+    resources->addTexture("mainSettingsMenuBackground", "./data/GUI/MainSettingsMenu/mainSettingsMenuBackground.png");
+    resources->addTexture("buttonMainSettingsVideo",   "./data/GUI/MainSettingsMenu/buttonSettingsVideo.png");
+    resources->addTexture("buttonMainSettingsAudio",   "./data/GUI/MainSettingsMenu/buttonSettingsAudio.png");
+    resources->addTexture("buttonMainSettingsLeft",  "./data/GUI/MainSettingsMenu/buttonSettingsleft.png");
     resources->addTexture("buttonMainSettingsRight",  "./data/GUI/MainSettingsMenu/buttonSettingsRight.png");
     resources->addTexture("buttonMainSettingsBack",   "./data/GUI/MainSettingsMenu/buttonSettingsBack.png");
     resources->addTexture("buttonMainSettingsApply",  "./data/GUI/MainSettingsMenu/buttonSettingsApply.png");
@@ -32,117 +58,199 @@ void SettingsMenu::loadResources()
     resources->addTexture("buttonMainSettingsResulution1024768",       "./data/GUI/mainSettingsMenu/resolutions/buttonSettingsResulution1024768.png");
     resources->addTexture("buttonSettingsMark",       "./data/GUI/mainSettingsMenu/buttonSettingsMark.png");
     resources->addTexture("buttonSettingsMarkBorder", "./data/GUI/mainSettingsMenu/buttonSettingsMarkBorder.png");
-    //resources->addTexture("buttonMainSettingsVideoSettngs", "./data/GUI/MainSettingsMenu/");
-    //resources->addTexture("MainSettingsMenuBackground", "./data/GUI/MainSettingsMeni/");
-    //resources->addTexture("MainSettingsMenuBackground", "./data/GUI/MainSettingsMeni/");
-    //resources->addTexture("MainSettingsMenuBackground", "./data/GUI/MainSettingsMeni/");
+    resources->addTexture("sliderLine", "./data/GUI/mainSettingsMenu/sliderLineMainSettingsMenu.png");
+    resources->addTexture("sliderButton", "./data/GUI/mainSettingsMenu/sliderMainSettingsMenu.png");
 
 }
 
 void SettingsMenu::setFunctions()
 {
-    buttonFunctions = new std::function<void(void)> [10];
+    buttonFunctions = new std::function<void(void)> [9];
+    sliderFunctions = new std::function<void(float)> [3];
+
     buttonFunctions[0] = [this](){
-        if (tempVideoSettings.vsync)
-        {
-            //buttons[3]->isSelect = false;
-            tempVideoSettings.vsync =  false;
-            refreshMenu();
-        }
-        else
-        {
-            //buttons[3]->isSelect = true;
-            tempVideoSettings.vsync = true;
-            refreshMenu();
-        }
+        refreshVideoMenu();
     };
 
     buttonFunctions[1] = [this](){
+        refreshAudioMenu();
+    };
+
+    buttonFunctions[2] = [this](){
+        if (tempVideoSettings.vsync)
+        {
+            tempVideoSettings.vsync =  false;
+            refreshVideoMenu();
+        }
+        else
+        {
+            tempVideoSettings.vsync = true;
+            refreshVideoMenu();
+        }
+    };
+
+    buttonFunctions[3] = [this](){
         if(tempVideoSettings.selectedResol == 0)
             tempVideoSettings.selectedResol = tempVideoSettings.resolutions.size() - 1;
         else tempVideoSettings.selectedResol--;
         tempVideoSettings.width = tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->x;
         tempVideoSettings.height = tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->y;
-        refreshMenu();
+        refreshVideoMenu();
     };
 
-
-    buttonFunctions[2] = [this](){
+    buttonFunctions[4] = [this](){
         if(tempVideoSettings.selectedResol == tempVideoSettings.resolutions.size() - 1)
             tempVideoSettings.selectedResol = 0;
         else tempVideoSettings.selectedResol++;
         tempVideoSettings.width = tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->x;
         tempVideoSettings.height = tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->y;
-        refreshMenu();
+        refreshVideoMenu();
     };
 
-    buttonFunctions[3] = [](){};
+    buttonFunctions[5] = [](){};
 
-    buttonFunctions[4] = [this](){
+    buttonFunctions[6] = [this](){
         if(tempVideoSettings.fullscreen)
         {
             tempVideoSettings.fullscreen = false;
-            refreshMenu();
+            refreshVideoMenu();
         }
         else
         {
             tempVideoSettings.fullscreen = true;
-            refreshMenu();
+            refreshVideoMenu();
         }
     };
 
-    buttonFunctions[5] = [this](){
-        *isSettings = false;
-        tempVideoSettings = *videoSettings;
+    buttonFunctions[7] = [this](){
+        *menuState = MenuStates::MS_CREATE_MAIN_MENU;
+        //tempVideoSettings = *videoSettings;
     };
 
-    buttonFunctions[6] = [this](){
+    buttonFunctions[8] = [this](){
         window.close();
         *videoSettings = tempVideoSettings;
+        cout << videoSettings->width << endl << videoSettings->height << endl << videoSettings->fullscreen << endl << videoSettings->vsync << endl;
         if(videoSettings->fullscreen)
             window.create(sf::VideoMode(videoSettings->width, videoSettings->height), "Shootan", sf::Style::Fullscreen);
         else window.create(sf::VideoMode(videoSettings->width, videoSettings->height), "Shootan");
         if (videoSettings->vsync)
                 window.setVerticalSyncEnabled(true);
         else window.setVerticalSyncEnabled(false);
-        refreshMenu();
+        refreshVideoMenu();
+    };
+
+    sliderFunctions[0] = [this](float status){
+        resources->getMusic("GXRCH - HARD")->setVolume(status/2);
+    };
+
+    sliderFunctions[1] = [this](float status){
+
+    };
+
+    sliderFunctions[2] = [this](float status){
+
     };
 }
 
-void SettingsMenu::refreshMenu()
+void SettingsMenu::refreshVideoMenu()
 {
-    string buttonName[5];
-    buttonName[0] = "buttonMainSettingsLeft";
-    buttonName[1] = "buttonMainSettingsRight";
-    buttonName[2] = "buttonMainSettingsResulution";
-    buttonName[2]+=to_string(tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->x);
-    buttonName[2]+=to_string(tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->y);
+    string buttonName[7];
+    buttonName[0] = "buttonMainSettingsVideo";
+    buttonName[1] = "buttonMainSettingsAudio";
+    buttonName[2] = "buttonMainSettingsLeft";
+    buttonName[3] = "buttonMainSettingsRight";
+    buttonName[4] = "buttonMainSettingsResulution";
+    buttonName[4]+=to_string(tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->x);
+    buttonName[4]+=to_string(tempVideoSettings.resolutions[tempVideoSettings.selectedResol]->y);
     if (tempVideoSettings.fullscreen)
-        buttonName[3] = "buttonMainSettingsFullscreen";
+        buttonName[5] = "buttonMainSettingsFullscreen";
     else
-        buttonName[3] = "buttonMainSettingsWindowed";
-    buttonName[4] = "buttonMainSettingsBack";
-    buttonName[5] = "buttonMainSettingsApply";
-    buttons.clear();
-    buttons.push_back(new CheckBox("Vertical Sync",window.getSize().x / 2,window.getSize().y / 2 - 250,tempVideoSettings.vsync));
-    buttons.back()->setFunction(buttonFunctions[0]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 250, window.getSize().y / 2 - 50));
-    buttons.back()->setFunction(buttonFunctions[1]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2 + 250, window.getSize().y / 2 - 50));
-    buttons.back()->setFunction(buttonFunctions[2]);
-    for(int i = 0; i < 2; i++){
-        buttons.push_back(new Button(resources->getTexture(buttonName[i+2]),window.getSize().x / 2,window.getSize().y / 2 - 250 + (i + 1)*200));
-        buttons.back()->setFunction(buttonFunctions[i+3]);
-    }
-    buttons.push_back(new Button(resources->getTexture(buttonName[4]),window.getSize().x / 2 - 200, window.getSize().y / 2 + 300));
-    buttons.back()->setFunction(buttonFunctions[5]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[5]),window.getSize().x / 2 + 200, window.getSize().y / 2 + 300));
-    buttons.back()->setFunction(buttonFunctions[6]);
-    backGroundSprite.setTexture(resources->getTexture("backgroundMainMenu"));
+        buttonName[5] = "buttonMainSettingsWindowed";
+    buttonName[6] = "buttonMainSettingsBack";
+    buttonName[7] = "buttonMainSettingsApply";
+    backGroundSprite.setTexture(resources->getTexture("mainSettingsMenuBackground"));
     backGroundSprite.setPosition(window.getSize().x/2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y/2 - backGroundSprite.getTexture()->getSize().y / 2);
+    sliders.clear();
+    buttons.clear();
+    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 200, window.getSize().y / 2 - 320));
+    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 320));
+    buttons.back()->setFunction(buttonFunctions[1]);
+    buttons.push_back(new CheckBox("Vertical Sync",window.getSize().x / 2 + 20, window.getSize().y / 2 - 200,tempVideoSettings.vsync));
+    buttons.back()->setFunction(buttonFunctions[2]);
+    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 260, window.getSize().y / 2 - 50));
+    buttons.back()->setFunction(buttonFunctions[3]);
+    buttons.push_back(new Button(resources->getTexture(buttonName[3]), window.getSize().x / 2 + 260, window.getSize().y / 2 - 50));
+    buttons.back()->setFunction(buttonFunctions[4]);
+    buttons.push_back(new Button(resources->getTexture(buttonName[4]), window.getSize().x / 2,window.getSize().y / 2 - 50));
+    buttons.back()->setFunction(buttonFunctions[5]);
+    buttons.push_back(new Button(resources->getTexture(buttonName[5]), window.getSize().x / 2,window.getSize().y / 2 + 150));
+    buttons.back()->setFunction(buttonFunctions[6]);
+    buttons.push_back(new Button(resources->getTexture(buttonName[6]), window.getSize().x / 2 - 180, window.getSize().y / 2 + 300));
+    buttons.back()->setFunction(buttonFunctions[7]);
+    changeSettings();
     for(unsigned int i = 0; i < buttons.size(); i++)
         buttonName[i].erase();
+}
+
+void SettingsMenu::refreshAudioMenu()
+{
+    string buttonName[3];
+    buttonName[0] = "buttonMainSettingsVideo";
+    buttonName[1] = "buttonMainSettingsAudio";
+    buttonName[2] = "buttonMainSettingsBack";
+    sliders.clear();
+    buttons.clear();
+    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 200, window.getSize().y / 2 - 320));
+    buttons.back()->setFunction(buttonFunctions[0]);
+    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 320));
+    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 180, window.getSize().y / 2 + 300));
+    buttons.back()->setFunction(buttonFunctions[7]);
+    for(unsigned int i = 0; i < 3; i++)
+    {
+        sliders.push_back(new Slider("name",window.getSize().x/2,window.getSize().y/2 - 250 +i*200,resources->getMusic("GXRCH - HARD")->getVolume()*2));
+        sliders.back()->setFunction(sliderFunctions[i]);
+    }
+}
+
+bool SettingsMenu::changeSettings()
+{   string buttonName = "buttonMainSettingsApply";
+    if((tempVideoSettings.fullscreen != videoSettings->fullscreen || tempVideoSettings.vsync != videoSettings->vsync ||
+        tempVideoSettings.selectedResol != videoSettings->selectedResol) && buttons.size() < 9)
+    {
+        buttons.push_back(new Button(resources->getTexture(buttonName),window.getSize().x / 2 + 180, window.getSize().y / 2 + 300));
+        buttons.back()->setFunction(buttonFunctions[8]);
+        return true;
+    }
+    if (buttons.size() == 9)
+        buttons.pop_back();
+    return false;
+}
+
+void SettingsMenu::handleEvents(sf::Event event)
+{
+    for(unsigned int i = 0; i < sliders.size(); i++)
+    {
+        if(sliders[i]->isPressed())
+        {
+            return;
+        }
+    }
+    switch(event.type)
+    {
+    case sf::Event::MouseButtonPressed:
+        switch(event.mouseButton.button)
+        {
+        case sf::Mouse::Left:
+            searchButton();
+            break;
+        default:
+            break;
+        }
+    default:
+        break;
+    }
 }
 
 void SettingsMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -150,4 +258,6 @@ void SettingsMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(backGroundSprite,states);
     for(unsigned int i = 0; i < buttons.size(); i++)
         target.draw(*buttons[i],states);
+    for(unsigned int i = 0; i < sliders.size(); i++)
+        target.draw(*sliders[i],states);
 }
