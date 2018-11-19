@@ -105,7 +105,10 @@ void GSSurvival::handleEvents(sf::Event _event)
             }
         if(_event.key.code == sf::Keyboard::L && !openPauseMenu)
             if(!openPerkMenu)
+            {
+                perkMenu->updatelvl(enemyFactory->getScore());
                 openPerkMenu = true;
+            }
     }
 }
 

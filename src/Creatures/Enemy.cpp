@@ -1,8 +1,8 @@
 #include "Creatures/Enemy.h"
 
-float Enemy::percentDamage = 0.f;
-float Enemy::FrostSpeed = 150.f;
-float Enemy::FrostRotationRate = 90.f;
+float Enemy::percentDamage = 0.05;
+float Enemy::FrostSpeed = 130.f;
+float Enemy::FrostRotationRate = 70.f;
 
 Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture) :
     HealthPoints(_healthPoints),
