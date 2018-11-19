@@ -130,7 +130,7 @@ void SettingsMenu::setFunctions()
     buttonFunctions[8] = [this](){
         window.close();
         *videoSettings = tempVideoSettings;
-        cout << videoSettings->width << endl << videoSettings->height << endl << videoSettings->fullscreen << endl << videoSettings->vsync << endl;
+        videoSettings->saveSettings();
         if(videoSettings->fullscreen)
             window.create(sf::VideoMode(videoSettings->width, videoSettings->height), "Shootan", sf::Style::Fullscreen);
         else window.create(sf::VideoMode(videoSettings->width, videoSettings->height), "Shootan");
