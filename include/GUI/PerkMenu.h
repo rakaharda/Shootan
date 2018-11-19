@@ -3,7 +3,7 @@
 
 #include "Menu.h"
 #include "Utils/ResourceManager.h"
-#include "Game/VideoSettings.h"
+#include "Utils/VideoSettings.h"
 #include "Player/Player.h"
 #include "Creatures/Enemy.h"
 #include <sstream>

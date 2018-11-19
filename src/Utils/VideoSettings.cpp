@@ -1,4 +1,4 @@
-#include "Game\VideoSettings.h"
+#include "Utils/VideoSettings.h"
 
 VideoSettings::VideoSettings()
 {

@@ -4,7 +4,7 @@
 #include "GUI/Menu.h"
 #include "GUI/MenuStates.h"
 #include "GUI/Slider.h"
-#include "Game/VideoSettings.h"
+#include "Utils/VideoSettings.h"
 #include "Utils/ResourceManager.h"
 #include "GUI/Checkbox.h"
 
