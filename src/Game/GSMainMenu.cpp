@@ -17,7 +17,7 @@ GSMainMenu::GSMainMenu(VideoSettings *_videoSettings)
 GSMainMenu::~GSMainMenu()
 {
     delete(mainMenu);
-    
+
 }
 
 void GSMainMenu::handleEvents(sf::Event event)
@@ -56,13 +56,7 @@ void GSMainMenu::loadresources()
 {
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
     //*Sound buffers
-    resources->addSoundBuffer("pistol_shot",         "./data/sounds/pistol_shot.wav");
-    resources->addSoundBuffer("pistol_reload",       "./data/sounds/pistol_reload.wav");
-    resources->addSoundBuffer("assaultrifle_shot",   "./data/sounds/assaultrifle_shot.wav");
-    resources->addSoundBuffer("assaultrifle_reload", "./data/sounds/assaultrifle_reload.wav");
-    resources->addSoundBuffer("sniperrifle_shot",    "./data/sounds/sniperrifle_shot.wav");
-    resources->addSoundBuffer("shotgun_shot",        "./data/sounds/shotgun_shot.wav");
-    resources->addSoundBuffer("shotgun_reload",      "./data/sounds/shotgun_reload.wav");
+    resources->addSoundBuffer("laser1",              "./data/sounds/laser1.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }

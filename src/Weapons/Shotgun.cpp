@@ -8,8 +8,6 @@ Shotgun::Shotgun(sf::Sprite* _source) : Weapon(_source)
     damage = 10.f;
     spread = 1;
     projectileSpeed = 0.9f;
-    shotSoundKey = "shotgun_shot";
-    reloadSoundKey = "shotgun_reload";
 }
 
 bool Shotgun::addProjectile()
@@ -29,7 +27,7 @@ bool Shotgun::addProjectile()
     }
     if(currentClipSize <= 0)
     {
-        playReloadSound();
+        //playReloadSound();
         currentReloadTime = reloadTime;
         currentClipSize = clipSize;
     }
