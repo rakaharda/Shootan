@@ -9,7 +9,6 @@
 #include <iostream>
 #include "Game/EnemyFactory.h"
 #include "Game/EntityDestroyer.h"
-#include "Game/VideoSettings.h"
 #include "Components/GameObject.h"
 #include "Components/GameStates.h"
 #include "Components/Collision.h"
@@ -32,6 +31,8 @@
 #include "GUI/PerkMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
+#include "Utils/AudioSettings.h"
+#include "Utils/VideoSettings.h"
 
 class GameState
 {

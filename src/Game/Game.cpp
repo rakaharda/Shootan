@@ -4,6 +4,7 @@ Game::Game() : isPlaying(true)
 {
     //Loading settings
     videoSettings = new VideoSettings;
+    audioSettings = new AudioSettings;
     resources = new ResourceManager;
     loadSettings();
     //Setting up window
@@ -111,4 +112,5 @@ void Game::loadResources()
 void Game::loadSettings()
 {
     videoSettings->loadSettings();
+    audioSettings->loadSettings();
 }

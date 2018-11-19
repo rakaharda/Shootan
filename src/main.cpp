@@ -1,10 +1,11 @@
 #include "Game/Game.h"
 
-sf::RenderWindow window;
-float frameTime;
-ResourceManager *resources;
+sf::RenderWindow     window;
+float                frameTime;
+ResourceManager      *resources;
 vector <Projectile*> vecProjectiles;
-vector <Perk*> vecPerks;
+vector <Perk*>       vecPerks;
+AudioSettings        *audioSettings;
 
 int main()
 {

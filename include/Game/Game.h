@@ -18,7 +18,7 @@
 #include "Weapons/SniperRifle.h"
 #include "Components/Collision.h"
 #include "Components/GameStates.h"
-#include "Game/VideoSettings.h"
+#include "Utils/VideoSettings.h"
 #include "Game/GSSurvival.h"
 #include "Game/GSMainMenu.h"
 #include "GUI/PauseMenu.h"
@@ -54,5 +54,6 @@ extern float                frameTime;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Perk*>       vecPerks;
 extern ResourceManager      *resources;
+extern AudioSettings        *audioSettings;
 #endif // GAME_H
 

@@ -1,4 +1,4 @@
-#include "Game\VideoSettings.h"
+#include "Utils/VideoSettings.h"
 
 VideoSettings::VideoSettings()
 {
@@ -61,5 +61,4 @@ void VideoSettings::fillResolutions()
     resolutions.push_back(new sf::Vector2u(1366,768));
     resolutions.push_back(new sf::Vector2u(1280,720));
     resolutions.push_back(new sf::Vector2u(1024,768));
-
 }

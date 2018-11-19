@@ -5,7 +5,7 @@
 #include "GUI/Button.h"
 #include "GUI/CheckBox.h"
 #include "GUI/Slider.h"
-#include "Game/VideoSettings.h"
+#include "Utils/VideoSettings.h"
 #include "Components/GameStates.h"
 #include "Utils/ResourceManager.h"
 
