@@ -28,6 +28,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     k = 0; //need to delete
     Perk::player = player;
     enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
+    resources->getMusic("GXRCH - HARD")->setVolume(audioSettings->music);
     resources->getMusic("GXRCH - HARD")->setLoop(true);
     resources->getMusic("GXRCH - HARD")->play();
 }
@@ -37,6 +38,7 @@ GSSurvival::~GSSurvival()
     delete(player);
     delete(pauseMenu);
     delete(perkMenu);
+    resources->getMusic("GXRCH - HARD")->pause();
 }
 
 GameStates GSSurvival::update()
@@ -239,6 +241,11 @@ void GSSurvival::loadResources()
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
     //*For button
     resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
+    resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
+    //*Sound buffers
+    resources->addSoundBuffer("laser1",              "./data/sounds/laser1.wav");
+    //*Music
+    resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
 
 void GSSurvival::draw()

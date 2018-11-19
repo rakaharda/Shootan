@@ -10,8 +10,6 @@ GSMainMenu::GSMainMenu(VideoSettings *_videoSettings)
     background.setTexture(resources->getTexture("mainBackground"));
     background.setScale((float)videoSettings->width/background.getTexture()->getSize().x,
                         (float)videoSettings->height/background.getTexture()->getSize().y);
-    resources->getMusic("GXRCH - HARD")->setVolume(50.f);
-    resources->getMusic("GXRCH - HARD")->pause();
 }
 
 GSMainMenu::~GSMainMenu()
@@ -55,10 +53,6 @@ GameStates GSMainMenu::update()
 void GSMainMenu::loadresources()
 {
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
-    //*Sound buffers
-    resources->addSoundBuffer("laser1",              "./data/sounds/laser1.wav");
-    //*Music
-    resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
 
 void GSMainMenu::draw()

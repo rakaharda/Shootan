@@ -5,6 +5,7 @@
 #include "GUI/MenuStates.h"
 #include "GUI/Slider.h"
 #include "Utils/VideoSettings.h"
+#include "Utils/AudioSettings.h"
 #include "Utils/ResourceManager.h"
 #include "GUI/Checkbox.h"
 
@@ -31,5 +32,6 @@ private:
 
 extern sf::RenderWindow window;
 extern ResourceManager *resources;
+extern AudioSettings        *audioSettings;
 
 #endif // SETTINGSMENU_H

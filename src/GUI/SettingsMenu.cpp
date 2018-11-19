@@ -140,16 +140,16 @@ void SettingsMenu::setFunctions()
         refreshVideoMenu();
     };
 
-    sliderFunctions[0] = [this](float status){
-        resources->getMusic("GXRCH - HARD")->setVolume(status/2);
+    sliderFunctions[0] = [](float status){
+        audioSettings->general = status;
     };
 
-    sliderFunctions[1] = [this](float status){
-
+    sliderFunctions[1] = [](float status){
+        audioSettings->music = status;
     };
 
-    sliderFunctions[2] = [this](float status){
-
+    sliderFunctions[2] = [](float status){
+        audioSettings->sounds = status;
     };
 }
 

@@ -8,6 +8,7 @@
 #include "Utils/VideoSettings.h"
 #include "Components/GameStates.h"
 #include "Utils/ResourceManager.h"
+#include "Utils/AudioSettings.h"
 
 class PauseMenu: public Menu
 {
@@ -33,5 +34,6 @@ friend Button;
 
 extern sf::RenderWindow window;
 extern ResourceManager      *resources;
+extern AudioSettings        *audioSettings;
 
 #endif // PAUSEMENU_H

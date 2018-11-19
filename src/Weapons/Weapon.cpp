@@ -95,6 +95,7 @@ void Weapon::playShotSound()
 {
     sounds.push_back(sf::Sound());
     sounds.back().setBuffer(resources->getSoundBuffer(shotSoundKey));
+    sounds.back().setVolume(audioSettings->sounds);
     sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
     sounds.back().setMinDistance(500);
     sounds.back().play();
@@ -103,6 +104,7 @@ void Weapon::playReloadSound()
 {
     sounds.push_back(sf::Sound());
     sounds.back().setBuffer(resources->getSoundBuffer(reloadSoundKey));
+    sounds.back().setVolume(audioSettings->sounds);
     sounds.back().setPosition(source->getPosition().x, source->getPosition().y, 0.f);
     sounds.back().setMinDistance(50);
     sounds.back().play();

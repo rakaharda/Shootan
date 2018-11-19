@@ -8,6 +8,7 @@
 #include "Projectiles/Projectile.h"
 #include "Components/Cooldown.h"
 #include "Utils/ResourceManager.h"
+#include "Utils/AudioSettings.h"
 
 using namespace std;
 
@@ -53,4 +54,5 @@ extern sf::RenderWindow     window;
 extern float                frameTime;
 extern vector <Projectile*> vecProjectiles;
 extern ResourceManager      *resources;
+extern AudioSettings        *audioSettings;
 #endif // WEAPON_H

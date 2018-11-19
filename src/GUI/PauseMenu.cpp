@@ -93,12 +93,13 @@ void PauseMenu::setFunctions()
     };
 
     sliderFunctions[0] = [](float status){
+        audioSettings->music = status;
+        audioSettings->saveSettings();
         resources->getMusic("GXRCH - HARD")->setVolume(status);
     };
     sliderFunctions[1] = [](float status) {
-        float musicVolume = resources->getMusic("GXRCH - HARD")->getVolume();
-        sf::Listener::setGlobalVolume(status);
-        resources->getMusic("GXRCH - HARD")->setVolume(musicVolume);
+        audioSettings->sounds = status;
+        audioSettings->saveSettings();
     };
 }
 
@@ -114,9 +115,9 @@ void PauseMenu::refreshMenu()
     buttonName[1] = "buttonSettingsBack";
     buttons.clear();
     sliders.clear();
-    sliders.push_back(new Slider("Music_Volume",window.getSize().x / 2,window.getSize().y / 2 - 150,resources->getMusic("GXRCH - HARD")->getVolume()));
+    sliders.push_back(new Slider("Music_Volume",window.getSize().x / 2,window.getSize().y / 2 - 150, audioSettings->music));
     sliders.back()->setFunction(sliderFunctions[0]);
-    sliders.push_back(new Slider("Effects_Volume",window.getSize().x / 2,window.getSize().y / 2 - 40, resources->getMusic("assaultrifle_shot")->getVolume()));
+    sliders.push_back(new Slider("Effects_Volume",window.getSize().x / 2,window.getSize().y / 2 - 40, audioSettings->sounds));
     sliders.back()->setFunction(sliderFunctions[1]);
     buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2,window.getSize().y / 2 + 80));
     buttons.back()->setFunction(buttonFunctions[3]);
