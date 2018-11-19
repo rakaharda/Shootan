@@ -16,7 +16,6 @@ class Perk : public GameObject
         bool checkActive();
         static Player* player;
     protected:
-        sf::Texture texture;
         float activeTime;
         float raz;
         float currentTimeIncrease;

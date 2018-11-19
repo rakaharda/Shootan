@@ -236,6 +236,8 @@ void GSSurvival::loadResources()
         //Perks
     resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
     resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
+    resources->addTexture("perk_frost",   "./data/perks/Blue.png");
+    resources->addTexture("perk_fire",   "./data/perks/Red.png");
         //GUI
     resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
