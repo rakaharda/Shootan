@@ -5,7 +5,7 @@ HealthBar::HealthBar(Player* _player) :
 {
     frame.setTexture(resources->getTexture("healthbar_frame"));
     healthCells.setTexture(resources->getTexture("healthbar_cells"));
-    origin = sf::Vector2f(50, window.getSize().y - 50);
+    origin = sf::Vector2f(50, window.getSize().y - 100);
     moveToOrigin();
     prevHealthPoints = 0;
     prevWindowsHeight = window.getSize().y;
@@ -28,7 +28,7 @@ void HealthBar::update()
             cells = 10 * player->getCurrentHealthPoints() / player->getHealthPoints();
         else
             cells = 0.f;
-        healthCells.setTextureRect(sf::IntRect(0, 0, 8 + (cells * 23), healthCells.getTexture()->getSize().y));    
+        healthCells.setTextureRect(sf::IntRect(0, 0, 8 + (cells * 23), healthCells.getTexture()->getSize().y));
         if(prevHealthPoints > player->getCurrentHealthPoints())
             isDamaged = true;
         prevHealthPoints = player->getCurrentHealthPoints();
@@ -62,7 +62,7 @@ void HealthBar::shake()
         else
             move(-300 * frameTime);
     }
-    
+
 }
 
 void HealthBar::moveToOrigin()
