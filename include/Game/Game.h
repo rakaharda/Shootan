@@ -54,5 +54,6 @@ extern float                frameTime;
 extern vector <Projectile*> vecProjectiles;
 extern vector <Perk*>       vecPerks;
 extern ResourceManager      *resources;
+extern AudioSettings        *audioSettings;
 #endif // GAME_H
 
