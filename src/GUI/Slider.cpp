@@ -1,4 +1,4 @@
-#include "Slider.h"
+#include "GUI/Slider.h"
 #include <iostream>
 #define INDENT 10.f
 Slider::Slider(string _name, float _xPos, float _yPos, float _status)

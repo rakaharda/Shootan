@@ -10,5 +10,8 @@ Frost::Frost(int _xPos, int _yPos) : Perk(_xPos, _yPos)
 
 void Frost::pickUp()
 {
-    //player->setSkill(2);
+    for(int i = 0; i < 60; i++)
+        {
+            vecProjectiles.push_back(new Projectile(&(player->m_sprite), resources->getTexture("projectile_1"), i, 2));
+        }
 }

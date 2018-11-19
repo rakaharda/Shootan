@@ -22,7 +22,12 @@ Projectile::Projectile(const sf::Sprite* _source, float _damage, int _spread, sf
 
     angle = ((rand() % _spread - _spread / 2) + source->getRotation()) / 180 * M_PI + ((float) _numberShot - 1.5) / 20;
 }
+Projectile::Projectile(const sf::Sprite* _source, sf::Texture& _texture, int _numberShot, int _skill):
+    Projectile(_source, 0.f, 2, _texture, 1.f, _skill)
+{
+    angle = (source->getRotation()) / 180 * M_PI + ((float) _numberShot) / M_PI * 6;
 
+}
 Projectile::~Projectile()
 {
     //dtor

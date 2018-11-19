@@ -3,6 +3,7 @@
 
 #include "Components/GameObject.h"
 #include "Player/Player.h"
+#include "Utils/ResourceManager.h"
 
 
 class Perk : public GameObject
@@ -31,5 +32,6 @@ class Perk : public GameObject
 };
 extern sf::RenderWindow window;
 extern float frameTime;
+extern ResourceManager      *resources;
 
 #endif // PERK_H
