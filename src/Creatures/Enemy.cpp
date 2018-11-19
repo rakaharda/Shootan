@@ -146,7 +146,7 @@ void Enemy::setSkill(int _skill)
     {
        skill = _skill;
     }
-    else if(skill != _skill)
+    else if(skill != _skill && _skill != 0)
             {
                 skill = 3;
             }
