@@ -64,6 +64,9 @@ GameStates GSSurvival::update()
         collectTrash();
         updateView();
         draw();
+        perkMenu->updatelvl(enemyFactory->getScore());
+        if(perkMenu->getlvl() && perkMenu->canOpen())
+            openPerkMenu = true;
     }
     return GameStates::GS_GAMEMODE_SURVIVAL;
 }
@@ -93,27 +96,18 @@ void GSSurvival::handleEvents(sf::Event _event)
         else if(openPerkMenu)
                 {
                     perkMenu->handleEvents(_event);
-                    if(_event.type == sf::Event::KeyPressed)
-                        if(_event.key.code == sf::Keyboard::L)
-                        openPerkMenu = false;
                     return;
                 }
                 else
                     player->handleEvents(_event);
     if(_event.type == sf::Event::KeyPressed)
     {
-        if(_event.key.code == sf::Keyboard::Escape)
+        if(_event.key.code == sf::Keyboard::Escape && !openPerkMenu)
             {
             if(!openPauseMenu)
                 openPauseMenu = true;
             else
                 openPauseMenu = false;
-            }
-        if(_event.key.code == sf::Keyboard::L && !openPauseMenu)
-            if(!openPerkMenu)
-            {
-                perkMenu->updatelvl(enemyFactory->getScore());
-                openPerkMenu = true;
             }
     }
 }
