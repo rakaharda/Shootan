@@ -29,7 +29,7 @@ void Button::setlvl(int _ilvl)
     {
         veclvl.push_back(new sf::Sprite);
         (*veclvl[i]).setTexture(textureLvl);
-        (*veclvl[i]).setPosition(xPos - 15 + i * 10 - (*veclvl[i]).getTexture()->getSize().x / 2, yPos + 15 - (*veclvl[i]).getTexture()->getSize().y / 2);
+        (*veclvl[i]).setPosition(xPos - 42 + i * 16, yPos + 23);
     }
 }
 

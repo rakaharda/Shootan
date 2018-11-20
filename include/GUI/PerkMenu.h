@@ -15,6 +15,8 @@ public:
     virtual ~PerkMenu();
     void handleEvents(sf::Event event);
     void updatelvl(int _score);
+    int getlvl();
+    bool canOpen();
 private:
     int maxHP;
     int currentHP;
