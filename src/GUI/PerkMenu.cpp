@@ -13,7 +13,7 @@ PerkMenu::PerkMenu(bool *_menuStatus, Player** _player):
     maxFrost(5),
     currentFrost(0),
     LVL(0),
-    currentlvl(0)
+    currentlvl(1)
 {
     player = *_player;
     menuStatus = _menuStatus;
