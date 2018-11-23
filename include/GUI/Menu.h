@@ -12,7 +12,6 @@ public:
     Menu();
     virtual ~Menu();
     virtual void handleEvents(sf::Event event);
-    bool *menuStatus;
 protected:
     void searchButton();
     virtual void setFunctions();

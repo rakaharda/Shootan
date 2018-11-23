@@ -29,6 +29,7 @@
 #include "GUI/PauseMenu.h"
 #include "GUI/HealthBar.h"
 #include "GUI/PerkMenu.h"
+#include "GUI/GameOverMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"
 #include "Utils/AudioSettings.h"

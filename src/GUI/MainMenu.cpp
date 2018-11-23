@@ -13,11 +13,10 @@ MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
     buttonName[2] = "buttonMainCredits";
     buttonName[3] = "buttonMainExit";
     backGroundSprite.setTexture(resources->getTexture("backgroundMainMenu"));
-    backGroundSprite.setColor(sf::Color(255,255,255,85));
     backGroundSprite.setPosition(window.getSize().x/2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y/2 - backGroundSprite.getTexture()->getSize().y / 2);
     for(unsigned int i = 0; i < 4; i++){
-        buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 240 + i*160));
+        buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 180 + i*120));
         buttons.back()->setFunction(buttonFunctions[i]);
         buttons.back()->setLightButton(buttonName[i]+"Light");
     }

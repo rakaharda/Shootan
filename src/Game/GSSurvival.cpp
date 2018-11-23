@@ -3,13 +3,15 @@
 GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     player(new Player),
     fieldSize(sf::IntRect(0, 0, 3840, 2160)),
-    videoSettings(_videoSettings),
-    openPauseMenu(false),
-    openPerkMenu(false)
+    videoSettings(_videoSettings)
+    //survivalState(SurvivalStates::SS_PLAY)
 {
     loadResources();
-    perkMenu = new PerkMenu(&openPerkMenu, &player);
-    pauseMenu = new PauseMenu(videoSettings,&openPauseMenu);
+    survivalState = new SurvivalStates;
+    *survivalState = SurvivalStates::SS_PLAY;
+    perkMenu = new PerkMenu(survivalState, &player);
+    pauseMenu = new PauseMenu(videoSettings, survivalState);
+    gameOverMenu = new GameOverMenu();
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     info.setFont(resources->getFont("arial"));
@@ -43,10 +45,11 @@ GSSurvival::~GSSurvival()
 
 GameStates GSSurvival::update()
 {
-    if(openPauseMenu||openPerkMenu)
-        return pauseMenu->gameState;
-    if(player->getCurrentHealthPoints() > 0.f)
+    if(player->getCurrentHealthPoints()<=0.f)
+        *survivalState = SurvivalStates::SS_GAME_OVER;
+    switch(*survivalState)
     {
+    case SurvivalStates::SS_PLAY:
         player->update();
         enemyFactory->update();
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
@@ -68,9 +71,15 @@ GameStates GSSurvival::update()
         draw();
         perkMenu->updatelvl(enemyFactory->getScore());
         if(perkMenu->getlvl() && perkMenu->canOpen())
-            openPerkMenu = true;
+            *survivalState = SurvivalStates::SS_PERK_MENU;
+        return GameStates::GS_GAMEMODE_SURVIVAL;
+    case SurvivalStates::SS_PAUSE_MENU:
+        return pauseMenu->gameState;
+    case SurvivalStates::SS_PERK_MENU:
+        return GameStates::GS_GAMEMODE_SURVIVAL;
+    case SurvivalStates::SS_GAME_OVER:
+        return gameOverMenu->gameState;
     }
-    return GameStates::GS_GAMEMODE_SURVIVAL;
 }
 
 void GSSurvival::updateStats()
@@ -93,24 +102,28 @@ void GSSurvival::updateListener()
 
 void GSSurvival::handleEvents(sf::Event _event)
 {
-    if(openPauseMenu)
-        pauseMenu->handleEvents(_event);
-        else if(openPerkMenu)
-                {
-                    perkMenu->handleEvents(_event);
-                    return;
-                }
-                else
-                    player->handleEvents(_event);
-    if(_event.type == sf::Event::KeyPressed)
+    switch(*survivalState)
     {
-        if(_event.key.code == sf::Keyboard::Escape && !openPerkMenu)
-            {
-            if(!openPauseMenu)
-                openPauseMenu = true;
-            else
-                openPauseMenu = false;
-            }
+    case SurvivalStates::SS_PLAY:
+        player->handleEvents(_event);
+        if(_event.type == sf::Event::KeyPressed)
+            if(_event.key.code == sf::Keyboard::Escape)
+                *survivalState = SurvivalStates::SS_PAUSE_MENU;
+        break;
+    case SurvivalStates::SS_PAUSE_MENU:
+        pauseMenu->handleEvents(_event);
+        if(_event.type == sf::Event::KeyPressed)
+            if(_event.key.code == sf::Keyboard::Escape)
+                *survivalState = SurvivalStates::SS_PLAY;
+        break;
+    case SurvivalStates::SS_PERK_MENU:
+        perkMenu->handleEvents(_event);
+        break;
+    case SurvivalStates::SS_GAME_OVER:
+        gameOverMenu->handleEvents(_event);
+        break;
+    default:
+        break;
     }
 }
 
@@ -262,8 +275,18 @@ void GSSurvival::draw()
     window.setView(window.getDefaultView());
     window.draw(*healthBar);
     window.draw(info);
-    if(openPauseMenu)
+    switch(*survivalState)
+    {
+    case SurvivalStates::SS_PAUSE_MENU:
         window.draw(*pauseMenu);
-    if(openPerkMenu)
+        break;
+    case SurvivalStates::SS_PERK_MENU:
         window.draw(*perkMenu);
+        break;
+    case SurvivalStates::SS_GAME_OVER:
+        window.draw(*gameOverMenu);
+        break;
+    default:
+        break;
+    }
 }

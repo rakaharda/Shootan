@@ -2,6 +2,7 @@
 #define GSSURVIVAL_H
 
 #include "Game/GameState.h"
+#include "Game/SurvivalStates.h"
 
 //*Field size 3840x2160 (2 times FullHD)
 
@@ -19,14 +20,14 @@ protected:
     sf::Text        info;
     sf::IntRect     fieldSize;
     sf::View        view;
+    SurvivalStates *survivalState;
     PauseMenu        *pauseMenu;
+    GameOverMenu     *gameOverMenu;
     VideoSettings   *videoSettings;
     EnemyFactory    *enemyFactory;
-    bool            openPauseMenu;
     vector <Enemy*> vecEnemies;
     vector <EntityDestroyer> vecDestroyers;
-    HealthBar       *healthBar;
-    bool            openPerkMenu;
+    HealthBar       *healthBar;  
     PerkMenu        *perkMenu;
     void updateStats();
     void loadResources();

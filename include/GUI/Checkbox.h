@@ -12,7 +12,7 @@ public:
 private:
     sf::Sprite markSprite;
     sf::Font font;
-    sf::Text text;
+    sf::Sprite textSprite;
     virtual void update();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

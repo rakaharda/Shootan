@@ -1,11 +1,11 @@
 #include "GUI/PauseMenu.h"
 
-PauseMenu::PauseMenu(VideoSettings *_videoSettings,bool *_menuStatus)
+PauseMenu::PauseMenu(VideoSettings *_videoSettings,SurvivalStates *_survivalState)
 {
     gameState = GameStates::GS_GAMEMODE_SURVIVAL;
     videoSettings = _videoSettings;
     tempVideoSettings = *videoSettings;
-    menuStatus = _menuStatus;
+    survivalState = _survivalState;
     isSettings = false;
     setFunctions();
     loadResources();
@@ -50,7 +50,7 @@ void PauseMenu::setFunctions()
     buttonFunctions = new std::function<void(void)> [5];
     sliderFunctions = new std::function<void(float)> [2];
     buttonFunctions[0] = [this](){
-        *menuStatus = false;
+        *survivalState = SurvivalStates::SS_PLAY;
     };
     buttonFunctions[1] = [this](){
        refreshMenu();
@@ -169,8 +169,8 @@ void PauseMenu::handleEvents(sf::Event event)
         break;
     case sf::Event::KeyPressed:
         if(event.key.code == sf::Keyboard::Escape)
-        {      
-            buttonFunctions[4]();    
+        {
+            buttonFunctions[4]();
         }
         break;
     default:

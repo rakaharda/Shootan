@@ -2,6 +2,7 @@
 #define PERKMENU_H
 
 #include "Menu.h"
+#include "Game/SurvivalStates.h"
 #include "Utils/ResourceManager.h"
 #include "Utils/VideoSettings.h"
 #include "Player/Player.h"
@@ -11,7 +12,7 @@
 class PerkMenu: public Menu
 {
 public:
-    PerkMenu(bool *_menuStatus, Player** _player);
+    PerkMenu(SurvivalStates *_survivalState, Player** _player);
     virtual ~PerkMenu();
     void handleEvents(sf::Event event);
     void updatelvl(int _score);
@@ -31,6 +32,7 @@ private:
     Player* player;
     void setFunctions();
     void loadResources();
+    SurvivalStates *survivalState;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     int currentlvl;
     int LVL;

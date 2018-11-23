@@ -2,17 +2,12 @@
 CheckBox::CheckBox(string _name, float _xPos, float _yPos, bool _isSelect)
     : Button(resources->getTexture("buttonSettingsMarkBorder"), _xPos, _yPos)
 {
-    m_sprite.setPosition(_xPos - 2.5*m_sprite.getTexture()->getSize().x, _yPos - m_sprite.getTexture()->getSize().y / 2);
+    m_sprite.setPosition(_xPos - m_sprite.getTexture()->getSize().x/2, _yPos - m_sprite.getTexture()->getSize().y / 2);
     markSprite.setTexture(resources->getTexture("buttonSettingsMark"));
-    markSprite.setPosition(_xPos - 2.5*m_sprite.getTexture()->getSize().x + 5, _yPos - m_sprite.getTexture()->getSize().y / 2 + 5);
-    font.loadFromFile("./data/fonts/Mylodon-Light.otf");
-    text.setFont(font);
-    text.setCharacterSize(m_sprite.getTexture()->getSize().y);
-    text.setFillColor(sf::Color(30,150,255));
-    text.setString(_name);
-    text.setCharacterSize(30);
-    text.setPosition(_xPos - 35,
-                     _yPos - 20);
+    markSprite.setPosition(_xPos - m_sprite.getTexture()->getSize().x/2 + 5, _yPos - m_sprite.getTexture()->getSize().y / 2 + 5);
+    textSprite.setTexture(resources->getTexture(_name));
+    textSprite.setPosition(_xPos + textSprite.getTexture()->getSize().x/8,
+                     _yPos - textSprite.getTexture()->getSize().y/2);
     isSelect = _isSelect;
 }
 
@@ -30,7 +25,7 @@ void CheckBox::update()
 void CheckBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite,states);
-    target.draw(text,states);
+    target.draw(textSprite,states);
     if(isSelect)
     {
         target.draw(markSprite,states);

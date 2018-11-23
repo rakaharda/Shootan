@@ -1,22 +1,22 @@
 #include "GUI/PerkMenu.h"
 #include <iostream>
 
-PerkMenu::PerkMenu(bool *_menuStatus, Player** _player):
+PerkMenu::PerkMenu(SurvivalStates *_survivalState, Player** _player):
     maxHP(5),
     currentHP(0),
     maxSpeed(5),
     currentSpeed(0),
     maxPlayerSpeed(5),
     currentPlayerSpeed(0),
-    maxFire(5),
-    currentFire(0),
     maxFrost(5),
     currentFrost(0),
-    LVL(0),
-    currentlvl(1)
+    maxFire(5),
+    currentFire(0),
+    currentlvl(1),
+    LVL(0)
 {
     player = *_player;
-    menuStatus = _menuStatus;
+    survivalState = _survivalState;
     setFunctions();
     string str[6];
     str[5] = "perkmenu_buttonPlay";
@@ -67,14 +67,13 @@ void PerkMenu::loadResources()
     resources->addTexture("perkmenu_buttonFrostLight",   "./data/GUI/perkMenu/buttonFrostLight.png");
     resources->addTexture("perkmenu_buttonSpeedLight",   "./data/GUI/perkMenu/buttonSpeedLight.png");
     resources->addTexture("perkmenu_buttonSpeedUpLight", "./data/GUI/perkMenu/buttonSpeedUpLight.png");
-    resources->addTexture("perkmenu_backgroundLight",    "./data/GUI/perkMenu/backgroundLight.png");
 }
 
 void PerkMenu::setFunctions()
 {
     buttonFunctions = new std::function<void(void)> [6];
     buttonFunctions[5] = [this](){
-        *menuStatus = false;
+//        *menuStatus = false;
     };
     buttonFunctions[0] = [this](){
         //HP++
@@ -91,7 +90,7 @@ void PerkMenu::setFunctions()
             currentHP++;
             player->setHealthPoints(player->getHealthPoints() + 50);
             player->setCurrentHealthPoints(player->getHealthPoints());
-            *menuStatus = false;
+            *survivalState = SurvivalStates::SS_PLAY;
         }
     };
     buttonFunctions[1] = [this](){
@@ -115,7 +114,7 @@ void PerkMenu::setFunctions()
             }
             else
             player->upSpeed += 30.f;
-            *menuStatus = false;
+            *survivalState = SurvivalStates::SS_PLAY;
         }
     };
     buttonFunctions[2] = [this](){
@@ -132,7 +131,7 @@ void PerkMenu::setFunctions()
             currentPlayerSpeed++;
             player->defoltSpeed+=20.f;
             player->speed+=20.f;
-            *menuStatus = false;
+            *survivalState = SurvivalStates::SS_PLAY;
         }
 
     };
@@ -151,7 +150,7 @@ void PerkMenu::setFunctions()
             Enemy::FrostRotationRate = 90.f - (currentFrost * 20.f - ((currentFrost - 2) * 10.f));
             Enemy::FrostSpeed = 150.f - (currentFrost * 20.f - ((currentFrost - 2) * 10.f));
             player->setSkill(2);
-            *menuStatus = false;
+            *survivalState = SurvivalStates::SS_PLAY;
         }
 
     };
@@ -169,7 +168,7 @@ void PerkMenu::setFunctions()
             currentFire++;
             Enemy::percentDamage = currentFire * 0.05;
             player->setSkill(1);
-            *menuStatus = false;
+            *survivalState = SurvivalStates::SS_PLAY;
         }
 
     };

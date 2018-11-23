@@ -2,6 +2,7 @@
 #define PAUSEMENU_H
 
 #include "Menu.h"
+#include "Game/SurvivalStates.h"
 #include "GUI/Button.h"
 #include "GUI/CheckBox.h"
 #include "GUI/Slider.h"
@@ -13,7 +14,7 @@
 class PauseMenu: public Menu
 {
 public:
-    PauseMenu(VideoSettings *_videoSettings, bool *_menuStatus);
+    PauseMenu(VideoSettings *_videoSettings, SurvivalStates *_survivalState);
     virtual ~PauseMenu();
     void handleEvents(sf::Event event);
     GameStates gameState;
@@ -23,6 +24,7 @@ private:
     void loadResources();
     bool isSettings;
     bool *isPlaying;
+    SurvivalStates *survivalState;
     vector <Slider*> sliders;
     std::function<void(float)> *sliderFunctions;
     VideoSettings tempVideoSettings;

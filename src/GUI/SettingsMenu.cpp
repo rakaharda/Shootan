@@ -58,8 +58,19 @@ void SettingsMenu::loadResources()
     resources->addTexture("buttonMainSettingsResulution1024768",       "./data/GUI/mainSettingsMenu/resolutions/buttonSettingsResulution1024768.png");
     resources->addTexture("buttonSettingsMark",       "./data/GUI/mainSettingsMenu/buttonSettingsMark.png");
     resources->addTexture("buttonSettingsMarkBorder", "./data/GUI/mainSettingsMenu/buttonSettingsMarkBorder.png");
+    resources->addTexture("Vertical_Sync", "./data/GUI/mainSettingsMenu/checkMarkTextVSync.png");
     resources->addTexture("sliderLine", "./data/GUI/mainSettingsMenu/sliderLineMainSettingsMenu.png");
     resources->addTexture("sliderButton", "./data/GUI/mainSettingsMenu/sliderMainSettingsMenu.png");
+    resources->addTexture("Music_Volume",         "./data/GUI/mainSettingsMenu/sliderTextMusicVolume.png");
+    resources->addTexture("Effects_Volume",       "./data/GUI/mainSettingsMenu/sliderTextEffectsVolume.png");
+    resources->addTexture("General_Volume",         "./data/GUI/mainSettingsMenu/sliderTextGeneralVolume.png");
+
+     resources->addTexture("buttonMainSettingsVideoLight",   "./data/GUI/MainSettingsMenu/buttonSettingsVideoLight.png");
+    resources->addTexture("buttonMainSettingsAudioLight",   "./data/GUI/MainSettingsMenu/buttonSettingsAudioLight.png");
+    resources->addTexture("buttonMainSettingsBackLight",   "./data/GUI/MainSettingsMenu/buttonSettingsBackLight.png");
+    resources->addTexture("buttonMainSettingsApplyLight",  "./data/GUI/MainSettingsMenu/buttonSettingsApplyLight.png");
+    resources->addTexture("buttonMainSettingsFullscreenLight", "./data/GUI/mainSettingsMenu/buttonSettingsFullscreenLight.png");
+    resources->addTexture("buttonMainSettingsWindowedLight",   "./data/GUI/mainSettingsMenu/buttonSettingsWindowedLight.png");
 
 }
 
@@ -174,21 +185,24 @@ void SettingsMenu::refreshVideoMenu()
                                  window.getSize().y/2 - backGroundSprite.getTexture()->getSize().y / 2);
     sliders.clear();
     buttons.clear();
-    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 200, window.getSize().y / 2 - 320));
-    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 320));
+    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 150, window.getSize().y / 2 - 200));
+    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 200));
     buttons.back()->setFunction(buttonFunctions[1]);
-    buttons.push_back(new CheckBox("Vertical Sync",window.getSize().x / 2 + 20, window.getSize().y / 2 - 200,tempVideoSettings.vsync));
+    buttons.back()->setLightButton(buttonName[1]+"Light");
+    buttons.push_back(new CheckBox("Vertical_Sync",window.getSize().x / 2 - 130, window.getSize().y / 2 - 100,tempVideoSettings.vsync));
     buttons.back()->setFunction(buttonFunctions[2]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 260, window.getSize().y / 2 - 50));
+    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 205, window.getSize().y / 2));
     buttons.back()->setFunction(buttonFunctions[3]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[3]), window.getSize().x / 2 + 260, window.getSize().y / 2 - 50));
+    buttons.push_back(new Button(resources->getTexture(buttonName[3]), window.getSize().x / 2 + 205, window.getSize().y / 2));
     buttons.back()->setFunction(buttonFunctions[4]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[4]), window.getSize().x / 2,window.getSize().y / 2 - 50));
+    buttons.push_back(new Button(resources->getTexture(buttonName[4]), window.getSize().x / 2,window.getSize().y / 2));
     buttons.back()->setFunction(buttonFunctions[5]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[5]), window.getSize().x / 2,window.getSize().y / 2 + 150));
+    buttons.push_back(new Button(resources->getTexture(buttonName[5]), window.getSize().x / 2,window.getSize().y / 2 + 100));
     buttons.back()->setFunction(buttonFunctions[6]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[6]), window.getSize().x / 2 - 180, window.getSize().y / 2 + 300));
+    buttons.back()->setLightButton(buttonName[5]+"Light");
+    buttons.push_back(new Button(resources->getTexture(buttonName[6]), window.getSize().x / 2 - 130, window.getSize().y / 2 + 200));
     buttons.back()->setFunction(buttonFunctions[7]);
+    buttons.back()->setLightButton(buttonName[6]+"Light");
     changeSettings();
     for(unsigned int i = 0; i < buttons.size(); i++)
         buttonName[i].erase();
@@ -202,16 +216,19 @@ void SettingsMenu::refreshAudioMenu()
     buttonName[2] = "buttonMainSettingsBack";
     sliders.clear();
     buttons.clear();
-    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 200, window.getSize().y / 2 - 320));
+    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 150, window.getSize().y / 2 - 200));
     buttons.back()->setFunction(buttonFunctions[0]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 320));
-    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 180, window.getSize().y / 2 + 300));
+    buttons.back()->setLightButton(buttonName[0]+"Light");
+    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 200));
+    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 130, window.getSize().y / 2 + 200));
+    buttons.back()->setLightButton(buttonName[2]+"Light");
     buttons.back()->setFunction(buttonFunctions[7]);
-    for(unsigned int i = 0; i < 3; i++)
-    {
-        sliders.push_back(new Slider("name",window.getSize().x/2,window.getSize().y/2 - 250 +i*200,resources->getMusic("GXRCH - HARD")->getVolume()*2));
-        sliders.back()->setFunction(sliderFunctions[i]);
-    }
+    sliders.push_back(new Slider("General_Volume",window.getSize().x/2,window.getSize().y/2 - 120,audioSettings->general));
+    sliders.back()->setFunction(sliderFunctions[0]);
+    sliders.push_back(new Slider("Music_Volume",window.getSize().x/2,window.getSize().y/2,audioSettings->music));
+    sliders.back()->setFunction(sliderFunctions[1]);
+    sliders.push_back(new Slider("Effects_Volume",window.getSize().x/2,window.getSize().y/2 + 120,audioSettings->sounds));
+    sliders.back()->setFunction(sliderFunctions[2]);
 }
 
 bool SettingsMenu::changeSettings()
@@ -219,8 +236,9 @@ bool SettingsMenu::changeSettings()
     if((tempVideoSettings.fullscreen != videoSettings->fullscreen || tempVideoSettings.vsync != videoSettings->vsync ||
         tempVideoSettings.selectedResol != videoSettings->selectedResol) && buttons.size() < 9)
     {
-        buttons.push_back(new Button(resources->getTexture(buttonName),window.getSize().x / 2 + 180, window.getSize().y / 2 + 300));
+        buttons.push_back(new Button(resources->getTexture(buttonName),window.getSize().x / 2 + 130, window.getSize().y / 2 + 200));
         buttons.back()->setFunction(buttonFunctions[8]);
+        buttons.back()->setLightButton(buttonName + "Light");
         return true;
     }
     if (buttons.size() == 9)
@@ -237,6 +255,8 @@ void SettingsMenu::handleEvents(sf::Event event)
             return;
         }
     }
+    for(unsigned int i = 0; i < buttons.size(); i++)
+        buttons[i]->update();
     switch(event.type)
     {
     case sf::Event::MouseButtonPressed:
