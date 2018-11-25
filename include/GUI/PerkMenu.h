@@ -22,12 +22,13 @@ private:
     int currentHP;
     int maxSpeed;
     int currentSpeed;
-    int maxPlayerSpeed;
-    int currentPlayerSpeed;
     int maxFrost;
     int currentFrost;
     int maxFire;
     int currentFire;
+    int maxImprovementWeapon;
+    int currentImprovementWeapon;
+    int lvlScore;
     Player* player;
     void setFunctions();
     void loadResources();

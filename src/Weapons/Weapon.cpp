@@ -59,6 +59,22 @@ float Weapon::getReloadTime()
 {
     return reloadTime;
 }
+
+void Weapon::setReloadTime(float _reloadTime)
+{
+    reloadTime = _reloadTime;
+}
+
+float Weapon::getProjectileSpeed()
+{
+    return projectileSpeed;
+}
+
+void Weapon::setProjectileSpeed(float _projectileSpeed)
+{
+    projectileSpeed = _projectileSpeed;
+}
+
 float Weapon::getCurrentReloadTime()
 {
     return currentReloadTime;
