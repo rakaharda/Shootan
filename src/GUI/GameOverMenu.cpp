@@ -1,4 +1,4 @@
-#include "GameOverMenu.h"
+#include "GUI/GameOverMenu.h"
 
 GameOverMenu::GameOverMenu()
 {
