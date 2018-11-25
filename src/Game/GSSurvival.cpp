@@ -45,6 +45,7 @@ GameStates GSSurvival::update()
         return pauseMenu->gameState;
     if(player->getCurrentHealthPoints() > 0.f)
     {
+        checkPerkMenu();
         player->update();
         enemyFactory->update();
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
@@ -64,9 +65,6 @@ GameStates GSSurvival::update()
         collectTrash();
         updateView();
         draw();
-        perkMenu->updatelvl(enemyFactory->getScore());
-        if(perkMenu->getlvl() && perkMenu->canOpen())
-            openPerkMenu = true;
     }
     return GameStates::GS_GAMEMODE_SURVIVAL;
 }
@@ -177,6 +175,33 @@ void GSSurvival::checkPerks()
             vecPerks.erase(vecPerks.begin() + i);
         }
     }
+}
+
+void GSSurvival::checkPerkMenu()
+{
+        if(reloadAnimation <= 0.f)
+        {
+            perkMenu->updatelvl(enemyFactory->getScore());
+            if(perkMenu->getlvl() && perkMenu->canOpen())
+            {
+                ianimation += 0.5f;
+                    if(ianimation == 5.f)
+                    {
+                        offanimation = true;
+                        openPerkMenu = true;
+                    }
+            }
+            if(offanimation)
+            {
+                ianimation -= 0.5f;
+                if(ianimation == 1.f)
+                    offanimation = false;
+            }
+            reloadAnimation = 0.2f;
+        }
+        else
+            reloadAnimation -= frameTime;
+        frameTime /= ianimation;
 }
 
 void GSSurvival::checkDestroyers()

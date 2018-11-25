@@ -39,6 +39,10 @@ protected:
     void updateListener();
     int k; //need for different perks( need rewrite)
 private:
+    bool offanimation=0;
+    float ianimation=1.f;
+    void checkPerkMenu();
+    float reloadAnimation=0.2f;
 };
 
 extern sf::RenderWindow     window;
