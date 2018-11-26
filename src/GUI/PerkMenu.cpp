@@ -127,7 +127,7 @@ void PerkMenu::setFunctions()
             buttons[2]->setlvl(currentImprovementWeapon + 1);
             if(currentImprovementWeapon == 4)
             {
-                buttons[2]->setTextureButton(resources->getTexture("maxPerkmenu_buttonSImprovementWeapon"));
+                buttons[2]->setTextureButton(resources->getTexture("maxPerkmenu_buttonImprovementWeapon"));
                 buttons[2]->setLightButton("maxPerkmenu_buttonImprovementWeapon");
                 buttons[2]->setlvl(0);
             }
