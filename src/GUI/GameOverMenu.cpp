@@ -36,7 +36,7 @@ void GameOverMenu::setFunctions()
 {
     buttonFunctions = new std::function<void(void)> [2];
     buttonFunctions[0] = [this](){
-
+        gameState = GameStates::GS_RESTART;
     };
 
     buttonFunctions[1] = [this](){

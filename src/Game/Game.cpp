@@ -71,8 +71,6 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    if(!window.isOpen())
-        isPlaying = false;
     fpsCounter.update();
     GameStates updatedGameState;
     updatedGameState = currentGameState->update();
@@ -87,6 +85,14 @@ void Game::update()
                 break;
             case GameStates::GS_GAMEMODE_SURVIVAL:
                 currentGameState = new GSSurvival(videoSettings);
+                break;
+            case GameStates::GS_RESTART:
+                currentGameState = new GSSurvival(videoSettings);
+                gameState = GameStates::GS_GAMEMODE_SURVIVAL;
+                break;
+            case GameStates::GS_ENDGAME:
+                isPlaying = false;
+                window.close();
                 break;
             default:
                 break;

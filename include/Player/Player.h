@@ -45,6 +45,7 @@ private:
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
 };
 
 extern sf::RenderWindow window;

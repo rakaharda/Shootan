@@ -20,6 +20,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
     healthBar = new HealthBar(player);
+    projectilesBar = new ProjectilesBar(player);
     vecEnemies.reserve(200);
     vecDestroyers.reserve(200);
     vecProjectiles.clear();
@@ -60,6 +61,7 @@ GameStates GSSurvival::update()
         for(unsigned int i=0; i<vecDestroyers.size(); i++)
             vecDestroyers[i].update();
         healthBar->update();
+        projectilesBar->update();
         updateView();
         updateListener();
         updateStats();
@@ -274,6 +276,7 @@ void GSSurvival::loadResources()
         //GUI
     resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
+    resources->addTexture("projectiles_scale","./data/GUI/projectiles_scale.png");
     //*For button
     resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
@@ -300,6 +303,7 @@ void GSSurvival::draw()
     //* UI
     window.setView(window.getDefaultView());
     window.draw(*healthBar);
+    window.draw(*projectilesBar);
     window.draw(info);
     switch(*survivalState)
     {

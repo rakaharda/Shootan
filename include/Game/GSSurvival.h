@@ -27,7 +27,8 @@ protected:
     EnemyFactory    *enemyFactory;
     vector <Enemy*> vecEnemies;
     vector <EntityDestroyer> vecDestroyers;
-    HealthBar       *healthBar;  
+    HealthBar       *healthBar;
+    ProjectilesBar  *projectilesBar;
     PerkMenu        *perkMenu;
     void updateStats();
     void loadResources();

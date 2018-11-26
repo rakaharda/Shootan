@@ -60,9 +60,8 @@ void MainMenu::setFunctions()
         *menuState = MenuStates::MS_CREATE_SETTINGS_MENU;
     };
     buttonFunctions[2] = [](){};
-    buttonFunctions[3] = [](){
-        //*isPlaying = false;
-        window.close();
+    buttonFunctions[3] = [this](){
+        *gameState = GameStates::GS_ENDGAME;
     };
 }
 
