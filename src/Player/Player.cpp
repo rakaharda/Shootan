@@ -13,6 +13,9 @@ Player::Player() : HealthPoints()
     upSpeed = 100.f;
     skill = 0;
     activeSpeedTime = 0.f;
+    reloadTime = 0.f;
+    projectileSpeed = 0.f;
+
 }
 
 Player::~Player()
@@ -57,6 +60,14 @@ void Player::setOrientation()
                          ));
 }
 
+void Player::updatePerkWeapon()
+{
+    reloadTime-=0.1f;
+    projectileSpeed+=0.02f;
+    weapon->setReloadTime(weapon->getReloadTime() - 0.1f);
+    weapon->setProjectileSpeed(weapon->getProjectileSpeed() + 0.02f);
+}
+
 void Player::handleEvents(sf::Event event)
 {
     if(event.type == sf::Event::KeyPressed)
@@ -75,6 +86,8 @@ void Player::setWeapon(Weapon* _weapon)
         delete(weapon);
     weapon = _weapon;
     setSkill(skill);
+    weapon->setReloadTime(weapon->getReloadTime() + reloadTime);
+    weapon->setProjectileSpeed(weapon->getProjectileSpeed() + projectileSpeed);
 }
 
 void Player::setSkill(int _skill)

@@ -50,6 +50,7 @@ GameStates GSSurvival::update()
     switch(*survivalState)
     {
     case SurvivalStates::SS_PLAY:
+        checkPerkMenu();
         player->update();
         enemyFactory->update();
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
@@ -69,9 +70,6 @@ GameStates GSSurvival::update()
         collectTrash();
         updateView();
         draw();
-        perkMenu->updatelvl(enemyFactory->getScore());
-        if(perkMenu->getlvl() && perkMenu->canOpen())
-            *survivalState = SurvivalStates::SS_PERK_MENU;
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_PAUSE_MENU:
         return pauseMenu->gameState;
@@ -79,6 +77,7 @@ GameStates GSSurvival::update()
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_GAME_OVER:
         return gameOverMenu->gameState;
+
     }
 }
 
@@ -192,6 +191,33 @@ void GSSurvival::checkPerks()
             vecPerks.erase(vecPerks.begin() + i);
         }
     }
+}
+
+void GSSurvival::checkPerkMenu()
+{
+        if(reloadAnimation <= 0.f)
+        {
+            perkMenu->updatelvl(enemyFactory->getScore());
+            if(perkMenu->getlvl() && perkMenu->canOpen())
+            {
+                ianimation += 0.5f;
+                    if(ianimation == 5.f)
+                    {
+                        offanimation = true;
+                        *survivalState = SurvivalStates::SS_PERK_MENU;
+                    }
+            }
+            if(offanimation)
+            {
+                ianimation -= 0.5f;
+                if(ianimation == 1.f)
+                    offanimation = false;
+            }
+            reloadAnimation = 0.2f;
+        }
+        else
+            reloadAnimation -= frameTime;
+        frameTime /= ianimation;
 }
 
 void GSSurvival::checkDestroyers()

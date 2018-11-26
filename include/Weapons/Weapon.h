@@ -21,6 +21,9 @@ public:
     virtual bool      addProjectile();
     void              reload();
     float             getReloadTime();
+    void              setReloadTime(float _reloadTime);
+    float             getProjectileSpeed();
+    void              setProjectileSpeed(float _projectileSpeed);
     float             getCurrentReloadTime();
     int               getClipSize();
     int               getCurrentClipSize();
