@@ -22,11 +22,11 @@ public:
     void setlvl(int _ilvl);
 protected:
     std::function <void(void)> m_function;
+    sf::Sprite lightSprite;
+    bool isLight;
 private:
     sf::Texture textureLvl;
-    sf::Sprite lightSprite;
     vector <sf::Sprite*>       veclvl;
-    bool isLight;
     int ilvl;
     float xPos;
     float yPos;

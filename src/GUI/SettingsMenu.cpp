@@ -73,7 +73,7 @@ void SettingsMenu::loadResources()
     resources->addTexture("buttonMainSettingsWindowedLight",   "./data/GUI/mainSettingsMenu/buttonSettingsWindowedLight.png");
     resources->addTexture("buttonMainSettingsLeftLight",  "./data/GUI/MainSettingsMenu/buttonSettingsleftLight.png");
     resources->addTexture("buttonMainSettingsRightLight",  "./data/GUI/MainSettingsMenu/buttonSettingsRightLight.png");
-
+    resources->addTexture("buttonSettingsMarkBorderLight", "./data/GUI/mainSettingsMenu/buttonSettingsMarkBorderLight.png");
 }
 
 void SettingsMenu::setFunctions()
@@ -187,21 +187,21 @@ void SettingsMenu::refreshVideoMenu()
                                  window.getSize().y/2 - backGroundSprite.getTexture()->getSize().y / 2);
     sliders.clear();
     buttons.clear();
-    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 150, window.getSize().y / 2 - 200));
-    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 200));
+    buttons.push_back(new Button(resources->getTexture(buttonName[0]+"Light"),window.getSize().x / 2 - 150, window.getSize().y / 2 - 225));
+    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 225));
     buttons.back()->setFunction(buttonFunctions[1]);
     buttons.back()->setLightButton(buttonName[1]+"Light");
-    buttons.push_back(new CheckBox("Vertical_Sync",window.getSize().x / 2 - 130, window.getSize().y / 2 - 100,tempVideoSettings.vsync));
+    buttons.push_back(new CheckBox("Vertical_Sync",window.getSize().x / 2 - 130, window.getSize().y / 2 - 140,tempVideoSettings.vsync));
     buttons.back()->setFunction(buttonFunctions[2]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 190, window.getSize().y / 2));
+    buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 190, window.getSize().y / 2 - 40));
     buttons.back()->setFunction(buttonFunctions[3]);
     buttons.back()->setLightButton(buttonName[2]+"Light");
-    buttons.push_back(new Button(resources->getTexture(buttonName[3]), window.getSize().x / 2 + 190, window.getSize().y / 2));
+    buttons.push_back(new Button(resources->getTexture(buttonName[3]), window.getSize().x / 2 + 190, window.getSize().y / 2 - 40));
     buttons.back()->setFunction(buttonFunctions[4]);
     buttons.back()->setLightButton(buttonName[3]+"Light");
-    buttons.push_back(new Button(resources->getTexture(buttonName[4]), window.getSize().x / 2,window.getSize().y / 2));
+    buttons.push_back(new Button(resources->getTexture(buttonName[4]), window.getSize().x / 2,window.getSize().y / 2 - 40));
     buttons.back()->setFunction(buttonFunctions[5]);
-    buttons.push_back(new Button(resources->getTexture(buttonName[5]), window.getSize().x / 2,window.getSize().y / 2 + 100));
+    buttons.push_back(new Button(resources->getTexture(buttonName[5]), window.getSize().x / 2,window.getSize().y / 2 + 80));
     buttons.back()->setFunction(buttonFunctions[6]);
     buttons.back()->setLightButton(buttonName[5]+"Light");
     buttons.push_back(new Button(resources->getTexture(buttonName[6]), window.getSize().x / 2 - 130, window.getSize().y / 2 + 200));
@@ -220,10 +220,10 @@ void SettingsMenu::refreshAudioMenu()
     buttonName[2] = "buttonMainSettingsBack";
     sliders.clear();
     buttons.clear();
-    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 150, window.getSize().y / 2 - 200));
+    buttons.push_back(new Button(resources->getTexture(buttonName[0]),window.getSize().x / 2 - 150, window.getSize().y / 2 - 225));
     buttons.back()->setFunction(buttonFunctions[0]);
     buttons.back()->setLightButton(buttonName[0]+"Light");
-    buttons.push_back(new Button(resources->getTexture(buttonName[1]),window.getSize().x / 2, window.getSize().y / 2 - 200));
+    buttons.push_back(new Button(resources->getTexture(buttonName[1]+"Light"),window.getSize().x / 2, window.getSize().y / 2 - 225));
     buttons.push_back(new Button(resources->getTexture(buttonName[2]), window.getSize().x / 2 - 130, window.getSize().y / 2 + 200));
     buttons.back()->setLightButton(buttonName[2]+"Light");
     buttons.back()->setFunction(buttonFunctions[7]);

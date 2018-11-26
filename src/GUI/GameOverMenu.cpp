@@ -9,7 +9,7 @@ GameOverMenu::GameOverMenu()
     buttonName[0] = "buttonRestart";
     buttonName[1] = "buttonToMainMenu";
     for(int i = 0; i < 2; i++){
-        buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 100 + i*200));
+        buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 30 + i*130));
         buttons.back()->setFunction(buttonFunctions[i]);
         buttons.back()->setLightButton(buttonName[i]+"Light");
     }
