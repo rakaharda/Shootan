@@ -33,11 +33,14 @@ public:
     float       speed;
     float       upSpeed;
     float       defoltSpeed;
+    void        updatePerkWeapon();
 private:
     sf::Texture texture;
     Weapon*     weapon;
     int         skill;
     float       activeSpeedTime;
+    float       reloadTime;
+    float       projectileSpeed;
     void         checkSkill();
     void         move();
     void         setOrientation();
