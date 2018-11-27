@@ -277,6 +277,7 @@ void GSSurvival::loadResources()
     resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
     resources->addTexture("projectiles_scale_default","./data/GUI/projectiles_scale_default.png");
+    resources->addTexture("projectiles_scale_default_line","./data/GUI/projectiles_scale_default_line.png");
     resources->addTexture("projectiles_scale_fire","./data/GUI/projectiles_scale_fire.png");
     resources->addTexture("projectiles_scale_freeze","./data/GUI/projectiles_scale_freeze.png");
     resources->addTexture("projectiles_scale_double","./data/GUI/projectiles_scale_double.png");
