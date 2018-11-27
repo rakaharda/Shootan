@@ -28,7 +28,7 @@
 #include "GUI/Menu.h"
 #include "GUI/PauseMenu.h"
 #include "GUI/HealthBar.h"
-#include "GUI/ProjectilesBar.h"
+#include "GUI/AmmoBar.h"
 #include "GUI/PerkMenu.h"
 #include "GUI/GameOverMenu.h"
 #include "Utils/FPSCounter.h"

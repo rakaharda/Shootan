@@ -5,16 +5,26 @@
 #include "Player/Player.h"
 #include "Utils/ResourceManager.h"
 
-class ProjectilesBar: public sf::Drawable
+class AmmoBar: public sf::Drawable
 {
 public:
-    ProjectilesBar(Player* _player);
-    virtual ~ProjectilesBar();
+    AmmoBar(Player* _player);
+    virtual ~AmmoBar();
     void update();
 private:
     Player*      player;
     sf::Sprite   clipBar;
+    sf::Sprite   barEdge;
     sf::Vector2f origin;
+    float        clipSize;
+    float        delta;
+    float        reduceSpeed;
+    int          numRounds;
+    int          selectSkill;
+    bool         isReload;
+    void         updateSkill();
+    void         reloadAnimate();
+    void         setRect();
     void         moveToOrigin();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

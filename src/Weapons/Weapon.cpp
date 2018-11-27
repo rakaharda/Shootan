@@ -97,6 +97,11 @@ void Weapon::setSkill(int _skill)
     skill = _skill;
 }
 
+int Weapon::getSkill()
+{
+    return skill;
+}
+
 float Weapon::getDamage()
 {
     return damage;
