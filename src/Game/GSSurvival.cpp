@@ -20,6 +20,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player->setWeapon(new AssaultRifle(&player->m_sprite));
     healthBar = new HealthBar(player);
+    lvlBar = new LvlBar();
     vecEnemies.reserve(200);
     vecDestroyers.reserve(200);
     vecProjectiles.clear();
@@ -52,6 +53,7 @@ GameStates GSSurvival::update()
     case SurvivalStates::SS_PLAY:
         checkPerkMenu();
         player->update();
+        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl());
         enemyFactory->update();
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
             vecProjectiles[i]->update();
@@ -200,18 +202,22 @@ void GSSurvival::checkPerkMenu()
             perkMenu->updatelvl(enemyFactory->getScore());
             if(perkMenu->getlvl() && perkMenu->canOpen())
             {
-                ianimation += 0.5f;
-                    if(ianimation == 5.f)
+                ianimation += 0.8f;
+                    if(ianimation >= 5.f)
                     {
+                        ianimation = 5.f;
                         offanimation = true;
                         *survivalState = SurvivalStates::SS_PERK_MENU;
                     }
             }
             if(offanimation)
             {
-                ianimation -= 0.5f;
-                if(ianimation == 1.f)
+                ianimation -= 0.8f;
+                if(ianimation <= 1.f)
+                {
+                    ianimation = 1.f;
                     offanimation = false;
+                }
             }
             reloadAnimation = 0.2f;
         }
@@ -274,6 +280,8 @@ void GSSurvival::loadResources()
         //GUI
     resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
+    resources->addTexture("lvlbar_frame","./data/GUI/lvlbar_frame.png");
+    resources->addTexture("lvlbar_cells","./data/GUI/lvlbar_cells.png");
     //*For button
     resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
@@ -300,6 +308,7 @@ void GSSurvival::draw()
     //* UI
     window.setView(window.getDefaultView());
     window.draw(*healthBar);
+    window.draw(*lvlBar);
     window.draw(info);
     switch(*survivalState)
     {

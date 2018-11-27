@@ -12,12 +12,17 @@ class LvlBar : public sf::Drawable
 public:
     LvlBar();
     virtual ~LvlBar();
-    void update();
+    void update(int score, int nextscore);
 protected:
 private:
     sf::Sprite   frame;
     sf::Sprite   lvlCells;
     sf::Vector2f origin;
+    int currentMaxScore;
+    int currentScore;
+    int moduleScore;
+    bool animationLvl;
+    void moveToOrigin();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
