@@ -16,6 +16,7 @@ PerkMenu::PerkMenu(SurvivalStates *_survivalState, Player** _player):
     currentlvl(1),
     lvlScore(500)
 {
+    nextlvl = 1000;
     player = *_player;
     survivalState = _survivalState;
     setFunctions();
@@ -190,6 +191,7 @@ void PerkMenu::updatelvl(int _score)
         LVL++;
         currentlvl++;
         lvlScore += 500 * currentlvl;
+        nextlvl = lvlScore + 500 * currentlvl;
     }
 }
 void PerkMenu::handleEvents(sf::Event event)
@@ -216,7 +218,10 @@ int PerkMenu::getlvl()
 {
     return LVL;
 }
-
+int PerkMenu::getnextlvl()
+{
+    return nextlvl;
+}
 bool PerkMenu::canOpen()
 {
     if((currentFire == maxFire) && (currentFrost == maxFrost) && (currentSpeed == maxSpeed) && (currentImprovementWeapon == maxImprovementWeapon) && (currentHP == maxHP))

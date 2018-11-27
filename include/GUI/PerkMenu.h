@@ -18,6 +18,7 @@ public:
     void updatelvl(int _score);
     int getlvl();
     bool canOpen();
+    int getnextlvl();
 private:
     int maxHP;
     int currentHP;
@@ -30,6 +31,7 @@ private:
     int maxImprovementWeapon;
     int currentImprovementWeapon;
     int lvlScore;
+    int nextlvl;
     Player* player;
     void setFunctions();
     void loadResources();

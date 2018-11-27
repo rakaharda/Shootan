@@ -29,6 +29,7 @@ protected:
     vector <EntityDestroyer> vecDestroyers;
     HealthBar       *healthBar;
     AmmoBar         *ammoBar;
+    LvlBar          *lvlBar;
     PerkMenu        *perkMenu;
     void updateStats();
     void loadResources();

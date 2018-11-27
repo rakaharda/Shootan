@@ -1,4 +1,4 @@
-#include "AmmoBar.h"
+#include "GUI/AmmoBar.h"
 
 AmmoBar::AmmoBar(Player* _player)
 {
