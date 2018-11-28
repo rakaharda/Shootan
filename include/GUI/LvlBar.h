@@ -17,7 +17,12 @@ protected:
 private:
     sf::Sprite   frame;
     sf::Sprite   lvlCells;
+    sf::Sprite   animation;
+    sf::Sprite   lvlup;
     sf::Vector2f origin;
+    int iAnimation;
+    float position;
+    float reloadAnimation;
     int currentMaxScore;
     int currentScore;
     int moduleScore;
