@@ -17,6 +17,7 @@ public:
     void handleEvents(sf::Event _event);
 private:
     void loadresources();
+    int  backgroundSize;
     GameStates gameState;
     MenuStates *menuState;
     VideoSettings *videoSettings;

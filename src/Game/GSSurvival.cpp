@@ -66,7 +66,7 @@ GameStates GSSurvival::update()
         ammoBar->update();
         updateView();
         updateListener();
-        updateStats();
+        //updateStats();
         checkProjectiles();
         checkMelee();
         checkPerks();
@@ -318,7 +318,7 @@ void GSSurvival::draw()
     window.draw(*healthBar);
     window.draw(*ammoBar);
     window.draw(*lvlBar);
-    window.draw(info);
+    //window.draw(info);
     switch(*survivalState)
     {
     case SurvivalStates::SS_PAUSE_MENU:

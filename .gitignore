@@ -56,3 +56,4 @@
 *.pdb
 *.idb
 /x64/
+settings.conf

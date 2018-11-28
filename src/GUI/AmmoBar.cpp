@@ -6,13 +6,11 @@ AmmoBar::AmmoBar(Player* _player)
     isReload = false;
     selectSkill = 0;
     clipBar.setTexture(resources->getTexture("projectiles_scale_default"));
-    lineBar.setTexture(resources->getTexture("projectiles_scale_default_line"));
     delta = clipBar.getTexture()->getSize().x / (float)player->getWeapon()->getClipSize();
     reduceSpeed = clipBar.getTexture()->getSize().x/(player->getWeapon()->getCooldown()*(float)player->getWeapon()->getClipSize());
     numRounds = player->getWeapon()->getClipSize();
     origin = sf::Vector2f(window.getSize().x - clipBar.getTexture()->getSize().x - 50, window.getSize().y - 100);
     moveToOrigin();
-    lineBar.setPosition(clipBar.getPosition());
 }
 
 AmmoBar::~AmmoBar()
@@ -86,5 +84,4 @@ void AmmoBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(clipBar, states);
     //target.draw(barEdge, states);
-    target.draw(lineBar,states);
 }

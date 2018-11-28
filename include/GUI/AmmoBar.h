@@ -14,7 +14,6 @@ public:
 private:
     Player*      player;
     sf::Sprite   clipBar;
-    sf::Sprite   lineBar;
     sf::Sprite   barEdge;
     sf::Vector2f origin;
     float        clipSize;
