@@ -20,9 +20,15 @@ LvlBar::~LvlBar()
     //
 }
 
-void LvlBar::update(int score, int nextscore)
+void LvlBar::update(int score, int nextscore, int allScore)
 {
-
+    stringstream ss;
+    ss << allScore;
+    if(textScore!=ss.str())
+    {
+        textScore = ss.str();
+        setSpriteScore();
+    }
     if(nextscore != currentMaxScore)
     {
         currentScore = currentMaxScore;
@@ -32,7 +38,7 @@ void LvlBar::update(int score, int nextscore)
         currentMaxScore = nextscore;
     }
     if(!animationLvl)
-    lvlCells.setTextureRect(sf::IntRect(0, 0, (246 * (score - currentScore)) / moduleScore, lvlCells.getTexture()->getSize().y));
+        lvlCells.setTextureRect(sf::IntRect(0, 0, (246 * (score - currentScore)) / moduleScore, lvlCells.getTexture()->getSize().y));
     else
     {
         if(iAnimation <=25)
@@ -53,6 +59,25 @@ void LvlBar::update(int score, int nextscore)
     }
 }
 
+void LvlBar::setSpriteScore()
+{
+    spriteScore.clear();
+    string num;
+    for(unsigned int i = 0; i < textScore.size(); i++)
+    {
+        num = "score_number_";
+        num.push_back(textScore[i]);
+        spriteScore.push_back(new sf::Sprite);
+        spriteScore.back()->setTexture(resources->getTexture("score_number_"));
+        cout << num;
+        //printf("%c\n",textScore[i]);
+        spriteScore.back()->setPosition(lvlCells.getPosition().x + lvlCells.getTexture()->getSize().x/2
+        + (i - textScore.size()/2) * spriteScore.back()->getTexture()->getSize().x,
+        lvlCells.getPosition().y - spriteScore.back()->getTexture()->getSize().y);
+    }
+
+}
+
 void LvlBar::moveToOrigin()
 {
     frame.setPosition(origin);
@@ -68,4 +93,6 @@ void LvlBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(lvlup, states);
         target.draw(animation, states);
     }
+    for(unsigned int i = 0; i < spriteScore.size(); i++)
+        target.draw(*spriteScore[i], states);
 }

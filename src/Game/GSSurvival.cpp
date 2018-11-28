@@ -52,7 +52,7 @@ GameStates GSSurvival::update()
     switch(*survivalState)
     {
     case SurvivalStates::SS_PLAY:
-        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl());
+        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl(),enemyFactory->getScore());
         checkPerkMenu();
         player->update();
         enemyFactory->update();
@@ -283,7 +283,6 @@ void GSSurvival::loadResources()
     resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
     resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
     resources->addTexture("projectiles_scale_default","./data/GUI/projectiles_scale_default.png");
-    resources->addTexture("projectiles_scale_default_line","./data/GUI/projectiles_scale_default_line.png");
     resources->addTexture("projectiles_scale_fire","./data/GUI/projectiles_scale_fire.png");
     resources->addTexture("projectiles_scale_freeze","./data/GUI/projectiles_scale_freeze.png");
     resources->addTexture("projectiles_scale_double","./data/GUI/projectiles_scale_double.png");
@@ -292,6 +291,17 @@ void GSSurvival::loadResources()
     resources->addTexture("lvlbar_cells","./data/GUI/lvlbar_cells.png");
     resources->addTexture("lvlbar_animation","./data/GUI/lvlbar_animation.png");
     resources->addTexture("lvlbar_lvlup","./data/GUI/lvlbar_lvlup.png");
+    //*Numbers
+    resources->addTexture("score_number_0","./data/GUI/gameInterface/numbers/score_number_0.png");
+    resources->addTexture("score_number_1","./data/GUI/gameInterface/numbers/score_number_1.png");
+    resources->addTexture("score_number_2","./data/GUI/gameInterface/numbers/score_number_2.png");
+    resources->addTexture("score_number_3","./data/GUI/gameInterface/numbers/score_number_3.png");
+    resources->addTexture("score_number_4","./data/GUI/gameInterface/numbers/score_number_4.png");
+    resources->addTexture("score_number_5","./data/GUI/gameInterface/numbers/score_number_5.png");
+    resources->addTexture("score_number_6","./data/GUI/gameInterface/numbers/score_number_6.png");
+    resources->addTexture("score_number_7","./data/GUI/gameInterface/numbers/score_number_7.png");
+    resources->addTexture("score_number_8","./data/GUI/gameInterface/numbers/score_number_8.png");
+    resources->addTexture("score_number_9","./data/GUI/gameInterface/numbers/score_number_9.png");
     //*For button
     resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");

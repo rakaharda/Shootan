@@ -41,6 +41,7 @@ private:
     float       activeSpeedTime;
     float       reloadTime;
     float       projectileSpeed;
+    void        setSpriteScore();
     void         checkSkill();
     void         move();
     void         setOrientation();
