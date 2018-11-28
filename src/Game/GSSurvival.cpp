@@ -52,9 +52,9 @@ GameStates GSSurvival::update()
     switch(*survivalState)
     {
     case SurvivalStates::SS_PLAY:
+        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl());
         checkPerkMenu();
         player->update();
-        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl());
         enemyFactory->update();
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
             vecProjectiles[i]->update();
@@ -290,6 +290,8 @@ void GSSurvival::loadResources()
     resources->addTexture("projectiles_edge","./data/GUI/projectiles_edge.png");
     resources->addTexture("lvlbar_frame","./data/GUI/lvlbar_frame.png");
     resources->addTexture("lvlbar_cells","./data/GUI/lvlbar_cells.png");
+    resources->addTexture("lvlbar_animation","./data/GUI/lvlbar_animation.png");
+    resources->addTexture("lvlbar_lvlup","./data/GUI/lvlbar_lvlup.png");
     //*For button
     resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
