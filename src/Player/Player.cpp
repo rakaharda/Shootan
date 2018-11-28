@@ -62,10 +62,11 @@ void Player::setOrientation()
 
 void Player::updatePerkWeapon()
 {
-    reloadTime-=0.1f;
+    reloadTime= reloadTime * 0.9f;
     projectileSpeed+=0.02f;
-    weapon->setReloadTime(weapon->getReloadTime() - 0.1f);
+    weapon->setReloadTime(weapon->getReloadTime() * 0.9f);
     weapon->setProjectileSpeed(weapon->getProjectileSpeed() + 0.02f);
+    weapon->setCooldown(weapon->getCooldown()*0.9f);
 }
 
 void Player::handleEvents(sf::Event event)

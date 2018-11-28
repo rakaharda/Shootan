@@ -280,17 +280,17 @@ void GSSurvival::loadResources()
     resources->addTexture("perk_frost",   "./data/perks/Blue.png");
     resources->addTexture("perk_fire",   "./data/perks/Red.png");
         //GUI
-    resources->addTexture("healthbar_frame","./data/GUI/healthbar_frame.png");
-    resources->addTexture("healthbar_cells","./data/GUI/healthbar_cells.png");
-    resources->addTexture("projectiles_scale_default","./data/GUI/projectiles_scale_default.png");
-    resources->addTexture("projectiles_scale_fire","./data/GUI/projectiles_scale_fire.png");
-    resources->addTexture("projectiles_scale_freeze","./data/GUI/projectiles_scale_freeze.png");
-    resources->addTexture("projectiles_scale_double","./data/GUI/projectiles_scale_double.png");
-    resources->addTexture("projectiles_edge","./data/GUI/projectiles_edge.png");
-    resources->addTexture("lvlbar_frame","./data/GUI/lvlbar_frame.png");
-    resources->addTexture("lvlbar_cells","./data/GUI/lvlbar_cells.png");
-    resources->addTexture("lvlbar_animation","./data/GUI/lvlbar_animation.png");
-    resources->addTexture("lvlbar_lvlup","./data/GUI/lvlbar_lvlup.png");
+    resources->addTexture("healthbar_frame",           "./data/GUI/gameInterface/healthbar_frame.png");
+    resources->addTexture("healthbar_cells",           "./data/GUI/gameInterface/healthbar_cells.png");
+    resources->addTexture("projectiles_scale_default", "./data/GUI/gameInterface/projectiles_scale_default.png");
+    resources->addTexture("projectiles_scale_fire",    "./data/GUI/gameInterface/projectiles_scale_fire.png");
+    resources->addTexture("projectiles_scale_freeze",  "./data/GUI/gameInterface/projectiles_scale_freeze.png");
+    resources->addTexture("projectiles_scale_double",  "./data/GUI/gameInterface/projectiles_scale_double.png");
+    resources->addTexture("projectiles_edge",          "./data/GUI/gameInterface/projectiles_edge.png");
+    resources->addTexture("lvlbar_frame",              "./data/GUI/gameInterface/lvlbar_frame.png");
+    resources->addTexture("lvlbar_cells",              "./data/GUI/gameInterface/lvlbar_cells.png");
+    resources->addTexture("lvlbar_animation",          "./data/GUI/gameInterface/lvlbar_animation.png");
+    resources->addTexture("lvlbar_lvlup",              "./data/GUI/gameInterface/lvlbar_lvlup.png");
     //*Numbers
     resources->addTexture("score_number_0","./data/GUI/gameInterface/numbers/score_number_0.png");
     resources->addTexture("score_number_1","./data/GUI/gameInterface/numbers/score_number_1.png");

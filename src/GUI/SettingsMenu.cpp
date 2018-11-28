@@ -150,6 +150,7 @@ void SettingsMenu::setFunctions()
         if (videoSettings->vsync)
                 window.setVerticalSyncEnabled(true);
         else window.setVerticalSyncEnabled(false);
+        window.setFramerateLimit(videoSettings->framerateLimit);
         refreshVideoMenu();
     };
 

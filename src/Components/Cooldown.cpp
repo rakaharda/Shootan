@@ -11,6 +11,11 @@ float Cooldown::getCooldown()
 {
     return weaponCooldown;
 }
+
+void Cooldown::setCooldown(float _weaponCooldown)
+{
+    weaponCooldown = _weaponCooldown;
+}
 float Cooldown::getCurrentCooldown()
 {
     return currentCooldown;

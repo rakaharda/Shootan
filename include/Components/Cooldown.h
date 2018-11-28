@@ -8,6 +8,7 @@ public:
     Cooldown(float _weaponCooldown);
     virtual ~Cooldown() {};
     float getCooldown();
+    void  setCooldown(float _weaponCooldown);
     float getCurrentCooldown();
     void  reduceCooldown();
 protected:

@@ -62,17 +62,13 @@ void LvlBar::update(int score, int nextscore, int allScore)
 void LvlBar::setSpriteScore()
 {
     spriteScore.clear();
-    string num;
+    string num = "score_number_";
     for(unsigned int i = 0; i < textScore.size(); i++)
     {
-        num = "score_number_";
-        num.push_back(textScore[i]);
         spriteScore.push_back(new sf::Sprite);
-        spriteScore.back()->setTexture(resources->getTexture("score_number_"));
-        cout << num;
-        //printf("%c\n",textScore[i]);
+        spriteScore.back()->setTexture(resources->getTexture(num + textScore[i]));
         spriteScore.back()->setPosition(lvlCells.getPosition().x + lvlCells.getTexture()->getSize().x/2
-        + (i - textScore.size()/2) * spriteScore.back()->getTexture()->getSize().x,
+        + (i - 0.5 - textScore.size()/2) * spriteScore.back()->getTexture()->getSize().x ,
         lvlCells.getPosition().y - spriteScore.back()->getTexture()->getSize().y);
     }
 

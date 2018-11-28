@@ -122,6 +122,7 @@ void PerkMenu::setFunctions()
         }
     };
     buttonFunctions[2] = [this](){
+        //Perk FiringSpeed++
         if((currentImprovementWeapon < maxImprovementWeapon) && (LVL > 0))
         {
             LVL--;
@@ -139,6 +140,7 @@ void PerkMenu::setFunctions()
 
     };
     buttonFunctions[3] = [this](){
+        //Perk Frost++
         if((currentFrost < maxFrost) && (LVL > 0))
         {
             LVL--;
@@ -158,6 +160,7 @@ void PerkMenu::setFunctions()
 
     };
     buttonFunctions[4] = [this](){
+        //Perk Fire++
         if((currentFire < maxFire) && (LVL > 0))
         {
             LVL--;
