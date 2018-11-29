@@ -156,14 +156,17 @@ void SettingsMenu::setFunctions()
 
     sliderFunctions[0] = [](float status){
         audioSettings->general = status;
+        audioSettings->saveSettings();
     };
 
     sliderFunctions[1] = [](float status){
         audioSettings->music = status;
+        audioSettings->saveSettings();
     };
 
     sliderFunctions[2] = [](float status){
         audioSettings->sounds = status;
+        audioSettings->saveSettings();
     };
 }
 
