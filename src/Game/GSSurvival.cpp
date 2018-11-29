@@ -18,7 +18,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     info.setFillColor(sf::Color::Red);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
-    player->setWeapon(new AssaultRifle(&player->m_sprite));
+    player->setWeapon(new Shotgun(&player->m_sprite));
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     lvlBar = new LvlBar();
