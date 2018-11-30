@@ -25,7 +25,7 @@ private:
     void loadResources();
     void refreshVideoMenu();
     void refreshAudioMenu();
-    bool changeSettings();
+    void changeSettings();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };

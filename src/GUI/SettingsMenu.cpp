@@ -239,7 +239,7 @@ void SettingsMenu::refreshAudioMenu()
     sliders.back()->setFunction(sliderFunctions[2]);
 }
 
-bool SettingsMenu::changeSettings()
+void SettingsMenu::changeSettings()
 {   string buttonName = "buttonMainSettingsApply";
     if((tempVideoSettings.fullscreen != videoSettings->fullscreen || tempVideoSettings.vsync != videoSettings->vsync ||
         tempVideoSettings.selectedResol != videoSettings->selectedResol) && buttons.size() < 9)
@@ -247,11 +247,11 @@ bool SettingsMenu::changeSettings()
         buttons.push_back(new Button(resources->getTexture(buttonName),window.getSize().x / 2 + 130, window.getSize().y / 2 + 200));
         buttons.back()->setFunction(buttonFunctions[8]);
         buttons.back()->setLightButton(buttonName + "Light");
-        return true;
+        return;
     }
     if (buttons.size() == 9)
         buttons.pop_back();
-    return false;
+    return;
 }
 
 void SettingsMenu::handleEvents(sf::Event event)
