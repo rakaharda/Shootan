@@ -14,7 +14,8 @@ Weapon::Weapon(sf::Sprite* _source) :
     wAttackDistance(40.f),
     textureKey("projectile_1"),
     shotSoundKey("laser1"),
-    reloadSoundKey("pistol_reload")
+    reloadSoundKey("pistol_reload"),
+    name("default")
 {
 
 }
@@ -135,4 +136,14 @@ void Weapon::playReloadSound()
 const sf::Sprite* Weapon::getSource()
 {
     return source;
+}
+
+string Weapon::getName()
+{
+    return name;
+}
+
+void Weapon::setName(string _name)
+{
+    name = _name;
 }

@@ -8,6 +8,7 @@ Shotgun::Shotgun(sf::Sprite* _source) : Weapon(_source)
     damage = 35.f;
     spread = 1;
     projectileSpeed = 0.9f;
+    name = "shotgun";
 }
 
 bool Shotgun::addProjectile()

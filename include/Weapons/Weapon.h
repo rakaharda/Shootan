@@ -9,6 +9,7 @@
 #include "Components/Cooldown.h"
 #include "Utils/ResourceManager.h"
 #include "Utils/AudioSettings.h"
+#include <string>
 
 using namespace std;
 
@@ -36,6 +37,8 @@ public:
     void              playShotSound();
     void              playReloadSound();
     const sf::Sprite* getSource();
+    string            getName();
+    void              setName(string _name);
 protected:
     const sf::Sprite* source;
     float             reloadTime;
@@ -50,6 +53,7 @@ protected:
     string            textureKey;
     string            shotSoundKey;
     string            reloadSoundKey;
+    string            name;
     list<sf::Sound>   sounds;
 private:
 };

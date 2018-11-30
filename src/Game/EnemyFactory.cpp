@@ -1,7 +1,8 @@
 #include "Game\EnemyFactory.h"
 
-EnemyFactory::EnemyFactory(sf::Sprite* _target, sf::IntRect _fieldSize, vector<Enemy*>* _vecEnemies) :
-    target(_target),
+EnemyFactory::EnemyFactory(Player* _player, sf::IntRect _fieldSize, vector<Enemy*>* _vecEnemies) :
+    player(_player),
+    target(&player->m_sprite),
     fieldSize(_fieldSize),
     vecEnemies(_vecEnemies),
     gameTimer(0.f),
@@ -84,6 +85,25 @@ void EnemyFactory::checkEnemies()
         if(vecEnemies->at(i)->toDelete)
         {
             score += vecEnemies->at(i)->getHealthPoints() + vecEnemies->at(i)->getWeapon()->getDamage();
+            if(player->getWeapon()->getName() == "default")
+                {
+                    Weapon* weapon;
+                    switch(rand() % 3)
+                    {
+                        case 0:
+                            weapon = new AssaultRifle(target);
+                            break;
+                        case 1:
+                            weapon = new Shotgun(target);
+                            break;
+                        case 2:
+                            weapon = new SniperRifle(target);
+                            break;
+                        default:
+                            break;
+                    }
+                    vecPerks.push_back(new FindWeapon(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y, weapon));
+                }
             switch(rand() % 40)
             {
                 case 0:
@@ -98,6 +118,26 @@ void EnemyFactory::checkEnemies()
                 case 3:
                     vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
+                case 4:
+                    Weapon* weapon;
+                    switch(rand() % 4)
+                    {
+                        case 0:
+                            weapon = new AssaultRifle(target);
+                            break;
+                        case 1:
+                            weapon = new Shotgun(target);
+                            break;
+                        case 2:
+                            weapon = new SniperRifle(target);
+                            break;
+                        case 3:
+                            weapon = new Gun(target);
+                            break;
+                        default:
+                            break;
+                    }
+                    vecPerks.push_back(new FindWeapon(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y, weapon));
                 default:
                     break;
             }

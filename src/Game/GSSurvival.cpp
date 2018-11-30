@@ -16,7 +16,6 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     background.setTextureRect(fieldSize);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
-    player->setWeapon(new Shotgun(&player->m_sprite));
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     lvlBar = new LvlBar();
@@ -29,7 +28,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     //!
     k = 0; //need to delete
     Perk::player = player;
-    enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
+    enemyFactory = new EnemyFactory(player, fieldSize, &vecEnemies);
     resources->getMusic("GXRCH - HARD")->setVolume(audioSettings->music);
     resources->getMusic("GXRCH - HARD")->setLoop(true);
     resources->getMusic("GXRCH - HARD(intro)")->setVolume(audioSettings->music);
@@ -292,6 +291,7 @@ void GSSurvival::loadResources()
     resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
     resources->addTexture("perk_frost",     "./data/perks/Blue.png");
     resources->addTexture("perk_fire",      "./data/perks/Red.png");
+    resources->addTexture("perk_weapon",    "./data/perks/perk_weapon.png");
         //GUI
     resources->addTexture("healthbar_frame",           "./data/GUI/gameInterface/healthbar_frame.png");
     resources->addTexture("healthbar_cells",           "./data/GUI/gameInterface/healthbar_cells.png");
