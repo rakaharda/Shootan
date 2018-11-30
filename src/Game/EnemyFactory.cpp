@@ -5,7 +5,7 @@ EnemyFactory::EnemyFactory(sf::Sprite* _target, sf::IntRect _fieldSize, vector<E
     fieldSize(_fieldSize),
     vecEnemies(_vecEnemies),
     gameTimer(0.f),
-    spawnTimer(5.f),
+    spawnTimer(4.f),
     currentSpawnTimer(0.f),
     score(0.f)
 {
@@ -59,12 +59,12 @@ void EnemyFactory::spawnEnemy()
         switch(rand() % 10)
         {
             case 0:
-                vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_range")));
+                vecEnemies->push_back(new Enemy(target, 100 + score / 1000, resources->getTexture("enemy_range")));
                 vecEnemies->back()->setWeapon(new Gun(&(vecEnemies->back()->m_sprite)));
-                vecEnemies->back()->getWeapon()->setDamage(10.f);
+                vecEnemies->back()->getWeapon()->setDamage(10.f + score / 10000.f);
                 break;
             default:
-                vecEnemies->push_back(new Enemy(target, 100, resources->getTexture("enemy_melee")));
+                vecEnemies->push_back(new Enemy(target, 100 + score / 500, resources->getTexture("enemy_melee")));
                 vecEnemies->back()->setWeapon(new MeleeAttack(&(vecEnemies->back()->m_sprite)));
                 break;
         }
@@ -75,7 +75,7 @@ void EnemyFactory::spawnEnemy()
 
 void EnemyFactory::increaseDifficulty()
 {
-    if (spawnTimer > 1.f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 10000);
+    if (spawnTimer > 1.f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 8000);
 }
 
 void EnemyFactory::checkEnemies()
@@ -99,7 +99,7 @@ void EnemyFactory::checkEnemies()
                     vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
                     break;
                 default:
-                    break;                
+                    break;
             }
             vecEnemies->erase(vecEnemies->begin() + i);
         }
