@@ -30,6 +30,7 @@ protected:
     AmmoBar         *ammoBar;
     LvlBar          *lvlBar;
     PerkMenu        *perkMenu;
+    list<sf::Sound> sounds;
     void updateStats();
     void updateEntities();
     void loadResources();

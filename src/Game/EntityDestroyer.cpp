@@ -10,6 +10,11 @@ EntityDestroyer::EntityDestroyer(Enemy* _enemyToDestroy) :
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f, m_sprite.getTexture()->getSize().y / 2.f);
     m_sprite.setPosition(enemyToDestroy->m_sprite.getPosition().x - enemyToDestroy->m_sprite.getTexture()->getSize().y / 2.f - 5.f,
                          enemyToDestroy->m_sprite.getPosition().y + enemyToDestroy->m_sprite.getTexture()->getSize().y / 2.f);
+    sound.setBuffer(resources->getSoundBuffer("destroy"));
+    sound.setVolume(audioSettings->sounds);
+    sound.setPosition(enemyToDestroy->m_sprite.getPosition().x, enemyToDestroy->m_sprite.getPosition().y, 0.f);
+    sound.setMinDistance(500);
+    sound.play();
 }
 
 EntityDestroyer::~EntityDestroyer()

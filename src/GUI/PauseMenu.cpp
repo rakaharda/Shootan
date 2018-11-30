@@ -1,6 +1,6 @@
 #include "GUI/PauseMenu.h"
 
-PauseMenu::PauseMenu(VideoSettings *_videoSettings,SurvivalStates *_survivalState)
+PauseMenu::PauseMenu(VideoSettings *_videoSettings, SurvivalStates *_survivalState)
 {
     gameState = GameStates::GS_GAMEMODE_SURVIVAL;
     videoSettings = _videoSettings;
@@ -14,7 +14,7 @@ PauseMenu::PauseMenu(VideoSettings *_videoSettings,SurvivalStates *_survivalStat
     buttonName[1] = "buttonSettings";
     buttonName[2] = "buttonExit";
     for(int i = 0; i < 3; i++){
-        buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 150 + i*150));
+        buttons.push_back(new Button(resources->getTexture(buttonName[i]), window.getSize().x/2, window.getSize().y / 2 - 150 + i * 150));
         buttons.back()->setFunction(buttonFunctions[i]);
         buttons.back()->setLightButton(buttonName[i]+"Light");
     }

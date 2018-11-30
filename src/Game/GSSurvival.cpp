@@ -94,9 +94,9 @@ void GSSurvival::updateFactories()
 
 void GSSurvival::updateMusic()
 {
-    cout<< resources->getMusic("GXRCH - HARD(intro)")->getStatus();
-    if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped && (resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing))
-        resources->getMusic("GXRCH - HARD")->play();
+    if(resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing)
+        if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped)
+            resources->getMusic("GXRCH - HARD")->play();
 }
 void GSSurvival::updateStats()
 {
@@ -244,6 +244,12 @@ void GSSurvival::checkDestroyers()
             {
                 vecDestroyers.push_back(EntityDestroyer(vecEnemies[i]));
                 vecEnemies[i]->isBeingDestroyed = true;
+                sounds.push_back(sf::Sound());
+                sounds.back().setBuffer(resources->getSoundBuffer("destroy"));
+                sounds.back().setVolume(audioSettings->sounds / 2.f);
+                sounds.back().setPosition(vecEnemies[i]->m_sprite.getPosition().x, vecEnemies[i]->m_sprite.getPosition().y, 0.f);
+                sounds.back().setMinDistance(500);
+                sounds.back().play();
             }
         }
     for(unsigned int i = 0; i < vecDestroyers.size(); i++)
@@ -284,8 +290,8 @@ void GSSurvival::loadResources()
         //Perks
     resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
     resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
-    resources->addTexture("perk_frost",   "./data/perks/Blue.png");
-    resources->addTexture("perk_fire",   "./data/perks/Red.png");
+    resources->addTexture("perk_frost",     "./data/perks/Blue.png");
+    resources->addTexture("perk_fire",      "./data/perks/Red.png");
         //GUI
     resources->addTexture("healthbar_frame",           "./data/GUI/gameInterface/healthbar_frame.png");
     resources->addTexture("healthbar_cells",           "./data/GUI/gameInterface/healthbar_cells.png");
@@ -299,21 +305,22 @@ void GSSurvival::loadResources()
     resources->addTexture("lvlbar_animation",          "./data/GUI/gameInterface/lvlbar_animation.png");
     resources->addTexture("lvlbar_lvlup",              "./data/GUI/gameInterface/lvlbar_lvlup.png");
     //*Numbers
-    resources->addTexture("score_number_0","./data/GUI/gameInterface/numbers/score_number_0.png");
-    resources->addTexture("score_number_1","./data/GUI/gameInterface/numbers/score_number_1.png");
-    resources->addTexture("score_number_2","./data/GUI/gameInterface/numbers/score_number_2.png");
-    resources->addTexture("score_number_3","./data/GUI/gameInterface/numbers/score_number_3.png");
-    resources->addTexture("score_number_4","./data/GUI/gameInterface/numbers/score_number_4.png");
-    resources->addTexture("score_number_5","./data/GUI/gameInterface/numbers/score_number_5.png");
-    resources->addTexture("score_number_6","./data/GUI/gameInterface/numbers/score_number_6.png");
-    resources->addTexture("score_number_7","./data/GUI/gameInterface/numbers/score_number_7.png");
-    resources->addTexture("score_number_8","./data/GUI/gameInterface/numbers/score_number_8.png");
-    resources->addTexture("score_number_9","./data/GUI/gameInterface/numbers/score_number_9.png");
+    resources->addTexture("score_number_0", "./data/GUI/gameInterface/numbers/score_number_0.png");
+    resources->addTexture("score_number_1", "./data/GUI/gameInterface/numbers/score_number_1.png");
+    resources->addTexture("score_number_2", "./data/GUI/gameInterface/numbers/score_number_2.png");
+    resources->addTexture("score_number_3", "./data/GUI/gameInterface/numbers/score_number_3.png");
+    resources->addTexture("score_number_4", "./data/GUI/gameInterface/numbers/score_number_4.png");
+    resources->addTexture("score_number_5", "./data/GUI/gameInterface/numbers/score_number_5.png");
+    resources->addTexture("score_number_6", "./data/GUI/gameInterface/numbers/score_number_6.png");
+    resources->addTexture("score_number_7", "./data/GUI/gameInterface/numbers/score_number_7.png");
+    resources->addTexture("score_number_8", "./data/GUI/gameInterface/numbers/score_number_8.png");
+    resources->addTexture("score_number_9", "./data/GUI/gameInterface/numbers/score_number_9.png");
     //*For button
-    resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
+    resources->addTexture("buttonLVL",      "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
     //*Sound buffers
-    resources->addSoundBuffer("laser1",              "./data/sounds/laser1.wav");
+    resources->addSoundBuffer("laser1",  "./data/sounds/laser1.wav");
+    resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }

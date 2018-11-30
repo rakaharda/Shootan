@@ -51,7 +51,7 @@ GameStates GSMainMenu::update()
     default:
         break;
     }
-    if(backgroundSize!=videoSettings->height)
+    if(backgroundSize != videoSettings->height)
     {
          background.setScale((float)videoSettings->width/background.getTexture()->getSize().x,
                              (float)videoSettings->height/background.getTexture()->getSize().y);
