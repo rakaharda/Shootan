@@ -19,9 +19,9 @@ protected:
     sf::Sprite      background;
     sf::IntRect     fieldSize;
     sf::View        view;
-    SurvivalStates *survivalState;
-    PauseMenu        *pauseMenu;
-    GameOverMenu     *gameOverMenu;
+    SurvivalStates  *survivalState;
+    PauseMenu       *pauseMenu;
+    GameOverMenu    *gameOverMenu;
     VideoSettings   *videoSettings;
     EnemyFactory    *enemyFactory;
     vector <Enemy*> vecEnemies;
@@ -31,6 +31,16 @@ protected:
     LvlBar          *lvlBar;
     PerkMenu        *perkMenu;
     list<sf::Sound> sounds;
+    float           bgColorRed;
+    float           bgColorGreen;
+    float           bgColorBlue;
+    float           colorAmplifier;
+    char            redModifier;
+    char            greenModifier;
+    char            blueModifier;
+    bool            isScaled;
+    float           scale;
+    float           scaleAmplifier;
     void updateStats();
     void updateEntities();
     void loadResources();
@@ -43,6 +53,7 @@ protected:
     void updateListener();
     void updateMusic();
     void updateFactories();
+    void updateBackground();
     int k; //need for different perks( need rewrite)
 private:
     bool offanimation=0;

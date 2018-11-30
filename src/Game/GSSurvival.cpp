@@ -13,7 +13,19 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     pauseMenu = new PauseMenu(videoSettings, survivalState);
     gameOverMenu = new GameOverMenu();
     background.setTexture(resources->getTexture("backgroundTile"));
-    background.setTextureRect(fieldSize);
+    background.setTextureRect(sf::IntRect(0, 0, fieldSize.width * 4, fieldSize.height * 4));
+    background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
+    background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
+    bgColorRed   = 255;
+    bgColorGreen = 0;
+    bgColorBlue  = 100;
+    redModifier  = -1;
+    greenModifier = 1;
+    blueModifier = -1;
+    colorAmplifier = 50.f;
+    isScaled = false;
+    scale = 1.1f;
+    scaleAmplifier = 8.f;
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     healthBar = new HealthBar(player);
@@ -52,6 +64,7 @@ GameStates GSSurvival::update()
     case SurvivalStates::SS_PLAY:
         updateStats();
         checkPerkMenu();
+        updateBackground();
         updateEntities();
         updateFactories();
         updateMusic();
@@ -71,8 +84,44 @@ GameStates GSSurvival::update()
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_GAME_OVER:
         return gameOverMenu->gameState;
-
     }
+    return GameStates::GS_GAMEMODE_SURVIVAL;
+}
+
+void GSSurvival::updateBackground()
+{
+    sf::Color color;
+    color.r = (int)bgColorRed;
+    color.g = (int)bgColorGreen;
+    color.b = (int)bgColorBlue;
+    background.setColor(color);
+    if(bgColorRed >= 255.f)
+        redModifier = -1;
+    if(bgColorGreen >= 255.f)
+        greenModifier = -1;
+    if(bgColorBlue >= 255.f)
+        blueModifier = -1;
+    if(bgColorRed <= 0.f)
+        redModifier = 1;
+    if(bgColorGreen <= 0.f)
+        greenModifier = 1;
+    if(bgColorBlue <= 0.f)
+        blueModifier = 1;
+    bgColorRed += (float)redModifier * frameTime * colorAmplifier;
+    bgColorGreen += (float)greenModifier * frameTime * colorAmplifier;
+    bgColorBlue += (float)blueModifier * frameTime * colorAmplifier;
+    if(isScaled)
+    {
+        background.setScale(background.getScale().x - frameTime / scaleAmplifier, background.getScale().y - frameTime / scaleAmplifier);
+        if(background.getScale().x <= 1.0f)
+            isScaled = false;
+    } else
+    {
+        background.setScale(background.getScale().x + frameTime / scaleAmplifier, background.getScale().y + frameTime / scaleAmplifier);
+        if(background.getScale().x >= scale)
+            isScaled = true;
+    }
+    background.rotate(frameTime * 5.f);
 }
 
 void GSSurvival::updateEntities()
@@ -95,7 +144,12 @@ void GSSurvival::updateMusic()
 {
     if(resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing)
         if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped)
-            resources->getMusic("GXRCH - HARD")->play();
+            {
+                scale = 1.2f;
+                colorAmplifier = 200.f;
+                scaleAmplifier = 3.f;
+                resources->getMusic("GXRCH - HARD")->play();
+            }
 }
 void GSSurvival::updateStats()
 {
