@@ -1,4 +1,4 @@
-#include "StatusBar.h"
+#include "GUI/StatusBar.h"
 
 StatusBar::StatusBar()
 {
