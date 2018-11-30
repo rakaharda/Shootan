@@ -16,7 +16,7 @@ public:
     Enemy (const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture);
     virtual ~Enemy();
     virtual void update();
-    virtual void setWeapon(Weapon* _weapon);
+    void setWeapon(Weapon* _weapon);
     Weapon*      getWeapon();
     float        attack();
     void         setSkill(int _skill);
@@ -28,7 +28,6 @@ public:
     bool              isBeingDestroyed;
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-protected:
     Weapon*           weapon;
     const sf::Sprite* target;
     float             rotationRate;
