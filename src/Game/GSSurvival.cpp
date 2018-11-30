@@ -14,8 +14,6 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     gameOverMenu = new GameOverMenu();
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
-    info.setFont(resources->getFont("arial"));
-    info.setFillColor(sf::Color::Red);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     player->setWeapon(new Shotgun(&player->m_sprite));
@@ -34,7 +32,8 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
     resources->getMusic("GXRCH - HARD")->setVolume(audioSettings->music);
     resources->getMusic("GXRCH - HARD")->setLoop(true);
-    resources->getMusic("GXRCH - HARD")->play();
+    resources->getMusic("GXRCH - HARD(intro)")->setVolume(audioSettings->music);
+    resources->getMusic("GXRCH - HARD(intro)")->play();
 }
 
 GSSurvival::~GSSurvival()
@@ -52,21 +51,13 @@ GameStates GSSurvival::update()
     switch(*survivalState)
     {
     case SurvivalStates::SS_PLAY:
-        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl(),enemyFactory->getScore());
+        updateStats();
         checkPerkMenu();
-        player->update();
-        enemyFactory->update();
-        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-            vecProjectiles[i]->update();
-        for(unsigned int i=0; i<vecPerks.size(); i++)
-            vecPerks[i]->update();
-        for(unsigned int i=0; i<vecDestroyers.size(); i++)
-            vecDestroyers[i].update();
-        healthBar->update();
-        ammoBar->update();
+        updateEntities();
+        updateFactories();
+        updateMusic();
         updateView();
         updateListener();
-        //updateStats();
         checkProjectiles();
         checkMelee();
         checkPerks();
@@ -85,17 +76,33 @@ GameStates GSSurvival::update()
     }
 }
 
+void GSSurvival::updateEntities()
+{
+    player->update();
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+        vecProjectiles[i]->update();
+    for(unsigned int i=0; i<vecPerks.size(); i++)
+        vecPerks[i]->update();
+    for(unsigned int i=0; i<vecDestroyers.size(); i++)
+        vecDestroyers[i].update();
+}
+
+void GSSurvival::updateFactories()
+{
+    enemyFactory->update();
+}
+
+void GSSurvival::updateMusic()
+{
+    cout<< resources->getMusic("GXRCH - HARD(intro)")->getStatus();
+    if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped && (resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing))
+        resources->getMusic("GXRCH - HARD")->play();
+}
 void GSSurvival::updateStats()
 {
-    stringstream ss;
-    ss<< endl << endl;
-    if(player->getWeapon()->getCurrentReloadTime() > 0.f)
-        ss << player->getWeapon()->getCurrentReloadTime() << '/' << player->getWeapon()->getReloadTime();
-    else
-        ss << player->getWeapon()->getCurrentClipSize() << '/' << player->getWeapon()->getClipSize();
-    ss << endl << "HP: " << player->getCurrentHealthPoints();
-    ss << endl << "Score: " << enemyFactory->getScore();
-    info.setString(ss.str());
+    lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl(),enemyFactory->getScore());
+    healthBar->update();
+    ammoBar->update();
 }
 
 void GSSurvival::updateListener()
@@ -330,7 +337,6 @@ void GSSurvival::draw()
     window.draw(*healthBar);
     window.draw(*ammoBar);
     window.draw(*lvlBar);
-    //window.draw(info);
     switch(*survivalState)
     {
     case SurvivalStates::SS_PAUSE_MENU:

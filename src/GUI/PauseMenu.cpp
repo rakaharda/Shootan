@@ -97,6 +97,7 @@ void PauseMenu::setFunctions()
         audioSettings->music = status;
         audioSettings->saveSettings();
         resources->getMusic("GXRCH - HARD")->setVolume(status);
+        resources->getMusic("GXRCH - HARD(intro)")->setVolume(status);
     };
     sliderFunctions[1] = [](float status) {
         audioSettings->sounds = status;

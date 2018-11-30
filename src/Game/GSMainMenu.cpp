@@ -62,8 +62,9 @@ GameStates GSMainMenu::update()
 
 void GSMainMenu::loadresources()
 {
-    resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
-    resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
+    resources->addTexture("mainBackground",    "./data/GUI/MainMenu/mainBackground.png");
+    resources->addMusic("GXRCH - HARD",        "./data/music/act.ogg");
+    resources->addMusic("GXRCH - HARD(intro)", "./data/music/sim.ogg");
 }
 
 void GSMainMenu::draw()
