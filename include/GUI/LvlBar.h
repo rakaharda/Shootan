@@ -3,12 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "Utils/ResourceManager.h"
+#include "GUI/StatusBar.h"
 #include "Game/GameState.h"
 #include <iostream>
 
 using namespace std;
 
-class LvlBar : public sf::Drawable
+class LvlBar : public StatusBar
 {
 public:
     LvlBar();
@@ -16,11 +17,9 @@ public:
     void update(int score, int nextscore, int allScore);
 protected:
 private:
-    sf::Sprite   frame;
     sf::Sprite   lvlCells;
     sf::Sprite   animation;
     sf::Sprite   lvlup;
-    sf::Vector2f origin;
     string textScore;
     vector <sf::Sprite*> spriteScore;
     int iAnimation;

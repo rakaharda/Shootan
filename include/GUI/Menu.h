@@ -14,7 +14,7 @@ public:
     virtual void handleEvents(sf::Event event);
 protected:
     void searchButton();
-    virtual void setFunctions();
+    virtual void setFunctions() = 0;
     vector <Button*> buttons;
     std::function<void(void)> *buttonFunctions;
     sf::Texture backGroundTexture;

@@ -5,11 +5,11 @@ AmmoBar::AmmoBar(Player* _player)
     player = _player;
     isReload = false;
     selectSkill = 0;
-    clipBar.setTexture(resources->getTexture("projectiles_scale_default"));
-    delta = clipBar.getTexture()->getSize().x / (float)player->getWeapon()->getClipSize();
-    reduceSpeed = clipBar.getTexture()->getSize().x/(player->getWeapon()->getCooldown()*(float)player->getWeapon()->getClipSize());
+    frame.setTexture(resources->getTexture("projectiles_scale_default"));
+    delta = frame.getTexture()->getSize().x / (float)player->getWeapon()->getClipSize();
+    reduceSpeed = frame.getTexture()->getSize().x/(player->getWeapon()->getCooldown()*(float)player->getWeapon()->getClipSize());
     numRounds = player->getWeapon()->getClipSize();
-    origin = sf::Vector2f(window.getSize().x - clipBar.getTexture()->getSize().x - 50, window.getSize().y - 100);
+    origin = sf::Vector2f(window.getSize().x - frame.getTexture()->getSize().x - 50, window.getSize().y - 100);
     moveToOrigin();
 }
 
@@ -20,6 +20,7 @@ AmmoBar::~AmmoBar()
 
 void AmmoBar::update()
 {
+    reduceSpeed = frame.getTexture()->getSize().x/(player->getWeapon()->getCooldown()*(float)player->getWeapon()->getClipSize());
     if (selectSkill!=player->getWeapon()->getSkill())
     {
         selectSkill=player->getWeapon()->getSkill();
@@ -40,16 +41,16 @@ void AmmoBar::updateSkill()
     switch(selectSkill)
     {
     case 0:
-        clipBar.setTexture(resources->getTexture("projectiles_scale_default"));
+        frame.setTexture(resources->getTexture("projectiles_scale_default"));
         break;
     case 1:
-        clipBar.setTexture(resources->getTexture("projectiles_scale_fire"));
+        frame.setTexture(resources->getTexture("projectiles_scale_fire"));
         break;
     case 2:
-        clipBar.setTexture(resources->getTexture("projectiles_scale_freeze"));
+        frame.setTexture(resources->getTexture("projectiles_scale_freeze"));
         break;
     case 3:
-        clipBar.setTexture(resources->getTexture("projectiles_scale_double"));
+        frame.setTexture(resources->getTexture("projectiles_scale_double"));
         break;
     default:
         break;
@@ -59,29 +60,23 @@ void AmmoBar::updateSkill()
 
 void AmmoBar::setRect()
 {
-    float expectSize = clipBar.getTexture()->getSize().x * clipSize;
-    if(clipBar.getTextureRect().width > expectSize)
-        clipBar.setTextureRect(sf::IntRect(0, 0, clipBar.getTextureRect().width - reduceSpeed*frameTime,
-                                            clipBar.getTexture()->getSize().y));
+    float expectSize = frame.getTexture()->getSize().x * clipSize;
+    if(frame.getTextureRect().width > expectSize)
+        frame.setTextureRect(sf::IntRect(0, 0, frame.getTextureRect().width - reduceSpeed*frameTime,
+                                            frame.getTexture()->getSize().y));
 }
 
 void AmmoBar::reloadAnimate()
 {
     float reloadState = (player->getWeapon()->getReloadTime() - player->getWeapon()->getCurrentReloadTime() )/player->getWeapon()->getReloadTime();
-    clipBar.setTextureRect(sf::IntRect(0, 0, clipBar.getTexture()->getSize().x * reloadState, clipBar.getTexture()->getSize().y));
+    frame.setTextureRect(sf::IntRect(0, 0, frame.getTexture()->getSize().x * reloadState, frame.getTexture()->getSize().y));
     if (reloadState >= 1.f){
         isReload = false;
     }
 
 }
 
-void AmmoBar::moveToOrigin()
-{
-    clipBar.setPosition(origin);
-}
-
 void AmmoBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(clipBar, states);
-    //target.draw(barEdge, states);
+    target.draw(frame, states);
 }
