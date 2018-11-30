@@ -41,13 +41,13 @@ void LvlBar::update(int score, int nextscore, int allScore)
         lvlCells.setTextureRect(sf::IntRect(0, 0, (246 * (score - currentScore)) / moduleScore, lvlCells.getTexture()->getSize().y));
     else
     {
-        if(iAnimation <=25)
+        if(iAnimation <=23)
         {
             if(reloadAnimation <= 0.f)
             {
                 reloadAnimation = 0.02f;
                 iAnimation++;
-                animation.setPosition(55 + iAnimation * 8.16, window.getSize().y - 120);
+                animation.setPosition(55 + iAnimation * 8.866, window.getSize().y - 120);
             }
         }
         else

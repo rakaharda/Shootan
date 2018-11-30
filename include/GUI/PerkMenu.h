@@ -16,6 +16,7 @@ public:
     virtual ~PerkMenu();
     void handleEvents(sf::Event event);
     void updatelvl(int _score);
+    void checkWeapon();
     int getlvl();
     bool canOpen();
     int getnextlvl();
@@ -33,6 +34,7 @@ private:
     int lvlScore;
     int nextlvl;
     Player* player;
+    Weapon* weapon;
     void setFunctions();
     void loadResources();
     SurvivalStates *survivalState;

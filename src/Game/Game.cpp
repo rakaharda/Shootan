@@ -76,17 +76,19 @@ void Game::update()
     updatedGameState = currentGameState->update();
     if(updatedGameState != gameState)
     {
-        delete(currentGameState);
         gameState = updatedGameState;
         switch(gameState)
         {
             case GameStates::GS_MAINMENU:
+                delete(currentGameState);
                 currentGameState = new GSMainMenu(videoSettings);
                 break;
             case GameStates::GS_GAMEMODE_SURVIVAL:
+                delete(currentGameState);
                 currentGameState = new GSSurvival(videoSettings);
                 break;
             case GameStates::GS_RESTART:
+                delete(currentGameState);
                 currentGameState = new GSSurvival(videoSettings);
                 gameState = GameStates::GS_GAMEMODE_SURVIVAL;
                 break;

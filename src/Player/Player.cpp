@@ -31,8 +31,6 @@ void Player::update()
     move();
     weapon->update();
     checkSkill();
-
-
 }
 
 void Player::setOrientation()
@@ -150,7 +148,18 @@ void Player::move()
         }
     }
     if(angle != -1)
-        m_sprite.move(cos(angle) * speed * frameTime, sin(angle) * speed * frameTime);
+    {
+        if(m_sprite.getPosition().x < 30.f)
+            m_sprite.move( 1.f * speed * frameTime , sin(angle) * speed * frameTime);
+        else if(m_sprite.getPosition().x > 3810.f)
+            m_sprite.move( -1.f * speed * frameTime , sin(angle) * speed * frameTime);
+        else if(m_sprite.getPosition().y < 30.f)
+            m_sprite.move(cos(angle) * speed * frameTime, 1.f * speed * frameTime);
+        else if(m_sprite.getPosition().y > 2130.f)
+            m_sprite.move(cos(angle) * speed * frameTime, -1.f * speed * frameTime);
+        else
+            m_sprite.move(cos(angle) * speed * frameTime, sin(angle) * speed * frameTime);
+    }
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const

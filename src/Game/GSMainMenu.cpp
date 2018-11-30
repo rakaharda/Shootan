@@ -32,12 +32,6 @@ void GSMainMenu::handleEvents(sf::Event event)
     default:
         break;
     }
-    if(backgroundSize!=videoSettings->height)
-    {
-         background.setScale((float)videoSettings->width/background.getTexture()->getSize().x,
-                             (float)videoSettings->height/background.getTexture()->getSize().y);
-        backgroundSize = videoSettings->height;
-    }
 }
 
 GameStates GSMainMenu::update()
@@ -50,8 +44,18 @@ GameStates GSMainMenu::update()
     case MenuStates::MS_CREATE_SETTINGS_MENU:
         settingsMenu = new SettingsMenu(videoSettings, menuState);
         break;
+    case MenuStates::MS_MAIN_MENU:
+        if(mainMenu->isCaption)
+            mainMenu->playCaption();
+        break;
     default:
         break;
+    }
+    if(backgroundSize!=videoSettings->height)
+    {
+         background.setScale((float)videoSettings->width/background.getTexture()->getSize().x,
+                             (float)videoSettings->height/background.getTexture()->getSize().y);
+        backgroundSize = videoSettings->height;
     }
     return gameState;
 }
@@ -59,6 +63,7 @@ GameStates GSMainMenu::update()
 void GSMainMenu::loadresources()
 {
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
+    resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
 
 void GSMainMenu::draw()
