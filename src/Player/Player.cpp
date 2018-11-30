@@ -60,8 +60,8 @@ void Player::setOrientation()
 
 void Player::updatePerkWeapon()
 {
-    reloadTime= reloadTime * 0.9f;
-    projectileSpeed+=0.02f;
+    //reloadTime= reloadTime * 0.9f;
+    //projectileSpeed+=0.02f;
     weapon->setReloadTime(weapon->getReloadTime() * 0.9f);
     weapon->setProjectileSpeed(weapon->getProjectileSpeed() + 0.02f);
     weapon->setCooldown(weapon->getCooldown()*0.9f);
@@ -85,8 +85,6 @@ void Player::setWeapon(Weapon* _weapon)
         delete(weapon);
     weapon = _weapon;
     setSkill(skill);
-    weapon->setReloadTime(weapon->getReloadTime() + reloadTime);
-    weapon->setProjectileSpeed(weapon->getProjectileSpeed() + projectileSpeed);
 }
 
 void Player::setSkill(int _skill)
