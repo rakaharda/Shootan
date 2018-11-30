@@ -15,6 +15,7 @@ public:
     LvlBar();
     virtual ~LvlBar();
     void update(int score, int nextscore, int allScore);
+    void update(){};
 protected:
 private:
     sf::Sprite   lvlCells;
