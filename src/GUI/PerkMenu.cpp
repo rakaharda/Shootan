@@ -79,7 +79,6 @@ void PerkMenu::setFunctions()
 //        *menuStatus = false;
     };
     buttonFunctions[0] = [this](){
-        //HP++
         if((currentHP < maxHP) && (LVL > 0))
         {
             LVL--;
@@ -97,7 +96,6 @@ void PerkMenu::setFunctions()
         }
     };
     buttonFunctions[1] = [this](){
-        //Perk UpSpeed++
         if((currentSpeed < maxSpeed) && (LVL > 0))
         {
             LVL--;
@@ -123,7 +121,6 @@ void PerkMenu::setFunctions()
         }
     };
     buttonFunctions[2] = [this](){
-        //Perk FiringSpeed++
         if((currentImprovementWeapon < maxImprovementWeapon) && (LVL > 0))
         {
             LVL--;
@@ -141,7 +138,6 @@ void PerkMenu::setFunctions()
 
     };
     buttonFunctions[3] = [this](){
-        //Perk Frost++
         if((currentFrost < maxFrost) && (LVL > 0))
         {
             LVL--;
@@ -197,6 +193,7 @@ void PerkMenu::updatelvl(int _score)
         lvlScore += 500 * currentlvl;
         nextlvl = lvlScore + 500 * currentlvl;
     }
+    checkWeapon();
 }
 
 void PerkMenu::checkWeapon()
@@ -205,10 +202,7 @@ void PerkMenu::checkWeapon()
     {
         for(unsigned int i = 0; i < currentImprovementWeapon; i++)
             player->updatePerkWeapon();
-        for(unsigned int i = 0; i < currentFrost; i++)
-            player->setSkill(2);
-        for(unsigned int i = 0; i < currentFire; i++)
-            player->setSkill(1);
+        weapon = player->getWeapon();
     }
 }
 void PerkMenu::handleEvents(sf::Event event)
