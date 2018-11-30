@@ -9,4 +9,5 @@ SniperRifle::SniperRifle(sf::Sprite* _source) : Weapon(_source)
     damage = 100.f;
     projectileSpeed = 1.7f;
     name = "sniper";
+    reloadTime = 0.1f;
 }

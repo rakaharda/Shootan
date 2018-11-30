@@ -3,7 +3,7 @@
 AssaultRifle::AssaultRifle(sf::Sprite* _source) : Weapon(_source)
 {
     weaponCooldown =  0.05f;
-    reloadTime = 3.f;
+    reloadTime = 1.5f;
     clipSize = 30;
     currentClipSize = clipSize;
     damage = 20.f;

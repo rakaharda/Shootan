@@ -13,7 +13,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     pauseMenu = new PauseMenu(videoSettings, survivalState);
     gameOverMenu = new GameOverMenu();
     background.setTexture(resources->getTexture("backgroundTile"));
-    background.setTextureRect(sf::IntRect(0, 0, fieldSize.width * 4, fieldSize.height * 4));
+    background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
     bgColorRed   = 255;
@@ -24,8 +24,8 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     blueModifier = -1;
     colorAmplifier = 50.f;
     isScaled = false;
-    scale = 1.1f;
-    scaleAmplifier = 8.f;
+    scale = 1.3f;
+    scaleAmplifier = 16.f;
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     healthBar = new HealthBar(player);
@@ -121,7 +121,6 @@ void GSSurvival::updateBackground()
         if(background.getScale().x >= scale)
             isScaled = true;
     }
-    background.rotate(frameTime * 5.f);
 }
 
 void GSSurvival::updateEntities()
@@ -145,9 +144,9 @@ void GSSurvival::updateMusic()
     if(resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing)
         if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped)
             {
-                scale = 1.2f;
+                scale = 1.7f;
                 colorAmplifier = 200.f;
-                scaleAmplifier = 3.f;
+                scaleAmplifier = 8.f;
                 resources->getMusic("GXRCH - HARD")->play();
             }
 }
