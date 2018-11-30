@@ -32,7 +32,7 @@ public:
     virtual float     attack(){return 0.f;};
     float             getDamage();
     void              setDamage(float _damage);
-    virtual void      setSkill(int _skill);
+    void              setSkill(int _skill);
     int               getSkill();
     void              playShotSound();
     void              playReloadSound();

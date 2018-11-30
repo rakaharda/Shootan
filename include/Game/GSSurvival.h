@@ -14,7 +14,7 @@ public:
     GameStates update();
     void draw();
     void handleEvents(sf::Event _event);
-protected:
+private:
     Player*         player;
     sf::Sprite      background;
     sf::IntRect     fieldSize;
@@ -55,7 +55,6 @@ protected:
     void updateFactories();
     void updateBackground();
     int k; //need for different perks( need rewrite)
-private:
     bool offanimation=0;
     float ianimation=1.f;
     void checkPerkMenu();
