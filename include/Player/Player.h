@@ -41,8 +41,7 @@ private:
     float       activeSpeedTime;
     float       reloadTime;
     float       projectileSpeed;
-    void        setSpriteScore();
-    void         checkSkill();
+    void         checkSkill(); 
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
