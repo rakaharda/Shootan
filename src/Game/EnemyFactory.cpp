@@ -2,7 +2,7 @@
 
 EnemyFactory::EnemyFactory(Player* _player, sf::IntRect _fieldSize, vector<Enemy*>* _vecEnemies) :
     player(_player),
-    target(&player->m_sprite),
+    target(player->getSpritePointer()),
     fieldSize(_fieldSize),
     vecEnemies(_vecEnemies),
     gameTimer(0.f),
@@ -61,12 +61,12 @@ void EnemyFactory::spawnEnemy()
         {
             case 0:
                 vecEnemies->push_back(new Enemy(target, 100 + score / 1000, resources->getTexture("enemy_range")));
-                vecEnemies->back()->setWeapon(new Gun(&(vecEnemies->back()->m_sprite)));
+                vecEnemies->back()->setWeapon(new Gun(vecEnemies->back()->getSpritePointer()));
                 vecEnemies->back()->getWeapon()->setDamage(10.f + score / 10000.f);
                 break;
             default:
                 vecEnemies->push_back(new Enemy(target, 100 + score / 500, resources->getTexture("enemy_melee")));
-                vecEnemies->back()->setWeapon(new MeleeAttack(&(vecEnemies->back()->m_sprite)));
+                vecEnemies->back()->setWeapon(new MeleeAttack(vecEnemies->back()->getSpritePointer()));
                 break;
         }
         vecEnemies->back()->setPosition(x, y);
@@ -82,7 +82,7 @@ void EnemyFactory::increaseDifficulty()
 void EnemyFactory::checkEnemies()
 {
     for(unsigned int i = 0; i < vecEnemies->size(); i++)
-        if(vecEnemies->at(i)->toDelete)
+        if(vecEnemies->at(i)->toDelete())
         {
             score += vecEnemies->at(i)->getHealthPoints() + vecEnemies->at(i)->getWeapon()->getDamage();
             if(player->getWeapon()->getName() == "default")
@@ -102,21 +102,21 @@ void EnemyFactory::checkEnemies()
                         default:
                             break;
                     }
-                    vecPerks.push_back(new FindWeapon(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y, weapon));
+                    vecPerks.push_back(new FindWeapon(vecEnemies->at(i)->getSprite().getPosition().x, vecEnemies->at(i)->getSprite().getPosition().y, weapon));
                 }
             switch(rand() % 40)
             {
                 case 0:
-                    vecPerks.push_back(new Frost(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Frost(vecEnemies->at(i)->getSprite().getPosition().x, vecEnemies->at(i)->getSprite().getPosition().y));
                     break;
                 case 1:
-                    vecPerks.push_back(new Fire(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Fire(vecEnemies->at(i)->getSprite().getPosition().x, vecEnemies->at(i)->getSprite().getPosition().y));
                     break;
                 case 2:
-                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new Medicine(vecEnemies->at(i)->getSprite().getPosition().x, vecEnemies->at(i)->getSprite().getPosition().y));
                     break;
                 case 3:
-                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y));
+                    vecPerks.push_back(new UpSpeed(vecEnemies->at(i)->getSprite().getPosition().x, vecEnemies->at(i)->getSprite().getPosition().y));
                     break;
                 case 4:
                     Weapon* weapon;
@@ -137,7 +137,7 @@ void EnemyFactory::checkEnemies()
                         default:
                             break;
                     }
-                    vecPerks.push_back(new FindWeapon(vecEnemies->at(i)->m_sprite.getPosition().x, vecEnemies->at(i)->m_sprite.getPosition().y, weapon));
+                    vecPerks.push_back(new FindWeapon(vecEnemies->at(i)->getSprite().getPosition().x, vecEnemies->at(i)->getSprite().getPosition().y, weapon));
                 default:
                     break;
             }

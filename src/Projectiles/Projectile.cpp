@@ -5,7 +5,7 @@ Projectile::Projectile(const sf::Sprite* _source, float _damage, int _spread, sf
     damage(_damage),
     speed(_speed)
 {
-    toDelete = false;
+    m_toDelete = false;
     speed = _speed;
     skill = _skill;
     m_sprite.setTexture(_texture);

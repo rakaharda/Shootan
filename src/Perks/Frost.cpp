@@ -11,6 +11,6 @@ void Frost::pickUp()
 {
     for(int i = 0; i < 60; i++)
         {
-            vecProjectiles.push_back(new Projectile(&(player->m_sprite), resources->getTexture("projectile_1"), i, 2));
+            vecProjectiles.push_back(new Projectile(player->getSpritePointer(), resources->getTexture("projectile_1"), i, 2));
         }
 }

@@ -16,16 +16,19 @@ public:
     Enemy (const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _texture);
     virtual ~Enemy();
     virtual void update();
-    void setWeapon(Weapon* _weapon);
+    void         setWeapon(Weapon* _weapon);
     Weapon*      getWeapon();
     float        attack();
     void         setSkill(int _skill);
     void         setPosition(float _xPos, float _yPos);
+    bool         isAlive();
+    bool         isBeingDestroyed();
+    void         kill();
+    void         destroy();         
     static float percentDamage;
-    static float      FrostSpeed;
-    static float      FrostRotationRate;
-    bool              isAlive;
-    bool              isBeingDestroyed;
+    static float FrostSpeed;
+    static float FrostRotationRate;
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     Weapon*           weapon;
@@ -39,6 +42,8 @@ private:
     float             skillDamage;
     int               iFrost;
     int               iFire;
+    bool              m_isAlive;
+    bool              m_isBeingDestroyed;
     void move();
     void calculateRotation();
     bool checkDistance();

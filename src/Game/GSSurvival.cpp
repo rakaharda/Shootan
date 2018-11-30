@@ -159,7 +159,7 @@ void GSSurvival::updateStats()
 
 void GSSurvival::updateListener()
 {
-    sf::Listener::setPosition(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y, 0.f);
+    sf::Listener::setPosition(player->getSprite().getPosition().x, player->getSprite().getPosition().y, 0.f);
 }
 
 void GSSurvival::handleEvents(sf::Event _event)
@@ -193,10 +193,10 @@ void GSSurvival::collectTrash()
 {
     for(unsigned int i = 0; i<vecProjectiles.size(); i++)
     {
-        if(vecProjectiles[i]->m_sprite.getPosition().x > fieldSize.width + 400
-                || vecProjectiles[i]->m_sprite.getPosition().x < -400
-                || vecProjectiles[i]->m_sprite.getPosition().y > fieldSize.height + 400
-                || vecProjectiles[i]->m_sprite.getPosition().y < -400)
+        if(vecProjectiles[i]->getSprite().getPosition().x > fieldSize.width + 400
+                || vecProjectiles[i]->getSprite().getPosition().x < -400
+                || vecProjectiles[i]->getSprite().getPosition().y > fieldSize.height + 400
+                || vecProjectiles[i]->getSprite().getPosition().y < -400)
             vecProjectiles.erase(vecProjectiles.begin() + i);
     }
 }
@@ -207,22 +207,22 @@ void GSSurvival::checkProjectiles()
     {
         for(unsigned int j = 0; j < vecEnemies.size(); j++)
         {
-            if(vecProjectiles[i]->getSource() != &vecEnemies[j]->m_sprite)
-                if(vecEnemies[j]->isAlive)
+            if(vecProjectiles[i]->getSource() != vecEnemies[j]->getSpritePointer())
+                if(vecEnemies[j]->isAlive())
                     if(checkCollision(vecProjectiles[i], vecEnemies[j]))
                         {
                             vecEnemies[j]->takeDamage(vecProjectiles[i]->getDamage());
                             vecEnemies[j]->setSkill(vecProjectiles[i]->getSkill());
-                            vecProjectiles[i]->toDelete = true;
+                            vecProjectiles[i]->markToDelete();
                         }
         }
-        if(vecProjectiles[i]->getSource() != &player->m_sprite)
+        if(vecProjectiles[i]->getSource() != player->getSpritePointer())
             if(checkCollision(vecProjectiles[i], player))
                 {
                     player->takeDamage(vecProjectiles[i]->getDamage());
-                    vecProjectiles[i]->toDelete = true;
+                    vecProjectiles[i]->markToDelete();
                 }
-        if(vecProjectiles[i]->toDelete)
+        if(vecProjectiles[i]->toDelete())
             vecProjectiles.erase(vecProjectiles.begin()+i);
     }
 }
@@ -231,7 +231,7 @@ void GSSurvival::checkMelee()
 {
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
     {
-        if(vecEnemies[i]->isAlive)
+        if(vecEnemies[i]->isAlive())
             if(checkCollision(player, vecEnemies[i]))
             {
                 player->takeDamage(vecEnemies[i]->attack());
@@ -291,21 +291,21 @@ void GSSurvival::checkDestroyers()
 {
     for(unsigned int i = 0; i < vecEnemies.size(); i++)
         {
-        if(!vecEnemies[i]->isAlive)
-            if(!vecEnemies[i]->isBeingDestroyed)
+        if(!vecEnemies[i]->isAlive())
+            if(!vecEnemies[i]->isBeingDestroyed())
             {
                 vecDestroyers.push_back(EntityDestroyer(vecEnemies[i]));
-                vecEnemies[i]->isBeingDestroyed = true;
+                vecEnemies[i]->destroy();
                 sounds.push_back(sf::Sound());
                 sounds.back().setBuffer(resources->getSoundBuffer("destroy"));
                 sounds.back().setVolume(audioSettings->sounds / 2.f);
-                sounds.back().setPosition(vecEnemies[i]->m_sprite.getPosition().x, vecEnemies[i]->m_sprite.getPosition().y, 0.f);
+                sounds.back().setPosition(vecEnemies[i]->getSprite().getPosition().x, vecEnemies[i]->getSprite().getPosition().y, 0.f);
                 sounds.back().setMinDistance(500);
                 sounds.back().play();
             }
         }
     for(unsigned int i = 0; i < vecDestroyers.size(); i++)
-        if(vecDestroyers[i].toDelete == true)
+        if(vecDestroyers[i].toDelete())
         {
             vecDestroyers.erase(vecDestroyers.begin() + i);
         }
@@ -313,7 +313,7 @@ void GSSurvival::checkDestroyers()
 
 void GSSurvival::updateView()
 {
-    view.setCenter(player->m_sprite.getPosition().x, player->m_sprite.getPosition().y);
+    view.setCenter(player->getSprite().getPosition().x, player->getSprite().getPosition().y);
     if(view.getCenter().x < window.getSize().x / 2)
         view.setCenter(window.getSize().x / 2, view.getCenter().y);
     else if(view.getCenter().x > fieldSize.width - (window.getSize().x / 2))

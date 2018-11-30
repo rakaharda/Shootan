@@ -7,13 +7,16 @@
 class GameObject : public sf::Drawable
 {
 public:
-    GameObject() {toDelete = false;};
+    GameObject() {m_toDelete = false;};
     virtual ~GameObject() {};
     virtual void update() = 0;
-    sf::Sprite       m_sprite;
-    bool             toDelete;
+    bool         toDelete() {return m_toDelete;}
+    void         markToDelete() {m_toDelete = true;}
+    sf::Sprite   getSprite() {return m_sprite;}
+    sf::Sprite*  getSpritePointer(){return &m_sprite;}
 protected:
-
+    sf::Sprite m_sprite;
+    bool       m_toDelete;
 };
 
 #endif // GAMEOBJECT_H

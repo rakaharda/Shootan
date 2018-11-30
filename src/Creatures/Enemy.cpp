@@ -20,9 +20,9 @@ Enemy::Enemy(const sf::Sprite* _sprite, float _healthPoints, sf::Texture& _textu
     currentAngle = angle;
     distance = (m_sprite.getPosition().x - target->getPosition().x) / cos(angle / 180 * M_PI);
     speed = 150.f;
-    toDelete = false;
-    isAlive = true;
-    isBeingDestroyed = false;
+    m_toDelete = false;
+    m_isAlive = true;
+    m_isBeingDestroyed = false;
     weapon = new MeleeAttack(&m_sprite);
     rotationRate = 90.f;
     skillDamage = 0.f;
@@ -42,7 +42,7 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-    if(isAlive)
+    if(isAlive())
     {
         calculateRotation();
         m_sprite.setRotation(currentAngle);
@@ -121,7 +121,7 @@ bool Enemy::checkDistance()
 void Enemy::checkHealth()
 {
     if(currentHealthPoints == 0.f)
-        isAlive = false;
+        kill();
 }
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -184,4 +184,24 @@ void Enemy::updateTexture()
     {
         m_sprite.setTextureRect(sf::IntRect(0,                                      0, m_sprite.getTexture()->getSize().y, m_sprite.getTexture()->getSize().y));
     }
+}
+
+bool Enemy::isAlive()
+{
+    return m_isAlive;
+}
+
+bool Enemy::isBeingDestroyed()
+{
+    return m_isBeingDestroyed;
+}
+
+void Enemy::kill()
+{
+    m_isAlive = false;
+}
+
+void Enemy::destroy()
+{
+    m_isBeingDestroyed = true;
 }
