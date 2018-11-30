@@ -16,14 +16,17 @@ public:
     void setFunction(std::function <void()> _function);
     virtual void update();
     bool isClicked(float _xPos, float _yPos);
-    bool isSelect;
     void setTextureButton(sf::Texture& _texture);
     void setLightButton(string name);
     void setlvl(int _ilvl);
+    bool isSelect();
+    void select();
+    void unselect();
 protected:
     std::function <void(void)> m_function;
     sf::Sprite lightSprite;
     bool isLight;
+    bool m_isSelect;
 private:
     sf::Texture textureLvl;
     vector <sf::Sprite*>       veclvl;

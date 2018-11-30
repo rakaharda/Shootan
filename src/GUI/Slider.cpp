@@ -5,7 +5,7 @@ Slider::Slider(string _name, float _xPos, float _yPos, float _status)
 {
     m_function = [](float status){};
     status = _status;
-    pressed = false;
+    m_pressed = false;
     index = 100.f/(resources->getTexture("sliderLine").getSize().x - 2*INDENT);
     lineSprite.setTexture(resources->getTexture("sliderLine"));
     textSprite.setTexture(resources->getTexture(_name));
@@ -28,10 +28,10 @@ bool Slider::isPressed()
     float _yPos = sf::Mouse::getPosition(window).y;
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         if(m_sprite.getGlobalBounds().contains(_xPos, _yPos))
-            pressed = true;
+            m_pressed = true;
         else;
-    else pressed = false;
-    if(pressed)
+    else m_pressed = false;
+    if(m_pressed)
     {
         status = (_xPos - lineSprite.getPosition().x - INDENT) * index;
         if(status >= 0 && status <= 100)
@@ -72,3 +72,7 @@ void Slider::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(textSprite,states);
 }
 
+bool Slider::pressed()
+{
+    return m_pressed;
+}

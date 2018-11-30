@@ -79,11 +79,11 @@ GameStates GSSurvival::update()
         draw();
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_PAUSE_MENU:
-        return pauseMenu->gameState;
+        return pauseMenu->getGameState();
     case SurvivalStates::SS_PERK_MENU:
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_GAME_OVER:
-        return gameOverMenu->gameState;
+        return gameOverMenu->getGameState();
     }
     return GameStates::GS_GAMEMODE_SURVIVAL;
 }

@@ -10,7 +10,7 @@ class Slider: public GameObject
 public:
     Slider(string _name, float _xPos, float _yPos, float _status);
     bool isPressed();
-    bool pressed;
+    bool pressed();
     void setFunction(std::function <void(float)> _function);
     virtual ~Slider();
 private:
@@ -20,6 +20,7 @@ private:
     sf::Sprite textSprite;
     sf::Text text;
     std::function <void(float)> m_function;
+    bool m_pressed;
     void update();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

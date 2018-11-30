@@ -30,10 +30,11 @@ public:
     void    setSpeed(float _speed);
     float   getActiveSpeedTime();
     void    setActiveSpeedTime(float _activeSpeedtime);
-    float       speed;
-    float       upSpeed;
-    float       defoltSpeed;
-    void        updatePerkWeapon();
+    void    updatePerkWeapon();
+    float   getDefaultSpeed();
+    float   getSpeedUp();
+    void    setSpeedUp(float _speedUp);
+    void    setDefaultSpeed(float _defaultSpeed);
 private:
     sf::Texture texture;
     Weapon*     weapon;
@@ -41,6 +42,9 @@ private:
     float       activeSpeedTime;
     float       reloadTime;
     float       projectileSpeed;
+    float       speed;
+    float       upSpeed;
+    float       defaultSpeed;
     void         checkSkill(); 
     void         move();
     void         setOrientation();

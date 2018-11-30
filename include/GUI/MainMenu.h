@@ -17,10 +17,13 @@ public:
     virtual ~MainMenu();
     void playCaption();
     void stopCaption();
-    bool isCaption;
+    bool isCaption();
+    void caption();
+    void uncaption();
 private:
     void setFunctions();
     void loadResources();
+    bool m_isCaption;
     sf::Sprite captionSprite;
     sf::Sprite backgroundCaption;
     MenuStates *menuState;

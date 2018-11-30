@@ -89,3 +89,17 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
     }
 }
 
+bool Button::isSelect()
+{
+    return m_isSelect;
+}
+
+void Button::select()
+{
+    m_isSelect = true;
+}
+
+void Button::unselect()
+{
+    m_isSelect = false;
+}

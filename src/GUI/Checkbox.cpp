@@ -9,7 +9,7 @@ CheckBox::CheckBox(string _name, float _xPos, float _yPos, bool _isSelect)
     textSprite.setTexture(resources->getTexture(_name));
     textSprite.setPosition(_xPos + textSprite.getTexture()->getSize().x/8,
                      _yPos - textSprite.getTexture()->getSize().y/2);
-    isSelect = _isSelect;
+    m_isSelect = _isSelect;
 }
 
 
@@ -32,7 +32,7 @@ void CheckBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(m_sprite,states);
     else target.draw(lightSprite,states);
     target.draw(textSprite,states);
-    if(isSelect)
+    if(m_isSelect)
     {
         target.draw(markSprite,states);
     }

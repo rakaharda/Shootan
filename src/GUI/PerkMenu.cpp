@@ -107,16 +107,16 @@ void PerkMenu::setFunctions()
                 buttons[1]->setlvl(0);
             }
             currentSpeed++;
-            if(player->speed != player->defoltSpeed)
+            if(player->getSpeed() != player->getDefaultSpeed())
             {
-                player->speed -= player->upSpeed;
-                player->upSpeed += 20.f;
-                player->speed += player->upSpeed;
+                player->setSpeed(player->getSpeed() - player->getSpeedUp());
+                player->setSpeedUp(player->getSpeedUp() + 20.f);
+                player->setSpeed(player->getSpeed()+ player->getSpeedUp());
             }
             else
-            player->upSpeed += 20.f;
-            player->defoltSpeed+=20.f;
-            player->speed+=20.f;
+            player->setSpeedUp(player->getSpeedUp() + 20.f);
+            player->setDefaultSpeed(player->getDefaultSpeed() + 20.f);
+            player->setSpeed(player->getSpeed() + 20.f);
             *survivalState = SurvivalStates::SS_PLAY;
         }
     };

@@ -10,11 +10,13 @@ public:
     GameOverMenu();
     virtual ~GameOverMenu();
     void handleEvents(sf::Event event);
-    GameStates gameState;
+    GameStates getGameState();
+    void setGameState(GameStates _gameState);
 private:
     void loadResources();
     void setFunctions();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    GameStates gameState;
 };
 
 #endif // GAMEOVERMENU_H
