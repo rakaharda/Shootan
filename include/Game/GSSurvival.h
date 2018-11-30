@@ -38,8 +38,6 @@ private:
     char            redModifier;
     char            greenModifier;
     char            blueModifier;
-    bool            isScaled;
-    float           scale;
     float           scaleAmplifier;
     void updateStats();
     void updateEntities();
