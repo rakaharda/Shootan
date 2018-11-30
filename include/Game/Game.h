@@ -27,7 +27,7 @@
 
 using namespace std;
 
-class Game : private Collision
+class Game
 {
 public:
     Game();

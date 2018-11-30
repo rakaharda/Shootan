@@ -91,13 +91,13 @@ void EnemyFactory::checkEnemies()
                     switch(rand() % 3)
                     {
                         case 0:
-                            weapon = new AssaultRifle(target);
+                            weapon = new SniperRifle(target);
                             break;
                         case 1:
                             weapon = new Shotgun(target);
                             break;
                         case 2:
-                            weapon = new SniperRifle(target);
+                            weapon = new AssaultRifle(target);
                             break;
                         default:
                             break;
