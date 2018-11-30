@@ -9,5 +9,6 @@ Gun::Gun(sf::Sprite* _source) : Weapon(_source)
     damage = 25.f;
     projectileSpeed = 0.7f;
     textureKey = "projectile_2";
+    name = "gun";
 }
 

@@ -17,7 +17,6 @@ public:
 protected:
     Player*         player;
     sf::Sprite      background;
-    sf::Text        info;
     sf::IntRect     fieldSize;
     sf::View        view;
     SurvivalStates *survivalState;
@@ -31,7 +30,9 @@ protected:
     AmmoBar         *ammoBar;
     LvlBar          *lvlBar;
     PerkMenu        *perkMenu;
+    list<sf::Sound> sounds;
     void updateStats();
+    void updateEntities();
     void loadResources();
     void collectTrash();
     void checkProjectiles();
@@ -40,6 +41,8 @@ protected:
     void checkDestroyers();
     void updateView();
     void updateListener();
+    void updateMusic();
+    void updateFactories();
     int k; //need for different perks( need rewrite)
 private:
     bool offanimation=0;

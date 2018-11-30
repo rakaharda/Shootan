@@ -10,4 +10,5 @@ AssaultRifle::AssaultRifle(sf::Sprite* _source) : Weapon(_source)
     spread = 9;
     projectileSpeed = 1.1f;
     reloadSoundKey = "assaultrifle_reload";
+    name = "auto";
 }

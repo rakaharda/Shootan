@@ -18,9 +18,10 @@ class EntityDestroyer : public GameObject
         float  destroyTimer;
         float  currentDestroyTimer;
         float  factor;
+        sf::Sound sound;
 };
 
 extern float frameTime;
 extern ResourceManager *resources;
-
+extern AudioSettings   *audioSettings;
 #endif // ENTITYDESTROYER_H

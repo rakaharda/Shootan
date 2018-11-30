@@ -14,11 +14,8 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     gameOverMenu = new GameOverMenu();
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
-    info.setFont(resources->getFont("arial"));
-    info.setFillColor(sf::Color::Red);
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
-    player->setWeapon(new SniperRifle(&player->m_sprite));
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     lvlBar = new LvlBar();
@@ -31,10 +28,11 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     //!
     k = 0; //need to delete
     Perk::player = player;
-    enemyFactory = new EnemyFactory(&player->m_sprite, fieldSize, &vecEnemies);
+    enemyFactory = new EnemyFactory(player, fieldSize, &vecEnemies);
     resources->getMusic("GXRCH - HARD")->setVolume(audioSettings->music);
     resources->getMusic("GXRCH - HARD")->setLoop(true);
-    resources->getMusic("GXRCH - HARD")->play();
+    resources->getMusic("GXRCH - HARD(intro)")->setVolume(audioSettings->music);
+    resources->getMusic("GXRCH - HARD(intro)")->play();
 }
 
 GSSurvival::~GSSurvival()
@@ -52,21 +50,13 @@ GameStates GSSurvival::update()
     switch(*survivalState)
     {
     case SurvivalStates::SS_PLAY:
-        lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl(),enemyFactory->getScore());
+        updateStats();
         checkPerkMenu();
-        player->update();
-        enemyFactory->update();
-        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-            vecProjectiles[i]->update();
-        for(unsigned int i=0; i<vecPerks.size(); i++)
-            vecPerks[i]->update();
-        for(unsigned int i=0; i<vecDestroyers.size(); i++)
-            vecDestroyers[i].update();
-        healthBar->update();
-        ammoBar->update();
+        updateEntities();
+        updateFactories();
+        updateMusic();
         updateView();
         updateListener();
-        //updateStats();
         checkProjectiles();
         checkMelee();
         checkPerks();
@@ -85,17 +75,33 @@ GameStates GSSurvival::update()
     }
 }
 
+void GSSurvival::updateEntities()
+{
+    player->update();
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+        vecProjectiles[i]->update();
+    for(unsigned int i=0; i<vecPerks.size(); i++)
+        vecPerks[i]->update();
+    for(unsigned int i=0; i<vecDestroyers.size(); i++)
+        vecDestroyers[i].update();
+}
+
+void GSSurvival::updateFactories()
+{
+    enemyFactory->update();
+}
+
+void GSSurvival::updateMusic()
+{
+    if(resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing)
+        if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped)
+            resources->getMusic("GXRCH - HARD")->play();
+}
 void GSSurvival::updateStats()
 {
-    stringstream ss;
-    ss<< endl << endl;
-    if(player->getWeapon()->getCurrentReloadTime() > 0.f)
-        ss << player->getWeapon()->getCurrentReloadTime() << '/' << player->getWeapon()->getReloadTime();
-    else
-        ss << player->getWeapon()->getCurrentClipSize() << '/' << player->getWeapon()->getClipSize();
-    ss << endl << "HP: " << player->getCurrentHealthPoints();
-    ss << endl << "Score: " << enemyFactory->getScore();
-    info.setString(ss.str());
+    lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl(),enemyFactory->getScore());
+    healthBar->update();
+    ammoBar->update();
 }
 
 void GSSurvival::updateListener()
@@ -237,6 +243,12 @@ void GSSurvival::checkDestroyers()
             {
                 vecDestroyers.push_back(EntityDestroyer(vecEnemies[i]));
                 vecEnemies[i]->isBeingDestroyed = true;
+                sounds.push_back(sf::Sound());
+                sounds.back().setBuffer(resources->getSoundBuffer("destroy"));
+                sounds.back().setVolume(audioSettings->sounds / 2.f);
+                sounds.back().setPosition(vecEnemies[i]->m_sprite.getPosition().x, vecEnemies[i]->m_sprite.getPosition().y, 0.f);
+                sounds.back().setMinDistance(500);
+                sounds.back().play();
             }
         }
     for(unsigned int i = 0; i < vecDestroyers.size(); i++)
@@ -277,8 +289,9 @@ void GSSurvival::loadResources()
         //Perks
     resources->addTexture("perk_cross",     "./data/perks/perk_cross.png");
     resources->addTexture("perk_speedup",   "./data/perks/perk_speedup.png");
-    resources->addTexture("perk_frost",   "./data/perks/Blue.png");
-    resources->addTexture("perk_fire",   "./data/perks/Red.png");
+    resources->addTexture("perk_frost",     "./data/perks/Blue.png");
+    resources->addTexture("perk_fire",      "./data/perks/Red.png");
+    resources->addTexture("perk_weapon",    "./data/perks/perk_weapon.png");
         //GUI
     resources->addTexture("healthbar_frame",           "./data/GUI/gameInterface/healthbar_frame.png");
     resources->addTexture("healthbar_cells",           "./data/GUI/gameInterface/healthbar_cells.png");
@@ -292,21 +305,22 @@ void GSSurvival::loadResources()
     resources->addTexture("lvlbar_animation",          "./data/GUI/gameInterface/lvlbar_animation.png");
     resources->addTexture("lvlbar_lvlup",              "./data/GUI/gameInterface/lvlbar_lvlup.png");
     //*Numbers
-    resources->addTexture("score_number_0","./data/GUI/gameInterface/numbers/score_number_0.png");
-    resources->addTexture("score_number_1","./data/GUI/gameInterface/numbers/score_number_1.png");
-    resources->addTexture("score_number_2","./data/GUI/gameInterface/numbers/score_number_2.png");
-    resources->addTexture("score_number_3","./data/GUI/gameInterface/numbers/score_number_3.png");
-    resources->addTexture("score_number_4","./data/GUI/gameInterface/numbers/score_number_4.png");
-    resources->addTexture("score_number_5","./data/GUI/gameInterface/numbers/score_number_5.png");
-    resources->addTexture("score_number_6","./data/GUI/gameInterface/numbers/score_number_6.png");
-    resources->addTexture("score_number_7","./data/GUI/gameInterface/numbers/score_number_7.png");
-    resources->addTexture("score_number_8","./data/GUI/gameInterface/numbers/score_number_8.png");
-    resources->addTexture("score_number_9","./data/GUI/gameInterface/numbers/score_number_9.png");
+    resources->addTexture("score_number_0", "./data/GUI/gameInterface/numbers/score_number_0.png");
+    resources->addTexture("score_number_1", "./data/GUI/gameInterface/numbers/score_number_1.png");
+    resources->addTexture("score_number_2", "./data/GUI/gameInterface/numbers/score_number_2.png");
+    resources->addTexture("score_number_3", "./data/GUI/gameInterface/numbers/score_number_3.png");
+    resources->addTexture("score_number_4", "./data/GUI/gameInterface/numbers/score_number_4.png");
+    resources->addTexture("score_number_5", "./data/GUI/gameInterface/numbers/score_number_5.png");
+    resources->addTexture("score_number_6", "./data/GUI/gameInterface/numbers/score_number_6.png");
+    resources->addTexture("score_number_7", "./data/GUI/gameInterface/numbers/score_number_7.png");
+    resources->addTexture("score_number_8", "./data/GUI/gameInterface/numbers/score_number_8.png");
+    resources->addTexture("score_number_9", "./data/GUI/gameInterface/numbers/score_number_9.png");
     //*For button
-    resources->addTexture("buttonLVL",    "./data/GUI/perkMenu/ilvl.png");
+    resources->addTexture("buttonLVL",      "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
     //*Sound buffers
-    resources->addSoundBuffer("laser1",              "./data/sounds/laser1.wav");
+    resources->addSoundBuffer("laser1",  "./data/sounds/laser1.wav");
+    resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
 }
@@ -330,7 +344,6 @@ void GSSurvival::draw()
     window.draw(*healthBar);
     window.draw(*ammoBar);
     window.draw(*lvlBar);
-    //window.draw(info);
     switch(*survivalState)
     {
     case SurvivalStates::SS_PAUSE_MENU:
