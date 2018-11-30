@@ -4,11 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include "Player/Player.h"
 #include "Utils/ResourceManager.h"
+#include "GUI/StatusBar.h"
 #include <iostream>
 
 using namespace std;
 
-class HealthBar : public sf::Drawable
+class HealthBar : public StatusBar
 {
 public:
     HealthBar(Player* _player);
@@ -17,9 +18,7 @@ public:
 protected:
 private:
     Player*      player;
-    sf::Sprite   frame;
     sf::Sprite   healthCells;
-    sf::Vector2f origin;
     float        amplitude;
     float        prevHealthPoints;
     unsigned int prevWindowsHeight;

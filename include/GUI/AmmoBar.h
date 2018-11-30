@@ -2,10 +2,11 @@
 #define PROJECTILESBAR_H
 
 #include <SFML/Graphics.hpp>
+#include "GUI/StatusBar.h"
 #include "Player/Player.h"
 #include "Utils/ResourceManager.h"
 
-class AmmoBar: public sf::Drawable
+class AmmoBar: public StatusBar
 {
 public:
     AmmoBar(Player* _player);
@@ -13,9 +14,6 @@ public:
     void update();
 private:
     Player*      player;
-    sf::Sprite   clipBar;
-    sf::Sprite   barEdge;
-    sf::Vector2f origin;
     float        clipSize;
     float        delta;
     float        reduceSpeed;
@@ -25,7 +23,6 @@ private:
     void         updateSkill();
     void         reloadAnimate();
     void         setRect();
-    void         moveToOrigin();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
