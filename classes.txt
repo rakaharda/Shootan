@@ -3,9 +3,9 @@ sf::Drawable (Динич)+
 	GameObject - sf::Drawable, абстрактный (Динич)+
 		Enemy - GameObject, HealthPoints (Динич)+
 		EntityDestroyer - GameObject (Динич)+
-		Button - GameObject
-			CheckBox - Button
-		Slider - GameObject
+		Button - GameObject 
+			CheckBox - Button (Димик) (Done)
+		Slider - GameObject (Димик) (Done)
 		Player - GameObject, HealthPoints (Динич)+
 		Projectile - GameObject (Динич)+
 		Perk - GameObject, абстрактный (Степик)
@@ -14,20 +14,20 @@ sf::Drawable (Динич)+
 			Frost - Perk (Степик)
 			Medicine - Perk (Степик)
 			UpSpeed - Perk (Степик)
-	StatusBar - sf::Drawable, абстрактный
-		AmmoBar - StatusBar
-		HealthBar - StatusBar
+	StatusBar - sf::Drawable, абстрактный (Димик) (Done)
+		AmmoBar - StatusBar (Димик) (Done)
+		HealthBar - StatusBar (Димик) (Done)
 		LevelBar - StatusBar (Степик)
-	Menu - sf::Drawable, абстрактный
-		GameOverMenu - Menu
-		MainMenu - Menu
-		PauseMenu - Menu
+	Menu - sf::Drawable, абстрактный (Димик) (Done)
+		GameOverMenu - Menu (Димик) (Done)
+		MainMenu - Menu (Димик) (Done)
+		PauseMenu - Menu (Димик) (Done)
 		PerkMenu - Menu (Степик)
-		SettingsMenu - Menu
+		SettingsMenu - Menu (Димик) (Done)
 		FPSCounter - sf::Drawable (Динич)+
 Collision (Динич)
 GameState, абстрактный (Динич)
-	GSMainMenu - GameState 
+	GSMainMenu - GameState (Димик) (Done)
 	GSSurvival - GameState, Collison (Динич)
 Cooldown (Динич)
 	Weapon - Cooldown (Динич)
