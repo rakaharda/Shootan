@@ -10,6 +10,7 @@ public:
     void pickUp();
     FindWeapon(int _xPos, int _yPos, Weapon* _weapon);
     virtual ~FindWeapon(){};
+private:
     Weapon * weapon;
 };
 

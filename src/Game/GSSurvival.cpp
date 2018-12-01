@@ -23,8 +23,6 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     greenModifier = 1;
     blueModifier = -1;
     colorAmplifier = 50.f;
-    isScaled = false;
-    scale = 1.3f;
     scaleAmplifier = 16.f;
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
@@ -79,11 +77,11 @@ GameStates GSSurvival::update()
         draw();
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_PAUSE_MENU:
-        return pauseMenu->gameState;
+        return pauseMenu->getGameState();
     case SurvivalStates::SS_PERK_MENU:
         return GameStates::GS_GAMEMODE_SURVIVAL;
     case SurvivalStates::SS_GAME_OVER:
-        return gameOverMenu->gameState;
+        return gameOverMenu->getGameState();
     }
     return GameStates::GS_GAMEMODE_SURVIVAL;
 }
@@ -110,17 +108,6 @@ void GSSurvival::updateBackground()
     bgColorRed += (float)redModifier * frameTime * colorAmplifier;
     bgColorGreen += (float)greenModifier * frameTime * colorAmplifier;
     bgColorBlue += (float)blueModifier * frameTime * colorAmplifier;
-    if(isScaled)
-    {
-        background.setScale(background.getScale().x - frameTime / scaleAmplifier, background.getScale().y - frameTime / scaleAmplifier);
-        if(background.getScale().x <= 1.0f)
-            isScaled = false;
-    } else
-    {
-        background.setScale(background.getScale().x + frameTime / scaleAmplifier, background.getScale().y + frameTime / scaleAmplifier);
-        if(background.getScale().x >= scale)
-            isScaled = true;
-    }
 }
 
 void GSSurvival::updateEntities()
@@ -144,9 +131,7 @@ void GSSurvival::updateMusic()
     if(resources->getMusic("GXRCH - HARD")->getStatus() != sf::Sound::Playing)
         if(resources->getMusic("GXRCH - HARD(intro)")->getStatus() == sf::Sound::Stopped)
             {
-                scale = 1.7f;
                 colorAmplifier = 200.f;
-                scaleAmplifier = 8.f;
                 resources->getMusic("GXRCH - HARD")->play();
             }
 }

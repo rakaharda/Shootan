@@ -71,3 +71,13 @@ void GameOverMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for(unsigned int i = 0; i < buttons.size(); i++)
         target.draw(*buttons[i],states);
 }
+
+GameStates GameOverMenu::getGameState()
+{
+    return gameState;
+}
+
+void GameOverMenu::setGameState(GameStates _gameState)
+{
+    gameState = _gameState;
+}

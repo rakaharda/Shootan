@@ -45,7 +45,7 @@ GameStates GSMainMenu::update()
         settingsMenu = new SettingsMenu(videoSettings, menuState);
         break;
     case MenuStates::MS_MAIN_MENU:
-        if(mainMenu->isCaption)
+        if(mainMenu->isCaption())
             mainMenu->playCaption();
         break;
     default:

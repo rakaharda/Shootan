@@ -17,7 +17,8 @@ public:
     PauseMenu(VideoSettings *_videoSettings, SurvivalStates *_survivalState);
     virtual ~PauseMenu();
     void handleEvents(sf::Event event);
-    GameStates gameState;
+    GameStates getGameState();
+    void setGameState(GameStates _gameState);
 private:
     void refreshMenu();
     void setFunctions();
@@ -30,6 +31,7 @@ private:
     VideoSettings tempVideoSettings;
     VideoSettings *videoSettings;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    GameStates gameState;
 friend Button;
 //    buttonFunctions;
 };

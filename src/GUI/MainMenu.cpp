@@ -6,7 +6,7 @@ MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
     loadResources();
     gameState = _gameState;
     menuState = _menuState;
-    isCaption = false;
+    m_isCaption = false;
     *menuState = MenuStates::MS_MAIN_MENU;
     string buttonName[4];
     buttonName[0] = "buttonMainPlay";
@@ -43,11 +43,11 @@ void MainMenu::handleEvents(sf::Event event)
     switch(event.type)
     {
     case sf::Event::KeyPressed:
-        if(event.key.code == sf::Keyboard::Escape&&isCaption)
+        if(event.key.code == sf::Keyboard::Escape && isCaption())
             stopCaption();
         break;
     case sf::Event::MouseButtonPressed:
-        if(!isCaption)
+        if(!isCaption())
             switch(event.mouseButton.button)
             {
             case sf::Mouse::Left:
@@ -71,7 +71,7 @@ void MainMenu::setFunctions()
         *menuState = MenuStates::MS_CREATE_SETTINGS_MENU;
     };
     buttonFunctions[2] = [this](){
-        isCaption = true;
+        caption();
         resources->getMusic("GXRCH - HARD")->setVolume(audioSettings->music);
         resources->getMusic("GXRCH - HARD")->play();
     };
@@ -89,7 +89,7 @@ void MainMenu::playCaption()
 
 void MainMenu::stopCaption()
 {
-    isCaption = false;
+    uncaption();
     resources->getMusic("GXRCH - HARD")->pause();
     captionSprite.setPosition(window.getSize().x / 2 - captionSprite.getTexture()->getSize().x / 2, window.getSize().y);
 }
@@ -111,7 +111,7 @@ void MainMenu::loadResources()
 
 void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if(isCaption)
+    if(m_isCaption)
     {
         target.draw(backgroundCaption,states);
         target.draw(captionSprite,states);
@@ -120,4 +120,19 @@ void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(backGroundSprite,states);
     for(unsigned int i = 0; i < buttons.size(); i++)
         target.draw(*buttons[i],states);
+}
+
+bool MainMenu::isCaption()
+{
+    return m_isCaption;
+}
+
+void MainMenu::caption()
+{
+    m_isCaption = true;
+}
+
+void MainMenu::uncaption()
+{
+    m_isCaption = false;
 }

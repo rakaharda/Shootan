@@ -188,3 +188,13 @@ void PauseMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for(unsigned int i = 0; i < sliders.size(); i++)
         target.draw(*sliders[i],states);
 }
+
+GameStates PauseMenu::getGameState()
+{
+    return gameState;
+}
+
+void PauseMenu::setGameState(GameStates _gameState)
+{
+    gameState = _gameState;
+}

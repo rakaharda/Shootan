@@ -9,7 +9,7 @@ Player::Player() : HealthPoints()
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
     weapon = new Weapon(&m_sprite);
     speed = 300.f;
-    defoltSpeed = 300.f;
+    defaultSpeed = 300.f;
     upSpeed = 100.f;
     skill = 0;
     activeSpeedTime = 0.f;
@@ -183,4 +183,24 @@ float Player::getActiveSpeedTime()
 void Player::setActiveSpeedTime(float _activeSpeedTime)
 {
     activeSpeedTime = _activeSpeedTime;
+}
+
+float Player::getDefaultSpeed()
+{
+    return defaultSpeed;
+}
+
+float Player::getSpeedUp()
+{
+    return upSpeed;
+}
+
+void Player::setSpeedUp(float _speedUp)
+{
+    upSpeed = _speedUp;
+}
+
+void Player::setDefaultSpeed(float _defaultSpeed)
+{
+    defaultSpeed = _defaultSpeed;
 }
