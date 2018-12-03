@@ -15,7 +15,7 @@ Player::Player() : HealthPoints()
     activeSpeedTime = 0.f;
     reloadTime = 0.f;
     projectileSpeed = 0.f;
-
+    newWeapon = nullptr;
 }
 
 Player::~Player()
@@ -26,11 +26,12 @@ Player::~Player()
 void Player::update()
 {
     setOrientation();
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        weapon->addProjectile();
     move();
+    checkWeapon();
     weapon->update();
     checkSkill();
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        weapon->addProjectile();
 }
 
 void Player::setOrientation()
@@ -81,12 +82,20 @@ Weapon* Player::getWeapon()
 
 void Player::setWeapon(Weapon* _weapon)
 {
-    if(weapon != nullptr)
-        delete(weapon);
-    weapon = _weapon;
-    setSkill(skill);
+    newWeapon = _weapon;
 }
 
+void Player::checkWeapon()
+{
+    if(newWeapon != nullptr)
+        if(weapon != newWeapon)
+        {
+            delete(weapon);
+            weapon = newWeapon;
+            newWeapon = nullptr;
+            setSkill(skill);
+        }
+}
 void Player::setSkill(int _skill)
 {
     if(skill == 0)

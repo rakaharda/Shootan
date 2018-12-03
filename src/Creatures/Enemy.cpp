@@ -205,3 +205,13 @@ void Enemy::destroy()
 {
     m_isBeingDestroyed = true;
 }
+
+void Enemy::setSpeed(float _speed)
+{
+    speed = _speed;
+}
+
+float Enemy::getSpeed()
+{
+    return speed;
+}

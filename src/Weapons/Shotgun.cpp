@@ -5,7 +5,7 @@ Shotgun::Shotgun(sf::Sprite* _source) : Weapon(_source)
     weaponCooldown = 0.5f;
     clipSize = 5;
     currentClipSize = clipSize;
-    damage = 35.f;
+    damage = 50.f;
     spread = 1;
     projectileSpeed = 0.9f;
     name = "shotgun";

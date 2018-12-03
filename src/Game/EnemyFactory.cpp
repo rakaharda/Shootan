@@ -63,10 +63,12 @@ void EnemyFactory::spawnEnemy()
                 vecEnemies->push_back(new Enemy(target, 100 + score / 1000, resources->getTexture("enemy_range")));
                 vecEnemies->back()->setWeapon(new Gun(vecEnemies->back()->getSpritePointer()));
                 vecEnemies->back()->getWeapon()->setDamage(10.f + score / 10000.f);
+                vecEnemies->back()->setSpeed(vecEnemies->back()->getSpeed() + score / 3500.f);
                 break;
             default:
                 vecEnemies->push_back(new Enemy(target, 100 + score / 500, resources->getTexture("enemy_melee")));
                 vecEnemies->back()->setWeapon(new MeleeAttack(vecEnemies->back()->getSpritePointer()));
+                vecEnemies->back()->setSpeed(vecEnemies->back()->getSpeed() + score / 7000.f);
                 break;
         }
         vecEnemies->back()->setPosition(x, y);
@@ -76,7 +78,7 @@ void EnemyFactory::spawnEnemy()
 
 void EnemyFactory::increaseDifficulty()
 {
-    if (spawnTimer > 1.f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 8000);
+    if (spawnTimer > 0.5f)spawnTimer -= (spawnTimer / 1000.f) * (gameTimer / 100) * (score / 8000);
 }
 
 void EnemyFactory::checkEnemies()
@@ -130,9 +132,6 @@ void EnemyFactory::checkEnemies()
                             break;
                         case 2:
                             weapon = new SniperRifle(target);
-                            break;
-                        case 3:
-                            weapon = new Gun(target);
                             break;
                         default:
                             break;

@@ -20,14 +20,23 @@ Weapon::Weapon(sf::Sprite* _source) :
 
 }
 
+Weapon::~Weapon()
+{
+    sounds.clear();
+}
 void Weapon::update()
 {
     reduceCooldown();
     if(currentReloadTime >= 0.f)
         currentReloadTime -= frameTime;
     if(sounds.size() != 0)
-        if(sounds.front().getStatus() != sf::Sound::Playing)
-            sounds.pop_front();
+        while(sounds.front().getStatus() != sf::Sound::Playing)
+    {
+        sounds.pop_front();
+        if(sounds.size() == 0)
+            break;
+    }
+    cout<<' '<<sounds.size();
 }
 
 bool Weapon::addProjectile()

@@ -2,12 +2,12 @@
 
 SniperRifle::SniperRifle(sf::Sprite* _source) : Weapon(_source)
 {
-    weaponCooldown = 1.2f;
+    weaponCooldown = 0.5f;
     clipSize = 7;
     currentClipSize = clipSize;
     spread = 1;
-    damage = 100.f;
-    projectileSpeed = 1.7f;
+    damage = 110.f;
+    projectileSpeed = 3.f;
     name = "sniper";
     reloadTime = 0.1f;
 }

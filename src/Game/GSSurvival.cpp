@@ -51,6 +51,7 @@ GSSurvival::~GSSurvival()
     delete(pauseMenu);
     delete(perkMenu);
     resources->getMusic("GXRCH - HARD")->pause();
+    sounds.clear();
 }
 
 GameStates GSSurvival::update()
@@ -294,6 +295,13 @@ void GSSurvival::checkDestroyers()
         {
             vecDestroyers.erase(vecDestroyers.begin() + i);
         }
+    if(sounds.size() != 0)
+        while(sounds.front().getStatus() != sf::Sound::Playing)
+    {
+        sounds.pop_front();
+        if(sounds.size() == 0)
+            break;
+    }
 }
 
 void GSSurvival::updateView()

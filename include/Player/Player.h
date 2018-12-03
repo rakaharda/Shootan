@@ -38,6 +38,7 @@ public:
 private:
     sf::Texture texture;
     Weapon*     weapon;
+    Weapon*     newWeapon;
     int         skill;
     float       activeSpeedTime;
     float       reloadTime;
@@ -45,11 +46,11 @@ private:
     float       speed;
     float       upSpeed;
     float       defaultSpeed;
-    void         checkSkill(); 
+    void         checkSkill();
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
+    void         checkWeapon();
 };
 
 extern sf::RenderWindow window;

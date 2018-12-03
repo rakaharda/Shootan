@@ -24,7 +24,9 @@ public:
     bool         isAlive();
     bool         isBeingDestroyed();
     void         kill();
-    void         destroy();         
+    void         destroy();
+    void         setSpeed(float _speed);
+    float        getSpeed();
     static float percentDamage;
     static float FrostSpeed;
     static float FrostRotationRate;

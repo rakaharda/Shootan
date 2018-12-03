@@ -17,7 +17,7 @@ class Weapon : public Cooldown
 {
 public:
     Weapon(sf::Sprite* _source);
-    virtual ~Weapon() {};
+    virtual ~Weapon();
     virtual void      update();
     virtual bool      addProjectile();
     void              reload();

@@ -3,7 +3,7 @@
 
 #include "Game/GameState.h"
 #include "Game/SurvivalStates.h"
-
+#include <list>
 //*Field size 3840x2160 (2 times FullHD)
 
 class GSSurvival : public GameState, public Collision
