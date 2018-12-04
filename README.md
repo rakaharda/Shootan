@@ -18,8 +18,6 @@ Balance:
 
 *Increased railgun damage
 
-*Increased railgun projectile damage
-
 *Increased railgun projectile speed
 
 *Increased railgun shooting speed
