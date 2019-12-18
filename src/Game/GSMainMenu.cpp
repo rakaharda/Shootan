@@ -29,6 +29,9 @@ void GSMainMenu::handleEvents(sf::Event event)
     case MenuStates::MS_SETTINGS_MENU:
         settingsMenu->handleEvents(event);
         break;
+    case MenuStates::MS_MULTIPLAYER_MENU:
+        multiplayerMenu->handleEvents(event);
+        break;
     default:
         break;
     }
@@ -44,9 +47,15 @@ GameStates GSMainMenu::update()
     case MenuStates::MS_CREATE_SETTINGS_MENU:
         settingsMenu = new SettingsMenu(videoSettings, menuState);
         break;
+    case MenuStates::MS_CREATE_MULTIPLAYER_MENU:
+        multiplayerMenu = new MultiplayerMenu(&gameState, menuState, &mode);
+        break;
     case MenuStates::MS_MAIN_MENU:
         if(mainMenu->isCaption())
             mainMenu->playCaption();
+        break;
+    case MenuStates::MS_MULTIPLAYER_MENU:
+        multiplayerMenu->update();
         break;
     default:
         break;
@@ -78,6 +87,8 @@ void GSMainMenu::draw()
     case MenuStates::MS_SETTINGS_MENU:
          window.draw(*settingsMenu);
         break;
+    case MenuStates::MS_MULTIPLAYER_MENU:
+        window.draw(*multiplayerMenu);
     default:
         break;
     }

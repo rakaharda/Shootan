@@ -3,6 +3,7 @@
 
 #include "GUI/MainMenu.h"
 #include "GUI/SettingsMenu.h"
+#include "GUI/MultiplayerMenu.h"
 #include "GUI/MenuStates.h"
 #include "Components/GameStates.h"
 #include "Game/GameState.h"
@@ -17,11 +18,13 @@ public:
     void handleEvents(sf::Event _event);
 private:
     void loadresources();
-    int  backgroundSize;
+    int backgroundSize;
+    int mode;
     GameStates gameState;
     MenuStates *menuState;
     VideoSettings *videoSettings;
     MainMenu *mainMenu;
+    MultiplayerMenu *multiplayerMenu;
     SettingsMenu *settingsMenu;
     sf::Sprite background;
 };
