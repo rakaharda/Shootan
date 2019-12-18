@@ -20,6 +20,7 @@ public:
     bool isCaption();
     void caption();
     void uncaption();
+    void update();
 private:
     void setFunctions();
     void loadResources();

@@ -8,11 +8,12 @@ MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
     menuState = _menuState;
     m_isCaption = false;
     *menuState = MenuStates::MS_MAIN_MENU;
-    string buttonName[4];
+    vector<string> buttonName(5);
     buttonName[0] = "buttonMainPlay";
     buttonName[1] = "buttonMainSettings";
     buttonName[2] = "buttonMainCredits";
     buttonName[3] = "buttonMainExit";
+    buttonName[4] = "buttonMainMultiplayer";
     captionSprite.setTexture(resources->getTexture("caption"));
     captionSprite.setPosition(window.getSize().x / 2 - captionSprite.getTexture()->getSize().x / 2, window.getSize().y);
     backgroundCaption.setTexture(resources->getTexture("background_caption"));
@@ -21,8 +22,8 @@ MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
     backGroundSprite.setTexture(resources->getTexture("backgroundMainMenu"));
     backGroundSprite.setPosition(window.getSize().x / 2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y / 2 - backGroundSprite.getTexture()->getSize().y / 2);
-    for(unsigned int i = 0; i < 4; i++){
-        buttons.push_back(new Button(resources->getTexture(buttonName[i]),window.getSize().x/2,window.getSize().y/2 - 180 + i*120));
+    for(unsigned int i = 0; i < 5; i++){
+        buttons.push_back(new Button(resources->getTexture(buttonName[i]), window.getSize().x/2, window.getSize().y/2 - 180 + i*120));
         buttons.back()->setFunction(buttonFunctions[i]);
         buttons.back()->setLightButton(buttonName[i]+"Light");
     }
@@ -78,6 +79,9 @@ void MainMenu::setFunctions()
     buttonFunctions[3] = [this](){
         *gameState = GameStates::GS_ENDGAME;
     };
+    buttonFunctions[4] = [this](){
+        *menuState = MenuStates::MS_CREATE_MULTIPLAYER_MENU;
+    };
 }
 
 void MainMenu::playCaption()
@@ -94,6 +98,11 @@ void MainMenu::stopCaption()
     captionSprite.setPosition(window.getSize().x / 2 - captionSprite.getTexture()->getSize().x / 2, window.getSize().y);
 }
 
+void MainMenu::update()
+{
+    
+}
+
 void MainMenu::loadResources()
 {
     resources->addTexture("buttonMainPlay",         "./data/GUI/MainMenu/buttonMainPlay.png");
@@ -107,6 +116,8 @@ void MainMenu::loadResources()
     resources->addTexture("backgroundMainMenu",     "./data/GUI/MainMenu/backgroundMainMenu.png");
     resources->addTexture("caption",                "./data/GUI/MainMenu/caption.png");
     resources->addTexture("background_caption",     "./data/GUI/MainMenu/backgroundCaption.png");
+    resources->addTexture("buttonMainMultiplayer",  "./data/GUI/MainMenu/buttonMainMultiplayer.png");
+    resources->addTexture("buttonMainMultiplayerLight","./data/GUI/MainMenu/buttonMainMultiplayerLight.png");
 }
 
 void MainMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const

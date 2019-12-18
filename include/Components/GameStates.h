@@ -6,6 +6,7 @@ enum GameStates
     GS_LOADING_SCREEN,
     GS_MAINMENU,
     GS_GAMEMODE_SURVIVAL,
+    GS_GAMEMODE_PVP,
     GS_RESTART,
     GS_ENDGAME
 };

@@ -17,6 +17,7 @@ public:
     void handleEvents(sf::Event event);
     void updatelvl(int _score);
     void checkWeapon();
+    void update();
     int getlvl();
     bool canOpen();
     int getnextlvl();

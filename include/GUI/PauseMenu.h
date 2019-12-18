@@ -19,6 +19,7 @@ public:
     void handleEvents(sf::Event event);
     GameStates getGameState();
     void setGameState(GameStates _gameState);
+    void update();
 private:
     void refreshMenu();
     void setFunctions();

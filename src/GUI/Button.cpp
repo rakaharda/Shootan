@@ -1,5 +1,5 @@
 #include "GUI/Button.h"
-
+#include <iostream>
 Button::Button(sf::Texture& _texture, float _xPos, float _yPos)
 {
     m_function = []{};
@@ -47,6 +47,19 @@ bool Button::isClicked(float _xPos, float _yPos)
         return true;
     }
     else return false;
+}
+
+void Button::handleEvents(sf::Event event)
+{
+    //std::cout << clock.getElapsedTime().asSeconds() << endl;
+    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        if(m_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y))
+        {
+            m_function();
+            return;
+        }
+    }
 }
 
 void Button::changeButtonSprite(sf::Texture& _texture)

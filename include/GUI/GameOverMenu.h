@@ -10,6 +10,7 @@ public:
     GameOverMenu();
     virtual ~GameOverMenu();
     void handleEvents(sf::Event event);
+    void update();
     GameStates getGameState();
     void setGameState(GameStates _gameState);
 private:

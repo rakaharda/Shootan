@@ -22,6 +22,7 @@ public:
     bool isSelect();
     void select();
     void unselect();
+    void handleEvents(sf::Event event);
 protected:
     std::function <void(void)> m_function;
     sf::Sprite lightSprite;
@@ -34,6 +35,7 @@ private:
     float xPos;
     float yPos;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    sf::Clock clock;
 
 };
 

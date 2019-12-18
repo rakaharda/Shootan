@@ -176,6 +176,12 @@ void PerkMenu::setFunctions()
 
     };
 }
+
+void PerkMenu::update()
+{
+    
+}
+
 void PerkMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(backGroundSprite, states);

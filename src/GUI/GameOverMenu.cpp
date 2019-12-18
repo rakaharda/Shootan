@@ -65,6 +65,11 @@ void GameOverMenu::handleEvents(sf::Event event)
     }
 }
 
+void GameOverMenu::update()
+{
+
+}
+
 void GameOverMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(backGroundSprite,states);
