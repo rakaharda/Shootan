@@ -4,7 +4,8 @@
 enum ConnectionModes
 {
     HOST,
-    CLIENT
+    CLIENT,
+    DEFAULT
 };
 
 #endif //CONNECTION_MODES_H

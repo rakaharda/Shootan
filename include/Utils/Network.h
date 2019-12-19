@@ -12,7 +12,7 @@ public:
     static sf::Packet receivePacket();
     static void setConnection(ConnectionModes _mode, sf::IpAddress _ip);
     static void sendPacket(sf::Packet _packet);
-private:    
+private:
     static ConnectionModes connectionMode;
     static sf::TcpSocket socket;
 };

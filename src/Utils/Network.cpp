@@ -5,6 +5,9 @@ Network::Network()
 
 }
 
+ConnectionModes Network::connectionMode = ConnectionModes::DEFAULT;
+sf::TcpSocket Network::socket;
+
 void Network::setConnection(ConnectionModes _mode, sf::IpAddress _ip)
 {
     connectionMode = _mode;
