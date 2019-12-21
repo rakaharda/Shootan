@@ -20,6 +20,7 @@
 #include "Components/GameStates.h"
 #include "Utils/VideoSettings.h"
 #include "Game/GSSurvival.h"
+#include "Game/GSMultiplayer.h"
 #include "Game/GSMainMenu.h"
 #include "GUI/PauseMenu.h"
 #include "Utils/FPSCounter.h"
