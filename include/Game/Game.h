@@ -21,6 +21,8 @@
 #include "Utils/VideoSettings.h"
 #include "Game/GSSurvival.h"
 #include "Game/GSMainMenu.h"
+#include "Game/GSMPHost.h"
+#include "Game/GSMPClient.h"
 #include "GUI/PauseMenu.h"
 #include "Utils/FPSCounter.h"
 #include "Utils/ResourceManager.h"

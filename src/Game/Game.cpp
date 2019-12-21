@@ -20,7 +20,8 @@ Game::Game() : isPlaying(true)
     loadResources();
     gameState = GS_MAINMENU;
     if(gameState == GS_MAINMENU)
-        currentGameState = new GSMainMenu(videoSettings);
+        currentGameState = new GSMPHost(videoSettings);
+        //currentGameState = new GSMainMenu(videoSettings); //default
         //currentGameState = new GSSurvival(videoSettings);
 }
 

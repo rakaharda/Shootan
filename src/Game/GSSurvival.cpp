@@ -136,6 +136,7 @@ void GSSurvival::updateMusic()
                 resources->getMusic("GXRCH - HARD")->play();
             }
 }
+
 void GSSurvival::updateStats()
 {
     lvlBar->update(enemyFactory->getScore(),perkMenu->getnextlvl(),enemyFactory->getScore());

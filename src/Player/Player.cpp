@@ -96,6 +96,7 @@ void Player::checkWeapon()
             setSkill(skill);
         }
 }
+
 void Player::setSkill(int _skill)
 {
     if(skill == 0)
