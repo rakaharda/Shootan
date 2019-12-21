@@ -7,7 +7,7 @@
 class FindWeapon : public Perk
 {
 public:
-    void pickUp();
+    void pickUp(Player* players = player);
     FindWeapon(int _xPos, int _yPos, Weapon* _weapon);
     virtual ~FindWeapon(){};
 private:

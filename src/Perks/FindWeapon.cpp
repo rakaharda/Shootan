@@ -9,7 +9,7 @@ weapon(_weapon)
     m_sprite.setPosition(_xPos, _yPos);
 }
 
-void FindWeapon::pickUp()
+void FindWeapon::pickUp(Player * players)
 {
-    player->setWeapon(weapon);
+    players->setWeapon(weapon);
 }

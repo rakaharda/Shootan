@@ -7,7 +7,7 @@
 class Fire : public Perk
 {
 public:
-    void pickUp();
+    void pickUp(Player* players = player);
     Fire(int _xPos, int _yPos);
     virtual ~Fire(){};
 };

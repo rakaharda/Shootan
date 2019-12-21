@@ -6,7 +6,7 @@
 class UpSpeed : public Perk
 {
 public:
-    void pickUp();
+    void pickUp(Player* players = player);
     UpSpeed(int _xPos, int _yPos);
     virtual ~UpSpeed(){};
 };
