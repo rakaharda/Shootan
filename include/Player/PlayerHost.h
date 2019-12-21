@@ -7,7 +7,7 @@ class PlayerHost
     public:
         PlayerHost();
         virtual ~PlayerHost();
-
+        
     protected:
 
     private:

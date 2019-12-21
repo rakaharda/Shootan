@@ -74,7 +74,7 @@ void MultiplayerMenu::setFunctions()
     enterButtons[0]->setFunction(buttonFunctions[3]);
     buttonFunctions[3] = [this]()
     {
-        *gameState = GameStates::GS_GAMEMODE_PVP;
+        *gameState = GameStates::GS_GAMEMODE_MPHOST;
     };
     lobbyButtons[0]->setFunction(buttonFunctions[4]);
     buttonFunctions[4] = [this]()

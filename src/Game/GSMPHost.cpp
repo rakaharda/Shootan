@@ -1,13 +1,18 @@
 #include "Game/GSMPHost.h"
 
-GSMPHost::GSMPHost(VideoSettings *_videoSettings) : 
-fieldSize(sf::IntRect(0, 0, 2000, 2000)),
-videoSettings(_videoSettings)
+GSMPHost::GSMPHost(VideoSettings *_videoSettings)
 {
     //Setting up the connection
     connect();
-    view.setSize(videoSettings->width, videoSettings->height);
-    view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
+    setupSettings(_videoSettings);
+    sf::Packet readyPacket;
+    client.receive(readyPacket);
+    string msg;
+    readyPacket >> msg;
+    if(msg == "ready")
+    {
+        cout << "Starting game!";
+    }
 }
 
 void GSMPHost::connect()
@@ -26,6 +31,15 @@ void GSMPHost::connect()
     cout << "Client connected!" << endl;
 }
 
+void GSMPHost::setupSettings(VideoSettings *_videoSettings)
+{
+    fieldSize = sf::IntRect(0, 0, 2000, 2000);
+    videoSettings = _videoSettings;
+    view.setSize(videoSettings->width, videoSettings->height);
+    view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
+    playerClient = new PlayerClient;
+}
+
 GSMPHost::~GSMPHost()
 {
     //dtor
@@ -33,8 +47,12 @@ GSMPHost::~GSMPHost()
 
 GameStates GSMPHost::update()
 {
-
-    return GameStates::GS_GAMEMODE_SURVIVAL;
+    ClientEvents event;
+    sf::Packet packet;
+    client.receive(packet);
+    packet >> event;
+    playerClient->update(event);
+    return GameStates::GS_GAMEMODE_MPHOST;
 }
 
 void GSMPHost::handleEvents(sf::Event _event)

@@ -5,6 +5,9 @@
 #include "Game/SurvivalStates.h"
 #include <SFML/Network.hpp>
 #include <iostream>
+#include <string>
+#include <vector>
+#include "Player/PlayerClient.h"
 
 using namespace std;
 
@@ -12,8 +15,9 @@ class GSMPHost : public GameState, public Collision
 {
     public:
         GSMPHost(VideoSettings *_videoSettings);
+        GSMPHost(){};
         ~GSMPHost();
-        GameStates update();
+        virtual GameStates update();
         void draw();
         void handleEvents(sf::Event _event);
     protected:
@@ -21,7 +25,9 @@ class GSMPHost : public GameState, public Collision
         sf::IntRect fieldSize;
         VideoSettings   *videoSettings;
         virtual void connect();
+        virtual void setupSettings(VideoSettings *_videoSettings);
     private:
+        PlayerClient* playerClient;
         Player* player;
         sf::TcpListener listener;
         sf::TcpSocket client;
@@ -32,5 +38,5 @@ extern float frameTime;
 extern vector<Projectile*> vecProjectiles;
 extern vector<Perk*> vecPerks;
 extern ResourceManager *resources;
-extern AudioSettings *audioSettings; 
+extern AudioSettings *audioSettings;
 #endif // GSMPHOST_H

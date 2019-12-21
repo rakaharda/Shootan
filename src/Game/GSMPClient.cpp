@@ -1,9 +1,13 @@
 #include "Game/GSMPClient.h"
 
-GSMPClient::GSMPClient(VideoSettings *_videoSettings) : 
-GSMPHost(_videoSettings)
+GSMPClient::GSMPClient(VideoSettings *_videoSettings)
 {
     //ctor
+    connect();
+    setupSettings(_videoSettings);
+    sf::Packet readyPacket;
+    readyPacket << "ready";
+    host.send(readyPacket);
 }
 
 void GSMPClient::connect()
@@ -15,6 +19,20 @@ void GSMPClient::connect()
         cout << "Couldn't connect to host!" << endl;
     }
     cout << "Succesfully connected to host!" << endl;
+}
+
+GameStates GSMPClient::update()
+{
+    sf::Packet packet;
+    ClientEvents event;
+    event.keyDownW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+    event.keyDownS = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+    event.keyDownA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+    event.keyDownD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+    event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
+    packet << event;
+    host.send(packet);
+    return GS_GAMEMODE_MPCLIENT;
 }
 
 GSMPClient::~GSMPClient()

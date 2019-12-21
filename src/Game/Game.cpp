@@ -20,7 +20,7 @@ Game::Game() : isPlaying(true)
     loadResources();
     gameState = GS_MAINMENU;
     if(gameState == GS_MAINMENU)
-        currentGameState = new GSMPHost(videoSettings);
+        currentGameState = new GSMPClient(videoSettings);
         //currentGameState = new GSMainMenu(videoSettings); //default
         //currentGameState = new GSSurvival(videoSettings);
 }
@@ -88,6 +88,12 @@ void Game::update()
                 delete(currentGameState);
                 currentGameState = new GSSurvival(videoSettings);
                 break;
+            case GameStates::GS_GAMEMODE_MPHOST:
+                delete(currentGameState);
+                currentGameState = new GSMPHost(videoSettings);
+            case GameStates::GS_GAMEMODE_MPCLIENT:
+                delete(currentGameState);
+                currentGameState = new GSMPClient(videoSettings);
             case GameStates::GS_RESTART:
                 delete(currentGameState);
                 currentGameState = new GSSurvival(videoSettings);

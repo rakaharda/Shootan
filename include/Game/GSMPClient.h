@@ -10,7 +10,7 @@ class GSMPClient : public GSMPHost
     public:
         GSMPClient(VideoSettings *_videoSettings);
         virtual ~GSMPClient();
-
+        GameStates update();
     protected:
         void connect();
     private:
