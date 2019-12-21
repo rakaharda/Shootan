@@ -232,7 +232,7 @@ void GSSurvival::checkPerks()
     {
         if(checkCollision(player, vecPerks[i]))
         {
-            vecPerks[i]->pickUp();
+            vecPerks[i]->pickUp(player);
             vecPerks.erase(vecPerks.begin() + i);
             continue;
         }

@@ -7,10 +7,10 @@ Fire::Fire(int _xPos, int _yPos) : Perk(_xPos, _yPos)
     m_sprite.setPosition(_xPos, _yPos);
 }
 
-void Fire::pickUp()
+void Fire::pickUp(Player* players)
 {
     for(int i = 0; i < 60; i++)
         {
-            vecProjectiles.push_back(new Projectile(player->getSpritePointer(), resources->getTexture("projectile_1"), i, 1));
+            vecProjectiles.push_back(new Projectile(players->getSpritePointer(), resources->getTexture("projectile_1"), i, 1));
         }
 }

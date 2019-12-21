@@ -11,7 +11,7 @@ class Perk : public GameObject
     public:
         Perk(int _xPos, int _yPos);
         virtual ~Perk();
-        virtual void pickUp()=0;
+        virtual void pickUp(Player* players = player)=0;
         void update();
         bool checkActive();
         static Player* player;

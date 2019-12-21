@@ -7,9 +7,9 @@ UpSpeed::UpSpeed(int _xPos, int _yPos) : Perk(_xPos, _yPos)
     m_sprite.setPosition(_xPos, _yPos);
 }
 
-void UpSpeed::pickUp()
+void UpSpeed::pickUp(Player* players)
 {
-    player->setActiveSpeedTime(30.f);
-    if((player)->getSpeed() == (player)->getDefaultSpeed())
-        (player)->setSpeed(player->getSpeed() + player->getSpeedUp());
+    players->setActiveSpeedTime(30.f);
+    if((players)->getSpeed() == (players)->getDefaultSpeed())
+        (players)->setSpeed(players->getSpeed() + players->getSpeedUp());
 }

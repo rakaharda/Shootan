@@ -7,7 +7,7 @@
 class Frost : public Perk
 {
 public:
-    void pickUp();
+    void pickUp(Player* players = player);
     Frost(int _xPos, int _yPos);
     virtual ~Frost(){};
 };

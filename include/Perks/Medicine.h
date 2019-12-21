@@ -6,7 +6,7 @@
 class Medicine : public Perk
 {
 public:
-    void pickUp();
+    void pickUp(Player* players = player);
     Medicine(int _xPos, int _yPos);
     virtual ~Medicine(){};
 };

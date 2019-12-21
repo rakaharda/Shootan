@@ -7,9 +7,9 @@ Medicine::Medicine(int _xPos, int _yPos) : Perk(_xPos, _yPos)
     m_sprite.setPosition(_xPos, _yPos);
 }
 
-void Medicine::pickUp()
+void Medicine::pickUp(Player* players)
 {
-    (player)->setCurrentHealthPoints((int)((player)->getHealthPoints()/4) + (player)->getCurrentHealthPoints());
-    if((player)->getCurrentHealthPoints() > (player)->getHealthPoints())
-        (player)->setCurrentHealthPoints( (player)->getHealthPoints() );
+    (players)->setCurrentHealthPoints((int)((players)->getHealthPoints()/4) + (players)->getCurrentHealthPoints());
+    if((players)->getCurrentHealthPoints() > (players)->getHealthPoints())
+        (players)->setCurrentHealthPoints( (players)->getHealthPoints() );
 }
