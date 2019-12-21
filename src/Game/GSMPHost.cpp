@@ -62,5 +62,5 @@ void GSMPHost::handleEvents(sf::Event _event)
 
 void GSMPHost::draw()
 {
-
+    window.draw(*playerClient);
 }

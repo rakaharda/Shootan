@@ -32,7 +32,7 @@ GameStates GSMPClient::update()
     event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
     packet << event;
     host.send(packet);
-    return GS_GAMEMODE_MPCLIENT;
+    return GameStates::GS_GAMEMODE_MPCLIENT;
 }
 
 GSMPClient::~GSMPClient()

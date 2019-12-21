@@ -58,3 +58,4 @@
 *.idb
 /x64/
 settings.conf
+audio.conf
