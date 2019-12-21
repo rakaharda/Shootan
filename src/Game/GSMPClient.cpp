@@ -23,15 +23,19 @@ void GSMPClient::connect()
 
 GameStates GSMPClient::update()
 {
-    sf::Packet packet;
+    sf::Packet incomingPacket, outgoingPacket;
     ClientEvents event;
     event.keyDownW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
     event.keyDownS = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
     event.keyDownA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
     event.keyDownD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
     event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
-    packet << event;
-    host.send(packet);
+    outgoingPacket << event;
+    host.send(outgoingPacket);
+    host.receive(incomingPacket);
+    sf::Vector2f pos;
+    incomingPacket >> pos.x >> pos.y;
+    playerClient->update(pos);
     return GameStates::GS_GAMEMODE_MPCLIENT;
 }
 

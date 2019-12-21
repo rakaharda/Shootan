@@ -17,6 +17,11 @@ void PlayerClient::update(ClientEvents event)
     move(event);
 }
 
+void PlayerClient::update(sf::Vector2f _pos)
+{
+    m_sprite.setPosition(_pos);
+}
+
 void PlayerClient::move(ClientEvents event)
 {
     float angle = -1;

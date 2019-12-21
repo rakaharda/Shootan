@@ -26,8 +26,8 @@ class GSMPHost : public GameState, public Collision
         VideoSettings   *videoSettings;
         virtual void connect();
         virtual void setupSettings(VideoSettings *_videoSettings);
-    private:
         PlayerClient* playerClient;
+    private:
         Player* player;
         sf::TcpListener listener;
         sf::TcpSocket client;

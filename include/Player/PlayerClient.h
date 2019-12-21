@@ -18,6 +18,7 @@ class PlayerClient : public GameObject, public HealthPoints
         PlayerClient();
         virtual ~PlayerClient();
         void update(ClientEvents event);
+        void update(sf::Vector2f _pos);
         void update(){};
     protected:
         sf::Texture  texture;

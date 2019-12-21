@@ -48,10 +48,12 @@ GSMPHost::~GSMPHost()
 GameStates GSMPHost::update()
 {
     ClientEvents event;
-    sf::Packet packet;
-    client.receive(packet);
-    packet >> event;
+    sf::Packet incomingPacket, outgoingPacket;
+    client.receive(incomingPacket);
+    incomingPacket >> event;
     playerClient->update(event);
+    outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y;
+    client.send(outgoingPacket);
     return GameStates::GS_GAMEMODE_MPHOST;
 }
 
