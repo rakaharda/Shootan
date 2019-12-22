@@ -30,6 +30,8 @@ void PlayerClient::update(sf::Vector2f _pos, bool keyDownLMB)
 {
     m_sprite.setPosition(_pos);
     update();
+    if(keyDownLMB)
+        weapon->addProjectile();
 }
 
 void PlayerClient::update()
