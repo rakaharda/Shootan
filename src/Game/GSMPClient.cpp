@@ -40,6 +40,7 @@ GameStates GSMPClient::update()
     float angleHost;
     incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
     bool keyDownLMB;
+    incomingPacket >> keyDownLMB;
     playerClient->update(posClient, event.keyDownLMB);
     playerHost->update(posHost, keyDownLMB);
     playerHost->setOrientation(angleHost);
