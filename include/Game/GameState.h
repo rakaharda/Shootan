@@ -37,6 +37,11 @@
 #include "Utils/AudioSettings.h"
 #include "Utils/VideoSettings.h"
 
+//
+#include "Obstacles/Obstacles.h"
+#include "Obstacles/DeathZone.h"
+#include "Obstacles/Wall.h"
+
 class GameState
 {
 public:

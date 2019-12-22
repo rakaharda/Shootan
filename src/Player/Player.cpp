@@ -169,6 +169,11 @@ void Player::move()
     }
 }
 
+void Player::recline(int _x, int _y)
+{
+    m_sprite.setPosition(m_sprite.getPosition().x + _x, m_sprite.getPosition().y + _y);
+}
+
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);

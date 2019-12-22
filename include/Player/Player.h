@@ -31,6 +31,7 @@ public:
     float   getActiveSpeedTime();
     void    setActiveSpeedTime(float _activeSpeedtime);
     void    updatePerkWeapon();
+    void    recline(int _x, int _y);
     float   getDefaultSpeed();
     float   getSpeedUp();
     void    setSpeedUp(float _speedUp);
