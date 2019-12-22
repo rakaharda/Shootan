@@ -31,6 +31,7 @@ GameStates GSMPClient::update()
     event.keyDownA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
     event.keyDownD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
     event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
+    event.keyDownLMB = sf::Mouse::isButtonPressed(sf::Mouse::Left);
     event.angle = playerClient->setOrientation();
     outgoingPacket << event;
     host.send(outgoingPacket);
@@ -38,8 +39,9 @@ GameStates GSMPClient::update()
     sf::Vector2f posClient, posHost;
     float angleHost;
     incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
-    playerClient->update(posClient);
-    playerHost->update(posHost);
+    bool keyDownLMB;
+    playerClient->update(posClient, event.keyDownLMB);
+    playerHost->update(posHost, keyDownLMB);
     playerHost->setOrientation(angleHost);
     updateView(playerClient);
     return GameStates::GS_GAMEMODE_MPCLIENT;

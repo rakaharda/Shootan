@@ -10,16 +10,30 @@ PlayerClient::PlayerClient()
     m_sprite.setPosition(FWIDTH / 2, FHEIGHT / 2);
     speed = 300.f;
     defaultSpeed = 300.f;
+    activeSpeedTime = 0.f;
+    reloadTime = 0.f;
+    projectileSpeed = 0.f;
+    upSpeed = 100.f;
 }
 
 void PlayerClient::update(ClientEvents event)
 {
     move(event);
+    update();
+    if(event.keyDownLMB)
+        weapon->addProjectile();
 }
 
-void PlayerClient::update(sf::Vector2f _pos)
+void PlayerClient::update(sf::Vector2f _pos, bool keyDownLMB)
 {
     m_sprite.setPosition(_pos);
+    update();
+}
+
+void PlayerClient::update()
+{
+    checkWeapon();
+    weapon->update();
 }
 
 void PlayerClient::move(ClientEvents event)
@@ -100,6 +114,18 @@ float PlayerClient::setOrientation(float _angle)
     }
     m_sprite.setRotation(angle);
     return angle;
+}
+
+void PlayerClient::checkWeapon()
+{
+    if(newWeapon != nullptr)
+        if(weapon != newWeapon)
+        {
+            delete(weapon);
+            weapon = newWeapon;
+            newWeapon = nullptr;
+            //setSkill(skill);
+        }
 }
 
 void PlayerClient::draw(sf::RenderTarget &target, sf::RenderStates states) const
