@@ -44,6 +44,8 @@ GameStates GSMPClient::update()
     playerClient->update(posClient, event.keyDownLMB);
     playerHost->update(posHost, keyDownLMB);
     playerHost->setOrientation(angleHost);
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+        vecProjectiles[i]->update();
     updateView(playerClient);
     return GameStates::GS_GAMEMODE_MPCLIENT;
 }
