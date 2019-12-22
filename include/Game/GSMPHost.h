@@ -18,7 +18,7 @@ class GSMPHost : public GameState, public Collision
         GSMPHost(){};
         ~GSMPHost();
         virtual GameStates update();
-        void draw();
+        virtual void draw();
         void handleEvents(sf::Event _event);
     protected:
         sf::Sprite background;

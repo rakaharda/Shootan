@@ -11,11 +11,13 @@ class GSMPClient : public GSMPHost
         GSMPClient(VideoSettings *_videoSettings);
         virtual ~GSMPClient();
         GameStates update();
+        void draw();
     protected:
         void connect();
     private:
         sf::TcpSocket host;
         PlayerClient* playerHost;
+        void drawClient();
 };
 
 extern sf::RenderWindow window;

@@ -36,7 +36,7 @@ void Weapon::update()
         if(sounds.size() == 0)
             break;
     }
-    cout<<' '<<sounds.size();
+    //cout<<' '<<sounds.size();
 }
 
 bool Weapon::addProjectile()

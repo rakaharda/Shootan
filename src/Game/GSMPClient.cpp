@@ -49,3 +49,14 @@ GSMPClient::~GSMPClient()
 {
     //dtor
 }
+
+
+void GSMPClient::draw()
+{
+    window.setView(view);
+    window.draw(background);
+    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+        window.draw(*vecProjectiles[i]);
+    window.draw(*playerClient);
+    window.draw(*playerHost);
+}
