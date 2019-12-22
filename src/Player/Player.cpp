@@ -17,6 +17,14 @@ Player::Player() : HealthPoints()
     reloadTime = 0.f;
     projectileSpeed = 0.f;
     newWeapon = nullptr;
+    FHEIGHT = 2160.f;
+    FWIDTH = 3840.f;
+}
+
+void Player::setBorders(float _width, float _height)
+{
+    FHEIGHT = _height;
+    FWIDTH = _width;
 }
 
 Player::~Player()

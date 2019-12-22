@@ -15,6 +15,14 @@ class GSMPClient : public GSMPHost
         void connect();
     private:
         sf::TcpSocket host;
+        PlayerClient* playerHost;
 };
+
+extern sf::RenderWindow window;
+extern float frameTime;
+extern vector<Projectile*> vecProjectiles;
+extern vector<Perk*> vecPerks;
+extern ResourceManager *resources;
+extern AudioSettings *audioSettings;
 
 #endif // GSMPCLIENT_H

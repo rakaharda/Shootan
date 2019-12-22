@@ -11,8 +11,8 @@
 #include "Weapons/Gun.h"
 #include "Components/HealthPoints.h"
 
-#define FHEIGHT 2160
-#define FWIDTH 3840
+//#define FHEIGHT 2160
+//#define FWIDTH 3840
 
 using namespace std;
 
@@ -35,7 +35,9 @@ public:
     float   getSpeedUp();
     void    setSpeedUp(float _speedUp);
     void    setDefaultSpeed(float _defaultSpeed);
+    void    setBorders(float _width, float _height);
 private:
+    float FHEIGHT, FWIDTH;
     sf::Texture texture;
     Weapon*     weapon;
     Weapon*     newWeapon;

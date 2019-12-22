@@ -5,6 +5,7 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings)
     //ctor
     connect();
     setupSettings(_videoSettings);
+    playerHost = new PlayerClient;
     sf::Packet readyPacket;
     readyPacket << "ready";
     host.send(readyPacket);
@@ -30,12 +31,16 @@ GameStates GSMPClient::update()
     event.keyDownA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
     event.keyDownD = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
     event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
+    event.angle = playerClient->setOrientation();
     outgoingPacket << event;
     host.send(outgoingPacket);
     host.receive(incomingPacket);
-    sf::Vector2f pos;
-    incomingPacket >> pos.x >> pos.y;
-    playerClient->update(pos);
+    sf::Vector2f posClient, posHost;
+    float angleHost;
+    incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
+    playerClient->update(posClient);
+    playerHost->update(posHost);
+    playerHost->setOrientation(angleHost);
     updateView(playerClient);
     return GameStates::GS_GAMEMODE_MPCLIENT;
 }

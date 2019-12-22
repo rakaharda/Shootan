@@ -20,12 +20,12 @@ class PlayerClient : public GameObject, public HealthPoints
         void update(ClientEvents event);
         void update(sf::Vector2f _pos);
         void update(){};
+        float        setOrientation(float _angle = -1);
     protected:
         sf::Texture  texture;
         float        speed;
         float        defaultSpeed;
         void         move(ClientEvents event);
-        void         setOrientation();
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
 };

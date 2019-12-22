@@ -11,7 +11,7 @@ struct ClientEvents
     sf::Int8 keyDownD;
     sf::Int8 keyDownR;
     sf::Int8 keyDownLMB;
-    sf::Vector2f mousePosition;
+    float    angle;
     ClientEvents()
     {
         keyDownW = 0;
@@ -20,7 +20,7 @@ struct ClientEvents
         keyDownD = 0;
         keyDownR = 0;
         keyDownLMB = 0;
-        mousePosition = sf::Vector2f(0.f, 0.f);
+        angle = -1.f;
     }
 };
 

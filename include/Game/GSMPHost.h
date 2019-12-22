@@ -21,12 +21,14 @@ class GSMPHost : public GameState, public Collision
         void draw();
         void handleEvents(sf::Event _event);
     protected:
+        sf::Sprite background;
         sf::View view;
         sf::IntRect fieldSize;
         VideoSettings   *videoSettings;
         virtual void connect();
         virtual void setupSettings(VideoSettings *_videoSettings);
         void updateView(GameObject* obj);
+        void loadResources();
         PlayerClient* playerClient;
     private:
         Player* player;
