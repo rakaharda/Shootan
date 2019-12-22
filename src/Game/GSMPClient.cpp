@@ -36,6 +36,7 @@ GameStates GSMPClient::update()
     sf::Vector2f pos;
     incomingPacket >> pos.x >> pos.y;
     playerClient->update(pos);
+    updateView(playerClient);
     return GameStates::GS_GAMEMODE_MPCLIENT;
 }
 
