@@ -118,6 +118,7 @@ GSMPClient::~GSMPClient()
     vecProjectiles.clear();
     delete(playerClient);
     delete(playerHost);
+    resources->getMusic("GXRCH - Race for Wind")->stop();
 }
 
 void GSMPClient::checkProjectiles()

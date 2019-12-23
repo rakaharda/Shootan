@@ -82,6 +82,9 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     greenModifier = 1;
     blueModifier = -1;
     colorAmplifier = 50.f;
+    resources->getMusic("GXRCH - Race for Wind")->setVolume(audioSettings->music);
+    resources->getMusic("GXRCH - Race for Wind")->setLoop(true);
+    resources->getMusic("GXRCH - Race for Wind")->play();
 }
 
 void GSMPHost::updateBackground()
@@ -133,6 +136,7 @@ void GSMPHost::updateView(GameObject *obj)
 
 GSMPHost::~GSMPHost()
 {
+    resources->getMusic("GXRCH - Race for Wind")->stop();
     //dtor
 }
 
@@ -316,6 +320,7 @@ void GSMPHost::loadResources()
     resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
+    resources->addMusic("GXRCH - Race for Wind", "./data/music/mpmusic.wav");
 }
 void GSMPHost::checkObstacles()
 {
