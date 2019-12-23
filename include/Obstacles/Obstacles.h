@@ -3,6 +3,7 @@
 
 #include "Components/GameObject.h"
 #include "Player/Player.h"
+#include "Player/PlayerClient.h"
 #include "Utils/ResourceManager.h"
 
 
@@ -12,6 +13,7 @@ class Obstacles : public GameObject
         Obstacles();
         virtual ~Obstacles();
         virtual void smash(Player* &players) = 0;
+        virtual void smash(PlayerClient* &players) = 0;
         virtual void update() = 0;
         virtual bool checkActive() = 0;
         bool passability = true;

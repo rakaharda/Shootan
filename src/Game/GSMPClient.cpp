@@ -5,6 +5,8 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     //ctor
     ip = _ip;
     setupSettings(_videoSettings);
+    healthBar = new HealthBar(playerClient);
+    ammoBar = new AmmoBar(playerClient);
     //host.setBlocking(false);
     playerHost = new PlayerClient;
 }
@@ -13,7 +15,7 @@ void GSMPClient::connect(string _ip)
 {
     sf::SocketSelector selector;
     selector.add(host);
-    cout << "Connecting to host" << endl;   
+    cout << "Connecting to host" << endl;
     status = host.connect(_ip, 2000);
     if(status != sf::Socket::Done)
     {
@@ -32,7 +34,7 @@ void GSMPClient::connect(string _ip)
 GameStates GSMPClient::update()
 {
     if(status != sf::Socket::Done)
-    { 
+    {
         connect(ip);
     }
     else
@@ -46,7 +48,7 @@ GameStates GSMPClient::update()
         event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
         event.keyDownLMB = sf::Mouse::isButtonPressed(sf::Mouse::Left);
         event.angle = playerClient->setOrientation();
-        outgoingPacket << event;
+        outgoingPacket << event << playerClient->getCurrentHealthPoints();
         host.send(outgoingPacket);
         host.receive(incomingPacket);
         sf::Vector2f posClient, posHost;
@@ -54,21 +56,91 @@ GameStates GSMPClient::update()
         incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
         bool keyDownLMB;
         incomingPacket >> keyDownLMB;
+        int gg;
+        incomingPacket >> gg;
         playerClient->update(posClient, event.keyDownLMB);
         playerHost->update(posHost, keyDownLMB);
         playerHost->setOrientation(angleHost);
-        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-            vecProjectiles[i]->update();
-        updateView(playerClient);
+        checkObstacles();
+        updateGlobal();
+        checkProjectiles();
+        updateListener();
+        if(gg)
+            rematch();
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
 }
 
-GSMPClient::~GSMPClient()
+void GSMPClient::rematch()
 {
-    //dtor
+    delete(playerHost);
+    delete(playerClient);
+    delete(healthBar);
+    delete(ammoBar);
+    vecProjectiles.clear();
+    vecProjectiles.reserve(200);
+    playerHost = new PlayerClient;
+    playerClient = new PlayerClient;
+    healthBar = new HealthBar(playerClient);
+    ammoBar = new AmmoBar(playerClient);
+    playerClient->setBorders(2000.f, 2000.f);
 }
 
+void GSMPClient::updateView()
+{
+    GSMPHost::updateView(playerClient);
+}
+
+void GSMPClient::checkObstacles()
+{
+    for(unsigned int i = 0; i < vecObstacles.size(); i++)
+    {
+        for(unsigned int j = 0; j < vecProjectiles.size(); j++)
+        {
+            if(checkCollision(vecProjectiles[j], vecObstacles[i]) && !(vecObstacles[i]->passability))
+            {
+                vecProjectiles[j]->markToDelete();
+                if(vecProjectiles[j]->toDelete())
+                    vecProjectiles.erase(vecProjectiles.begin()+j);
+            }
+        }
+    }
+
+}
+
+void GSMPClient::updateListener()
+{
+    sf::Listener::setPosition(playerClient->getSprite().getPosition().x, playerClient->getSprite().getPosition().y, 0.f);
+}
+
+GSMPClient::~GSMPClient()
+{
+    vecProjectiles.clear();
+    delete(playerClient);
+    delete(playerHost);
+    resources->getMusic("GXRCH - Race for Wind")->stop();
+}
+
+void GSMPClient::checkProjectiles()
+{
+    for (unsigned int i = 0; i < vecProjectiles.size(); i++)
+    {
+        if (vecProjectiles[i]->getSource() != playerHost->getSpritePointer())
+            if (checkCollision(vecProjectiles[i], playerHost))
+            {
+                playerHost->takeDamage(vecProjectiles[i]->getDamage());
+                vecProjectiles[i]->markToDelete();
+            }
+        if (vecProjectiles[i]->getSource() != playerClient->getSpritePointer())
+            if (checkCollision(vecProjectiles[i], playerClient))
+            {
+                playerClient->takeDamage(vecProjectiles[i]->getDamage());
+                vecProjectiles[i]->markToDelete();
+            }
+        if (vecProjectiles[i]->toDelete())
+            vecProjectiles.erase(vecProjectiles.begin() + i);
+    }
+}
 
 void GSMPClient::draw()
 {
@@ -76,6 +148,12 @@ void GSMPClient::draw()
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
+    for(unsigned int i = 0; i < vecObstacles.size(); i++)
+        window.draw(*vecObstacles[i]);
     window.draw(*playerClient);
     window.draw(*playerHost);
+    window.setView(window.getDefaultView());
+    window.draw(*healthBar);
+    window.draw(*ammoBar);
 }
+

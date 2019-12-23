@@ -21,8 +21,8 @@ class Player : public GameObject, public HealthPoints
 public:
     Player();
     virtual ~Player();
-    void    update();
-    void    handleEvents(sf::Event event);
+    virtual void    update();
+    virtual void    handleEvents(sf::Event event);
     Weapon* getWeapon();
     void    setWeapon(Weapon* _weapon);
     void    setSkill(int _skill);
@@ -37,8 +37,9 @@ public:
     void    setSpeedUp(float _speedUp);
     void    setDefaultSpeed(float _defaultSpeed);
     void    setBorders(float _width, float _height);
-private:
-    float FHEIGHT, FWIDTH;
+    void    setPosition(sf::Vector2f pos);
+    void    setPosition(float x, float y);
+protected:
     sf::Texture texture;
     Weapon*     weapon;
     Weapon*     newWeapon;
@@ -50,10 +51,12 @@ private:
     float       upSpeed;
     float       defaultSpeed;
     void         checkSkill();
+    void         checkWeapon();
+    float FHEIGHT, FWIDTH;
+private:
     void         move();
     void         setOrientation();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    void         checkWeapon();
 };
 
 extern sf::RenderWindow window;

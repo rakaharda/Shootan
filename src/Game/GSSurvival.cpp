@@ -325,6 +325,9 @@ void GSSurvival::loadResources()
     //*Textures
         //Background
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
+        //Obstacles
+    resources->addTexture("obstacles_wall", "./data/Obstacles/Wall.png");
+    resources->addTexture("obstacles_death_zone", "./data/Obstacles/Death_zone.png");
         //Projectiles
     resources->addTexture("projectile_1",   "./data/projectiles/projectile1_test.png");
     resources->addTexture("projectile_2",   "./data/projectiles/projectile2.png");
