@@ -5,11 +5,12 @@
 #include "GUI/TextBox.h"
 #include "GUI/Menu.h"
 #include "GUI/MenuStates.h"
-#include "GUI/MultiplayerStates.h"
+#include "GUI/MultiplayerMenuStates.h"
 #include "Utils/ResourceManager.h"
 #include "Utils/VideoSettings.h"
 #include "Game/GSMPHost.h"
 #include "Game/GSMPClient.h"
+#include "Game/MultiplayerStates.h"
 #include "Components/GameStates.h"
 
 class MultiplayerMenu: public Menu
@@ -31,7 +32,7 @@ private:
     vector<sf::Vector2f*> positions;
     MenuStates *menuState;
     GameStates *gameState;
-    MultiplayerStates mpMenuState;
+    MultiplayerMenuStates mpMenuState;
     VideoSettings *videoSettings;
     sf::IpAddress ip;
     sf::Text textIp;

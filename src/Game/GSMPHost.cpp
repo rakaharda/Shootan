@@ -6,11 +6,14 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     //Setting up the connection
     status = sf::Socket::NotReady;
     state = MPS_MENU_CONNECTING;
-    videoSettings = _videoSettings;
+    setupSettings(_videoSettings);
     player = new Player;
+    player->setBorders(2000.f, 2000.f);
+    player->setPosition(100.f, 1000.f);
+    playerClient->setBorders(2000.f, 2000.f);
+    playerClient->setPosition(1900, 1000);
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
-    playerClient = new PlayerClient;
     //client.setBlocking(false);
     listener.setBlocking(false);
     unsigned port = 2000;
@@ -46,6 +49,7 @@ void GSMPHost::connect()
                 //client.setBlocking(true);
                 listener.setBlocking(true);
                 cout << "Starting game!";
+                state = MPS_MENU_WAITING;
             }
         }
 }
@@ -61,6 +65,7 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
+    playerClient = new PlayerClient;
     playerClient->setBorders(2000.f, 2000.f);
     vecObstacles.reserve(20);
     vecObstacles.push_back(new Wall(200, 670, 0));
@@ -83,7 +88,6 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     colorAmplifier = 50.f;
     resources->getMusic("GXRCH - Race for Wind")->setVolume(audioSettings->music);
     resources->getMusic("GXRCH - Race for Wind")->setLoop(true);
-    resources->getMusic("GXRCH - Race for Wind")->play();
 }
 
 void GSMPHost::updateBackground()
@@ -144,17 +148,14 @@ GSMPHost::~GSMPHost()
 
 GameStates GSMPHost::update()
 {
-    if (status != sf::Socket::Done)
+    sf::Packet outgoingPacket, incomingPacket;
+    switch(state)
     {
+    case MPS_MENU_CONNECTING:
         connect();
         break;
     case MPS_START_GAME:
-        setupSettings(videoSettings);
-        player->setBorders(2000.f, 2000.f);
-        player->setPosition(100.f, 1000.f);
-        playerClient->setBorders(2000.f, 2000.f);
-        playerClient->setPosition(1900, 1000);
-        playerClient->setOpponentTexture();
+        resources->getMusic("GXRCH - Race for Wind")->play();
         state = MPS_PLAY;
         break;
     case MPS_PLAY:
@@ -193,6 +194,16 @@ GameStates GSMPHost::update()
             rematch();
         return GameStates::GS_GAMEMODE_MPHOST;
     }
+}
+
+void GSMPHost::setState(MultiplayerStates _state)
+{
+    state = _state;
+}
+
+MultiplayerStates GSMPHost::getState()
+{
+    return state;
 }
 
 void GSMPHost::rematch()

@@ -7,10 +7,9 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     videoSettings = _videoSettings;
     state = MPS_MENU_CONNECTING;
     //host.setBlocking(false);
-    playerClient = new PlayerClient;
+    setupSettings(_videoSettings);
     healthBar = new HealthBar(playerClient);
     ammoBar = new AmmoBar(playerClient);
-    playerHost = new PlayerClient;
     playerHost = new PlayerClient;
     playerHost->setOpponentTexture();
 }
@@ -28,6 +27,7 @@ void GSMPClient::connect(string _ip)
     else
     {
         cout << "Succesfully connected to host!" << endl;
+        state = MPS_MENU_WAITING;
         host.setBlocking(true);
     }
     sf::Packet readyPacket;
@@ -37,13 +37,15 @@ void GSMPClient::connect(string _ip)
 
 GameStates GSMPClient::update()
 {
-    if(status != sf::Socket::Done)
+    sf::Packet outgoingPacket, incomingPacket;
+    switch(state)
     {
+    case MPS_MENU_CONNECTING:
         connect(ip);
         break;
     case MPS_START_GAME:
         //host.setBlocking(false);
-        setupSettings(videoSettings);
+        resources->getMusic("GXRCH - Race for Wind")->play();
         state = MPS_PLAY;
         break;
     case MPS_PLAY:

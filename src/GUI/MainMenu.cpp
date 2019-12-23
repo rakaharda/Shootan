@@ -10,10 +10,10 @@ MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
     *menuState = MenuStates::MS_MAIN_MENU;
     vector<string> buttonName(5);
     buttonName[0] = "buttonMainPlay";
-    buttonName[1] = "buttonMainSettings";
-    buttonName[2] = "buttonMainCredits";
-    buttonName[3] = "buttonMainExit";
-    buttonName[4] = "buttonMainMultiplayer";
+    buttonName[1] = "buttonMainMultiplayer";
+    buttonName[2] = "buttonMainSettings";
+    buttonName[3] = "buttonMainCredits";
+    buttonName[4] = "buttonMainExit";
     captionSprite.setTexture(resources->getTexture("caption"));
     captionSprite.setPosition(window.getSize().x / 2 - captionSprite.getTexture()->getSize().x / 2, window.getSize().y);
     backgroundCaption.setTexture(resources->getTexture("background_caption"));
@@ -23,7 +23,7 @@ MainMenu::MainMenu(GameStates *_gameState, MenuStates *_menuState)
     backGroundSprite.setPosition(window.getSize().x / 2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y / 2 - backGroundSprite.getTexture()->getSize().y / 2);
     for(unsigned int i = 0; i < 5; i++){
-        buttons.push_back(new Button(resources->getTexture(buttonName[i]), window.getSize().x/2, window.getSize().y/2 - 180 + i*120));
+        buttons.push_back(new Button(resources->getTexture(buttonName[i]), window.getSize().x/2, window.getSize().y/2 - 250 + i * 125));
         buttons.back()->setFunction(buttonFunctions[i]);
         buttons.back()->setLightButton(buttonName[i]+"Light");
     }
@@ -69,18 +69,18 @@ void MainMenu::setFunctions()
         *gameState = GameStates::GS_GAMEMODE_SURVIVAL;
     };
     buttonFunctions[1] = [this](){
-        *menuState = MenuStates::MS_CREATE_SETTINGS_MENU;
+        *menuState = MenuStates::MS_CREATE_MULTIPLAYER_MENU;
     };
     buttonFunctions[2] = [this](){
+        *menuState = MenuStates::MS_CREATE_SETTINGS_MENU;
+    };
+    buttonFunctions[3] = [this](){
         caption();
         resources->getMusic("GXRCH - HARD")->setVolume(audioSettings->music);
         resources->getMusic("GXRCH - HARD")->play();
     };
-    buttonFunctions[3] = [this](){
-        *gameState = GameStates::GS_ENDGAME;
-    };
     buttonFunctions[4] = [this](){
-        *menuState = MenuStates::MS_CREATE_MULTIPLAYER_MENU;
+        *gameState = GameStates::GS_ENDGAME;
     };
 }
 
