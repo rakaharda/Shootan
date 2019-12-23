@@ -5,6 +5,7 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     //ctor
     ip = _ip;
     videoSettings = _videoSettings;
+    state = MPS_MENU_CONNECTING;
     //host.setBlocking(false);
     playerHost = new PlayerClient;
     playerHost->setOpponentTexture();

@@ -5,6 +5,7 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     //Setting up the connection
     status = sf::Socket::NotReady;
     videoSettings = _videoSettings;
+    state = MPS_MENU_CONNECTING;
     //client.setBlocking(false);
     listener.setBlocking(false);
     unsigned port = 2000;
