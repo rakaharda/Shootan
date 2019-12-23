@@ -5,7 +5,6 @@
 #include "GUI/TextBox.h"
 #include "GUI/Menu.h"
 #include "GUI/MenuStates.h"
-#include "GUI/Lobby.h"
 #include "GUI/MultiplayerStates.h"
 #include "Utils/ResourceManager.h"
 #include "Utils/VideoSettings.h"
@@ -32,7 +31,6 @@ private:
     vector<sf::Vector2f*> positions;
     MenuStates *menuState;
     GameStates *gameState;
-    PlayerBlock* pb;
     MultiplayerStates mpMenuState;
     VideoSettings *videoSettings;
     sf::IpAddress ip;

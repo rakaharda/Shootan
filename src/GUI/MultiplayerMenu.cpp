@@ -8,7 +8,6 @@ MultiplayerMenu::MultiplayerMenu(GameStates *_gameState, MenuStates *_menuState,
     menuState = _menuState;
     connected = false;
     videoSettings = _videoSettings;
-    pb = new PlayerBlock(window.getSize().x / 2 - 200, window.getSize().y / 2 - 50, "host", 1);
     loadResources();
     setButtons();
     setFunctions();

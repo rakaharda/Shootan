@@ -28,6 +28,7 @@ void GSMPHost::connect()
     sf::SocketSelector selector;
     selector.add(listener);
     cout << "Waiting for user to connect." << endl;
+
         if(listener.accept(client) != sf::Socket::Done)
         {
             //cout << "Cannot connect client!" << endl;
@@ -48,7 +49,6 @@ void GSMPHost::connect()
                 cout << "Starting game!";
             }
         }
-    }
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)
