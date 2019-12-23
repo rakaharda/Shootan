@@ -69,7 +69,7 @@ void MultiplayerMenu::update()
     {
         if(!connected)
         {
-            if(multiplayerState->getSate() != MultiplayerStates::MPS_MENU_CONNECTING)
+            if(multiplayerState->getSate() == MultiplayerStates::MPS_MENU_CONNECTING)
             {
                 multiplayerState->update();
                 if(clock.getElapsedTime().asSeconds() > 2.f)
