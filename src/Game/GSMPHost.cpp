@@ -110,6 +110,7 @@ GameStates GSMPHost::update()
         player->update();
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
             vecProjectiles[i]->update();
+        checkObstacles();
         outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y  <<
                         player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left);
         client.send(outgoingPacket);
@@ -180,6 +181,27 @@ void GSMPHost::loadResources()
     resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
+}
+void GSMPHost::checkObstacles()
+{
+    for(unsigned int i = 0; i < vecObstacles.size(); i++)
+    {
+        if(checkCollision(player, vecObstacles[i]))
+        {
+            vecObstacles[i]->smash(player);
+        }
+        if(checkCollision(playerClient, vecObstacles[i]))
+        {
+            vecObstacles[i]->smash(playerClient);
+        }
+        //for(unsigned int j = 0; j < vecProjectiles.size(); j++)
+        //{
+            //if(checkCollision(vecProjectiles[j], vecObstacles[i]) && !(vecObstacles[i]->passability))
+            //{
+            //    vecProjectiles[j]->markToDelete();
+            //}
+        //}
+    }
 }
 
 void GSMPHost::draw()

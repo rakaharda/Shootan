@@ -20,22 +20,46 @@ Wall::Wall(int _xPos, int _yPos, int rot) : Obstacles()
 }
 void Wall::smash(Player* &players)
 {
-    players->recline(5, 0);
+    players->recline(20, 0);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(-10, 0);
+    players->recline(-40, 0);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(5, 5);
+    players->recline(20, 20);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(0, -10);
+    players->recline(0, -40);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+}
+
+void Wall::smash(PlayerClient* &players)
+{
+    players->recline(20, 0);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(-40, 0);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(20, 20);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(0, -40);
     if(!checkCollision(players, this))
     {
         return;

@@ -21,6 +21,7 @@ class PlayerClient : public GameObject, public HealthPoints
         void  update(sf::Vector2f _pos, bool keyDownLMB);
         void  update();
         float setOrientation(float _angle = -1);
+        void recline(int _x, int _y);
     protected:
         sf::Texture  texture;
         Weapon*      weapon;

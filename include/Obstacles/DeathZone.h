@@ -7,6 +7,7 @@ class DeathZone : public Obstacles
 {
 public:
     void smash(Player* &players);
+    void smash(PlayerClient* &players);
     DeathZone(int _xPos, int _yPos);
     virtual ~DeathZone(){};
     void update(){};

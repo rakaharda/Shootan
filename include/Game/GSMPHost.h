@@ -37,6 +37,7 @@ class GSMPHost : public GameState, public Collision
         Player* player;
         sf::TcpListener listener;
         sf::TcpSocket client;
+        void checkObstacles();
 };
 
 extern sf::RenderWindow window;
