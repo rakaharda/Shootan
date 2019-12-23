@@ -25,11 +25,11 @@ void GSMPHost::connect()
     cout << "Waiting for user to connect." << endl;
         if(listener.accept(client) != sf::Socket::Done)
         {
-            cout << "Cannot connect client!" << endl;
+            //cout << "Cannot connect client!" << endl;
         }
         else
         {
-            cout << "Client connected!" << endl;
+            //cout << "Client connected!" << endl;
             sf::Packet readyPacket;
             client.setBlocking(false);
             client.receive(readyPacket);

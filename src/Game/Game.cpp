@@ -38,7 +38,7 @@ void Game::play()
     cout << "Starting main game loop"<<endl;
     while (isPlaying)
     {
-        frameTime = gameClock->restart().asSeconds();
+        frameTime = gameClock->restart().asSeconds(); 
         handleEvents();
         update();
         draw();

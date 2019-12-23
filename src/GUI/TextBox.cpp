@@ -6,7 +6,7 @@ TextBox::TextBox(string _name = "", float _xPos = 0, float _yPos = 0)
     m_sprite.setTexture(resources->getTexture("textBoxDefault"));
     m_sprite.setPosition(_xPos - m_sprite.getTexture()->getSize().x / 2, _yPos - m_sprite.getTexture()->getSize().y / 2);
     size = m_sprite.getTexture()->getSize().y / 2.5;
-    m_text.setFillColor(sf::Color(60, 180, 240));
+    m_text.setFillColor(sf::Color(180, 120, 255));
     m_text.setFont(resources->getFont("Mylodon-Light"));
     m_text.setCharacterSize(size);
     m_text.setString("A");
