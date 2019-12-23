@@ -4,15 +4,14 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
 {
     //ctor
     ip = _ip;
-    setupSettings(_videoSettings);
-    healthBar = new HealthBar(playerClient);
-    ammoBar = new AmmoBar(playerClient);
+    videoSettings = _videoSettings;
     //host.setBlocking(false);
     playerHost = new PlayerClient;
 }
 
 void GSMPClient::connect(string _ip)
 {
+
     sf::SocketSelector selector;
     selector.add(host);
     cout << "Connecting to host" << endl;
@@ -33,13 +32,21 @@ void GSMPClient::connect(string _ip)
 
 GameStates GSMPClient::update()
 {
-    if(status != sf::Socket::Done)
+    sf::Packet incomingPacket, outgoingPacket;
+    switch(state)
     {
+    case MPS_MENU_CONNECTING:
         connect(ip);
-    }
-    else
-    {
-        sf::Packet incomingPacket, outgoingPacket;
+        break;
+    case MPS_START_GAME:
+        healthBar = new HealthBar(playerClient);
+        ammoBar = new AmmoBar(playerClient);
+        //host.setBlocking(false);
+        playerHost = new PlayerClient;
+        setupSettings(videoSettings);
+        state = MPS_PLAY;
+        break;
+    case MPS_PLAY:
         ClientEvents event;
         event.keyDownW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
         event.keyDownS = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
@@ -68,6 +75,9 @@ GameStates GSMPClient::update()
         if(gg)
             rematch();
         return GameStates::GS_GAMEMODE_MPCLIENT;
+        break;
+//    default:
+//        break;
     }
 }
 
