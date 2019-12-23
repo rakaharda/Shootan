@@ -17,7 +17,6 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
 
 void GSMPClient::connect(string _ip)
 {
-
     sf::SocketSelector selector;
     selector.add(host);
     cout << "Connecting to host" << endl;
@@ -38,10 +37,8 @@ void GSMPClient::connect(string _ip)
 
 GameStates GSMPClient::update()
 {
-    sf::Packet incomingPacket, outgoingPacket;
-    switch(state)
+    if(status != sf::Socket::Done)
     {
-    case MPS_MENU_CONNECTING:
         connect(ip);
         break;
     case MPS_START_GAME:
@@ -83,9 +80,6 @@ GameStates GSMPClient::update()
         if(gg)
             rematch();
         return GameStates::GS_GAMEMODE_MPCLIENT;
-        break;
-//    default:
-//        break;
     }
 }
 

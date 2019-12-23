@@ -36,17 +36,16 @@ void GSMPHost::connect()
         {
             //cout << "Client connected!" << endl;
             sf::Packet readyPacket;
-            client.setBlocking(false);
+           // client.setBlocking(false);
             client.receive(readyPacket);
             string msg;
             readyPacket >> msg;
             if(msg == "ready")
             {
                 status = sf::Socket::Done;
-                client.setBlocking(true);
+                //client.setBlocking(true);
                 listener.setBlocking(true);
                 cout << "Starting game!";
-                state = MPS_MENU_WAITING;
             }
         }
 }
@@ -87,11 +86,6 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     resources->getMusic("GXRCH - Race for Wind")->play();
 }
 
-void GSMPHost::setState(MultiplayerStates _state)
-{
-    state = _state;
-}
-
 void GSMPHost::updateBackground()
 {
     sf::Color color;
@@ -116,9 +110,9 @@ void GSMPHost::updateBackground()
     bgColorBlue += (float)blueModifier * frameTime * colorAmplifier;
 }
 
-MultiplayerStates GSMPHost::getSate()
+sf::Socket::Status GSMPHost::getStatus()
 {
-    return state;
+    return status;
 }
 
 void GSMPHost::updateView()
@@ -150,10 +144,8 @@ GSMPHost::~GSMPHost()
 
 GameStates GSMPHost::update()
 {
-    sf::Packet incomingPacket, outgoingPacket;
-    switch(state)
+    if (status != sf::Socket::Done)
     {
-    case MPS_MENU_CONNECTING:
         connect();
         break;
     case MPS_START_GAME:
@@ -171,6 +163,7 @@ GameStates GSMPHost::update()
         sf::Int8 disconnect = 0;
         sf::Int8 clientDisconnect = 0;
         int gg = 0;
+        sf::Packet incomingPacket, outgoingPacket;
         client.receive(incomingPacket);
         incomingPacket >> clientDisconnect;
         if(clientDisconnect)
@@ -199,9 +192,6 @@ GameStates GSMPHost::update()
         if(gg)
             rematch();
         return GameStates::GS_GAMEMODE_MPHOST;
-        break;
-//    default:
-//        break;
     }
 }
 
