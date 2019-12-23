@@ -3,34 +3,46 @@
 GSMPHost::GSMPHost(VideoSettings *_videoSettings)
 {
     //Setting up the connection
-    connect();
+    status = sf::Socket::NotReady;
     setupSettings(_videoSettings);
     player = new Player;
     player->setBorders(2000.f, 2000.f);
-    sf::Packet readyPacket;
-    client.receive(readyPacket);
-    string msg;
-    readyPacket >> msg;
-    if(msg == "ready")
-    {
-        cout << "Starting game!";
-    }
-}
-
-void GSMPHost::connect()
-{
+    //client.setBlocking(false);
+    listener.setBlocking(false);
     unsigned port = 2000;
     cout << "Listenning port " << port << endl;
     if(listener.listen(port) != sf::Socket::Done)
     {
         cout << "Cannot listen port " << port << endl;
     }
+}
+
+void GSMPHost::connect()
+{
+    unsigned port = 2000;
+    sf::SocketSelector selector;
+    selector.add(listener);
     cout << "Waiting for user to connect." << endl;
-    if(listener.accept(client) != sf::Socket::Done)
-    {
-        cout << "Cannot connect client!" << endl;
-    }
-    cout << "Client connected!" << endl;
+        if(listener.accept(client) != sf::Socket::Done)
+        {
+            cout << "Cannot connect client!" << endl;
+        }
+        else
+        {
+            cout << "Client connected!" << endl;
+            sf::Packet readyPacket;
+            client.setBlocking(false);
+            client.receive(readyPacket);
+            string msg;
+            readyPacket >> msg;
+            if(msg == "ready")
+            {
+                status = sf::Socket::Done;
+                client.setBlocking(true);
+                listener.setBlocking(true);
+                cout << "Starting game!";
+            }
+        }
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)
@@ -45,6 +57,11 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
+}
+
+sf::Socket::Status GSMPHost::getStatus()
+{
+    return status;
 }
 
 void GSMPHost::updateView(GameObject* obj)
@@ -67,20 +84,29 @@ GSMPHost::~GSMPHost()
 
 GameStates GSMPHost::update()
 {
-    ClientEvents event;
-    sf::Packet incomingPacket, outgoingPacket;
-    client.receive(incomingPacket);
-    incomingPacket >> event;
-    playerClient->update(event);
-    playerClient->setOrientation(event.angle);
-    player->update();
-    for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-        vecProjectiles[i]->update();
-    outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y  <<
-                      player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left);
-    client.send(outgoingPacket);
-    updateView(player);
-    return GameStates::GS_GAMEMODE_MPHOST;
+    if(status != sf::Socket::Done)
+    {
+        connect();
+    }
+    else
+    {
+        ClientEvents event;
+        sf::Packet incomingPacket, outgoingPacket;
+        client.receive(incomingPacket);
+        incomingPacket >> event;
+        playerClient->update(event);
+        playerClient->setOrientation(event.angle);
+        player->update();
+        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
+            vecProjectiles[i]->update();
+        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y  <<
+                        player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left);
+        client.send(outgoingPacket);
+        updateView(player);
+        return GameStates::GS_GAMEMODE_MPHOST;
+    }
+    
+    
 }
 
 void GSMPHost::handleEvents(sf::Event _event)

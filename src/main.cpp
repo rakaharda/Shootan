@@ -6,6 +6,7 @@ ResourceManager      *resources;
 vector <Projectile*> vecProjectiles;
 vector <Perk*>       vecPerks;
 AudioSettings        *audioSettings;
+GSMPHost             *multiplayerState;
 
 int main()
 {

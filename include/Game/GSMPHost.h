@@ -20,7 +20,9 @@ class GSMPHost : public GameState, public Collision
         virtual GameStates update();
         virtual void draw();
         void handleEvents(sf::Event _event);
+        sf::Socket::Status getStatus();
     protected:
+        sf::Socket::Status status;
         sf::Sprite background;
         sf::View view;
         sf::IntRect fieldSize;

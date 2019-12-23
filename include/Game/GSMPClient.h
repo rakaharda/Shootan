@@ -8,15 +8,16 @@ using namespace std;
 class GSMPClient : public GSMPHost
 {
     public:
-        GSMPClient(VideoSettings *_videoSettings);
+        GSMPClient(VideoSettings *_videoSettings, string _ip);
         virtual ~GSMPClient();
         GameStates update();
         void draw();
     protected:
-        void connect();
+        void connect(string _ip);
     private:
         sf::TcpSocket host;
         PlayerClient* playerHost;
+        string ip;
         void drawClient();
 };
 

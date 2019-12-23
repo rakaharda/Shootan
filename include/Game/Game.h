@@ -57,5 +57,6 @@ extern vector <Projectile*> vecProjectiles;
 extern vector <Perk*>       vecPerks;
 extern ResourceManager      *resources;
 extern AudioSettings        *audioSettings;
+extern GSMPHost             *multiplayerState;
 #endif // GAME_H
 

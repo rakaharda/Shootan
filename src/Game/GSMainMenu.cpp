@@ -10,7 +10,7 @@ GSMainMenu::GSMainMenu(VideoSettings *_videoSettings)
     backgroundSize = videoSettings->height;
     background.setTexture(resources->getTexture("mainBackground"));
     background.setScale((float)videoSettings->width/background.getTexture()->getSize().x,
-                        (float)videoSettings->height/background.getTexture()->getSize().y);
+                        (float)videoSettings->height/background.getTexture()->getSize().y); 
 }
 
 GSMainMenu::~GSMainMenu()
@@ -48,7 +48,8 @@ GameStates GSMainMenu::update()
         settingsMenu = new SettingsMenu(videoSettings, menuState);
         break;
     case MenuStates::MS_CREATE_MULTIPLAYER_MENU:
-        multiplayerMenu = new MultiplayerMenu(&gameState, menuState, &mode);
+        multiplayerMenu = new MultiplayerMenu(&gameState, menuState, videoSettings);
+        cout << "3" << endl;
         break;
     case MenuStates::MS_MAIN_MENU:
         if(mainMenu->isCaption())

@@ -1,17 +1,17 @@
 #include "GUI/MultiplayerMenu.h"
 #include <iostream>
 
-MultiplayerMenu::MultiplayerMenu(GameStates *_gameState, MenuStates *_menuState, int *_mode)
+MultiplayerMenu::MultiplayerMenu(GameStates *_gameState, MenuStates *_menuState, VideoSettings *_videoSettings)
 {
     ip = sf::IpAddress::getLocalAddress();
     gameState = _gameState;
     menuState = _menuState;
-    mode = _mode;
+    videoSettings = _videoSettings;
     loadResources();
     setButtons();
     setFunctions();
     *menuState = MenuStates::MS_MULTIPLAYER_MENU;
-    multiplayerState = MultiplayerStates::MPS_SELECT_MODE;
+    mpMenuState = MultiplayerStates::MPS_SELECT_MODE;
     backGroundSprite.setTexture(resources->getTexture("backgroundMultiplayerMenu"));
     backGroundSprite.setPosition(window.getSize().x / 2 - backGroundSprite.getTexture()->getSize().x / 2,
                                  window.getSize().y / 2 - backGroundSprite.getTexture()->getSize().y / 2);
@@ -24,8 +24,7 @@ MultiplayerMenu::~MultiplayerMenu()
 
 void MultiplayerMenu::handleEvents(sf::Event event)
 {
-    int i, n;
-    switch (multiplayerState)
+    switch (mpMenuState)
     {
     case MultiplayerStates::MPS_SELECT_MODE:
         for(auto &i : buttons)
@@ -46,9 +45,13 @@ void MultiplayerMenu::handleEvents(sf::Event event)
 
 void MultiplayerMenu::update()
 {
-    if(multiplayerState == MultiplayerStates::MPS_ENTER_IP)
+    if(mpMenuState == MultiplayerStates::MPS_ENTER_IP)
     {
         textBoxes[0]->update();
+    }
+    else if(mpMenuState == MultiplayerStates::MPS_LOBBY && multiplayerState->getStatus() != sf::Socket::Done)
+    {
+        multiplayerState->update();
     }
 }
 
@@ -57,26 +60,33 @@ void MultiplayerMenu::setFunctions()
     buttonFunctions = new std::function<void(void)> [10];
     buttonFunctions[0] = [this]()
     {
-        *mode = 0;
-        multiplayerState = MultiplayerStates::MPS_LOBBY;
+        mode = 1;
+        mpMenuState = MultiplayerStates::MPS_LOBBY;
+        multiplayerState = new GSMPHost(videoSettings);
+
     };
     buttons[0]->setFunction(buttonFunctions[0]);
     buttonFunctions[1] = [this]()
     {
-        *mode = 1;
-        multiplayerState = MultiplayerStates::MPS_ENTER_IP;
+        mode = 2;
+        mpMenuState = MultiplayerStates::MPS_ENTER_IP;
     };
     buttons[1]->setFunction(buttonFunctions[1]);
     buttonFunctions[2] = [this]()
     {
-        multiplayerState = MultiplayerStates::MPS_LOBBY;
+        mpMenuState = MultiplayerStates::MPS_LOBBY;
+        multiplayerState = new GSMPClient(videoSettings, textBoxes[0]->getText());
     };
-    enterButtons[0]->setFunction(buttonFunctions[3]);
+    textBoxes[0]->setFunction(buttonFunctions[2]);
+    enterButtons[0]->setFunction(buttonFunctions[2]);
     buttonFunctions[3] = [this]()
     {
-        *gameState = GameStates::GS_GAMEMODE_MPHOST;
+        if(mode == 1)
+            *gameState = GameStates::GS_GAMEMODE_MPHOST;
+        else if(mode == 2)
+            *gameState = GameStates::GS_GAMEMODE_MPCLIENT;
     };
-    lobbyButtons[0]->setFunction(buttonFunctions[4]);
+    lobbyButtons[0]->setFunction(buttonFunctions[3]);
     buttonFunctions[4] = [this]()
     {
         *menuState = MenuStates::MS_CREATE_MAIN_MENU;
@@ -112,7 +122,6 @@ void MultiplayerMenu::setButtons()
     lobbyButtons.push_back(back);
 
     textBoxes.push_back(new TextBox("", window.getSize().x/2, window.getSize().y/2 - 80));
-    textBoxes[0]->setFunction([](){});
 
     labeles.push_back(new sf::Sprite(resources->getTexture("labelSelectMode")));
     labeles.back()->setPosition(window.getSize().x/2 - resources->getTexture("labelSelectMode").getSize().x / 2,
@@ -133,8 +142,7 @@ void MultiplayerMenu::setButtons()
 void MultiplayerMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(backGroundSprite,states);
-    int i, n;
-    switch (multiplayerState)
+    switch (mpMenuState)
     {
     case MultiplayerStates::MPS_SELECT_MODE:
         for(auto &i : buttons)
@@ -150,7 +158,8 @@ void MultiplayerMenu::draw(sf::RenderTarget& target, sf::RenderStates states) co
     case MultiplayerStates::MPS_LOBBY:
         for(auto &i : lobbyButtons)
             target.draw(*i, states);
-        target.draw(textIp, states);
+        if(mode == 1)
+            target.draw(textIp, states);
         break;
     default:
         break;
