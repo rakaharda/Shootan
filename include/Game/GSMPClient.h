@@ -14,6 +14,7 @@ class GSMPClient : public GSMPHost
         void draw();
     protected:
         void connect(string _ip);
+        void updateView();
         void checkObstacles();
     private:
         sf::TcpSocket host;

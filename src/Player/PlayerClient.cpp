@@ -2,20 +2,7 @@
 
 PlayerClient::PlayerClient()
 {
-    texture.loadFromFile("./data/player/sprite2.png");
-    texture.setSmooth(true);
-    m_sprite.setTexture(texture);
-    m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2,
-                       m_sprite.getTexture()->getSize().y / 2);
     m_sprite.setPosition(1900, 1000);
-    weapon = new Weapon(&m_sprite);
-    speed = 300.f;
-    defaultSpeed = 300.f;
-    activeSpeedTime = 0.f;
-    reloadTime = 0.f;
-    projectileSpeed = 0.f;
-    upSpeed = 100.f;
-    newWeapon = nullptr;
 }
 
 void PlayerClient::update(ClientEvents event)
@@ -118,18 +105,6 @@ float PlayerClient::setOrientation(float _angle)
     }
     m_sprite.setRotation(angle);
     return angle;
-}
-
-void PlayerClient::checkWeapon()
-{
-    if(newWeapon != nullptr)
-        if(weapon != newWeapon)
-        {
-            delete(weapon);
-            weapon = newWeapon;
-            newWeapon = nullptr;
-            //setSkill(skill);
-        }
 }
 
 void PlayerClient::draw(sf::RenderTarget &target, sf::RenderStates states) const

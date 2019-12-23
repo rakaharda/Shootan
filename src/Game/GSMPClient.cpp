@@ -5,6 +5,8 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     //ctor
     ip = _ip;
     setupSettings(_videoSettings);
+    healthBar = new HealthBar(playerClient);
+    ammoBar = new AmmoBar(playerClient);
     //host.setBlocking(false);
     playerHost = new PlayerClient;
 }
@@ -57,13 +59,17 @@ GameStates GSMPClient::update()
         playerClient->update(posClient, event.keyDownLMB);
         playerHost->update(posHost, keyDownLMB);
         playerHost->setOrientation(angleHost);
-        for(unsigned int i = 0; i < vecProjectiles.size(); i++)
-            vecProjectiles[i]->update();
         checkObstacles();
-        updateView(playerClient);
+        updateGlobal();
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
 }
+
+void GSMPClient::updateView()
+{
+    GSMPHost::updateView(playerClient);
+}
+
 void GSMPClient::checkObstacles()
 {
     for(unsigned int i = 0; i < vecObstacles.size(); i++)
@@ -97,4 +103,8 @@ void GSMPClient::draw()
         window.draw(*vecObstacles[i]);
     window.draw(*playerClient);
     window.draw(*playerHost);
+    window.setView(window.getDefaultView());
+    window.draw(*healthBar);
+    window.draw(*ammoBar);
 }
+

@@ -7,12 +7,14 @@
 #include "Components/ClientEvents.h"
 #include "Components/HealthPoints.h"
 #include "Weapons/Weapon.h"
-#define FHEIGHT 2000
-#define FWIDTH 2000
+#include "Player/Player.h"
+
+//#define FHEIGHT 2000
+//#define FWIDTH 2000
 
 using namespace std;
 
-class PlayerClient : public GameObject, public HealthPoints
+class PlayerClient : public Player
 {
     public:
         PlayerClient();
@@ -21,19 +23,8 @@ class PlayerClient : public GameObject, public HealthPoints
         void  update(sf::Vector2f _pos, bool keyDownLMB);
         void  update();
         float setOrientation(float _angle = -1);
-        void recline(int _x, int _y);
+        void  recline(int _x, int _y);
     protected:
-        sf::Texture  texture;
-        Weapon*      weapon;
-        Weapon*      newWeapon;
-        int          skill;
-        void         checkWeapon();
-        float        speed;
-        float        defaultSpeed;
-        float        activeSpeedTime;
-        float        reloadTime;
-        float        projectileSpeed;
-        float        upSpeed;
         void         move(ClientEvents event);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
