@@ -59,9 +59,26 @@ GameStates GSMPClient::update()
         playerHost->setOrientation(angleHost);
         for(unsigned int i = 0; i < vecProjectiles.size(); i++)
             vecProjectiles[i]->update();
+        checkObstacles();
         updateView(playerClient);
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
+}
+void GSMPClient::checkObstacles()
+{
+    for(unsigned int i = 0; i < vecObstacles.size(); i++)
+    {
+        for(unsigned int j = 0; j < vecProjectiles.size(); j++)
+        {
+            if(checkCollision(vecProjectiles[j], vecObstacles[i]) && !(vecObstacles[i]->passability))
+            {
+                vecProjectiles[j]->markToDelete();
+                if(vecProjectiles[j]->toDelete())
+                    vecProjectiles.erase(vecProjectiles.begin()+j);
+            }
+        }
+    }
+
 }
 
 GSMPClient::~GSMPClient()

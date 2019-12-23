@@ -29,6 +29,7 @@ class GSMPHost : public GameState, public Collision
         VideoSettings   *videoSettings;
         virtual void connect();
         virtual void setupSettings(VideoSettings *_videoSettings);
+        virtual void checkObstacles();
         void updateView(GameObject* obj);
         void loadResources();
         PlayerClient* playerClient;
@@ -37,7 +38,6 @@ class GSMPHost : public GameState, public Collision
         Player* player;
         sf::TcpListener listener;
         sf::TcpSocket client;
-        void checkObstacles();
 };
 
 extern sf::RenderWindow window;

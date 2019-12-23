@@ -194,13 +194,15 @@ void GSMPHost::checkObstacles()
         {
             vecObstacles[i]->smash(playerClient);
         }
-        //for(unsigned int j = 0; j < vecProjectiles.size(); j++)
-        //{
-            //if(checkCollision(vecProjectiles[j], vecObstacles[i]) && !(vecObstacles[i]->passability))
-            //{
-            //    vecProjectiles[j]->markToDelete();
-            //}
-        //}
+        for(unsigned int j = 0; j < vecProjectiles.size(); j++)
+        {
+            if(checkCollision(vecProjectiles[j], vecObstacles[i]) && !(vecObstacles[i]->passability))
+            {
+                vecProjectiles[j]->markToDelete();
+                if(vecProjectiles[j]->toDelete())
+                    vecProjectiles.erase(vecProjectiles.begin()+j);
+            }
+        }
     }
 }
 
