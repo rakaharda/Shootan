@@ -123,7 +123,7 @@ void GSMPClient::updateListener()
 GSMPClient::~GSMPClient()
 {
     sf::Packet packet;
-    packet << sf::Int8(0);
+    packet << sf::Int8(1);
     host.send(packet);
     vecProjectiles.clear();
     delete(playerClient);

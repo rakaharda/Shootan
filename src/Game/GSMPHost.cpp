@@ -140,7 +140,7 @@ GSMPHost::~GSMPHost()
 {
     resources->getMusic("GXRCH - Race for Wind")->stop();
     sf::Packet packet;
-    packet << sf::Int8(0);
+    packet << sf::Int8(1);
     client.send(packet);
     //dtor
 }
