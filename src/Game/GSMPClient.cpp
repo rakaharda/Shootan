@@ -5,7 +5,12 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     //ctor
     ip = _ip;
     videoSettings = _videoSettings;
+    state = MPS_MENU_CONNECTING;
     //host.setBlocking(false);
+    playerClient = new PlayerClient;
+    healthBar = new HealthBar(playerClient);
+    ammoBar = new AmmoBar(playerClient);
+    playerHost = new PlayerClient;
     playerHost = new PlayerClient;
     playerHost->setOpponentTexture();
 }
@@ -40,10 +45,7 @@ GameStates GSMPClient::update()
         connect(ip);
         break;
     case MPS_START_GAME:
-        healthBar = new HealthBar(playerClient);
-        ammoBar = new AmmoBar(playerClient);
         //host.setBlocking(false);
-        playerHost = new PlayerClient;
         setupSettings(videoSettings);
         state = MPS_PLAY;
         break;

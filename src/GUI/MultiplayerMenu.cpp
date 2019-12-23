@@ -69,7 +69,7 @@ void MultiplayerMenu::update()
     {
         if(!connected)
         {
-            if(multiplayerState->getSate() != MultiplayerStates::MPS_MENU_CONNECTING)
+            if(multiplayerState->getSate() == MultiplayerStates::MPS_MENU_CONNECTING)
             {
                 multiplayerState->update();
                 if(clock.getElapsedTime().asSeconds() > 2.f)
@@ -135,13 +135,12 @@ void MultiplayerMenu::setFunctions()
             *gameState = GameStates::GS_GAMEMODE_MPHOST;
         else if(mode == 2)
             *gameState = GameStates::GS_GAMEMODE_MPCLIENT;
-        multiplayerState->setState(MPS_PLAY);
+        multiplayerState->setState(MPS_START_GAME);
     };
     lobbyButtons[0]->setFunction(buttonFunctions[3]);
     buttonFunctions[4] = [this]()
     {
         *menuState = MenuStates::MS_CREATE_MAIN_MENU;
-        cout << "da\n";
     };
     buttons.back()->setFunction(buttonFunctions[4]);
 }

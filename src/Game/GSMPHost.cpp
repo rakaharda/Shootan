@@ -2,9 +2,15 @@
 
 GSMPHost::GSMPHost(VideoSettings *_videoSettings)
 {
+
     //Setting up the connection
     status = sf::Socket::NotReady;
+    state = MPS_MENU_CONNECTING;
     videoSettings = _videoSettings;
+    player = new Player;
+    healthBar = new HealthBar(player);
+    ammoBar = new AmmoBar(player);
+    playerClient = new PlayerClient;
     //client.setBlocking(false);
     listener.setBlocking(false);
     unsigned port = 2000;
@@ -52,12 +58,11 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     loadResources();
-    playerClient = new PlayerClient;
-    playerClient->setBorders(2000.f, 2000.f);
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
+    playerClient->setBorders(2000.f, 2000.f);
     vecObstacles.reserve(20);
     vecObstacles.push_back(new Wall(200, 670, 0));
     vecObstacles.push_back(new Wall(200, 1330, 0));
@@ -153,14 +158,11 @@ GameStates GSMPHost::update()
         break;
     case MPS_START_GAME:
         setupSettings(videoSettings);
-        player = new Player;
         player->setBorders(2000.f, 2000.f);
         player->setPosition(100.f, 1000.f);
         playerClient->setBorders(2000.f, 2000.f);
         playerClient->setPosition(1900, 1000);
         playerClient->setOpponentTexture();
-        healthBar = new HealthBar(player);
-    ammoBar = new AmmoBar(player);
         state = MPS_PLAY;
         break;
     case MPS_PLAY:

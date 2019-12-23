@@ -49,7 +49,6 @@ GameStates GSMainMenu::update()
         break;
     case MenuStates::MS_CREATE_MULTIPLAYER_MENU:
         multiplayerMenu = new MultiplayerMenu(&gameState, menuState, videoSettings);
-        cout << "3" << endl;
         break;
     case MenuStates::MS_MAIN_MENU:
         if(mainMenu->isCaption())
