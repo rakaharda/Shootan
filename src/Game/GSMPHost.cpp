@@ -137,6 +137,9 @@ void GSMPHost::updateView(GameObject *obj)
 GSMPHost::~GSMPHost()
 {
     resources->getMusic("GXRCH - Race for Wind")->stop();
+    sf::Packet packet;
+    packet << sf::Int8(1);
+    client.send(packet);
     //dtor
 }
 
@@ -149,21 +152,27 @@ GameStates GSMPHost::update()
         connect();
         break;
     case MPS_START_GAME:
+        setupSettings(videoSettings);
         player = new Player;
         player->setBorders(2000.f, 2000.f);
         player->setPosition(100.f, 1000.f);
         playerClient->setBorders(2000.f, 2000.f);
         playerClient->setPosition(1900, 1000);
+        playerClient->setOpponentTexture();
         healthBar = new HealthBar(player);
-        ammoBar = new AmmoBar(player);
-        setupSettings(videoSettings);
+    ammoBar = new AmmoBar(player);
         state = MPS_PLAY;
         break;
     case MPS_PLAY:
         ClientEvents event;
         float clientHealth;
+        sf::Int8 disconnect = 0;
+        sf::Int8 clientDisconnect = 0;
         int gg = 0;
         client.receive(incomingPacket);
+        incomingPacket >> clientDisconnect;
+        if(clientDisconnect)
+            return GameStates::GS_MAINMENU;
         incomingPacket >> event >> clientHealth;
         playerClient->update(event);
         playerClient->setOrientation(event.angle);
@@ -178,7 +187,7 @@ GameStates GSMPHost::update()
             else
                 gg = 1;
         }
-        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y <<
+        outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y <<
                           player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y <<
                           player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
         client.send(outgoingPacket);
@@ -210,6 +219,7 @@ void GSMPHost::rematch()
     player->setPosition(100.f, 1000.f);
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
+    playerClient->setOpponentTexture();
 }
 
 void GSMPHost::updateGlobal()

@@ -13,5 +13,6 @@ int main()
     Game* game;
     game = new Game;
     game->play();
+    delete(game);
     return 0;
 }
