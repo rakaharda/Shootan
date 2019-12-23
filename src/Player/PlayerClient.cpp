@@ -2,6 +2,11 @@
 
 PlayerClient::PlayerClient()
 {
+    
+}
+
+void PlayerClient::setOpponentTexture()
+{
     texture.loadFromFile("./data/player/sprite3.png");
     texture.setSmooth(true);
     m_sprite.setTexture(texture);

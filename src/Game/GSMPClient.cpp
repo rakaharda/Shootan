@@ -9,6 +9,7 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     ammoBar = new AmmoBar(playerClient);
     //host.setBlocking(false);
     playerHost = new PlayerClient;
+    playerHost->setOpponentTexture();
 }
 
 void GSMPClient::connect(string _ip)
@@ -81,6 +82,7 @@ void GSMPClient::rematch()
     vecProjectiles.reserve(200);
     playerHost = new PlayerClient;
     playerClient = new PlayerClient;
+    playerHost->setOpponentTexture();
     healthBar = new HealthBar(playerClient);
     ammoBar = new AmmoBar(playerClient);
     playerClient->setBorders(2000.f, 2000.f);

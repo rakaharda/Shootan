@@ -10,6 +10,7 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     player->setPosition(100.f, 1000.f);
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
+    playerClient->setOpponentTexture();
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     //client.setBlocking(false);
@@ -197,6 +198,7 @@ void GSMPHost::rematch()
     player->setPosition(100.f, 1000.f);
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
+    playerClient->setOpponentTexture();
 }
 
 void GSMPHost::updateGlobal()
