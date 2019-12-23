@@ -2,7 +2,11 @@
 
 PlayerClient::PlayerClient()
 {
-    m_sprite.setPosition(1900, 1000);
+    texture.loadFromFile("./data/player/sprite3.png");
+    texture.setSmooth(true);
+    m_sprite.setTexture(texture);
+    m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2, 
+                       m_sprite.getTexture()->getSize().y / 2);
 }
 
 void PlayerClient::update(ClientEvents event)
