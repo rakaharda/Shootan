@@ -7,6 +7,7 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     setupSettings(_videoSettings);
     player = new Player;
     player->setBorders(2000.f, 2000.f);
+    player->recline(100,1000);
     //client.setBlocking(false);
     listener.setBlocking(false);
     unsigned port = 2000;
