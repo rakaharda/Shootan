@@ -48,7 +48,7 @@ GameStates GSMPClient::update()
         event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
         event.keyDownLMB = sf::Mouse::isButtonPressed(sf::Mouse::Left);
         event.angle = playerClient->setOrientation();
-        outgoingPacket << event;
+        outgoingPacket << event << playerClient->getCurrentHealthPoints();
         host.send(outgoingPacket);
         host.receive(incomingPacket);
         sf::Vector2f posClient, posHost;
@@ -56,14 +56,34 @@ GameStates GSMPClient::update()
         incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
         bool keyDownLMB;
         incomingPacket >> keyDownLMB;
+        int gg;
+        incomingPacket >> gg;
         playerClient->update(posClient, event.keyDownLMB);
         playerHost->update(posHost, keyDownLMB);
         playerHost->setOrientation(angleHost);
         checkObstacles();
         updateGlobal();
         checkProjectiles();
+        updateListener();
+        if(gg)
+            rematch();
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
+}
+
+void GSMPClient::rematch()
+{
+    delete(playerHost);
+    delete(playerClient);
+    delete(healthBar);
+    delete(ammoBar);
+    vecProjectiles.clear();
+    vecProjectiles.resize(200);
+    playerHost = new PlayerClient;
+    playerClient = new PlayerClient;
+    healthBar = new HealthBar(playerClient);
+    ammoBar = new AmmoBar(playerClient);
+    playerClient->setBorders(2000.f, 2000.f);
 }
 
 void GSMPClient::updateView()
@@ -88,9 +108,16 @@ void GSMPClient::checkObstacles()
 
 }
 
+void GSMPClient::updateListener()
+{
+    sf::Listener::setPosition(playerClient->getSprite().getPosition().x, playerClient->getSprite().getPosition().y, 0.f);
+}
+
 GSMPClient::~GSMPClient()
 {
-    //dtor
+    vecProjectiles.clear();
+    delete(playerClient);
+    delete(playerHost);
 }
 
 void GSMPClient::checkProjectiles()

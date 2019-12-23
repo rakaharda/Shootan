@@ -17,6 +17,8 @@ class GSMPClient : public GSMPHost
         void connect(string _ip);
         void updateView();
         void checkObstacles();
+        void updateListener();
+        void rematch();
         sf::TcpSocket host;
         PlayerClient* playerHost;
         string ip;

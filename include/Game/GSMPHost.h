@@ -42,6 +42,16 @@ class GSMPHost : public GameState, public Collision
         void loadResources();
         PlayerClient* playerClient;
         vector<Obstacles*> vecObstacles;
+        void updateBackground();
+        virtual void updateListener();
+        virtual void rematch();
+        float           bgColorRed;
+        float           bgColorGreen;
+        float           bgColorBlue;
+        float           colorAmplifier;
+        char            redModifier;
+        char            greenModifier;
+        char            blueModifier;
     private:
         Player* player;
         sf::TcpListener listener;

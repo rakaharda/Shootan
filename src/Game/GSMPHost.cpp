@@ -7,8 +7,9 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     setupSettings(_videoSettings);
     player = new Player;
     player->setBorders(2000.f, 2000.f);
-    player->recline(100, 1000);
+    player->setPosition(100.f, 1000.f);
     playerClient->setBorders(2000.f, 2000.f);
+    playerClient->setPosition(1900, 1000);
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     //client.setBlocking(false);
@@ -74,6 +75,37 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     vecObstacles.push_back(new Wall(1000, 1000, 2));
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
+    bgColorRed   = 255;
+    bgColorGreen = 0;
+    bgColorBlue  = 100;
+    redModifier  = -1;
+    greenModifier = 1;
+    blueModifier = -1;
+    colorAmplifier = 50.f;
+}
+
+void GSMPHost::updateBackground()
+{
+    sf::Color color;
+    color.r = (int)bgColorRed;
+    color.g = (int)bgColorGreen;
+    color.b = (int)bgColorBlue;
+    background.setColor(color);
+    if(bgColorRed >= 255.f)
+        redModifier = -1;
+    if(bgColorGreen >= 255.f)
+        greenModifier = -1;
+    if(bgColorBlue >= 255.f)
+        blueModifier = -1;
+    if(bgColorRed <= 0.f)
+        redModifier = 1;
+    if(bgColorGreen <= 0.f)
+        greenModifier = 1;
+    if(bgColorBlue <= 0.f)
+        blueModifier = 1;
+    bgColorRed += (float)redModifier * frameTime * colorAmplifier;
+    bgColorGreen += (float)greenModifier * frameTime * colorAmplifier;
+    bgColorBlue += (float)blueModifier * frameTime * colorAmplifier;
 }
 
 sf::Socket::Status GSMPHost::getStatus()
@@ -113,25 +145,60 @@ GameStates GSMPHost::update()
     else
     {
         ClientEvents event;
+        float clientHealth;
+        int gg = 0;
         sf::Packet incomingPacket, outgoingPacket;
         client.receive(incomingPacket);
-        incomingPacket >> event;
+        incomingPacket >> event >> clientHealth;
         playerClient->update(event);
         playerClient->setOrientation(event.angle);
         player->update();
         checkObstacles();
-        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left);
+        if(clientHealth <= 0.f || player->getCurrentHealthPoints() <= 0.f)
+        {
+            if(clientHealth <= 0.f && player->getCurrentHealthPoints() <= 0.f)
+                gg = 3;
+            else if(clientHealth <= 0.f)
+                gg = 2;
+            else
+                gg = 1;
+        }  
+        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << 
+                          player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << 
+                          player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
         client.send(outgoingPacket);
         updateGlobal();
         checkProjectiles();
+        updateListener();
+        if(gg)
+            rematch();
         return GameStates::GS_GAMEMODE_MPHOST;
     }
+}
+
+void GSMPHost::rematch()
+{
+    delete(player);
+    delete(playerClient);
+    delete(healthBar);
+    delete(ammoBar);
+    vecProjectiles.clear();
+    vecProjectiles.resize(200);
+    player = new Player;
+    playerClient = new PlayerClient;
+    healthBar = new HealthBar(player);
+    ammoBar = new AmmoBar(player);
+    player->setBorders(2000.f, 2000.f);
+    player->setPosition(100.f, 1000.f);
+    playerClient->setBorders(2000.f, 2000.f);
+    playerClient->setPosition(1900, 1000);
 }
 
 void GSMPHost::updateGlobal()
 {
     updateStats();
     updateEntities();
+    updateBackground();
     collectTrash();
     updateView();
 }
@@ -145,14 +212,12 @@ void GSMPHost::checkProjectiles()
         if (vecProjectiles[i]->getSource() != player->getSpritePointer())
             if (checkCollision(vecProjectiles[i], player))
             {
-                cout << "Player host hitreg" << endl;
                 player->takeDamage(vecProjectiles[i]->getDamage());
                 vecProjectiles[i]->markToDelete();
             }
         if (vecProjectiles[i]->getSource() != playerClient->getSpritePointer())
             if (checkCollision(vecProjectiles[i], playerClient))
             {
-                cout << "Player client hitreg" << endl;
                 playerClient->takeDamage(vecProjectiles[i]->getDamage());
                 vecProjectiles[i]->markToDelete();
             }
@@ -171,6 +236,11 @@ void GSMPHost::collectTrash()
                 || vecProjectiles[i]->getSprite().getPosition().y < -400)
             vecProjectiles.erase(vecProjectiles.begin() + i);
     }
+}
+
+void GSMPHost::updateListener()
+{
+    sf::Listener::setPosition(player->getSprite().getPosition().x, player->getSprite().getPosition().y, 0.f);
 }
 
 void GSMPHost::updateEntities()

@@ -21,6 +21,16 @@ Player::Player() : HealthPoints()
     newWeapon = nullptr;
 }
 
+void Player::setPosition(sf::Vector2f pos)
+{
+    m_sprite.setPosition(pos);
+}
+
+void Player::setPosition(float x, float y)
+{
+    setPosition(sf::Vector2f(x, y));
+}
+
 void Player::setBorders(float _width, float _height)
 {
     FHEIGHT = _height;
