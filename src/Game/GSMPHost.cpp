@@ -4,8 +4,14 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
 {
     //Setting up the connection
     status = sf::Socket::NotReady;
-    videoSettings = _videoSettings;
-    state = MPS_MENU_CONNECTING;
+    setupSettings(_videoSettings);
+    player = new Player;
+    player->setBorders(2000.f, 2000.f);
+    player->setPosition(100.f, 1000.f);
+    playerClient->setBorders(2000.f, 2000.f);
+    playerClient->setPosition(1900, 1000);
+    healthBar = new HealthBar(player);
+    ammoBar = new AmmoBar(player);
     //client.setBlocking(false);
     listener.setBlocking(false);
     unsigned port = 2000;
@@ -41,7 +47,6 @@ void GSMPHost::connect()
                 client.setBlocking(true);
                 listener.setBlocking(true);
                 cout << "Starting game!";
-                state = MPS_MENU_WAITING;
             }
         }
 }
@@ -83,11 +88,6 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     resources->getMusic("GXRCH - Race for Wind")->play();
 }
 
-void GSMPHost::setState(MultiplayerStates _state)
-{
-    state = _state;
-}
-
 void GSMPHost::updateBackground()
 {
     sf::Color color;
@@ -112,9 +112,9 @@ void GSMPHost::updateBackground()
     bgColorBlue += (float)blueModifier * frameTime * colorAmplifier;
 }
 
-MultiplayerStates GSMPHost::getSate()
+sf::Socket::Status GSMPHost::getStatus()
 {
-    return state;
+    return status;
 }
 
 void GSMPHost::updateView()
@@ -146,30 +146,18 @@ GSMPHost::~GSMPHost()
 
 GameStates GSMPHost::update()
 {
-    sf::Packet incomingPacket, outgoingPacket;
-    switch(state)
+    if (status != sf::Socket::Done)
     {
-    case MPS_MENU_CONNECTING:
         connect();
-        break;
-    case MPS_START_GAME:
-        setupSettings(videoSettings);
-        player = new Player;
-        player->setBorders(2000.f, 2000.f);
-        player->setPosition(100.f, 1000.f);
-        playerClient->setBorders(2000.f, 2000.f);
-        playerClient->setPosition(1900, 1000);
-        playerClient->setOpponentTexture();
-        healthBar = new HealthBar(player);
-    ammoBar = new AmmoBar(player);
-        state = MPS_PLAY;
-        break;
-    case MPS_PLAY:
+    }
+    else
+    {
         ClientEvents event;
         float clientHealth;
         sf::Int8 disconnect = 0;
         sf::Int8 clientDisconnect = 0;
         int gg = 0;
+        sf::Packet incomingPacket, outgoingPacket;
         client.receive(incomingPacket);
         incomingPacket >> clientDisconnect;
         if(clientDisconnect)
@@ -198,9 +186,6 @@ GameStates GSMPHost::update()
         if(gg)
             rematch();
         return GameStates::GS_GAMEMODE_MPHOST;
-        break;
-//    default:
-//        break;
     }
 }
 

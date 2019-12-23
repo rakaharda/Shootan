@@ -3,8 +3,6 @@
 
 #include "Game/Gamestate.h"
 #include "Game/SurvivalStates.h"
-#include "Game/MultiplayerStates.h"
-#include "Utils/VideoSettings.h"
 #include <SFML/Network.hpp>
 #include <iostream>
 #include <string>
@@ -23,17 +21,14 @@ class GSMPHost : public GameState, public Collision
         virtual void draw();
         void handleEvents(sf::Event _event);
         sf::Socket::Status getStatus();
-        void setState(MultiplayerStates _state);
-        MultiplayerStates getSate();
     protected:
         sf::Socket::Status status;
         sf::Sprite background;
         sf::View view;
         sf::IntRect fieldSize;
-        MultiplayerStates state;
-        VideoSettings *videoSettings;
         HealthBar *healthBar;
         AmmoBar         *ammoBar;
+        VideoSettings   *videoSettings;
         virtual void connect();
         virtual void setupSettings(VideoSettings *_videoSettings);
         virtual void checkObstacles();
