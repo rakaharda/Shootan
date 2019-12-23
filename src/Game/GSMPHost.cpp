@@ -57,6 +57,7 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
+    ob = new Wall(400,400,0);
 }
 
 sf::Socket::Status GSMPHost::getStatus()
@@ -105,8 +106,8 @@ GameStates GSMPHost::update()
         updateView(player);
         return GameStates::GS_GAMEMODE_MPHOST;
     }
-    
-    
+
+
 }
 
 void GSMPHost::handleEvents(sf::Event _event)
@@ -121,6 +122,9 @@ void GSMPHost::loadResources()
     //*Textures
         //Background
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
+    //Obstacles
+    resources->addTexture("obstacles_wall", "./data/Obstacles/Wall.png");
+    resources->addTexture("obstacles_death_zone", "./data/Obstacles/Death_zone.png");
         //Projectiles
     resources->addTexture("projectile_1",   "./data/projectiles/projectile1_test.png");
     resources->addTexture("projectile_2",   "./data/projectiles/projectile2.png");
@@ -174,6 +178,7 @@ void GSMPHost::draw()
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
+    window.draw(*ob);
     window.draw(*playerClient);
     window.draw(*player);
 }

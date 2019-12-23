@@ -32,6 +32,7 @@ class GSMPHost : public GameState, public Collision
         void updateView(GameObject* obj);
         void loadResources();
         PlayerClient* playerClient;
+        Obstacles* ob;
     private:
         Player* player;
         sf::TcpListener listener;
@@ -42,6 +43,7 @@ extern sf::RenderWindow window;
 extern float frameTime;
 extern vector<Projectile*> vecProjectiles;
 extern vector<Perk*> vecPerks;
+extern vector<Obstacles*> vecObstacles;
 extern ResourceManager *resources;
 extern AudioSettings *audioSettings;
 #endif // GSMPHOST_H

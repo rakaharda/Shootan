@@ -13,7 +13,7 @@ void GSMPClient::connect(string _ip)
 {
     sf::SocketSelector selector;
     selector.add(host);
-    cout << "Connecting to host" << endl;   
+    cout << "Connecting to host" << endl;
     status = host.connect(_ip, 2000);
     if(status != sf::Socket::Done)
     {
@@ -32,7 +32,7 @@ void GSMPClient::connect(string _ip)
 GameStates GSMPClient::update()
 {
     if(status != sf::Socket::Done)
-    { 
+    {
         connect(ip);
     }
     else
@@ -76,6 +76,7 @@ void GSMPClient::draw()
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
+    window.draw(*ob);
     window.draw(*playerClient);
     window.draw(*playerHost);
 }

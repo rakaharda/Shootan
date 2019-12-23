@@ -25,6 +25,7 @@ extern sf::RenderWindow window;
 extern float frameTime;
 extern vector<Projectile*> vecProjectiles;
 extern vector<Perk*> vecPerks;
+extern vector<Obstacles*> vecObstacles;
 extern ResourceManager *resources;
 extern AudioSettings *audioSettings;
 
