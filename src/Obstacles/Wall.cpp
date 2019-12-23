@@ -20,22 +20,42 @@ Wall::Wall(int _xPos, int _yPos, int rot) : Obstacles()
 }
 void Wall::smash(Player* &players)
 {
-    players->recline(20, 0);
+    players->recline(10, 0);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(-40, 0);
+    players->recline(-20, 0);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(20, 20);
+    players->recline(10, 10);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(0, -40);
+    players->recline(0, -20);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(10, 0);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(0, 20);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(-20, 0);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(0, 20);
     if(!checkCollision(players, this))
     {
         return;
@@ -44,22 +64,42 @@ void Wall::smash(Player* &players)
 
 void Wall::smash(PlayerClient* &players)
 {
-    players->recline(20, 0);
+    players->recline(10, 0);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(-40, 0);
+    players->recline(-20, 0);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(20, 20);
+    players->recline(10, 10);
     if(!checkCollision(players, this))
     {
         return;
     }
-    players->recline(0, -40);
+    players->recline(0, -20);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(10, 0);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(0, 20);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(-20, 0);
+    if(!checkCollision(players, this))
+    {
+        return;
+    }
+    players->recline(0, 20);
     if(!checkCollision(players, this))
     {
         return;

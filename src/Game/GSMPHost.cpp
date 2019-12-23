@@ -133,7 +133,7 @@ void GSMPHost::loadResources()
     //*Textures
         //Background
     resources->addTexture("backgroundTile", "./data/background/tile1.png", true);
-    //Obstacles
+        //Obstacles
     resources->addTexture("obstacles_wall", "./data/Obstacles/Wall.png");
     resources->addTexture("obstacles_death_zone", "./data/Obstacles/Death_zone.png");
         //Projectiles
