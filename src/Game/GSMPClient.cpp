@@ -78,7 +78,7 @@ void GSMPClient::rematch()
     delete(healthBar);
     delete(ammoBar);
     vecProjectiles.clear();
-    vecProjectiles.resize(200);
+    vecProjectiles.reserve(200);
     playerHost = new PlayerClient;
     playerClient = new PlayerClient;
     healthBar = new HealthBar(playerClient);

@@ -162,9 +162,9 @@ GameStates GSMPHost::update()
                 gg = 2;
             else
                 gg = 1;
-        }  
-        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << 
-                          player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << 
+        }
+        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y <<
+                          player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y <<
                           player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
         client.send(outgoingPacket);
         updateGlobal();
@@ -183,7 +183,7 @@ void GSMPHost::rematch()
     delete(healthBar);
     delete(ammoBar);
     vecProjectiles.clear();
-    vecProjectiles.resize(200);
+    vecProjectiles.reserve(200);
     player = new Player;
     playerClient = new PlayerClient;
     healthBar = new HealthBar(player);
