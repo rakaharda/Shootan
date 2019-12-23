@@ -37,14 +37,14 @@ void GSMPHost::connect()
         {
             //cout << "Client connected!" << endl;
             sf::Packet readyPacket;
-            client.setBlocking(false);
+           // client.setBlocking(false);
             client.receive(readyPacket);
             string msg;
             readyPacket >> msg;
             if(msg == "ready")
             {
                 status = sf::Socket::Done;
-                client.setBlocking(true);
+                //client.setBlocking(true);
                 listener.setBlocking(true);
                 cout << "Starting game!";
             }
