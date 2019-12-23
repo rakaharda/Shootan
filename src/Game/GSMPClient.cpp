@@ -76,7 +76,8 @@ void GSMPClient::draw()
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
-    window.draw(*ob);
+    for(unsigned int i = 0; i < vecObstacles.size(); i++)
+        window.draw(*vecObstacles[i]);
     window.draw(*playerClient);
     window.draw(*playerHost);
 }

@@ -57,7 +57,17 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
-    ob = new Wall(400,400,0);
+    vecObstacles.reserve(20);
+    vecObstacles.push_back(new Wall(200,670,0));
+    vecObstacles.push_back(new Wall(200,1330,0));
+    vecObstacles.push_back(new Wall(1800,670,0));
+    vecObstacles.push_back(new Wall(1800,1330,0));
+
+    vecObstacles.push_back(new Wall(500,400,2));
+    vecObstacles.push_back(new Wall(500,1600,2));
+    vecObstacles.push_back(new Wall(1500,400,2));
+    vecObstacles.push_back(new Wall(1500,1600,2));
+    vecObstacles.push_back(new Wall(1000,1000,2));
 }
 
 sf::Socket::Status GSMPHost::getStatus()
@@ -178,7 +188,8 @@ void GSMPHost::draw()
     window.draw(background);
     for(unsigned int i = 0; i < vecProjectiles.size(); i++)
         window.draw(*vecProjectiles[i]);
-    window.draw(*ob);
+    for(unsigned int i = 0; i < vecObstacles.size(); i++)
+        window.draw(*vecObstacles[i]);
     window.draw(*playerClient);
     window.draw(*player);
 }
