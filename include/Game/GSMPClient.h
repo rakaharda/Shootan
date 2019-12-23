@@ -12,11 +12,11 @@ class GSMPClient : public GSMPHost
         virtual ~GSMPClient();
         GameStates update();
         void draw();
-    protected:
+    private:
+        void checkProjectiles();
         void connect(string _ip);
         void updateView();
         void checkObstacles();
-    private:
         sf::TcpSocket host;
         PlayerClient* playerHost;
         string ip;

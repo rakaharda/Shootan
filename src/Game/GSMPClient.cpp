@@ -61,6 +61,7 @@ GameStates GSMPClient::update()
         playerHost->setOrientation(angleHost);
         checkObstacles();
         updateGlobal();
+        checkProjectiles();
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
 }
@@ -92,6 +93,26 @@ GSMPClient::~GSMPClient()
     //dtor
 }
 
+void GSMPClient::checkProjectiles()
+{
+    for (unsigned int i = 0; i < vecProjectiles.size(); i++)
+    {
+        if (vecProjectiles[i]->getSource() != playerHost->getSpritePointer())
+            if (checkCollision(vecProjectiles[i], playerHost))
+            {
+                playerHost->takeDamage(vecProjectiles[i]->getDamage());
+                vecProjectiles[i]->markToDelete();
+            }
+        if (vecProjectiles[i]->getSource() != playerClient->getSpritePointer())
+            if (checkCollision(vecProjectiles[i], playerClient))
+            {
+                playerClient->takeDamage(vecProjectiles[i]->getDamage());
+                vecProjectiles[i]->markToDelete();
+            }
+        if (vecProjectiles[i]->toDelete())
+            vecProjectiles.erase(vecProjectiles.begin() + i);
+    }
+}
 
 void GSMPClient::draw()
 {

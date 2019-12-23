@@ -36,7 +36,7 @@ class GSMPHost : public GameState, public Collision
         void updateView(GameObject* obj);
         void updateStats();
         void updateEntities();
-        void checkProjectiles();
+        virtual void checkProjectiles();
         void updateGlobal();
         void collectTrash();
         void loadResources();

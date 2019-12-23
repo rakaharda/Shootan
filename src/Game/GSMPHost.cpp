@@ -130,10 +130,11 @@ void GSMPHost::updateGlobal()
 {
     updateStats();
     updateEntities();
-    checkProjectiles();
     collectTrash();
     updateView();
 }
+
+
 
 void GSMPHost::checkProjectiles()
 {
