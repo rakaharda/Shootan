@@ -57,6 +57,7 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     loadResources();
     playerClient = new PlayerClient;
+    playerClient->setBorders(2000.f, 2000.f);
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
@@ -122,6 +123,7 @@ GameStates GSMPHost::update()
         outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left);
         client.send(outgoingPacket);
         updateGlobal();
+        checkProjectiles();
         return GameStates::GS_GAMEMODE_MPHOST;
     }
 }
@@ -143,12 +145,14 @@ void GSMPHost::checkProjectiles()
         if (vecProjectiles[i]->getSource() != player->getSpritePointer())
             if (checkCollision(vecProjectiles[i], player))
             {
+                cout << "Player host hitreg" << endl;
                 player->takeDamage(vecProjectiles[i]->getDamage());
                 vecProjectiles[i]->markToDelete();
             }
         if (vecProjectiles[i]->getSource() != playerClient->getSpritePointer())
             if (checkCollision(vecProjectiles[i], playerClient))
             {
+                cout << "Player client hitreg" << endl;
                 playerClient->takeDamage(vecProjectiles[i]->getDamage());
                 vecProjectiles[i]->markToDelete();
             }
