@@ -50,7 +50,12 @@ GameStates GSMPClient::update()
         event.angle = playerClient->setOrientation();
         outgoingPacket << event << playerClient->getCurrentHealthPoints();
         host.send(outgoingPacket);
-        host.receive(incomingPacket);
+        sf::SocketSelector selector;
+        selector.add(host);
+        if(selector.wait(sf::seconds(5.f)))
+            host.receive(incomingPacket);
+        else
+            return GameStates::GS_MAINMENU;
         sf::Vector2f posClient, posHost;
         float angleHost;
         incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
@@ -66,7 +71,18 @@ GameStates GSMPClient::update()
         checkProjectiles();
         updateListener();
         if(gg)
+        {
+            if(gg == 3)
+            {
+                score.first++;
+                score.second++;
+            }
+            else if(gg == 2)
+                score.first++;
+            else
+                score.second++;
             rematch();
+        }
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
 }

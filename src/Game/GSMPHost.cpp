@@ -150,9 +150,15 @@ GameStates GSMPHost::update()
     {
         ClientEvents event;
         float clientHealth;
-        int gg = 0;
+        sf::Int8 gg = 0;
+        sf::Int8 connection = 1;
         sf::Packet incomingPacket, outgoingPacket;
-        client.receive(incomingPacket);
+        sf::SocketSelector selector;
+        selector.add(client);
+        if(selector.wait(sf::seconds(5.f)))
+            client.receive(incomingPacket);
+        else
+            return GameStates::GS_MAINMENU;
         incomingPacket >> event >> clientHealth;
         playerClient->update(event);
         playerClient->setOrientation(event.angle);
@@ -161,11 +167,21 @@ GameStates GSMPHost::update()
         if(clientHealth <= 0.f || player->getCurrentHealthPoints() <= 0.f)
         {
             if(clientHealth <= 0.f && player->getCurrentHealthPoints() <= 0.f)
-                gg = 3;
+                {
+                    gg = 3;
+                    score.first++;
+                    score.second++;
+                }
             else if(clientHealth <= 0.f)
+            {
                 gg = 2;
+                score.first++;
+            }
             else
+            {
                 gg = 1;
+                score.second++;
+            }
         }
         outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y <<
                           player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y <<
@@ -356,6 +372,7 @@ void GSMPHost::draw()
         window.draw(*vecObstacles[i]);
     window.draw(*playerClient);
     window.draw(*player);
+    //GUI
     window.setView(window.getDefaultView());
     window.draw(*healthBar);
     window.draw(*ammoBar);

@@ -52,6 +52,7 @@ class GSMPHost : public GameState, public Collision
         char            redModifier;
         char            greenModifier;
         char            blueModifier;
+        pair<unsigned, unsigned> score;
     private:
         Player* player;
         sf::TcpListener listener;
