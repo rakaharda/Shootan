@@ -178,6 +178,8 @@ GameStates GSMPHost::update()
         {
             state = MPS_PLAY;
             tScore.setCharacterSize(40);
+            auto bounds = tScore.getGlobalBounds();
+            tScore.setOrigin(bounds.width / 2, bounds.height / 2);
             tScore.setPosition(window.getSize().x / 2, 50);
         }
         else if (rematchPauseTime < 1.5)
@@ -266,7 +268,10 @@ void GSMPHost::rematch()
     state = MPS_REMATCH;
     rematchPauseTime = 3.f;
     tScore.setCharacterSize(100);
+    auto bounds = tScore.getGlobalBounds();
+    tScore.setOrigin(bounds.width / 2, bounds.height / 2);
     tScore.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    
 }
 
 void GSMPHost::updateGlobal()
