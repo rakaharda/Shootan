@@ -100,6 +100,9 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     colorAmplifier = 50.f;
     resources->getMusic("GXRCH - Race for Wind")->setVolume(audioSettings->music);
     resources->getMusic("GXRCH - Race for Wind")->setLoop(true);
+    survivalStates = new SurvivalStates;
+    pauseMenu = new PauseMenu(videoSettings, survivalStates);
+    *survivalStates = SS_PLAY;
 }
 
 void GSMPHost::updateBackground()
@@ -189,7 +192,7 @@ GameStates GSMPHost::update()
             tScore.setString(ss.str());
         }
         return gameState;
-    break;
+        break;
     case MPS_PLAY:
         ClientEvents event;
         float clientHealth;
@@ -233,6 +236,12 @@ GameStates GSMPHost::update()
                 score.second++;
             rematch();
         }
+        if(*survivalStates == SS_PAUSE_MENU)
+        {
+            if(pauseMenu->getGameState() == GS_MAINMENU)
+            gameState = pauseMenu->getGameState();
+        }
+            
         return gameState;
     }
 }
@@ -398,14 +407,19 @@ void GSMPHost::updateStats()
 
 void GSMPHost::handleEvents(sf::Event _event)
 {
-    if (_event.type == sf::Event::KeyPressed)
+    if(*survivalStates == SS_PAUSE_MENU)
+        pauseMenu->handleEvents(_event);
+    else if (_event.type == sf::Event::KeyPressed)
     {
         if (_event.key.code == sf::Keyboard::Escape)
         {
+            /*
             sf::Packet packet;
             packet << sf::Int8(1);
             client.send(packet);
             gameState = GS_MAINMENU;
+            */
+           *survivalStates = SS_PAUSE_MENU;
         }
     }
 }
@@ -508,4 +522,6 @@ void GSMPHost::draw()
     window.draw(tScore);
     window.draw(*healthBar);
     window.draw(*ammoBar);
+    if(*survivalStates == SS_PAUSE_MENU)
+        window.draw(*pauseMenu);
 }

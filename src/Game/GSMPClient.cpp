@@ -114,6 +114,11 @@ GameStates GSMPClient::update()
                 score.second++;
             rematch();
         }
+        if(*survivalStates == SS_PAUSE_MENU)
+        {
+            if(pauseMenu->getGameState() == GS_MAINMENU)
+            gameState = pauseMenu->getGameState();
+        }
         return gameState;
     }
 }
@@ -264,5 +269,7 @@ void GSMPClient::draw()
     window.draw(tScore);
     window.draw(*healthBar);
     window.draw(*ammoBar);
+    if(*survivalStates == SS_PAUSE_MENU)
+        window.draw(*pauseMenu);
 }
 

@@ -10,6 +10,7 @@
 #include <vector>
 #include <sstream>
 #include "Player/PlayerClient.h"
+#include "GUI/PauseMenu.h"
 
 using namespace std;
 
@@ -26,6 +27,8 @@ class GSMPHost : public GameState, public Collision
         MultiplayerStates getState();
         sf::Socket::Status getStatus();
     protected:
+        PauseMenu *pauseMenu;
+        SurvivalStates* survivalStates;
         sf::Socket::Status status;
         sf::Sprite background;
         sf::View view;
