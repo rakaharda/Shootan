@@ -53,6 +53,22 @@ GameStates GSMPClient::update()
         state = MPS_PLAY;
         return gameState;
         break;
+    case MPS_REMATCH:
+        rematchPauseTime -= frameTime;
+
+        if(rematchPauseTime <= 0.f)
+        {
+            state = MPS_PLAY;
+            tScore.setCharacterSize(40);
+            tScore.setPosition(window.getSize().x / 2, 50);
+        }
+        else if (rematchPauseTime < 1.5)
+        {
+            stringstream ss;
+            ss << score.first << " : " << score.second;
+            tScore.setString(ss.str());
+        }
+        return gameState;
     case MPS_PLAY:
         ClientEvents event;
         sf::Int8 disconnect = 0;
