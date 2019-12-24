@@ -8,7 +8,8 @@ enum MultiplayerStates
     MPS_START_GAME,
     MPS_PLAY,
     MPS_PAUSE_MENU,
-    MPS_GAME_OVER
+    MPS_GAME_OVER,
+    MPS_REMATCH
 };
 
 #endif // MULTIPLAYERSTATES_H

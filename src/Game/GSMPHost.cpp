@@ -36,27 +36,27 @@ void GSMPHost::connect()
     selector.add(listener);
     cout << "Waiting for user to connect." << endl;
 
-        if(listener.accept(client) != sf::Socket::Done)
+    if (listener.accept(client) != sf::Socket::Done)
+    {
+        //cout << "Cannot connect client!" << endl;
+    }
+    else
+    {
+        //cout << "Client connected!" << endl;
+        sf::Packet readyPacket;
+        // client.setBlocking(false);
+        client.receive(readyPacket);
+        string msg;
+        readyPacket >> msg;
+        if (msg == "ready")
         {
-            //cout << "Cannot connect client!" << endl;
+            status = sf::Socket::Done;
+            //client.setBlocking(true);
+            listener.setBlocking(true);
+            cout << "Starting game!";
+            state = MPS_MENU_WAITING;
         }
-        else
-        {
-            //cout << "Client connected!" << endl;
-            sf::Packet readyPacket;
-           // client.setBlocking(false);
-            client.receive(readyPacket);
-            string msg;
-            readyPacket >> msg;
-            if(msg == "ready")
-            {
-                status = sf::Socket::Done;
-                //client.setBlocking(true);
-                listener.setBlocking(true);
-                cout << "Starting game!";
-                state = MPS_MENU_WAITING;
-            }
-        }
+    }
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)
@@ -78,7 +78,7 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     tScore.setFont(resources->getFont("Mylodon-Light"));
     auto bounds = tScore.getGlobalBounds();
     tScore.setOrigin(bounds.width / 2, bounds.height / 2);
-    tScore.setPosition(window.getSize().x / 2 ,  50);
+    tScore.setPosition(window.getSize().x / 2, 50);
     vecObstacles.reserve(20);
     vecObstacles.push_back(new Wall(200, 670, 0));
     vecObstacles.push_back(new Wall(200, 1330, 0));
@@ -91,10 +91,10 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     vecObstacles.push_back(new Wall(1000, 1000, 2));
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
-    bgColorRed   = 255;
+    bgColorRed = 255;
     bgColorGreen = 0;
-    bgColorBlue  = 100;
-    redModifier  = -1;
+    bgColorBlue = 100;
+    redModifier = -1;
     greenModifier = 1;
     blueModifier = -1;
     colorAmplifier = 50.f;
@@ -109,17 +109,17 @@ void GSMPHost::updateBackground()
     color.g = (int)bgColorGreen;
     color.b = (int)bgColorBlue;
     background.setColor(color);
-    if(bgColorRed >= 255.f)
+    if (bgColorRed >= 255.f)
         redModifier = -1;
-    if(bgColorGreen >= 255.f)
+    if (bgColorGreen >= 255.f)
         greenModifier = -1;
-    if(bgColorBlue >= 255.f)
+    if (bgColorBlue >= 255.f)
         blueModifier = -1;
-    if(bgColorRed <= 0.f)
+    if (bgColorRed <= 0.f)
         redModifier = 1;
-    if(bgColorGreen <= 0.f)
+    if (bgColorGreen <= 0.f)
         greenModifier = 1;
-    if(bgColorBlue <= 0.f)
+    if (bgColorBlue <= 0.f)
         blueModifier = 1;
     bgColorRed += (float)redModifier * frameTime * colorAmplifier;
     bgColorGreen += (float)greenModifier * frameTime * colorAmplifier;
@@ -161,7 +161,7 @@ GSMPHost::~GSMPHost()
 GameStates GSMPHost::update()
 {
     sf::Packet outgoingPacket, incomingPacket;
-    switch(state)
+    switch (state)
     {
     case MPS_MENU_CONNECTING:
         connect();
@@ -171,6 +171,23 @@ GameStates GSMPHost::update()
         state = MPS_PLAY;
         return gameState;
         break;
+    case MPS_REMATCH:
+        rematchPauseTime -= frameTime;
+
+        if(rematchPauseTime <= 0.f)
+        {
+            state = MPS_PLAY;
+            tScore.setCharacterSize(40);
+            tScore.setPosition(window.getSize().x / 2, 50);
+        }
+        else if (rematchPauseTime < 1.5)
+        {
+            stringstream ss;
+            ss << score.first << " : " << score.second;
+            tScore.setString(ss.str());
+        }
+        return gameState;
+    break;
     case MPS_PLAY:
         ClientEvents event;
         float clientHealth;
@@ -180,36 +197,35 @@ GameStates GSMPHost::update()
         sf::Packet incomingPacket, outgoingPacket;
         client.receive(incomingPacket);
         incomingPacket >> clientDisconnect;
-        if(clientDisconnect)
+        if (clientDisconnect)
             return GameStates::GS_MAINMENU;
         incomingPacket >> event >> clientHealth;
         playerClient->update(event);
         playerClient->setOrientation(event.angle);
         player->update();
         checkObstacles();
-        if(clientHealth <= 0.f || player->getCurrentHealthPoints() <= 0.f)
+        if (clientHealth <= 0.f || player->getCurrentHealthPoints() <= 0.f)
         {
-            if(clientHealth <= 0.f && player->getCurrentHealthPoints() <= 0.f)
+            if (clientHealth <= 0.f && player->getCurrentHealthPoints() <= 0.f)
                 gg = 3;
-            else if(clientHealth <= 0.f)
+            else if (clientHealth <= 0.f)
                 gg = 2;
             else
                 gg = 1;
         }
-        outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y <<
-                          player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y <<
-                          player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
+        outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
         client.send(outgoingPacket);
         updateGlobal();
         checkProjectiles();
         updateListener();
-        if(gg)
+        if (gg)
         {
-            if(gg == 3)
+            if (gg == 3)
             {
                 score.first++;
                 score.second++;
-            } else if(gg == 2)
+            }
+            else if (gg == 2)
                 score.first++;
             else
                 score.second++;
@@ -231,10 +247,10 @@ MultiplayerStates GSMPHost::getState()
 
 void GSMPHost::rematch()
 {
-    delete(player);
-    delete(playerClient);
-    delete(healthBar);
-    delete(ammoBar);
+    delete (player);
+    delete (playerClient);
+    delete (healthBar);
+    delete (ammoBar);
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
     player = new Player;
@@ -247,6 +263,10 @@ void GSMPHost::rematch()
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
     playerClient->setOpponentTexture();
+    state = MPS_REMATCH;
+    rematchPauseTime = 3.f;
+    tScore.setCharacterSize(100);
+    tScore.setPosition(window.getSize().x / 2, window.getSize().y / 2);
 }
 
 void GSMPHost::updateGlobal()
@@ -264,46 +284,58 @@ void GSMPHost::updateGlobal()
 
 void GSMPHost::updateTime()
 {
-    if(currentTime <= 0.f)
+    if (currentTime <= 0.f)
     {
         currentTime = overloadTime;
         counterWeapon++;
-        Weapon* wp1;
-        Weapon* wp2;
-        switch(counterWeapon%3)
+        Weapon *wp1;
+        Weapon *wp2;
+        switch (counterWeapon % 3)
         {
-            case 0: wp1 = new Shotgun(player->getSpritePointer()); wp2 = new Shotgun(player->getSpritePointer()); break;
-            case 1: wp1 = new SniperRifle(player->getSpritePointer()); wp2 = new SniperRifle(player->getSpritePointer()); break;
-            case 2: wp1 = new AssaultRifle(player->getSpritePointer()); wp2 = new AssaultRifle(player->getSpritePointer()); break;
-            default: wp1 = new Shotgun(player->getSpritePointer()); wp2 = new Shotgun(player->getSpritePointer()); break;
+        case 0:
+            wp1 = new Shotgun(player->getSpritePointer());
+            wp2 = new Shotgun(player->getSpritePointer());
+            break;
+        case 1:
+            wp1 = new SniperRifle(player->getSpritePointer());
+            wp2 = new SniperRifle(player->getSpritePointer());
+            break;
+        case 2:
+            wp1 = new AssaultRifle(player->getSpritePointer());
+            wp2 = new AssaultRifle(player->getSpritePointer());
+            break;
+        default:
+            wp1 = new Shotgun(player->getSpritePointer());
+            wp2 = new Shotgun(player->getSpritePointer());
+            break;
         }
-        vecPerks.push_back(new FindWeapon(1000,200,wp1));
-        vecPerks.push_back(new FindWeapon(1000,1800,wp2));
-        vecPerks.push_back(new UpSpeed(200,200));
-        vecPerks.push_back(new UpSpeed(1800,1800));
-        vecPerks.push_back(new Medicine(1800,200));
-        vecPerks.push_back(new Medicine(200,1800));
+        vecPerks.push_back(new FindWeapon(1000, 200, wp1));
+        vecPerks.push_back(new FindWeapon(1000, 1800, wp2));
+        vecPerks.push_back(new UpSpeed(200, 200));
+        vecPerks.push_back(new UpSpeed(1800, 1800));
+        vecPerks.push_back(new Medicine(1800, 200));
+        vecPerks.push_back(new Medicine(200, 1800));
     }
     else
     {
         currentTime -= frameTime;
     }
-    for(unsigned int i=0; i < vecPerks.size(); i++)
+    for (unsigned int i = 0; i < vecPerks.size(); i++)
     {
         vecPerks[i]->update();
-        if(checkCollision(player, vecPerks[i]))
+        if (checkCollision(player, vecPerks[i]))
         {
             vecPerks[i]->pickUp(player);
             vecPerks.erase(vecPerks.begin() + i);
             continue;
         }
-        if(checkCollision(playerClient, vecPerks[i]))
+        if (checkCollision(playerClient, vecPerks[i]))
         {
             vecPerks[i]->pickUp(playerClient);
             vecPerks.erase(vecPerks.begin() + i);
             continue;
         }
-        if(vecPerks[i]->checkActive())
+        if (vecPerks[i]->checkActive())
         {
             vecPerks.erase(vecPerks.begin() + i);
         }
@@ -333,12 +365,9 @@ void GSMPHost::checkProjectiles()
 
 void GSMPHost::collectTrash()
 {
-    for(unsigned int i = 0; i<vecProjectiles.size(); i++)
+    for (unsigned int i = 0; i < vecProjectiles.size(); i++)
     {
-        if(vecProjectiles[i]->getSprite().getPosition().x > fieldSize.width + 400
-                || vecProjectiles[i]->getSprite().getPosition().x < -400
-                || vecProjectiles[i]->getSprite().getPosition().y > fieldSize.height + 400
-                || vecProjectiles[i]->getSprite().getPosition().y < -400)
+        if (vecProjectiles[i]->getSprite().getPosition().x > fieldSize.width + 400 || vecProjectiles[i]->getSprite().getPosition().x < -400 || vecProjectiles[i]->getSprite().getPosition().y > fieldSize.height + 400 || vecProjectiles[i]->getSprite().getPosition().y < -400)
             vecProjectiles.erase(vecProjectiles.begin() + i);
     }
 }
@@ -364,9 +393,9 @@ void GSMPHost::updateStats()
 
 void GSMPHost::handleEvents(sf::Event _event)
 {
-    if(_event.type == sf::Event::KeyPressed)
+    if (_event.type == sf::Event::KeyPressed)
     {
-        if(_event.key.code == sf::Keyboard::Escape)
+        if (_event.key.code == sf::Keyboard::Escape)
         {
             sf::Packet packet;
             packet << sf::Int8(1);
@@ -426,7 +455,7 @@ void GSMPHost::loadResources()
     //*For button
     resources->addTexture("buttonLVL", "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
-    resources->addFont("Mylodon-Light",               "./data/fonts/Mylodon-Light.otf");
+    resources->addFont("Mylodon-Light", "./data/fonts/Mylodon-Light.otf");
     //*Sound buffers
     resources->addSoundBuffer("laser1", "./data/sounds/laser1.wav");
     resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
