@@ -10,6 +10,7 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     setupSettings(_videoSettings);
     healthBar = new HealthBar(playerClient);
     ammoBar = new AmmoBar(playerClient);
+    gameState = GS_GAMEMODE_MPCLIENT;
     playerHost = new PlayerClient;
     playerHost->setOpponentTexture();
     playerClient->increaseHealthPoints(200.f);
@@ -48,7 +49,7 @@ GameStates GSMPClient::update()
         //host.setBlocking(false);
         resources->getMusic("GXRCH - Race for Wind")->play();
         state = MPS_PLAY;
-        return GameStates::GS_GAMEMODE_MPCLIENT;
+        return gameState;
         break;
     case MPS_PLAY:
         ClientEvents event;
@@ -93,7 +94,7 @@ GameStates GSMPClient::update()
                 score.second++;
             rematch();
         }
-        return GameStates::GS_GAMEMODE_MPCLIENT;
+        return gameState;
     }
 }
 

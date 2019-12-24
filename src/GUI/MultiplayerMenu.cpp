@@ -200,7 +200,7 @@ void MultiplayerMenu::setButtons()
                                 window.getSize().y/2 - resources->getTexture("labelConnecting").getSize().y / 2 - 100);
 
     textIp.setCharacterSize(30);
-    textIp.setFillColor(sf::Color(180, 120, 255));
+    textIp.setFillColor(sf::Color(210, 120, 255));
     textIp.setFont(resources->getFont("Mylodon-Light"));
     textIp.setString("Your Ip: " + ip.toString());
     auto bounds = textIp.getGlobalBounds();

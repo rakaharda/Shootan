@@ -13,8 +13,10 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     player->increaseHealthPoints(200.f);
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
+    playerClient->setOpponentTexture();
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
+    gameState = GS_GAMEMODE_MPHOST;
     //client.setBlocking(false);
     listener.setBlocking(false);
     unsigned port = 2000;
@@ -165,6 +167,7 @@ GameStates GSMPHost::update()
     case MPS_START_GAME:
         resources->getMusic("GXRCH - Race for Wind")->play();
         state = MPS_PLAY;
+        return gameState;
         break;
     case MPS_PLAY:
         ClientEvents event;
@@ -210,7 +213,7 @@ GameStates GSMPHost::update()
                 score.second++;
             rematch();
         }
-        return GameStates::GS_GAMEMODE_MPHOST;
+        return gameState;
     }
 }
 
@@ -359,6 +362,16 @@ void GSMPHost::updateStats()
 
 void GSMPHost::handleEvents(sf::Event _event)
 {
+    if(_event.type == sf::Event::KeyPressed)
+    {
+        if(_event.key.code == sf::Keyboard::Escape)
+        {
+            sf::Packet packet;
+            packet << sf::Int8(1);
+            client.send(packet);
+            gameState = GS_MAINMENU;
+        }
+    }
 }
 
 void GSMPHost::loadResources()

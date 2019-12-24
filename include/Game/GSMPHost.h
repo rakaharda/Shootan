@@ -55,6 +55,7 @@ class GSMPHost : public GameState, public Collision
         void updateBackground();
         virtual void updateListener();
         virtual void rematch();
+        GameStates      gameState;
         float           bgColorRed;
         float           bgColorGreen;
         float           bgColorBlue;
