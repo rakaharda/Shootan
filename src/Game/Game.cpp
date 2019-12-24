@@ -18,7 +18,7 @@ Game::Game() : isPlaying(true)
         window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(videoSettings->framerateLimit);
     loadResources();
-    
+
     //if(gameState == GS_MAINMENU)
     currentGameState = new GSMainMenu(videoSettings); //default
         //currentGameState = new GSSurvival(videoSettings);
@@ -38,7 +38,7 @@ void Game::play()
     cout << "Starting main game loop"<<endl;
     while (isPlaying)
     {
-        frameTime = gameClock->restart().asSeconds(); 
+        frameTime = gameClock->restart().asSeconds();
         handleEvents();
         update();
         draw();
@@ -113,6 +113,7 @@ void Game::update()
 void Game::draw()
 {
     window.clear();
+    cout << currentGameState << endl;
     currentGameState->draw();
     //* UI
     window.setView(window.getDefaultView());
