@@ -13,6 +13,8 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     playerHost = new PlayerClient;
     playerHost->setOpponentTexture();
     playerClient->increaseHealthPoints(200.f);
+    playerHost->setSpeedUp(200.f);
+    playerClient->setSpeedUp(200.f);
 }
 
 void GSMPClient::connect(string _ip)
@@ -131,7 +133,7 @@ void GSMPClient::updateTime()
         {
             case 0: wp1 = new Shotgun(playerClient->getSpritePointer()); wp2 = new Shotgun(playerClient->getSpritePointer()); break;
             case 1: wp1 = new SniperRifle(playerClient->getSpritePointer()); wp2 = new SniperRifle(playerClient->getSpritePointer()); break;
-            case 2: wp1 = new SniperRifle(playerClient->getSpritePointer()); wp2 = new SniperRifle(playerClient->getSpritePointer()); break;
+            case 2: wp1 = new AssaultRifle(playerClient->getSpritePointer()); wp2 = new AssaultRifle(playerClient->getSpritePointer()); break;
             default: wp1 = new Shotgun(playerClient->getSpritePointer()); wp2 = new Shotgun(playerClient->getSpritePointer()); break;
         }
         vecPerks.push_back(new FindWeapon(100,100,wp1));
