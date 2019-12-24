@@ -39,6 +39,7 @@ public:
     const sf::Sprite* getSource();
     string            getName();
     void              setName(string _name);
+    void              setSource(sf::Sprite* _source);
 protected:
     const sf::Sprite* source;
     float             reloadTime;

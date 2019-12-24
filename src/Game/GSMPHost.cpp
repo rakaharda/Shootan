@@ -134,7 +134,18 @@ void GSMPHost::updateGlobal()
     updateView();
 }
 
-
+void GSMPHost::updateTime()
+{
+    if(currentTime <= 0.f)
+    {
+        currentTime = overloadTime;
+        //vecPerks.push_back(new UpSpeed());
+    }
+    else
+    {
+        currentTime -= frameTime;
+    }
+}
 
 void GSMPHost::checkProjectiles()
 {

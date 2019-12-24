@@ -147,6 +147,11 @@ const sf::Sprite* Weapon::getSource()
     return source;
 }
 
+void Weapon::setSource(sf::Sprite* _source)
+{
+    source = _source;
+}
+
 string Weapon::getName()
 {
     return name;

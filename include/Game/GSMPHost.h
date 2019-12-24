@@ -33,6 +33,9 @@ class GSMPHost : public GameState, public Collision
         virtual void setupSettings(VideoSettings *_videoSettings);
         virtual void checkObstacles();
         virtual void updateView();
+        float overloadTime = 25.f;
+        float currentTime = 25.f;
+        void updateTime();
         void updateView(GameObject* obj);
         void updateStats();
         void updateEntities();
