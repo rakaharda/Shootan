@@ -107,6 +107,54 @@ void GSMPClient::updateView()
     GSMPHost::updateView(playerClient);
 }
 
+void GSMPClient::updateTime()
+{
+    if(currentTime <= 0.f)
+    {
+        currentTime = overloadTime;
+        counterWeapon++;
+        Weapon* wp1;
+        Weapon* wp2;
+        switch(counterWeapon%3)
+        {
+            case 0: wp1 = new Shotgun(playerClient->getSpritePointer()); wp2 = new Shotgun(playerClient->getSpritePointer()); break;
+            case 1: wp1 = new SniperRifle(playerClient->getSpritePointer()); wp2 = new SniperRifle(playerClient->getSpritePointer()); break;
+            case 2: wp1 = new SniperRifle(playerClient->getSpritePointer()); wp2 = new SniperRifle(playerClient->getSpritePointer()); break;
+            default: wp1 = new Shotgun(playerClient->getSpritePointer()); wp2 = new Shotgun(playerClient->getSpritePointer()); break;
+        }
+        vecPerks.push_back(new FindWeapon(100,100,wp1));
+        vecPerks.push_back(new FindWeapon(1900,1900,wp2));
+        vecPerks.push_back(new UpSpeed(200,100));
+        vecPerks.push_back(new UpSpeed(1800,1900));
+        vecPerks.push_back(new Medicine(300,100));
+        vecPerks.push_back(new Medicine(1700,1900));
+    }
+    else
+    {
+        currentTime -= frameTime;
+    }
+    for(unsigned int i=0; i < vecPerks.size(); i++)
+    {
+        vecPerks[i]->update();
+        if(checkCollision(playerHost, vecPerks[i]))
+        {
+            vecPerks[i]->pickUp(playerHost);
+            vecPerks.erase(vecPerks.begin() + i);
+            continue;
+        }
+        if(checkCollision(playerClient, vecPerks[i]))
+        {
+            vecPerks[i]->pickUp(playerClient);
+            vecPerks.erase(vecPerks.begin() + i);
+            continue;
+        }
+        if(vecPerks[i]->checkActive())
+        {
+            vecPerks.erase(vecPerks.begin() + i);
+        }
+    }
+}
+
 void GSMPClient::checkObstacles()
 {
     for(unsigned int i = 0; i < vecObstacles.size(); i++)
@@ -169,6 +217,8 @@ void GSMPClient::draw()
         window.draw(*vecProjectiles[i]);
     for(unsigned int i = 0; i < vecObstacles.size(); i++)
         window.draw(*vecObstacles[i]);
+    for (unsigned int i = 0; i < vecPerks.size(); i++)
+        window.draw(*vecPerks[i]);
     window.draw(*playerClient);
     window.draw(*playerHost);
     window.setView(window.getDefaultView());
