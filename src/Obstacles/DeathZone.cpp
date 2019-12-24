@@ -24,15 +24,15 @@ void DeathZone::smash(Player* &players)
 }
 void DeathZone::smash(PlayerClient* &players)
 {
-    //if(timecounter <= 0.f)
-    //{
-    //    players->takeDamage(5.f);
-    //    timecounter = timereload;
-    //}
-    //else
-    //{
-    //    timecounter -= frameTime;
-    //}
+    if(timecounter <= 0.f)
+    {
+        players->takeDamage(5.f);
+        timecounter = timereload;
+    }
+    else
+    {
+        timecounter -= frameTime;
+    }
 
 }
 

@@ -207,6 +207,10 @@ void GSMPClient::checkObstacles()
                     vecProjectiles.erase(vecProjectiles.begin()+j);
             }
         }
+        if (checkCollision(playerClient, vecObstacles[i]) && (vecObstacles[i]->passability))
+        {
+            vecObstacles[i]->smash(playerClient);
+        }
     }
 
 }

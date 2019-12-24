@@ -89,6 +89,10 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     vecObstacles.push_back(new Wall(1500, 400, 2));
     vecObstacles.push_back(new Wall(1500, 1600, 2));
     vecObstacles.push_back(new Wall(1000, 1000, 2));
+    vecObstacles.push_back(new DeathZone(200, 300));
+    vecObstacles.push_back(new DeathZone(200, 1700));
+    vecObstacles.push_back(new DeathZone(1800, 300));
+    vecObstacles.push_back(new DeathZone(1800, 1700));
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
     bgColorRed = 255;
@@ -271,7 +275,7 @@ void GSMPHost::rematch()
     auto bounds = tScore.getGlobalBounds();
     tScore.setOrigin(bounds.width / 2, bounds.height / 2);
     tScore.setPosition(window.getSize().x / 2, window.getSize().y / 2);
-    
+
 }
 
 void GSMPHost::updateGlobal()
