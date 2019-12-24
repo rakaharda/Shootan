@@ -25,6 +25,8 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     {
         cout << "Cannot listen port " << port << endl;
     }
+    player->setSpeedUp(200.f);
+    playerClient->setSpeedUp(200.f);
 }
 
 void GSMPHost::connect()
@@ -272,7 +274,7 @@ void GSMPHost::updateTime()
         {
             case 0: wp1 = new Shotgun(player->getSpritePointer()); wp2 = new Shotgun(player->getSpritePointer()); break;
             case 1: wp1 = new SniperRifle(player->getSpritePointer()); wp2 = new SniperRifle(player->getSpritePointer()); break;
-            case 2: wp1 = new SniperRifle(player->getSpritePointer()); wp2 = new SniperRifle(player->getSpritePointer()); break;
+            case 2: wp1 = new AssaultRifle(player->getSpritePointer()); wp2 = new AssaultRifle(player->getSpritePointer()); break;
             default: wp1 = new Shotgun(player->getSpritePointer()); wp2 = new Shotgun(player->getSpritePointer()); break;
         }
         vecPerks.push_back(new FindWeapon(100,100,wp1));
