@@ -137,12 +137,12 @@ void GSMPClient::updateTime()
             case 2: wp1 = new AssaultRifle(playerClient->getSpritePointer()); wp2 = new AssaultRifle(playerClient->getSpritePointer()); break;
             default: wp1 = new Shotgun(playerClient->getSpritePointer()); wp2 = new Shotgun(playerClient->getSpritePointer()); break;
         }
-        vecPerks.push_back(new FindWeapon(100,100,wp1));
-        vecPerks.push_back(new FindWeapon(1900,1900,wp2));
-        vecPerks.push_back(new UpSpeed(200,100));
-        vecPerks.push_back(new UpSpeed(1800,1900));
-        vecPerks.push_back(new Medicine(300,100));
-        vecPerks.push_back(new Medicine(1700,1900));
+        vecPerks.push_back(new FindWeapon(1000,200,wp1));
+        vecPerks.push_back(new FindWeapon(1000,1800,wp2));
+        vecPerks.push_back(new UpSpeed(200,200));
+        vecPerks.push_back(new UpSpeed(1800,1800));
+        vecPerks.push_back(new Medicine(1800,200));
+        vecPerks.push_back(new Medicine(200,1800));
     }
     else
     {
