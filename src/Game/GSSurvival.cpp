@@ -6,6 +6,7 @@ GSSurvival::GSSurvival(VideoSettings *_videoSettings) :
     videoSettings(_videoSettings)
     //survivalState(SurvivalStates::SS_PLAY)
 {
+    player->setBorders(3840, 2160);
     loadResources();
     survivalState = new SurvivalStates;
     *survivalState = SurvivalStates::SS_PLAY;

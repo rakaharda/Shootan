@@ -39,6 +39,10 @@ class GSMPHost : public GameState, public Collision
         virtual void setupSettings(VideoSettings *_videoSettings);
         virtual void checkObstacles();
         virtual void updateView();
+        float overloadTime = 25.f;
+        float currentTime = 0.f;
+        int counterWeapon = 0;
+        virtual void updateTime();
         void updateView(GameObject* obj);
         void updateStats();
         void updateEntities();
@@ -60,9 +64,9 @@ class GSMPHost : public GameState, public Collision
         char            blueModifier;
         pair<int, int> score;
     private:
-        Player* player;
         sf::TcpListener listener;
         sf::TcpSocket client;
+        Player* player;
 };
 
 extern sf::RenderWindow window;

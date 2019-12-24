@@ -249,6 +249,7 @@ void GSMPHost::updateGlobal()
     updateStats();
     updateEntities();
     updateBackground();
+    updateTime();
     collectTrash();
     updateView();
     stringstream ss;
@@ -256,7 +257,53 @@ void GSMPHost::updateGlobal()
     tScore.setString(ss.str());
 }
 
-
+void GSMPHost::updateTime()
+{
+    if(currentTime <= 0.f)
+    {
+        currentTime = overloadTime;
+        counterWeapon++;
+        Weapon* wp1;
+        Weapon* wp2;
+        switch(counterWeapon%3)
+        {
+            case 0: wp1 = new Shotgun(player->getSpritePointer()); wp2 = new Shotgun(player->getSpritePointer()); break;
+            case 1: wp1 = new SniperRifle(player->getSpritePointer()); wp2 = new SniperRifle(player->getSpritePointer()); break;
+            case 2: wp1 = new SniperRifle(player->getSpritePointer()); wp2 = new SniperRifle(player->getSpritePointer()); break;
+            default: wp1 = new Shotgun(player->getSpritePointer()); wp2 = new Shotgun(player->getSpritePointer()); break;
+        }
+        vecPerks.push_back(new FindWeapon(100,100,wp1));
+        vecPerks.push_back(new FindWeapon(1900,1900,wp2));
+        vecPerks.push_back(new UpSpeed(200,100));
+        vecPerks.push_back(new UpSpeed(1800,1900));
+        vecPerks.push_back(new Medicine(300,100));
+        vecPerks.push_back(new Medicine(1700,1900));
+    }
+    else
+    {
+        currentTime -= frameTime;
+    }
+    for(unsigned int i=0; i < vecPerks.size(); i++)
+    {
+        vecPerks[i]->update();
+        if(checkCollision(player, vecPerks[i]))
+        {
+            vecPerks[i]->pickUp(player);
+            vecPerks.erase(vecPerks.begin() + i);
+            continue;
+        }
+        if(checkCollision(playerClient, vecPerks[i]))
+        {
+            vecPerks[i]->pickUp(playerClient);
+            vecPerks.erase(vecPerks.begin() + i);
+            continue;
+        }
+        if(vecPerks[i]->checkActive())
+        {
+            vecPerks.erase(vecPerks.begin() + i);
+        }
+    }
+}
 
 void GSMPHost::checkProjectiles()
 {
@@ -380,7 +427,7 @@ void GSMPHost::checkObstacles()
         {
             vecObstacles[i]->smash(player);
         }
-        if (checkCollision(playerClient, vecObstacles[i]))
+        if (checkCollision(playerClient, vecObstacles[i]) && !(vecObstacles[i]->passability))
         {
             vecObstacles[i]->smash(playerClient);
         }
@@ -404,6 +451,8 @@ void GSMPHost::draw()
         window.draw(*vecProjectiles[i]);
     for (unsigned int i = 0; i < vecObstacles.size(); i++)
         window.draw(*vecObstacles[i]);
+    for (unsigned int i = 0; i < vecPerks.size(); i++)
+        window.draw(*vecPerks[i]);
     window.draw(*playerClient);
     window.draw(*player);
     window.setView(window.getDefaultView());

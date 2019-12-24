@@ -12,6 +12,8 @@ class GSMPClient : public GSMPHost
         virtual ~GSMPClient();
         GameStates update();
         void draw();
+    protected:
+        void updateTime();
     private:
         void checkProjectiles();
         void connect(string _ip);

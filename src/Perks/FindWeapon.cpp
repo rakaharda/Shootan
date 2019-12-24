@@ -11,5 +11,6 @@ weapon(_weapon)
 
 void FindWeapon::pickUp(Player * players)
 {
+    weapon->setSource(players->getSpritePointer());
     players->setWeapon(weapon);
 }
