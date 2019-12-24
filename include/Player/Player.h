@@ -37,6 +37,8 @@ public:
     void    setSpeedUp(float _speedUp);
     void    setDefaultSpeed(float _defaultSpeed);
     void    setBorders(float _width, float _height);
+    void    setPosition(sf::Vector2f pos);
+    void    setPosition(float x, float y);
 protected:
     sf::Texture texture;
     Weapon*     weapon;

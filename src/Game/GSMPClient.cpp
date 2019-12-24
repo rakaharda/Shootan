@@ -4,11 +4,14 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
 {
     //ctor
     ip = _ip;
+    videoSettings = _videoSettings;
+    state = MPS_MENU_CONNECTING;
+    //host.setBlocking(false);
     setupSettings(_videoSettings);
     healthBar = new HealthBar(playerClient);
     ammoBar = new AmmoBar(playerClient);
-    //host.setBlocking(false);
     playerHost = new PlayerClient;
+    playerHost->setOpponentTexture();
 }
 
 void GSMPClient::connect(string _ip)
@@ -24,6 +27,7 @@ void GSMPClient::connect(string _ip)
     else
     {
         cout << "Succesfully connected to host!" << endl;
+        state = MPS_MENU_WAITING;
         host.setBlocking(true);
     }
     sf::Packet readyPacket;
@@ -33,14 +37,21 @@ void GSMPClient::connect(string _ip)
 
 GameStates GSMPClient::update()
 {
-    if(status != sf::Socket::Done)
+    sf::Packet outgoingPacket, incomingPacket;
+    switch(state)
     {
+    case MPS_MENU_CONNECTING:
         connect(ip);
-    }
-    else
-    {
-        sf::Packet incomingPacket, outgoingPacket;
+        break;
+    case MPS_START_GAME:
+        //host.setBlocking(false);
+        resources->getMusic("GXRCH - Race for Wind")->play();
+        state = MPS_PLAY;
+        break;
+    case MPS_PLAY:
         ClientEvents event;
+        sf::Int8 disconnect = 0;
+        sf::Int8 hostDisconnect = 0;
         event.keyDownW = sf::Keyboard::isKeyPressed(sf::Keyboard::W);
         event.keyDownS = sf::Keyboard::isKeyPressed(sf::Keyboard::S);
         event.keyDownA = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
@@ -48,22 +59,46 @@ GameStates GSMPClient::update()
         event.keyDownR = sf::Keyboard::isKeyPressed(sf::Keyboard::R);
         event.keyDownLMB = sf::Mouse::isButtonPressed(sf::Mouse::Left);
         event.angle = playerClient->setOrientation();
-        outgoingPacket << event;
+        outgoingPacket << disconnect << event << playerClient->getCurrentHealthPoints();
         host.send(outgoingPacket);
         host.receive(incomingPacket);
         sf::Vector2f posClient, posHost;
+        incomingPacket >> hostDisconnect;
+        if(hostDisconnect)
+            return GameStates::GS_MAINMENU;
         float angleHost;
         incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
         bool keyDownLMB;
         incomingPacket >> keyDownLMB;
+        int gg;
+        incomingPacket >> gg;
         playerClient->update(posClient, event.keyDownLMB);
         playerHost->update(posHost, keyDownLMB);
         playerHost->setOrientation(angleHost);
         checkObstacles();
         updateGlobal();
         checkProjectiles();
+        updateListener();
+        if(gg)
+            rematch();
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
+}
+
+void GSMPClient::rematch()
+{
+    delete(playerHost);
+    delete(playerClient);
+    delete(healthBar);
+    delete(ammoBar);
+    vecProjectiles.clear();
+    vecProjectiles.reserve(200);
+    playerHost = new PlayerClient;
+    playerClient = new PlayerClient;
+    playerHost->setOpponentTexture();
+    healthBar = new HealthBar(playerClient);
+    ammoBar = new AmmoBar(playerClient);
+    playerClient->setBorders(2000.f, 2000.f);
 }
 
 void GSMPClient::updateView()
@@ -88,9 +123,20 @@ void GSMPClient::checkObstacles()
 
 }
 
+void GSMPClient::updateListener()
+{
+    sf::Listener::setPosition(playerClient->getSprite().getPosition().x, playerClient->getSprite().getPosition().y, 0.f);
+}
+
 GSMPClient::~GSMPClient()
 {
-    //dtor
+    sf::Packet packet;
+    packet << sf::Int8(1);
+    host.send(packet);
+    vecProjectiles.clear();
+    delete(playerClient);
+    delete(playerHost);
+    resources->getMusic("GXRCH - Race for Wind")->stop();
 }
 
 void GSMPClient::checkProjectiles()

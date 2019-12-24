@@ -211,7 +211,6 @@ void SettingsMenu::refreshVideoMenu()
     buttons.push_back(new Button(resources->getTexture(buttonName[6]), window.getSize().x / 2 - 130, window.getSize().y / 2 + 200));
     buttons.back()->setFunction(buttonFunctions[7]);
     buttons.back()->setLightButton(buttonName[6]+"Light");
-    textbox = new TextBox("",500, 500);
     changeSettings();
     for(unsigned int i = 0; i < buttons.size(); i++)
         buttonName[i].erase();
@@ -264,8 +263,6 @@ void SettingsMenu::handleEvents(sf::Event event)
             return;
         }
     }
-    textbox->handleEvents(event);
-    textbox->update();
     for(unsigned int i = 0; i < buttons.size(); i++)
         buttons[i]->update();
     switch(event.type)
@@ -296,5 +293,4 @@ void SettingsMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(*buttons[i],states);
     for(unsigned int i = 0; i < sliders.size(); i++)
         target.draw(*sliders[i],states);
-    target.draw(*textbox, states);
 }

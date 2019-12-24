@@ -2,13 +2,16 @@
 
 GSMPHost::GSMPHost(VideoSettings *_videoSettings)
 {
+
     //Setting up the connection
     status = sf::Socket::NotReady;
+    state = MPS_MENU_CONNECTING;
     setupSettings(_videoSettings);
     player = new Player;
     player->setBorders(2000.f, 2000.f);
-    player->recline(100, 1000);
+    player->setPosition(100.f, 1000.f);
     playerClient->setBorders(2000.f, 2000.f);
+    playerClient->setPosition(1900, 1000);
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     //client.setBlocking(false);
@@ -27,26 +30,28 @@ void GSMPHost::connect()
     sf::SocketSelector selector;
     selector.add(listener);
     cout << "Waiting for user to connect." << endl;
-    if (listener.accept(client) != sf::Socket::Done)
-    {
-        cout << "Cannot connect client!" << endl;
-    }
-    else
-    {
-        cout << "Client connected!" << endl;
-        sf::Packet readyPacket;
-        client.setBlocking(false);
-        client.receive(readyPacket);
-        string msg;
-        readyPacket >> msg;
-        if (msg == "ready")
+
+        if(listener.accept(client) != sf::Socket::Done)
         {
-            status = sf::Socket::Done;
-            client.setBlocking(true);
-            listener.setBlocking(true);
-            cout << "Starting game!";
+            //cout << "Cannot connect client!" << endl;
         }
-    }
+        else
+        {
+            //cout << "Client connected!" << endl;
+            sf::Packet readyPacket;
+           // client.setBlocking(false);
+            client.receive(readyPacket);
+            string msg;
+            readyPacket >> msg;
+            if(msg == "ready")
+            {
+                status = sf::Socket::Done;
+                //client.setBlocking(true);
+                listener.setBlocking(true);
+                cout << "Starting game!";
+                state = MPS_MENU_WAITING;
+            }
+        }
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)
@@ -56,11 +61,12 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     view.setSize(videoSettings->width, videoSettings->height);
     view.setCenter(fieldSize.width / 2, fieldSize.height / 2);
     loadResources();
-    playerClient = new PlayerClient;
     background.setTexture(resources->getTexture("backgroundTile"));
     background.setTextureRect(fieldSize);
     background.setOrigin(fieldSize.width / 2, fieldSize.height / 2);
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
+    playerClient = new PlayerClient;
+    playerClient->setBorders(2000.f, 2000.f);
     vecObstacles.reserve(20);
     vecObstacles.push_back(new Wall(200, 670, 0));
     vecObstacles.push_back(new Wall(200, 1330, 0));
@@ -73,6 +79,39 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     vecObstacles.push_back(new Wall(1000, 1000, 2));
     vecProjectiles.clear();
     vecProjectiles.reserve(200);
+    bgColorRed   = 255;
+    bgColorGreen = 0;
+    bgColorBlue  = 100;
+    redModifier  = -1;
+    greenModifier = 1;
+    blueModifier = -1;
+    colorAmplifier = 50.f;
+    resources->getMusic("GXRCH - Race for Wind")->setVolume(audioSettings->music);
+    resources->getMusic("GXRCH - Race for Wind")->setLoop(true);
+}
+
+void GSMPHost::updateBackground()
+{
+    sf::Color color;
+    color.r = (int)bgColorRed;
+    color.g = (int)bgColorGreen;
+    color.b = (int)bgColorBlue;
+    background.setColor(color);
+    if(bgColorRed >= 255.f)
+        redModifier = -1;
+    if(bgColorGreen >= 255.f)
+        greenModifier = -1;
+    if(bgColorBlue >= 255.f)
+        blueModifier = -1;
+    if(bgColorRed <= 0.f)
+        redModifier = 1;
+    if(bgColorGreen <= 0.f)
+        greenModifier = 1;
+    if(bgColorBlue <= 0.f)
+        blueModifier = 1;
+    bgColorRed += (float)redModifier * frameTime * colorAmplifier;
+    bgColorGreen += (float)greenModifier * frameTime * colorAmplifier;
+    bgColorBlue += (float)blueModifier * frameTime * colorAmplifier;
 }
 
 sf::Socket::Status GSMPHost::getStatus()
@@ -100,36 +139,97 @@ void GSMPHost::updateView(GameObject *obj)
 
 GSMPHost::~GSMPHost()
 {
+    resources->getMusic("GXRCH - Race for Wind")->stop();
+    sf::Packet packet;
+    packet << sf::Int8(1);
+    client.send(packet);
     //dtor
 }
 
 GameStates GSMPHost::update()
 {
-    if (status != sf::Socket::Done)
+    sf::Packet outgoingPacket, incomingPacket;
+    switch(state)
     {
+    case MPS_MENU_CONNECTING:
         connect();
-    }
-    else
-    {
+        break;
+    case MPS_START_GAME:
+        resources->getMusic("GXRCH - Race for Wind")->play();
+        state = MPS_PLAY;
+        break;
+    case MPS_PLAY:
         ClientEvents event;
+        float clientHealth;
+        sf::Int8 disconnect = 0;
+        sf::Int8 clientDisconnect = 0;
+        int gg = 0;
         sf::Packet incomingPacket, outgoingPacket;
         client.receive(incomingPacket);
-        incomingPacket >> event;
+        incomingPacket >> clientDisconnect;
+        if(clientDisconnect)
+            return GameStates::GS_MAINMENU;
+        incomingPacket >> event >> clientHealth;
         playerClient->update(event);
         playerClient->setOrientation(event.angle);
         player->update();
         checkObstacles();
-        outgoingPacket << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left);
+        if(clientHealth <= 0.f || player->getCurrentHealthPoints() <= 0.f)
+        {
+            if(clientHealth <= 0.f && player->getCurrentHealthPoints() <= 0.f)
+                gg = 3;
+            else if(clientHealth <= 0.f)
+                gg = 2;
+            else
+                gg = 1;
+        }
+        outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y <<
+                          player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y <<
+                          player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
         client.send(outgoingPacket);
         updateGlobal();
+        checkProjectiles();
+        updateListener();
+        if(gg)
+            rematch();
         return GameStates::GS_GAMEMODE_MPHOST;
     }
+}
+
+void GSMPHost::setState(MultiplayerStates _state)
+{
+    state = _state;
+}
+
+MultiplayerStates GSMPHost::getState()
+{
+    return state;
+}
+
+void GSMPHost::rematch()
+{
+    delete(player);
+    delete(playerClient);
+    delete(healthBar);
+    delete(ammoBar);
+    vecProjectiles.clear();
+    vecProjectiles.reserve(200);
+    player = new Player;
+    playerClient = new PlayerClient;
+    healthBar = new HealthBar(player);
+    ammoBar = new AmmoBar(player);
+    player->setBorders(2000.f, 2000.f);
+    player->setPosition(100.f, 1000.f);
+    playerClient->setBorders(2000.f, 2000.f);
+    playerClient->setPosition(1900, 1000);
+    playerClient->setOpponentTexture();
 }
 
 void GSMPHost::updateGlobal()
 {
     updateStats();
     updateEntities();
+    updateBackground();
     collectTrash();
     updateView();
 }
@@ -178,6 +278,11 @@ void GSMPHost::collectTrash()
                 || vecProjectiles[i]->getSprite().getPosition().y < -400)
             vecProjectiles.erase(vecProjectiles.begin() + i);
     }
+}
+
+void GSMPHost::updateListener()
+{
+    sf::Listener::setPosition(player->getSprite().getPosition().x, player->getSprite().getPosition().y, 0.f);
 }
 
 void GSMPHost::updateEntities()
@@ -253,6 +358,7 @@ void GSMPHost::loadResources()
     resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
     //*Music
     resources->addMusic("GXRCH - HARD", "./data/music/act.ogg");
+    resources->addMusic("GXRCH - Race for Wind", "./data/music/mpmusic.wav");
 }
 void GSMPHost::checkObstacles()
 {

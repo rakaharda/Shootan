@@ -8,7 +8,6 @@
 #include "Utils/AudioSettings.h"
 #include "Utils/ResourceManager.h"
 #include "GUI/Checkbox.h"
-#include "GUI/TextBox.h"
 
 class SettingsMenu: public Menu
 {
@@ -23,7 +22,6 @@ private:
     MenuStates *menuState;
     std::function<void(float)> *sliderFunctions;
     vector <Slider*> sliders; 
-    TextBox* textbox;
     void setFunctions();
     void loadResources();
     void refreshVideoMenu();

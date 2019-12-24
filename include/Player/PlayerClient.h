@@ -24,6 +24,7 @@ class PlayerClient : public Player
         void  update();
         float setOrientation(float _angle = -1);
         void  recline(int _x, int _y);
+        void  setOpponentTexture();
     protected:
         void         move(ClientEvents event);
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
