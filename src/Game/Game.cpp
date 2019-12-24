@@ -113,7 +113,6 @@ void Game::update()
 void Game::draw()
 {
     window.clear();
-    cout << currentGameState << endl;
     currentGameState->draw();
     //* UI
     window.setView(window.getDefaultView());

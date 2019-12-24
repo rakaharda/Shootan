@@ -12,6 +12,7 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     ammoBar = new AmmoBar(playerClient);
     playerHost = new PlayerClient;
     playerHost->setOpponentTexture();
+    playerClient->increaseHealthPoints(200.f);
 }
 
 void GSMPClient::connect(string _ip)
@@ -81,7 +82,17 @@ GameStates GSMPClient::update()
         checkProjectiles();
         updateListener();
         if(gg)
+        {
+            if(gg == 3)
+            {
+                score.first++;
+                score.second++;
+            } else if(gg == 2)
+                score.first++;
+            else
+                score.second++;
             rematch();
+        }
         return GameStates::GS_GAMEMODE_MPCLIENT;
     }
 }
@@ -97,6 +108,7 @@ void GSMPClient::rematch()
     playerHost = new PlayerClient;
     playerClient = new PlayerClient;
     playerHost->setOpponentTexture();
+    playerClient->increaseHealthPoints(200.f);
     healthBar = new HealthBar(playerClient);
     ammoBar = new AmmoBar(playerClient);
     playerClient->setBorders(2000.f, 2000.f);
@@ -172,6 +184,7 @@ void GSMPClient::draw()
     window.draw(*playerClient);
     window.draw(*playerHost);
     window.setView(window.getDefaultView());
+    window.draw(tScore);
     window.draw(*healthBar);
     window.draw(*ammoBar);
 }

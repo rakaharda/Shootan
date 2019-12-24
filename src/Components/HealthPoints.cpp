@@ -35,6 +35,13 @@ void HealthPoints::setHealthPoints(float _hp)
 {
     healthPoints=_hp;
 }
+
+void HealthPoints::increaseHealthPoints(float _hp)
+{
+    setHealthPoints(_hp);
+    setCurrentHealthPoints(_hp);
+}
+
 void HealthPoints::takeDamage(float _damage)
 {
     if(currentHealthPoints < _damage)

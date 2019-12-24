@@ -12,6 +12,7 @@ public:
     float getCurrentHealthPoints();
     void setCurrentHealthPoints(float _hp);
     void setHealthPoints(float _hp);
+    void increaseHealthPoints(float _hp);
     void  takeDamage(float _damage);
 protected:
     float healthPoints;

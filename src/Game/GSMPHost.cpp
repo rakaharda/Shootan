@@ -10,6 +10,7 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     player = new Player;
     player->setBorders(2000.f, 2000.f);
     player->setPosition(100.f, 1000.f);
+    player->increaseHealthPoints(200.f);
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
     healthBar = new HealthBar(player);
@@ -67,6 +68,13 @@ void GSMPHost::setupSettings(VideoSettings *_videoSettings)
     background.setPosition(fieldSize.width / 2, fieldSize.height / 2);
     playerClient = new PlayerClient;
     playerClient->setBorders(2000.f, 2000.f);
+    tScore.setString("0 : 0");
+    tScore.setCharacterSize(40);
+    tScore.setFillColor(sf::Color(180, 120, 255));
+    tScore.setFont(resources->getFont("Mylodon-Light"));
+    auto bounds = tScore.getGlobalBounds();
+    tScore.setOrigin(bounds.width / 2, bounds.height / 2);
+    tScore.setPosition(window.getSize().x / 2 ,  50);
     vecObstacles.reserve(20);
     vecObstacles.push_back(new Wall(200, 670, 0));
     vecObstacles.push_back(new Wall(200, 1330, 0));
@@ -191,7 +199,17 @@ GameStates GSMPHost::update()
         checkProjectiles();
         updateListener();
         if(gg)
+        {
+            if(gg == 3)
+            {
+                score.first++;
+                score.second++;
+            } else if(gg == 2)
+                score.first++;
+            else
+                score.second++;
             rematch();
+        }
         return GameStates::GS_GAMEMODE_MPHOST;
     }
 }
@@ -220,6 +238,7 @@ void GSMPHost::rematch()
     ammoBar = new AmmoBar(player);
     player->setBorders(2000.f, 2000.f);
     player->setPosition(100.f, 1000.f);
+    player->increaseHealthPoints(200.f);
     playerClient->setBorders(2000.f, 2000.f);
     playerClient->setPosition(1900, 1000);
     playerClient->setOpponentTexture();
@@ -232,6 +251,9 @@ void GSMPHost::updateGlobal()
     updateBackground();
     collectTrash();
     updateView();
+    stringstream ss;
+    ss << score.first << " : " << score.second;
+    tScore.setString(ss.str());
 }
 
 
@@ -342,6 +364,7 @@ void GSMPHost::loadResources()
     //*For button
     resources->addTexture("buttonLVL", "./data/GUI/perkMenu/ilvl.png");
     resources->addTexture("mainBackground", "./data/GUI/MainMenu/mainBackground.png");
+    resources->addFont("Mylodon-Light",               "./data/fonts/Mylodon-Light.otf");
     //*Sound buffers
     resources->addSoundBuffer("laser1", "./data/sounds/laser1.wav");
     resources->addSoundBuffer("destroy", "./data/sounds/destroy.wav");
@@ -384,6 +407,7 @@ void GSMPHost::draw()
     window.draw(*playerClient);
     window.draw(*player);
     window.setView(window.getDefaultView());
+    window.draw(tScore);
     window.draw(*healthBar);
     window.draw(*ammoBar);
 }

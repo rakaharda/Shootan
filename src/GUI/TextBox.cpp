@@ -11,6 +11,7 @@ TextBox::TextBox(string _name = "", float _xPos = 0, float _yPos = 0)
     m_text.setCharacterSize(size);
     m_text.setString("A");
     setCenter();
+    selected = true;
     m_text.setString(_name);
     cursor.setTexture(resources->getTexture("cursorDefault"));
     moveCursor();

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 #include "Player/PlayerClient.h"
 
 using namespace std;
@@ -29,6 +30,7 @@ class GSMPHost : public GameState, public Collision
         sf::Sprite background;
         sf::View view;
         sf::IntRect fieldSize;
+        sf::Text tScore;
         HealthBar *healthBar;
         AmmoBar         *ammoBar;
         VideoSettings   *videoSettings;
@@ -56,6 +58,7 @@ class GSMPHost : public GameState, public Collision
         char            redModifier;
         char            greenModifier;
         char            blueModifier;
+        pair<int, int> score;
     private:
         Player* player;
         sf::TcpListener listener;
