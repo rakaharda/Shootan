@@ -47,6 +47,7 @@ GameStates GSMPClient::update()
         //host.setBlocking(false);
         resources->getMusic("GXRCH - Race for Wind")->play();
         state = MPS_PLAY;
+        return GameStates::GS_GAMEMODE_MPCLIENT;
         break;
     case MPS_PLAY:
         ClientEvents event;
