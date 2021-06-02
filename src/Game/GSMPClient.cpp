@@ -26,6 +26,7 @@ void GSMPClient::connect(string _ip)
     network.send(readyPacket, address, 2000);
     network.receive(readyPacket);
     network.socket.setBlocking(false);
+    state = MPS_MENU_WAITING;
 }
 
 GameStates GSMPClient::update()
@@ -73,25 +74,22 @@ GameStates GSMPClient::update()
         event.angle = playerClient->setOrientation();
         outgoingPacket << disconnect << event << playerClient->getCurrentHealthPoints();
         network.send(outgoingPacket);
-        network.receive(incomingPacket);
-        sf::Vector2f posClient, posHost;
-        incomingPacket >> hostDisconnect;
-        if(hostDisconnect)
-            return GameStates::GS_MAINMENU;
-        float angleHost;
-        incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
-        bool keyDownLMB;
-        incomingPacket >> keyDownLMB;
-        int gg;
-        incomingPacket >> gg;
-        playerClient->update(posClient, event.keyDownLMB);
-        playerHost->update(posHost, keyDownLMB);
-        playerHost->setOrientation(angleHost);
-        checkObstacles();
-        updateGlobal();
-        checkProjectiles();
-        updateListener();
-        if(gg)
+        if(network.receive(incomingPacket) == sf::Socket::Done)
+        {
+            sf::Vector2f posClient, posHost;
+            incomingPacket >> hostDisconnect;
+            if(hostDisconnect)
+                return GameStates::GS_MAINMENU;
+            float angleHost;
+            incomingPacket >> posClient.x >> posClient.y >> posHost.x >> posHost.y >> angleHost;
+            bool keyDownLMB;
+            incomingPacket >> keyDownLMB;
+            int gg;
+            incomingPacket >> gg;
+            playerClient->update(posClient, event.keyDownLMB);
+            playerHost->update(posHost, keyDownLMB);
+            playerHost->setOrientation(angleHost);
+            if(gg)
         {
             if(gg == 3)
             {
@@ -103,6 +101,12 @@ GameStates GSMPClient::update()
                 score.second++;
             rematch();
         }
+        }
+        checkObstacles();
+        updateGlobal();
+        checkProjectiles();
+        updateListener();
+
         if(*survivalStates == SS_PAUSE_MENU)
         {
             if(pauseMenu->getGameState() == GS_MAINMENU)

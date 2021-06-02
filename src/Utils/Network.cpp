@@ -17,7 +17,7 @@ sf::Socket::Status Network::receive(sf::Packet& packet, sf::IpAddress &rcvAdr, u
 {
     sf::Socket::Status status = socket.receive(packet, rcvAdr, rcvPort);
     std::cout << "packet received from" << rcvAdr << ":" << rcvPort << std::endl;
-    if(connections.find(rcvAdr) == connections.end())
+    if(connections.find(rcvAdr) == connections.end() && status == sf::Socket::Done)
         connections.insert(std::make_pair(rcvAdr, rcvPort));
     return status;
 }

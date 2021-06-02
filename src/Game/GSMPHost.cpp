@@ -19,6 +19,7 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings) : network()
     gameState = GS_GAMEMODE_MPHOST;
     player->setSpeedUp(200.f);
     playerClient->setSpeedUp(200.f);
+    network.socket.setBlocking(false);
 }
 
 void GSMPHost::connect()
@@ -36,7 +37,6 @@ void GSMPHost::connect()
         cout << "Starting game!";
         state = MPS_MENU_WAITING;
     }
-    network.socket.setBlocking(false);
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)

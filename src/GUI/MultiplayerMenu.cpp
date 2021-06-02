@@ -93,6 +93,11 @@ void MultiplayerMenu::update()
             else
             {
                 connected = true;
+                if(mode == 1)
+                    *gameState = GameStates::GS_GAMEMODE_MPHOST;
+                else if(mode == 2)
+                    *gameState = GameStates::GS_GAMEMODE_MPCLIENT;
+                multiplayerState->setState(MPS_START_GAME);
                  lobbyButtons[0]->setLightButton("buttonMultiplayerPlayLight");
             }
 
