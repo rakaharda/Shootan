@@ -37,7 +37,6 @@ void MultiplayerMenu::handleEvents(sf::Event event)
         textBoxes[0]->handleEvents(event);
         break;
     case MultiplayerMenuStates::MPS_LOBBY:
-        if(multiplayerState->getStatus() == sf::Socket::Done)
             lobbyButtons[0]->handleEvents(event);
         for(int i = 1; i < lobbyButtons.size(); i++)
             lobbyButtons[i]->handleEvents(event);

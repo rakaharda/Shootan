@@ -2,19 +2,22 @@
 #define NETWORK_H
 
 #include <SFML/Network.hpp>
-#include "Utils/ConnectionModes.h"
+#include <unordered_map>
+#include <iostream>
 
 class Network
 {
 public:
-    Network();
-    static sf::IpAddress getIp();
-    static sf::Packet receivePacket();
-    static void setConnection(ConnectionModes _mode, sf::IpAddress _ip);
-    static void sendPacket(sf::Packet _packet);
-private:
-    static ConnectionModes connectionMode;
-    static sf::TcpSocket socket;
+    Network(unsigned short _port = 2000);
+    ~Network();
+    sf::Socket::Status receive(sf::Packet& packet);
+    sf::Socket::Status receive(sf::Packet& packet, sf::IpAddress &rcvAdr, unsigned short &rcvPort);
+    unsigned short send(sf::Packet packet); // returns amount of packets failed to send
+    sf::Socket::Status send(sf::Packet packet, sf::IpAddress senderAdr, unsigned short senderPort);
+    sf::UdpSocket socket;
+protected:
+    std::map <sf::IpAddress, unsigned short> connections; //  <address, port>
+    unsigned short port;
 };
 
 #endif //NETWORK_H

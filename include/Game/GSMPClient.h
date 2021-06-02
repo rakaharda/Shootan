@@ -15,14 +15,13 @@ class GSMPClient : public GSMPHost
     protected:
         void updateTime();
     private:
+        Network network;
         void checkProjectiles();
         void connect(string _ip);
         void updateView();
         void checkObstacles();
         void updateListener();
         void rematch();
-        sf::UdpSocket host;
-        sf::IpAddress serverAddress;
         unsigned short port;
         PlayerClient* playerHost;
         string ip;

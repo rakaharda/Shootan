@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Player/PlayerClient.h"
 #include "GUI/PauseMenu.h"
+#include "Utils/Network.h"
 
 using namespace std;
 
@@ -70,9 +71,7 @@ class GSMPHost : public GameState, public Collision
         bool            focus;
         pair<int, int>  score;
     private:
-        unsigned short  port;
-        sf::UdpSocket client;
-        sf::IpAddress clientAddress;
+        Network network;
         Player* player;
 };
 

@@ -1,6 +1,6 @@
 #include "Game/GSMPClient.h"
 
-GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
+GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip) : network()
 {
     //ctor
     ip = _ip;
@@ -16,18 +16,16 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip)
     playerClient->increaseHealthPoints(200.f);
     playerHost->setSpeedUp(200.f);
     playerClient->setSpeedUp(200.f);
-    port = 2000;
 }
 
 void GSMPClient::connect(string _ip)
 {
-    port = 2000;
-    serverAddress = _ip;
     cout << "Connecting to host" << endl;
     sf::Packet readyPacket;
     readyPacket << "ready";
-    host.send(readyPacket, _ip, port);
-    state = MPS_MENU_WAITING;
+    network.send(readyPacket, _ip, port);
+    network.receive(readyPacket);
+    network.socket.setBlocking(false);
 }
 
 GameStates GSMPClient::update()
@@ -74,8 +72,8 @@ GameStates GSMPClient::update()
         event.keyDownLMB = sf::Mouse::isButtonPressed(sf::Mouse::Left);
         event.angle = playerClient->setOrientation();
         outgoingPacket << disconnect << event << playerClient->getCurrentHealthPoints();
-        host.send(outgoingPacket, serverAddress, port);
-        host.receive(incomingPacket, serverAddress, port);
+        network.send(outgoingPacket);
+        network.receive(incomingPacket);
         sf::Vector2f posClient, posHost;
         incomingPacket >> hostDisconnect;
         if(hostDisconnect)
@@ -220,7 +218,7 @@ GSMPClient::~GSMPClient()
 {
     sf::Packet packet;
     packet << sf::Int8(1);
-    host.send(packet, serverAddress, port);
+    network.send(packet);
     vecProjectiles.clear();
     delete(playerClient);
     delete(playerHost);

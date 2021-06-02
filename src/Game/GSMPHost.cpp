@@ -1,6 +1,6 @@
 #include "Game/GSMPHost.h"
 
-GSMPHost::GSMPHost(VideoSettings *_videoSettings)
+GSMPHost::GSMPHost(VideoSettings *_videoSettings) : network()
 {
 
     //Setting up the connection
@@ -17,25 +17,23 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     gameState = GS_GAMEMODE_MPHOST;
-    cout << "Listenning port " << port << endl;
-    if (client.bind(port) != sf::Socket::Done)
-    {
-        cout << "Cannot bind port " << port << endl;
-    }
     player->setSpeedUp(200.f);
     playerClient->setSpeedUp(200.f);
-    port = 2000;
 }
 
 void GSMPHost::connect()
 {
     sf::Packet readyPacket;
-    client.receive(readyPacket, clientAddress, port);
+    network.socket.setBlocking(false);
+    network.receive(readyPacket);
     string msg;
     readyPacket >> msg;
     if (msg == "ready")
     {
-        status = sf::Socket::Done;
+        if(network.send(readyPacket) == 0)
+            status = sf::Socket::Done;
+        else
+            status = sf::Socket::Error;
         cout << "Starting game!";
         state = MPS_MENU_WAITING;
     }
@@ -143,7 +141,7 @@ GSMPHost::~GSMPHost()
     resources->getMusic("GXRCH - Race for Wind")->stop();
     sf::Packet packet;
     packet << sf::Int8(1);
-    client.send(packet, clientAddress, port);
+    network.send(packet);
     //dtor
 }
 
@@ -186,7 +184,7 @@ GameStates GSMPHost::update()
         sf::Int8 clientDisconnect = 0;
         int gg = 0;
         sf::Packet incomingPacket, outgoingPacket;
-        client.receive(incomingPacket, clientAddress, port);
+        network.receive(incomingPacket);
         incomingPacket >> clientDisconnect;
         if (clientDisconnect)
             return GameStates::GS_MAINMENU;
@@ -205,8 +203,10 @@ GameStates GSMPHost::update()
             else
                 gg = 1;
         }
-        outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
-        client.send(outgoingPacket, clientAddress, port);
+        outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x
+                       << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x
+                       << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
+        network.send(outgoingPacket);
         updateGlobal();
         checkProjectiles();
         updateListener();
