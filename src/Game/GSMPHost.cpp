@@ -24,7 +24,6 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings) : network()
 void GSMPHost::connect()
 {
     sf::Packet readyPacket;
-    network.socket.setBlocking(false);
     network.receive(readyPacket);
     string msg;
     readyPacket >> msg;
@@ -37,6 +36,7 @@ void GSMPHost::connect()
         cout << "Starting game!";
         state = MPS_MENU_WAITING;
     }
+    network.socket.setBlocking(false);
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)

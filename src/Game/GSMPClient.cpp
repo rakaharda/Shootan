@@ -1,12 +1,11 @@
 #include "Game/GSMPClient.h"
 
-GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip) : network()
+GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip) : network(sf::Socket::AnyPort)
 {
     //ctor
     ip = _ip;
     videoSettings = _videoSettings;
     state = MPS_MENU_CONNECTING;
-    //host.setBlocking(false);
     setupSettings(_videoSettings);
     healthBar = new HealthBar(playerClient);
     ammoBar = new AmmoBar(playerClient);
@@ -20,10 +19,11 @@ GSMPClient::GSMPClient(VideoSettings *_videoSettings, string _ip) : network()
 
 void GSMPClient::connect(string _ip)
 {
+    sf::IpAddress address(_ip);
     cout << "Connecting to host" << endl;
     sf::Packet readyPacket;
     readyPacket << "ready";
-    network.send(readyPacket, _ip, port);
+    network.send(readyPacket, address, 2000);
     network.receive(readyPacket);
     network.socket.setBlocking(false);
 }

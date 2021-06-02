@@ -16,6 +16,7 @@ Network::~Network()
 sf::Socket::Status Network::receive(sf::Packet& packet, sf::IpAddress &rcvAdr, unsigned short &rcvPort)
 {
     sf::Socket::Status status = socket.receive(packet, rcvAdr, rcvPort);
+    std::cout << "packet received from" << rcvAdr << ":" << rcvPort << std::endl;
     if(connections.find(rcvAdr) == connections.end())
         connections.insert(std::make_pair(rcvAdr, rcvPort));
     return status;
@@ -38,6 +39,8 @@ unsigned short Network::send(sf::Packet packet)
             packetsFailed++;
             std::cout << "Failed to send packet to " << i.first << ":" << i.second << std::endl;
         }
+        else
+            std::cout << "packet sent to" << i.first << ":" << i.second << std::endl;
     }
     return packetsFailed;
 }
@@ -45,4 +48,5 @@ unsigned short Network::send(sf::Packet packet)
 sf::Socket::Status Network::send(sf::Packet packet, sf::IpAddress senderAdr, unsigned short senderPort)
 {
     socket.send(packet, senderAdr, senderPort);
+    std::cout << "packet sent to" << senderAdr << ":" << senderPort << std::endl;
 }
