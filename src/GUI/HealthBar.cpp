@@ -22,16 +22,17 @@ HealthBar::~HealthBar()
 void HealthBar::update()
 {
     int cells;
-    if(prevHealthPoints != player->getCurrentHealthPoints())
+    currentHealthPoints = player->getCurrentHealthPoints();
+    if(prevHealthPoints != currentHealthPoints)
     {
-        if(player->getCurrentHealthPoints() > 0)
-            cells = 10 * player->getCurrentHealthPoints() / player->getHealthPoints();
+        if(currentHealthPoints > 0)
+            cells = 10 * currentHealthPoints / player->getHealthPoints();
         else
             cells = 0.f;
         healthCells.setTextureRect(sf::IntRect(0, 0, 8 + (cells * 23), healthCells.getTexture()->getSize().y));
-        if(prevHealthPoints > player->getCurrentHealthPoints())
+        if(prevHealthPoints > currentHealthPoints)
             isDamaged = true;
-        prevHealthPoints = player->getCurrentHealthPoints();
+        prevHealthPoints = currentHealthPoints;
     }
     shake();
     updateOrigin();

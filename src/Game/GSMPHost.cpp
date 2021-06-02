@@ -17,45 +17,27 @@ GSMPHost::GSMPHost(VideoSettings *_videoSettings)
     healthBar = new HealthBar(player);
     ammoBar = new AmmoBar(player);
     gameState = GS_GAMEMODE_MPHOST;
-    //client.setBlocking(false);
-    listener.setBlocking(false);
-    unsigned port = 2000;
     cout << "Listenning port " << port << endl;
-    if (listener.listen(port) != sf::Socket::Done)
+    if (client.bind(port) != sf::Socket::Done)
     {
-        cout << "Cannot listen port " << port << endl;
+        cout << "Cannot bind port " << port << endl;
     }
     player->setSpeedUp(200.f);
     playerClient->setSpeedUp(200.f);
+    port = 2000;
 }
 
 void GSMPHost::connect()
 {
-    unsigned port = 2000;
-    sf::SocketSelector selector;
-    selector.add(listener);
-    cout << "Waiting for user to connect." << endl;
-
-    if (listener.accept(client) != sf::Socket::Done)
+    sf::Packet readyPacket;
+    client.receive(readyPacket, clientAddress, port);
+    string msg;
+    readyPacket >> msg;
+    if (msg == "ready")
     {
-        //cout << "Cannot connect client!" << endl;
-    }
-    else
-    {
-        //cout << "Client connected!" << endl;
-        sf::Packet readyPacket;
-        // client.setBlocking(false);
-        client.receive(readyPacket);
-        string msg;
-        readyPacket >> msg;
-        if (msg == "ready")
-        {
-            status = sf::Socket::Done;
-            //client.setBlocking(true);
-            listener.setBlocking(true);
-            cout << "Starting game!";
-            state = MPS_MENU_WAITING;
-        }
+        status = sf::Socket::Done;
+        cout << "Starting game!";
+        state = MPS_MENU_WAITING;
     }
 }
 
@@ -161,7 +143,7 @@ GSMPHost::~GSMPHost()
     resources->getMusic("GXRCH - Race for Wind")->stop();
     sf::Packet packet;
     packet << sf::Int8(1);
-    client.send(packet);
+    client.send(packet, clientAddress, port);
     //dtor
 }
 
@@ -204,14 +186,15 @@ GameStates GSMPHost::update()
         sf::Int8 clientDisconnect = 0;
         int gg = 0;
         sf::Packet incomingPacket, outgoingPacket;
-        client.receive(incomingPacket);
+        client.receive(incomingPacket, clientAddress, port);
         incomingPacket >> clientDisconnect;
         if (clientDisconnect)
             return GameStates::GS_MAINMENU;
         incomingPacket >> event >> clientHealth;
         playerClient->update(event);
         playerClient->setOrientation(event.angle);
-        player->update();
+        if(focus)
+            player->update();
         checkObstacles();
         if (clientHealth <= 0.f || player->getCurrentHealthPoints() <= 0.f)
         {
@@ -223,7 +206,7 @@ GameStates GSMPHost::update()
                 gg = 1;
         }
         outgoingPacket << disconnect << playerClient->getSpritePointer()->getPosition().x << playerClient->getSpritePointer()->getPosition().y << player->getSpritePointer()->getPosition().x << player->getSpritePointer()->getPosition().y << player->getSpritePointer()->getRotation() << sf::Mouse::isButtonPressed(sf::Mouse::Left) << gg;
-        client.send(outgoingPacket);
+        client.send(outgoingPacket, clientAddress, port);
         updateGlobal();
         checkProjectiles();
         updateListener();
@@ -245,7 +228,7 @@ GameStates GSMPHost::update()
             if(pauseMenu->getGameState() == GS_MAINMENU)
             gameState = pauseMenu->getGameState();
         }
-            
+
         return gameState;
     }
 }
@@ -426,6 +409,10 @@ void GSMPHost::handleEvents(sf::Event _event)
            *survivalStates = SS_PAUSE_MENU;
         }
     }
+    else if (_event.type == sf::Event::LostFocus)
+        focus = false;
+    else if (_event.type == sf::Event::GainedFocus)
+        focus = true;
 }
 
 void GSMPHost::loadResources()

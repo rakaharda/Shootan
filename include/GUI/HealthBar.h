@@ -21,6 +21,7 @@ private:
     sf::Sprite   healthCells;
     float        amplitude;
     float        prevHealthPoints;
+    float        currentHealthPoints;
     unsigned int prevWindowsHeight;
     bool         isDamaged;
     bool         direction;

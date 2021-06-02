@@ -67,10 +67,12 @@ class GSMPHost : public GameState, public Collision
         char            greenModifier;
         char            blueModifier;
         float           rematchPauseTime;
-        pair<int, int> score;
+        bool            focus;
+        pair<int, int>  score;
     private:
-        sf::TcpListener listener;
-        sf::TcpSocket client;
+        unsigned short  port;
+        sf::UdpSocket client;
+        sf::IpAddress clientAddress;
         Player* player;
 };
 
