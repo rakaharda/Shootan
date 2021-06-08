@@ -27,6 +27,7 @@ void GSMPClient::connect(string _ip)
     network.receive(readyPacket);
     network.socket.setBlocking(false);
     state = MPS_MENU_WAITING;
+    network.startPacketFiltering();
 }
 
 GameStates GSMPClient::update()

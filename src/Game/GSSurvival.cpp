@@ -299,11 +299,11 @@ void GSSurvival::checkDestroyers()
         }
     if(sounds.size() != 0)
         while(sounds.front().getStatus() != sf::Sound::Playing)
-    {
+        {
         sounds.pop_front();
         if(sounds.size() == 0)
             break;
-    }
+        }
 }
 
 void GSSurvival::updateView()

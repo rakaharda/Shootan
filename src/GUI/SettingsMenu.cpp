@@ -283,7 +283,7 @@ void SettingsMenu::handleEvents(sf::Event event)
 
 void SettingsMenu::update()
 {
-    
+
 }
 
 void SettingsMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -294,3 +294,4 @@ void SettingsMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for(unsigned int i = 0; i < sliders.size(); i++)
         target.draw(*sliders[i],states);
 }
+
