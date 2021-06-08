@@ -6,6 +6,7 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
+#include <chrono>
 
 class Network
 {
@@ -24,6 +25,7 @@ protected:
     std::map <sf::IpAddress, unsigned short> connections; //  <address, port>
     unsigned short port;
     bool filterPackets;
+    bool receiveCall;
     sf::Packet lastPacket;
     sf::IpAddress lastReceiver;
     sf::Socket::Status lastStatus;

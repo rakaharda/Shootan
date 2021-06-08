@@ -8,6 +8,7 @@ Network::Network(unsigned short _port)
         std::cout << "Cannot bind port " << port << std::endl;
     }
     filterPackets = false;
+    receiveCall = false;
 }
 
 Network::~Network()
@@ -19,12 +20,14 @@ sf::Socket::Status Network::receive(sf::Packet& packet, sf::IpAddress &rcvAdr, u
 {
     if(filterPackets == true)
     {
+        receiveCall = true;
         _lock.lock();
         packet = lastPacket;
         rcvAdr = lastReceiver;
         rcvPort = lastPort;
         return lastStatus;
         _lock.unlock();
+        receiveCall = false;
     }
     else
     {
@@ -64,6 +67,7 @@ sf::Socket::Status Network::send(sf::Packet packet, sf::IpAddress senderAdr, uns
 void Network::startPacketFiltering()
 {
     filterPackets = true;
+    socket.setBlocking(false);
     filteringThread = std::thread(Network::packetFiltering, this);
 }
 
@@ -76,8 +80,12 @@ void Network::packetFiltering()
 {
     while(filterPackets)
     {
-        _lock.lock();
-        lastStatus = socket.receive(lastPacket, lastReceiver, lastPort);
-        _lock.unlock();
+        if(!receiveCall)
+        {
+            _lock.lock();
+            std::cout << "thread receiving packet" << std::endl;
+            lastStatus = socket.receive(lastPacket, lastReceiver, lastPort);
+            _lock.unlock();
+        }
     }
 }
