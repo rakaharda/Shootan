@@ -84,7 +84,16 @@ void Network::packetFiltering()
         {
             _lock.lock();
             std::cout << "thread receiving packet" << std::endl;
-            lastStatus = socket.receive(lastPacket, lastReceiver, lastPort);
+            sf::Packet tempPacket;
+            sf::IpAddress tempReceiver;
+            unsigned short tempPort;
+            if (socket.receive(tempPacket, tempReceiver, tempPort) == sf::Socket::Done)
+            {
+                lastPacket = tempPacket;
+                lastReceiver = tempReceiver;
+                lastPort = tempPort;
+                lastStatus = sf::Socket::Done;
+            }
             _lock.unlock();
         }
     }
