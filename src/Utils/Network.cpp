@@ -64,7 +64,7 @@ sf::Socket::Status Network::send(sf::Packet packet, sf::IpAddress senderAdr, uns
 void Network::startPacketFiltering()
 {
     filterPackets = true;
-    std::thread filteringThread(Network::packetFiltering, this);
+    filteringThread = std::thread(Network::packetFiltering, this);
 }
 
 void Network::stopPacketFiltering()

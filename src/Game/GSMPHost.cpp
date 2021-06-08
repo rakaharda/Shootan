@@ -36,8 +36,8 @@ void GSMPHost::connect()
             status = sf::Socket::Error;
         cout << "Starting game!";
         state = MPS_MENU_WAITING;
+        network.startPacketFiltering();
     }
-    network.startPacketFiltering();
 }
 
 void GSMPHost::setupSettings(VideoSettings *_videoSettings)

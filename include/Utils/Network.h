@@ -27,6 +27,7 @@ protected:
     sf::Packet lastPacket;
     sf::IpAddress lastReceiver;
     sf::Socket::Status lastStatus;
+    std::thread filteringThread;
     unsigned short lastPort;
     std::mutex _lock;
 };
