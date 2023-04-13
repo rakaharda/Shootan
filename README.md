@@ -14,7 +14,7 @@ Bug fixes:
 
 Balance:
 
-*Increased multigan damage
+*Increased multigun damage
 
 *Increased railgun damage
 
